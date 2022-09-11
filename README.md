@@ -9,4 +9,4 @@
 我还对它进行了优化，所以它要比官方原包要流畅一点
 
 该软件并不是官方原包，我只参与修改，更多详细内容请前往[官方网站](https://github.com/PojavLauncherTeam/PojavLauncher)查看
-## 从[此处](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink/releases)获取软件
+## 从[此处](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink-CN/releases)获取软件
