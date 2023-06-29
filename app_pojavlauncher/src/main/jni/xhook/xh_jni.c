@@ -21,30 +21,39 @@
 
 // Created by caikelun on 2018-04-11.
 
-#ifndef XHOOK_H
-#define XHOOK_H 1
+#include <jni.h>
+#include "xhook.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define JNI_API_DEF(f) Java_com_qiyi_xhook_NativeHandler_##f
 
-#define XHOOK_EXPORT __attribute__((visibility("default")))
+JNIEXPORT jint JNI_API_DEF(refresh)(JNIEnv *env, jobject obj, jboolean async)
+{
+    (void)env;
+    (void)obj;
 
-int xhook_register(const char *pathname_regex_str, const char *symbol,
-                   void *new_func, void **old_func) XHOOK_EXPORT;
-
-int xhook_ignore(const char *pathname_regex_str, const char *symbol) XHOOK_EXPORT;
-
-int xhook_refresh(int async) XHOOK_EXPORT;
-
-void xhook_clear() XHOOK_EXPORT;
-
-void xhook_enable_debug(int flag) XHOOK_EXPORT;
-
-void xhook_enable_sigsegv_protection(int flag) XHOOK_EXPORT;
-
-#ifdef __cplusplus
+    return xhook_refresh(async ? 1 : 0);
 }
-#endif
 
-#endif
+JNIEXPORT void JNI_API_DEF(clear)(JNIEnv *env, jobject obj)
+{
+    (void)env;
+    (void)obj;
+
+    xhook_clear();
+}
+
+JNIEXPORT void JNI_API_DEF(enableDebug)(JNIEnv *env, jobject obj, jboolean flag)
+{
+    (void)env;
+    (void)obj;
+
+    xhook_enable_debug(flag ? 1 : 0);
+}
+
+JNIEXPORT void JNI_API_DEF(enableSigSegvProtection)(JNIEnv *env, jobject obj, jboolean flag)
+{
+    (void)env;
+    (void)obj;
+
+    xhook_enable_sigsegv_protection(flag ? 1 : 0);
+}

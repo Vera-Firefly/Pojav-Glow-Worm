@@ -21,30 +21,17 @@
 
 // Created by caikelun on 2018-04-11.
 
-#ifndef XHOOK_H
-#define XHOOK_H 1
+#ifndef XH_ERRNO_H
+#define XH_ERRNO_H 1
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define XHOOK_EXPORT __attribute__((visibility("default")))
-
-int xhook_register(const char *pathname_regex_str, const char *symbol,
-                   void *new_func, void **old_func) XHOOK_EXPORT;
-
-int xhook_ignore(const char *pathname_regex_str, const char *symbol) XHOOK_EXPORT;
-
-int xhook_refresh(int async) XHOOK_EXPORT;
-
-void xhook_clear() XHOOK_EXPORT;
-
-void xhook_enable_debug(int flag) XHOOK_EXPORT;
-
-void xhook_enable_sigsegv_protection(int flag) XHOOK_EXPORT;
-
-#ifdef __cplusplus
-}
-#endif
+#define XH_ERRNO_UNKNOWN 1001
+#define XH_ERRNO_INVAL   1002
+#define XH_ERRNO_NOMEM   1003
+#define XH_ERRNO_REPEAT  1004
+#define XH_ERRNO_NOTFND  1005
+#define XH_ERRNO_BADMAPS 1006
+#define XH_ERRNO_FORMAT  1007
+#define XH_ERRNO_ELFINIT 1008
+#define XH_ERRNO_SEGVERR 1009
 
 #endif

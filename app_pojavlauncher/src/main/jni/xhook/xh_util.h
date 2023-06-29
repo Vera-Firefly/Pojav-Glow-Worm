@@ -21,27 +21,28 @@
 
 // Created by caikelun on 2018-04-11.
 
-#ifndef XHOOK_H
-#define XHOOK_H 1
+#ifndef XH_UTILS_H
+#define XH_UTILS_H 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define XHOOK_EXPORT __attribute__((visibility("default")))
+#if defined(__LP64__)
+#define XH_UTIL_FMT_LEN     "16"
+#define XH_UTIL_FMT_X       "llx"
+#else
+#define XH_UTIL_FMT_LEN     "8"
+#define XH_UTIL_FMT_X       "x"
+#endif
 
-int xhook_register(const char *pathname_regex_str, const char *symbol,
-                   void *new_func, void **old_func) XHOOK_EXPORT;
+#define XH_UTIL_FMT_FIXED_X XH_UTIL_FMT_LEN XH_UTIL_FMT_X
+#define XH_UTIL_FMT_FIXED_S XH_UTIL_FMT_LEN "s"
 
-int xhook_ignore(const char *pathname_regex_str, const char *symbol) XHOOK_EXPORT;
-
-int xhook_refresh(int async) XHOOK_EXPORT;
-
-void xhook_clear() XHOOK_EXPORT;
-
-void xhook_enable_debug(int flag) XHOOK_EXPORT;
-
-void xhook_enable_sigsegv_protection(int flag) XHOOK_EXPORT;
+int xh_util_get_mem_protect(uintptr_t addr, size_t len, const char *pathname, unsigned int *prot);
+int xh_util_get_addr_protect(uintptr_t addr, const char *pathname, unsigned int *prot);
+int xh_util_set_addr_protect(uintptr_t addr, unsigned int prot);
+void xh_util_flush_instruction_cache(uintptr_t addr);
 
 #ifdef __cplusplus
 }

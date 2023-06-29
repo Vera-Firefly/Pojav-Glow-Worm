@@ -21,30 +21,36 @@
 
 // Created by caikelun on 2018-04-11.
 
-#ifndef XHOOK_H
-#define XHOOK_H 1
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define XHOOK_EXPORT __attribute__((visibility("default")))
+#include "xh_core.h"
+#include "xhook.h"
 
 int xhook_register(const char *pathname_regex_str, const char *symbol,
-                   void *new_func, void **old_func) XHOOK_EXPORT;
-
-int xhook_ignore(const char *pathname_regex_str, const char *symbol) XHOOK_EXPORT;
-
-int xhook_refresh(int async) XHOOK_EXPORT;
-
-void xhook_clear() XHOOK_EXPORT;
-
-void xhook_enable_debug(int flag) XHOOK_EXPORT;
-
-void xhook_enable_sigsegv_protection(int flag) XHOOK_EXPORT;
-
-#ifdef __cplusplus
+                   void *new_func, void **old_func)
+{
+    return xh_core_register(pathname_regex_str, symbol, new_func, old_func);
 }
-#endif
 
-#endif
+int xhook_ignore(const char *pathname_regex_str, const char *symbol)
+{
+    return xh_core_ignore(pathname_regex_str, symbol);
+}
+
+int xhook_refresh(int async)
+{
+    return xh_core_refresh(async);
+}
+
+void xhook_clear()
+{
+    return xh_core_clear();
+}
+
+void xhook_enable_debug(int flag)
+{
+    return xh_core_enable_debug(flag);
+}
+
+void xhook_enable_sigsegv_protection(int flag)
+{
+    return xh_core_enable_sigsegv_protection(flag);
+}

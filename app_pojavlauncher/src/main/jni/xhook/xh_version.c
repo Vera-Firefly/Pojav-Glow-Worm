@@ -21,30 +21,46 @@
 
 // Created by caikelun on 2018-04-11.
 
-#ifndef XHOOK_H
-#define XHOOK_H 1
+#include "xh_version.h"
 
-#ifdef __cplusplus
-extern "C" {
+#define XH_VERSION_MAJOR 1
+#define XH_VERSION_MINOR 2
+#define XH_VERSION_EXTRA 0
+
+#define XH_VERSION ((XH_VERSION_MAJOR << 16) | (XH_VERSION_MINOR <<  8) | (XH_VERSION_EXTRA))
+
+#define XH_VERSION_TO_STR_HELPER(x) #x
+#define XH_VERSION_TO_STR(x) XH_VERSION_TO_STR_HELPER(x)
+
+#define XH_VERSION_STR XH_VERSION_TO_STR(XH_VERSION_MAJOR) "." \
+                       XH_VERSION_TO_STR(XH_VERSION_MINOR) "." \
+                       XH_VERSION_TO_STR(XH_VERSION_EXTRA)
+
+#if defined(__arm__)
+#define XH_VERSION_ARCH "arm"
+#elif defined(__aarch64__)
+#define XH_VERSION_ARCH "aarch64"
+#elif defined(__i386__)
+#define XH_VERSION_ARCH "x86"
+#elif defined(__x86_64__)
+#define XH_VERSION_ARCH "x86_64"
+#else
+#define XH_VERSION_ARCH "unknown"
 #endif
 
-#define XHOOK_EXPORT __attribute__((visibility("default")))
+#define XH_VERSION_STR_FULL "libxhook "XH_VERSION_STR" ("XH_VERSION_ARCH")"
 
-int xhook_register(const char *pathname_regex_str, const char *symbol,
-                   void *new_func, void **old_func) XHOOK_EXPORT;
-
-int xhook_ignore(const char *pathname_regex_str, const char *symbol) XHOOK_EXPORT;
-
-int xhook_refresh(int async) XHOOK_EXPORT;
-
-void xhook_clear() XHOOK_EXPORT;
-
-void xhook_enable_debug(int flag) XHOOK_EXPORT;
-
-void xhook_enable_sigsegv_protection(int flag) XHOOK_EXPORT;
-
-#ifdef __cplusplus
+unsigned int xh_version()
+{
+    return XH_VERSION;
 }
-#endif
 
-#endif
+const char *xh_version_str()
+{
+    return XH_VERSION_STR;
+}
+
+const char *xh_version_str_full()
+{
+    return XH_VERSION_STR_FULL;
+}

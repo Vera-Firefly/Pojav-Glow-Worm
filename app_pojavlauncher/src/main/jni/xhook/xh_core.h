@@ -21,27 +21,25 @@
 
 // Created by caikelun on 2018-04-11.
 
-#ifndef XHOOK_H
-#define XHOOK_H 1
+#ifndef XH_CORE_H
+#define XH_CORE_H 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define XHOOK_EXPORT __attribute__((visibility("default")))
+int xh_core_register(const char *pathname_regex_str, const char *symbol,
+                     void *new_func, void **old_func);
 
-int xhook_register(const char *pathname_regex_str, const char *symbol,
-                   void *new_func, void **old_func) XHOOK_EXPORT;
+int xh_core_ignore(const char *pathname_regex_str, const char *symbol);
 
-int xhook_ignore(const char *pathname_regex_str, const char *symbol) XHOOK_EXPORT;
+int xh_core_refresh(int async);
 
-int xhook_refresh(int async) XHOOK_EXPORT;
+void xh_core_clear();
 
-void xhook_clear() XHOOK_EXPORT;
+void xh_core_enable_debug(int flag);
 
-void xhook_enable_debug(int flag) XHOOK_EXPORT;
-
-void xhook_enable_sigsegv_protection(int flag) XHOOK_EXPORT;
+void xh_core_enable_sigsegv_protection(int flag);
 
 #ifdef __cplusplus
 }

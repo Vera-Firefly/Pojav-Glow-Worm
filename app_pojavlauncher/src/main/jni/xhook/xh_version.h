@@ -21,27 +21,18 @@
 
 // Created by caikelun on 2018-04-11.
 
-#ifndef XHOOK_H
-#define XHOOK_H 1
+#ifndef XH_VERSION_H
+#define XH_VERSION_H 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define XHOOK_EXPORT __attribute__((visibility("default")))
+unsigned int xh_version();
 
-int xhook_register(const char *pathname_regex_str, const char *symbol,
-                   void *new_func, void **old_func) XHOOK_EXPORT;
+const char *xh_version_str();
 
-int xhook_ignore(const char *pathname_regex_str, const char *symbol) XHOOK_EXPORT;
-
-int xhook_refresh(int async) XHOOK_EXPORT;
-
-void xhook_clear() XHOOK_EXPORT;
-
-void xhook_enable_debug(int flag) XHOOK_EXPORT;
-
-void xhook_enable_sigsegv_protection(int flag) XHOOK_EXPORT;
+const char *xh_version_str_full();
 
 #ifdef __cplusplus
 }

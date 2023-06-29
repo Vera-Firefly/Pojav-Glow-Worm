@@ -21,27 +21,22 @@
 
 // Created by caikelun on 2018-04-11.
 
-#ifndef XHOOK_H
-#define XHOOK_H 1
+#ifndef XH_LOG_H
+#define XH_LOG_H 1
+
+#include <android/log.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define XHOOK_EXPORT __attribute__((visibility("default")))
+extern android_LogPriority xh_log_priority;
 
-int xhook_register(const char *pathname_regex_str, const char *symbol,
-                   void *new_func, void **old_func) XHOOK_EXPORT;
-
-int xhook_ignore(const char *pathname_regex_str, const char *symbol) XHOOK_EXPORT;
-
-int xhook_refresh(int async) XHOOK_EXPORT;
-
-void xhook_clear() XHOOK_EXPORT;
-
-void xhook_enable_debug(int flag) XHOOK_EXPORT;
-
-void xhook_enable_sigsegv_protection(int flag) XHOOK_EXPORT;
+#define XH_LOG_TAG "xhook"
+#define XH_LOG_DEBUG(fmt, ...) do{if(xh_log_priority <= ANDROID_LOG_DEBUG) __android_log_print(ANDROID_LOG_DEBUG, XH_LOG_TAG, fmt, ##__VA_ARGS__);}while(0)
+#define XH_LOG_INFO(fmt, ...)  do{if(xh_log_priority <= ANDROID_LOG_INFO)  __android_log_print(ANDROID_LOG_INFO,  XH_LOG_TAG, fmt, ##__VA_ARGS__);}while(0)
+#define XH_LOG_WARN(fmt, ...)  do{if(xh_log_priority <= ANDROID_LOG_WARN)  __android_log_print(ANDROID_LOG_WARN,  XH_LOG_TAG, fmt, ##__VA_ARGS__);}while(0)
+#define XH_LOG_ERROR(fmt, ...) do{if(xh_log_priority <= ANDROID_LOG_ERROR) __android_log_print(ANDROID_LOG_ERROR, XH_LOG_TAG, fmt, ##__VA_ARGS__);}while(0)
 
 #ifdef __cplusplus
 }
