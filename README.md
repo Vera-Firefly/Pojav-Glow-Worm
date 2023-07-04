@@ -10,6 +10,5 @@
 
 该软件并不是官方原包，我只参与修改，更多详细内容请前往[官方网站](https://github.com/PojavLauncherTeam/PojavLauncher)查看
 ## 注意:
-### 该库源代码未上传完整,可能无法编译
 ## 从[此处](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink-CN/releases)获取软件
 ## 修改作者: [𝓞𝔀𝓮梓](https://qm.qq.com/cgi-bin/qm/qr?k=Hfz2ZNFGeXjrANr6H8WjZfKLg9Yi-SgT&noverify=0&personal_qrcode_source=3)
