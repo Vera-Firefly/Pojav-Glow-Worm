@@ -96,17 +96,7 @@ jobs:
 
           java-version: '17'
 
-      - name: Build Google Play .aab
-
-        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'main'
-
-        run: |
-
-          gradle :app_pojavlauncher:bundleGplay
-
-          mv app_pojavlauncher/build/outputs/bundle/gplay/app_pojavlauncher-gplay.aab out/app-gplay.aab
-
-      - name: Build Debug .apk
+      - name: Fucking This
 
         run: |
 
