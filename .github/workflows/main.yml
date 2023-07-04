@@ -104,37 +104,13 @@ jobs:
 
           gradle :app_pojavlauncher:assembleDebug
 
-          mv app_pojavlauncher/build/outputs/apk/debug/* out/app-debug.apk
-
-      - name: Build APK without runtime
-
-        run: |
-
-          rm -r app_pojavlauncher/src/main/assets/components/jre
-
-          rm -r app_pojavlauncher/src/main/assets/components/jre-new
-
-          gradle assembleDebug
-
-          mv app_pojavlauncher/build/outputs/apk/debug/* out/app-debug-noruntime.apk
-
       - name: Upload APK
 
         uses: actions/upload-artifact@v3
 
         with:
 
-          name: app-debug
+          name: app-relase
 
-          path: out/app-debug.apk
-
-      - name: Upload APK (without runtime)
-
-        uses: actions/upload-artifact@v3
-
-        with:
-
-          name: app-debug-noruntime
-
-          path: out/app-debug-noruntime.apk
+          path: app_pojavlauncher/build/outputs/apk/debug/*
 
