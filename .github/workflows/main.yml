@@ -96,7 +96,7 @@ jobs:
 
           java-version: '17'
 
-      - name: Fucking This
+      - name: Bild Debug.apk
 
         run: |
 
