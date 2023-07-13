@@ -34,6 +34,68 @@ jobs:
 
         uses: actions/checkout@v3
 
+      - name: Set up JDK 8
+
+        uses: actions/setup-java@v3
+
+        with:
+
+          distribution: 'temurin'
+
+          java-version: '8'
+
+      - name: Get JRE 8
+
+        uses: dawidd6/action-download-artifact@v2
+
+        with:
+
+          workflow: build.yml
+
+          path: app_pojavlauncher/src/main/assets/components/jre
+
+          workflow_conclusion: success
+
+          repo: PojavLauncherTeam/android-openjdk-build-multiarch
+
+          branch: buildjre8
+
+          name: jre8-pojav
+
+      - name: Get JRE17
+
+        uses: dawidd6/action-download-artifact@v2
+
+        with:
+
+          workflow: build.yml
+
+          path: app_pojavlauncher/src/main/assets/components/jre-new
+
+          workflow_conclusion: success
+
+          repo: PojavLauncherTeam/android-openjdk-build-multiarch
+
+          branch: buildjre17
+
+          name: jre17-pojav
+
+      - uses: gradle/gradle-build-action@v2
+
+        with:
+
+          gradle-version: 7.6.1
+
+      - name: Set up JDK 17
+
+        uses: actions/setup-java@v3
+
+        with:
+
+          distribution: 'temurin'
+
+          java-version: '17'
+
       - name: Bild Debug.apk
 
         run: |
@@ -48,7 +110,7 @@ jobs:
 
         with:
 
-          name: app-noruntime-relase
+          name: app-relase
 
           path: app_pojavlauncher/build/outputs/apk/debug/*
 
