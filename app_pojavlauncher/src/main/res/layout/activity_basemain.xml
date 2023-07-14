@@ -9,7 +9,6 @@
 	android:id="@+id/main_drawer_options"
 	android:background="@drawable/no_focus_shown"
 	android:keepScreenOn="true">
-	tools:context=".owe"
 
 	<FrameLayout
 		android:id="@+id/content_frame"
