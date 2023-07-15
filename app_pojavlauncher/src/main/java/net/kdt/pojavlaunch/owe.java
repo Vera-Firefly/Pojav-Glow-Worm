@@ -1,9 +1,9 @@
 package net.kdt.pojavlaunch;
 
-import android.os.*;
-import androidx.appcompat.app.*;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 
+import android.os.Bundle;
 import android.widget.Toast;
 
 public abstract class owe extends AppCompatActivity {
