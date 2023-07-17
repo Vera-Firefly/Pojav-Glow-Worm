@@ -329,6 +329,7 @@ public class JREUtils {
         ArrayList<String> overridableArguments = new ArrayList<>(Arrays.asList(
                 "-Djava.home=" + runtimeHome,
                 "-Djava.io.tmpdir=" + Tools.DIR_CACHE.getAbsolutePath(),
+                "-Djna.boot.library.path=" + NATIVE_LIB_DIR,
                 "-Duser.home=" + Tools.DIR_GAME_HOME,
                 "-Duser.language=" + System.getProperty("user.language"),
                 "-Dos.name=Linux",
@@ -337,7 +338,9 @@ public class JREUtils {
                 "-Dpojav.path.private.account=" + Tools.DIR_ACCOUNT_NEW,
                 "-Duser.timezone=" + TimeZone.getDefault().getID(),
 
+                "-Dorg.lwjgl.vulkan.libname=libvulkan.so",
                 //LWJGL 3 DEBUG FLAGS
+                 "-Dorg.lwjgl.util.NoChecks=true",
                 //"-Dorg.lwjgl.util.Debug=true",
                 //"-Dorg.lwjgl.util.DebugFunctions=true",
                 //"-Dorg.lwjgl.util.DebugLoader=true",
@@ -442,13 +445,17 @@ public class JREUtils {
             case "opengles2":
             case "opengles2_5":
             case "opengles3":
-                renderLibrary = "libgl4es_114.so"; break;
+                renderLibrary = "libgl4es_114.so";
+                break;
             case "opengles2_vgpu":
-                renderLibrary = "libvgpu.so"; break;
+                renderLibrary = "libvgpu.so";
+                break;
             case "opengles3_virgl":
-                renderLibrary = "libOSMesa_81.so"; break;
+                renderLibrary = "libOSMesa_81.so";
+                break;
             case "vulkan_zink":
-                renderLibrary = "libOSMesa_8.so"; break;
+                renderLibrary = "libOSMesa_8.so";
+                break;
             case "opengles3_desktopgl_angle_vulkan" : renderLibrary = "libtinywrapper.so"; break;
             default:
                 Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
