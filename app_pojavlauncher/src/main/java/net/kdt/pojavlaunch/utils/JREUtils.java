@@ -341,6 +341,7 @@ public class JREUtils {
                 //"-Dorg.lwjgl.util.Debug=true",
                 //"-Dorg.lwjgl.util.DebugFunctions=true",
                 //"-Dorg.lwjgl.util.DebugLoader=true",
+                "-Dorg.lwjgl.util.NoChecks=true",
                 // GLFW Stub width height
                 "-Dglfwstub.windowWidth=" + Tools.getDisplayFriendlyRes(currentDisplayMetrics.widthPixels, LauncherPreferences.PREF_SCALE_FACTOR/100F),
                 "-Dglfwstub.windowHeight=" + Tools.getDisplayFriendlyRes(currentDisplayMetrics.heightPixels, LauncherPreferences.PREF_SCALE_FACTOR/100F),
@@ -442,14 +443,20 @@ public class JREUtils {
             case "opengles2":
             case "opengles2_5":
             case "opengles3":
-                renderLibrary = "libgl4es_114.so"; break;
+                renderLibrary = "libgl4es_114.so";
+                break;
             case "opengles2_vgpu":
-                renderLibrary = "libvgpu.so"; break;
+                renderLibrary = "libvgpu.so";
+                break;
             case "opengles3_virgl":
-                renderLibrary = "libOSMesa_81.so"; break;
+                renderLibrary = "libOSMesa_81.so";
+                break;
             case "vulkan_zink":
-                renderLibrary = "libOSMesa_8.so"; break;
-            case "opengles3_desktopgl_angle_vulkan" : renderLibrary = "libtinywrapper.so"; break;
+                renderLibrary = "libOSMesa_8.so";
+                break;
+            case "opengles3_desktopgl_angle_vulkan":
+                renderLibrary = "libtinywrapper.so";
+                break;
             default:
                 Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
                 renderLibrary = "libgl4es_114.so";
