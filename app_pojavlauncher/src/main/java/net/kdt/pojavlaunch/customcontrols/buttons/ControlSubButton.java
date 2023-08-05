@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import net.kdt.pojavlaunch.customcontrols.ControlData;
 import net.kdt.pojavlaunch.customcontrols.ControlDrawerData;
 import net.kdt.pojavlaunch.customcontrols.ControlLayout;
+import net.kdt.pojavlaunch.customcontrols.handleview.EditControlPopup;
 
 @SuppressLint("ViewConstructor")
 public class ControlSubButton extends ControlButton {
@@ -32,7 +33,12 @@ public class ControlSubButton extends ControlButton {
 
     @Override
     public void setVisible(boolean isVisible) {
-        setVisibility(isVisible ? (parentDrawer.areButtonsVisible ? VISIBLE : GONE) : (!mProperties.isHideable && parentDrawer.getVisibility() == GONE) ? VISIBLE : View.GONE);
+        setVisibility(isVisible ? VISIBLE : (!mProperties.isHideable && parentDrawer.getVisibility() == GONE) ? VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onGrabState(boolean isGrabbing) {
+        // STUB, visibility lifecycle handled by the ControlDrawer
     }
 
     @Override
@@ -82,5 +88,10 @@ public class ControlSubButton extends ControlButton {
         if(parentDrawer.drawerData.orientation == ControlDrawerData.Orientation.FREE)
             super.snapAndAlign(x, y);
         // Else the button is forced into place
+    }
+
+    @Override
+    public void loadEditValues(EditControlPopup editControlPopup) {
+        editControlPopup.loadSubButtonValues(getProperties());
     }
 }

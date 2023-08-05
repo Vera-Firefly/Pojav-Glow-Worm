@@ -20,10 +20,11 @@
     <string-array name="menu_customcontrol_customactivity">
         <item name="0">@string/customctrl_addbutton</item>
         <item name="1">@string/customctrl_addbutton_drawer</item>
-        <item name="2">@string/global_load</item>
-        <item name="3">@string/global_save</item>
-        <item name="4">@string/customctrl_selectdefault</item>
-        <item name="5">@string/customctrl_export</item>
+        <item name="2">@string/customctrl_addbutton_joystick</item>
+        <item name="3">@string/global_load</item>
+        <item name="4">@string/global_save</item>
+        <item name="5">@string/customctrl_selectdefault</item>
+        <item name="6">@string/customctrl_export</item>
     </string-array>
 
     <string-array name="menu_ingame">
@@ -37,8 +38,8 @@
     
     <string-array name="renderer_values">
         <item>opengles2</item> <!-- gl4es_extra 1.1.4 with OpenGL ES 2/"3" -->
-        <item>opengles2_vgpu</item>
-        <item>vulkan_zink</item>
+        <item>opengles2_vgpu</item> <!-- vgpurenderer with OpenGL ES 2 OpenGL4.4 -->
+        <item>vulkan_zink</item> <!-- zinkrenderer with Vulkan OpenGL4.6 -->
         <item>opengles3_virgl</item> <!-- virglrenderer with OpenGL ES 3 -->
         <item>opengles3_desktopgl_angle_vulkan</item>
     </string-array>
