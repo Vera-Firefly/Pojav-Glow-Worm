@@ -3,6 +3,7 @@ package net.kdt.pojavlaunch.customcontrols.buttons;
 import android.annotation.SuppressLint;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.customcontrols.ControlData;
@@ -40,12 +41,12 @@ public class ControlDrawer extends ControlButton {
 
     public void addButton(ControlSubButton button){
         buttons.add(button);
-        setControlButtonVisibility(button, areButtonsVisible);
         syncButtons();
+        setControlButtonVisibility(button, areButtonsVisible);
     }
 
     private void setControlButtonVisibility(ControlButton button, boolean isVisible){
-        button.setVisible(isVisible);
+        post(() -> button.setVisible(isVisible));
     }
 
     private void switchButtonVisibility(){
@@ -124,8 +125,13 @@ public class ControlDrawer extends ControlButton {
 
     @Override
     public void setVisible(boolean isVisible) {
-        //TODO replicate changes to his children ?
-        setVisibility(isVisible ? VISIBLE : GONE);
+        int visibility = isVisible ? VISIBLE : GONE;
+        setVisibility(visibility);
+        if(visibility == GONE || areButtonsVisible) {
+            for(ControlSubButton button : buttons){
+                button.setVisible(isVisible);
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
