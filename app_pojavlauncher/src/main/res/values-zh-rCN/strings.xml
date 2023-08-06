@@ -177,6 +177,7 @@
     <string name="customctrl_keycombine_shift">Shift</string>
     <string name="customctrl_addbutton">添加按键</string>
     <string name="customctrl_addbutton_drawer">添加组合键</string>
+    <string name="customctrl_addbutton_joystick">添加摇杆</string>
     <string name="customctrl_addsubbutton">添加子按钮</string>
     <string name="customctrl_add_subbutton_message">子按钮 n°%d 已添加！</string>
     <string name="customctrl_selectdefault">选择默认 .json 控制键位</string>
@@ -316,4 +317,16 @@
     <string name="mcl_setting_title_buttonallcaps">在按钮标签中仅使用大写字母</string>
     <string name="mcl_setting_subtitle_buttonallcaps">如果您想在控件中使用小写字母，请禁用此功能</string>
     <string name="create_profile">创建新配置</string>
+    <string name="customctrl_editor_exit_title">离开?</string>
+    <string name="customctrl_editor_exit_msg">你真的确定你要离开吗?</string>
+    <string name="customctrl_editor_exit">离开编辑</string>
+    <string name="global_save_and_exit">保存并退出</string>
+    <string name="global_yes">确定</string>
+    <string name="global_no">取消</string>
+    <string name="preference_controller_map_wiped">控制器配置已被擦除</string>
+    <string name="preference_category_controller_settings">控制器设置</string>
+    <string name="preference_wipe_controller_title">重置控制器映射</string>
+    <string name="preference_wipe_controller_description">允许您重新映射控制器按钮</string>
+    <string name="preference_deadzone_scale_title">操纵杆死区比例</string>
+    <string name="preference_deadzone_scale_description">在操纵杆失灵时增加它</string>
 </resources>
