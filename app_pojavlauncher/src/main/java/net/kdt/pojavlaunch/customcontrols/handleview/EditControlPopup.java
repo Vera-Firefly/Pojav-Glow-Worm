@@ -176,6 +176,11 @@ public class EditControlPopup {
             }
         }
 
+        // Adjust the color selector to have the same size as the control settings
+        ViewGroup.LayoutParams params = mColorSelector.getRootView().getLayoutParams();
+        params.height = mScrollView.getHeight();
+        mColorSelector.getRootView().setLayoutParams(params);
+
         mDisplayingColor = true;
         mColorSelector.show(color == -1 ? Color.WHITE : color);
     }
@@ -351,14 +356,16 @@ public class EditControlPopup {
     /**
      * Load values for sub buttons
      */
-    public void loadSubButtonValues(ControlData data) {
+    public void loadSubButtonValues(ControlData data, ControlDrawerData.Orientation drawerOrientation) {
         loadValues(data);
 
-        // Size linked to the parent drawer
-        mSizeTextview.setVisibility(GONE);
-        mSizeXTextView.setVisibility(GONE);
-        mWidthEditText.setVisibility(GONE);
-        mHeightEditText.setVisibility(GONE);
+        // Size linked to the parent drawer depending on the drawer settings
+        if(drawerOrientation != ControlDrawerData.Orientation.FREE){
+            mSizeTextview.setVisibility(GONE);
+            mSizeXTextView.setVisibility(GONE);
+            mWidthEditText.setVisibility(GONE);
+            mHeightEditText.setVisibility(GONE);
+        }
 
         // No conditional, already depends on the parent drawer visibility
         mVisibilityTextView.setVisibility(GONE);
