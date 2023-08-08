@@ -356,4 +356,20 @@
     <string name="create_profile_optifine">创建 OptiFine 配置</string>
     <string name="preference_gyro_damper_window_title">平滑时间</string>
     <string name="preference_gyro_damper_window_description">减少抖动以换取延迟,输入 0 以禁用</string>
+
+    <!-- App New Annotation -->
+    <string name="preference_category_gestures_title">手势</string>
+    <string name="preference_category_buttons_title">按键</string>
+    <string name="preference_category_experimental_fuckury_title">实验性的补丁</string>
+    <string name="preference_category_java_tweaks_title">Java调整</string>
+    <string name="preference_category_categories_title">更多设置</string>
+    <string name="preference_category_miscellaneous_settings_title">其他设置</string>
+    <string name="preference_category_video_settings_title">视频和渲染器</string>
+    <string name="preference_category_visibility_title">能见度</string>
+    <string name="preference_category_in_game_title">游戏内显示</string>
+    <string name="preference_category_in_menu_title">游戏外显示</string>
+    <string name="preference_category_microsoft_account_title">微软账号</string>
+    <string name="preference_category_local_account_title">离线账号</string>
+    <string name="customctrl_forward_lock">前进锁定</string>
+
 </resources>
