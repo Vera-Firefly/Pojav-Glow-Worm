@@ -97,7 +97,7 @@ jobs:
 
         with:
 
-          name: app-relase
+          name: app-debug-release
 
           path: app_pojavlauncher/build/outputs/apk/debug/*
 
