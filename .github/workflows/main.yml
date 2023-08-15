@@ -76,10 +76,9 @@ jobs:
       
       - name: Build JRE JAR files
         run: |
-          ./scripts/languagelist_updater.sh
-
-          mkdir out
+        
           # Build JRE JAR files (security manager, etc...)
+          
           gradle :jre_lwjgl3glfw:build --no-daemon
       
       - name: Set up JDK 17
