@@ -701,7 +701,10 @@ bool loadSymbols() {
     switch (pojav_environ->config_renderer) {
         case RENDERER_VIRGL:
             dlsym_EGL();
+            dlsym_OSMesa();
+            break;
         case RENDERER_VK_ZINK:
+            dlsym_EGL();
             dlsym_OSMesa();
             break;
         case RENDERER_GL4ES:
