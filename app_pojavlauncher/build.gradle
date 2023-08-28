@@ -67,6 +67,17 @@ def getVersionName = {
     return TAG_STRING.trim().replace("-g", "-") + "-" + BRANCH.toString().trim()
 }
 
+def getCFApiKey = {
+    String key = System.getenv("CURSEFORGE_API_KEY");
+    if(key != null) return key;
+    File curseforgeKeyFile = new File("./curseforge_key.txt");
+    if(curseforgeKeyFile.canRead() && curseforgeKeyFile.isFile()) {
+        return curseforgeKeyFile.text;
+    }
+    logger.warn('BUILD: You have no CurseForge key, the curseforge api will get disabled !');
+    return "DUMMY";
+}
+
 configurations {
     instrumentedClasspath {
         canBeConsumed = false
@@ -105,6 +116,7 @@ android {
         versionCode getDateSeconds()
         versionName getVersionName()
         multiDexEnabled true //important
+        resValue 'string', 'curseforge_api_key', getCFApiKey()
     }
 
     buildTypes {
