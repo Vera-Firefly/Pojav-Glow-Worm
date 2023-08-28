@@ -700,9 +700,12 @@ void dlsym_OSMesa(void* dl_handle) {
 bool loadSymbols() {
     switch (pojav_environ->config_renderer) {
         case RENDERER_VIRGL:
+            dlsym_OSMesa_1();
             dlsym_EGL();
+            break;
         case RENDERER_VK_ZINK:
             dlsym_OSMesa();
+            dlsym_EGL();
             break;
         case RENDERER_GL4ES:
             //inside glbridge
