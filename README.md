@@ -13,6 +13,8 @@ Click to switch to [English](https://github.com/Vera-Firefly/PojavLauncher-Beta-
 * 在正式发行包中会提供旧Mesa版本zink渲染器,以便于搭载骁龙处理器的设备体验光影
 
 * 该软件并不是官方原包，我只参与魔改，更多详细内容请前往[官方](https://github.com/PojavLauncherTeam/PojavLauncher)查看
+
+* 
 ## 注意:
 * 若您使用的是搭载骁龙处理器的设备,且要使用zink渲染器开光影,请注意辨别Mesa版本
 
