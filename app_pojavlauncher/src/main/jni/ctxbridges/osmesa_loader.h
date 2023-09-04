@@ -1,5 +1,5 @@
 //
-// Created by maks on 21.09.2022.
+// Created by Vera-Firefly on 28.08.2023.
 //
 
 #ifndef POJAVLAUNCHER_OSMESA_LOADER_H
@@ -19,4 +19,5 @@ extern void (*glClearColor_p) (GLclampf red, GLclampf green, GLclampf blue, GLcl
 extern void (*glClear_p) (GLbitfield mask);
 extern void (*glReadPixels_p) (GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void * data);
 void dlsym_OSMesa();
+void dlsym_OSMesa_1();
 #endif //POJAVLAUNCHER_OSMESA_LOADER_H
