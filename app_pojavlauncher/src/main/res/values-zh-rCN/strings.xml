@@ -349,7 +349,7 @@
     <string name="fabric_dl_game_version">Minecraft 版本</string>
     <string name="fabric_dl_install">安装</string>
     <string name="fabric_dl_cant_read_meta">无法读取 %s 元数据,请稍后再试</string>
-    <string name="modloader_dl_install_fabric">创建 %s 配置</string>
+    <string name="modloader_dl_install_fabric">创建 Fabric 配置</string>
     <string name="modloader_dl_install_quilt">创建 Quilt 配置</string>
     <string name="modloader_dl_install_forge">创建 Forge 配置</string>
     <string name="create_profile_vanilla">创建原版配置</string>
