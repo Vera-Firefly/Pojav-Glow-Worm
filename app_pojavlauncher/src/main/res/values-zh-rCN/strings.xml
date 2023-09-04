@@ -363,10 +363,17 @@
     <string name="preference_gyro_damper_window_title">平滑时间</string>
     <string name="preference_gyro_damper_window_description">减少抖动以换取延迟,输入 0 以禁用</string>
 
-    <!-- Modpack -->
+    <!-- Modpack Install-->
+    <string name="forge_dl_searching">搜索 Forge 版本号</string>
+    <string name="hint_search_modpack">搜索整合包</string>
+
+    <string name="generic_install">安装</string>
+    <string name="generic_apply">应用</string>
+
     <string name="search_modpack_no_result">未找到整合包</string>
     <string name="search_modpack_error">找不到整合包</string>
     <string name="search_modpack_download_error">无法下载整合包元数据</string>
+
     <string name="modpack_download_downloading_metadata">下载整合包元数据中 (%.2f MB / %.2f MB)</string>
     <string name="modpack_download_downloading_mods">下载模组中 (%.2f MB / %.2f MB)</string>
     <string name="modpack_download_downloading_mods_fc">正在下载模组中（文件 %d 中的 %d）</string>
