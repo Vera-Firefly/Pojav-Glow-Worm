@@ -363,6 +363,21 @@
     <string name="preference_gyro_damper_window_title">平滑时间</string>
     <string name="preference_gyro_damper_window_description">减少抖动以换取延迟,输入 0 以禁用</string>
 
+    <!-- Modpack -->
+    <string name="search_modpack_no_result">未找到整合包</string>
+    <string name="search_modpack_error">找不到整合包</string>
+    <string name="search_modpack_download_error">无法下载整合包元数据</string>
+    <string name="modpack_download_downloading_metadata">下载整合包元数据中 (%.2f MB / %.2f MB)</string>
+    <string name="modpack_download_downloading_mods">下载模组中 (%.2f MB / %.2f MB)</string>
+    <string name="modpack_download_downloading_mods_fc">正在下载模组中（文件 %d 中的 %d）</string>
+    <string name="modpack_download_applying_overrides">应用 overrides (%d/%d)</string>
+    <string name="modpack_install_notification_title">Pojav整合包安装程序</string>
+    <string name="modpack_install_notification_success">点击此处完成整合包安装</string>
+    <string name="modpack_install_notification_data_not_available">无法下载模组加载器信息</string>
+    <string name="modpack_install_modloader_download_failed">无法下载模组加载程序文件</string>
+    <string name="modpack_install_download_failed">无法下载整合包文件</string>
+    <string name="modpack_install_button">创建整合包配置文件</string>
+    
     <!-- App New Annotation -->
     <string name="preference_category_gestures_title">手势</string>
     <string name="preference_category_buttons_title">按键</string>
