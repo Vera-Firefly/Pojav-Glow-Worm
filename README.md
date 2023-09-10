@@ -1,6 +1,6 @@
 # PojavLauncher-Beta-Zink
 基于Boardwalk的Java版Android启动器
-Click to switch to [English](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink)
+Click to switch to [English](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink/blob/v3_openjdk/README-EN.md)
 ## 介绍
 * 该Beta版将会与Pojav团队主要分支[v3_openjdk](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk)更新进度保持一致
 
