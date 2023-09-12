@@ -23,5 +23,4 @@ Click to switch to <a href="/README-EN.md">English</a>
 * 新Mesa版本zink渲染器目前不太稳定,谦容性极差,若您使用它进入游戏时多次闪退请重启设备,如还无法解决请回退到旧Mesa版本zink渲染器
 
 * 考虑到该启动器更新时会产生一些神奇的特性导致部分设备无法进入或启动游戏,所以该Beta版所有版本之间可来回覆盖安装,所以不必担心你的游戏数据,除非你手贱卸载了它
-## 从<a href="/release">此处</a>获取软件
 ## 修改作者: [𝓞𝔀𝓮梓](https://qm.qq.com/cgi-bin/qm/qr?k=Hfz2ZNFGeXjrANr6H8WjZfKLg9Yi-SgT&noverify=0&personal_qrcode_source=3)
