@@ -1,6 +1,6 @@
 # PojavLauncher-Beta-Zink
 A Minecraft: Java Edition Launcher for Android based on Boardwalk.
-点击切换 [中文](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink)
+点击切换<a href="/README.md">中文</a>
 ## Introduction:
 * This app will be aligned with the Pojav team's main branch update →[v3_openjdk](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk)
 
