@@ -1001,7 +1001,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
     }
     if (pojav_environ->config_renderer == RENDERER_VIRGL) {
         printf("OSMDroid: making current\n");
-        OSMesaMakeCurrent_p((OSMesaContext)window,setgbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
+        OSMesaMakeCurrent_p((OSMesaContext)window,setbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
 
 
         printf("OSMDroid: vendor: %s\n",glGetString_p(GL_VENDOR));
