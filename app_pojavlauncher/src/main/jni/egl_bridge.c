@@ -758,7 +758,7 @@ void* load_turnip_vulkan() {
     if(!linker_ns_load(native_dir)) return NULL;
     void* linkerhook = linker_ns_dlopen("liblinkerhook.so", RTLD_LOCAL | RTLD_NOW);
     if(linkerhook == NULL) return NULL;
-    void* turnip_driver_handle = linker_ns_dlopen("libvulkan.adr.so", RTLD_LOCAL | RTLD_NOW);
+    void* turnip_driver_handle = linker_ns_dlopen("libvulkan_freedreno.so", RTLD_LOCAL | RTLD_NOW);
     if(turnip_driver_handle == NULL) {
         printf("AdrenoSupp: Failed to load Turnip!\n%s\n", dlerror());
         dlclose(linkerhook);
