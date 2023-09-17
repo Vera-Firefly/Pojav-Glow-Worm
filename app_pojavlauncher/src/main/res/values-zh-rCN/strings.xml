@@ -362,6 +362,8 @@
     <string name="create_profile_optifine">创建 OptiFine 配置</string>
     <string name="preference_gyro_damper_window_title">平滑时间</string>
     <string name="preference_gyro_damper_window_description">减少抖动以换取延迟,输入 0 以禁用</string>
+    <string name="preference_vulkan_driver_system_title">使用系统Vulkan驱动程序</string>
+    <string name="preference_vulkan_driver_system_description">强制启动器使用系统Vulkan驱动程序,而不是Adreno GPU上的Turnip.只影响zink</string>
 
     <!-- Modpack Install-->
     <string name="forge_dl_searching">搜索 Forge 版本号</string>
