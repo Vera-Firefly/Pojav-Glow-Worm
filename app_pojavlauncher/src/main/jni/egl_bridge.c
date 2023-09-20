@@ -838,7 +838,7 @@ int pojavInitOpenGL() {
         loadSymbols();
     } else if (strcmp(renderer, "vulkan_warlip") == 0) {
         pojav_environ->config_renderer = RENDERER_VK_WARLIP;
-        setenv("GALLIUM_DRIVER","warlip",1);
+        setenv("GALLIUM_DRIVER","zink",1);
         loadSymbols();
     }
     if(pojav_environ->config_renderer == RENDERER_GL4ES) {
