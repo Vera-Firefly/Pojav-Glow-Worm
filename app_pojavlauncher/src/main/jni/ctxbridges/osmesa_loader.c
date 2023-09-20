@@ -57,3 +57,23 @@ void dlsym_OSMesa_1() {
      glFinish_p = dlsym(dl_handle,"glFinish");
      glReadPixels_p = dlsym(dl_handle,"glReadPixels");
 }
+
+void dlsym_OSMesa_2() {
+     char* ctw_path = NULL;
+     if(asprintf(&alt_path, "%s/libOSMesa_82.so", getenv("POJAV_NATIVEDIR")) == -1){
+         abort();
+     }
+     void* dl_handle = NULL;
+     dl_handle = dlopen(ctw_path, RTLD_GLOBAL);
+     if(dl_handle == NULL) abort();
+     OSMesaMakeCurrent_p = dlsym(dl_handle, "OSMesaMakeCurrent");
+     OSMesaGetCurrentContext_p = dlsym(dl_handle,"OSMesaGetCurrentContext");
+     OSMesaCreateContext_p = dlsym(dl_handle, "OSMesaCreateContext");
+     OSMesaDestroyContext_p = dlsym(dl_handle, "OSMesaDestroyContext");
+     OSMesaPixelStore_p = dlsym(dl_handle,"OSMesaPixelStore");
+     glGetString_p = dlsym(dl_handle,"glGetString");
+     glClearColor_p = dlsym(dl_handle, "glClearColor");
+     glClear_p = dlsym(dl_handle,"glClear");
+     glFinish_p = dlsym(dl_handle,"glFinish");
+     glReadPixels_p = dlsym(dl_handle,"glReadPixels");
+}
