@@ -1,5 +1,5 @@
 //
-// Modifile by Vera-Firefly on 28.08.2023.
+// Modifile by Vera-Firefly on 20.09.2023.
 //
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,7 +60,7 @@ void dlsym_OSMesa_1() {
 
 void dlsym_OSMesa_2() {
      char* ctw_path = NULL;
-     if(asprintf(&alt_path, "%s/libOSMesa_82.so", getenv("POJAV_NATIVEDIR")) == -1){
+     if(asprintf(&ctw_path, "%s/libOSMesa_82.so", getenv("POJAV_NATIVEDIR")) == -1){
          abort();
      }
      void* dl_handle = NULL;
