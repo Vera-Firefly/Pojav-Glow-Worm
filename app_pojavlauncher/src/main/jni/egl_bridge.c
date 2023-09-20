@@ -678,7 +678,6 @@ void loadSymbols() {
             break;
         case RENDERER_VK_ZINK:
             dlsym_OSMesa();
-            dlsym_EGL();
             break;
         case RENDERER_GL4ES:
             //inside glbridge
