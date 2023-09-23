@@ -450,6 +450,6 @@
     <string name="preference_category_microsoft_account_title">Microsoft Account</string>
     <string name="preference_category_local_account_title">Local account</string>
     <string name="preference_category_custom_path">Custom path</string>
+    <string name="app_start_toast">#Welcome to Pojav beta!!!!</string>
     <string name="mcl_setting_renderer_vulkan_warlip">Zink (Mesa21.0.3) - (all versions,very slow., low device compat)</string>
-    
 </resources>
