@@ -303,7 +303,6 @@
     <string name="preference_category_microsoft_account_title">微软账号</string>
     <string name="preference_category_local_account_title">离线账号</string>
     <string name="preference_category_custom_path">自定义路径</string>
-    <string name="customctrl_forward_lock">前进锁定</string>
     
     <string name="app_start_toast">#欢迎使用beta版!!!!</string>
 </resources>
