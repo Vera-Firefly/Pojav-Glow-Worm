@@ -92,7 +92,7 @@ jobs:
 
           java-version: '17'
 
-      - name: Fucking Debug.apk
+      - name: Build Debug.apk
 
         run: |
 
