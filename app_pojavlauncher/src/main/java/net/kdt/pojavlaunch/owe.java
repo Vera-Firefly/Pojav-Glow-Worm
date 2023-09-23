@@ -2,11 +2,10 @@ package net.kdt.pojavlaunch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
-
 import android.os.Bundle;
 import android.widget.Toast;
 
-public abstract class owe extends AppCompatActivity {
+public class owe extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
