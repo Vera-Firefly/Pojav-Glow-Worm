@@ -23,7 +23,7 @@ public class TestStorageActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owe);
-        Toast.makeText(this, "#欢迎使用Beta版!!!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.app_start_toast, Toast.LENGTH_SHORT).show();
         if(Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29 && !isStorageAllowed(this)) requestStoragePermission();
         else exit();
     }
