@@ -461,6 +461,9 @@ public class JREUtils {
             case "vulkan_zink":
                 renderLibrary = "libOSMesa_8.so";
                 break;
+            case "vulkan_warlip":
+                renderLibrary = "libOSMesa_82.so";
+                break;
             case "opengles3_desktopgl_angle_vulkan":
                 renderLibrary = "libtinywrapper.so";
                 break;
