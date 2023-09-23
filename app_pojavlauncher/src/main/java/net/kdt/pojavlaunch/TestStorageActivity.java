@@ -24,7 +24,6 @@ public class TestStorageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_storage);
         Toast.makeText(this, "欢迎使用Beta版!!!", Toast.LENGTH_SHORT).show();
-    }
         if(Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29 && !isStorageAllowed(this)) requestStoragePermission();
         else exit();
     }
