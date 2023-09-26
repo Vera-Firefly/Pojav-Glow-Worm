@@ -21,7 +21,7 @@
     <string name="toast_permission_denied">需要存储读写权限！</string>
     <string name="toast_optifine_success">安装成功</string>
     <!-- MCLauncherActivity: Tabs -->
-    <string name="mcl_tab_wiki">源代码</string>
+    <string name="mcl_tab_wiki">官网</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">正在清理缓存</string>
     <string name="mcl_launch_downloading">正在下载 %s</string>
