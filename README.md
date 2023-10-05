@@ -10,8 +10,6 @@ A Minecraft: Java Edition Launcher for Android based on Boardwalk.
 
 * Virgl render is already working.
 
-* 
-
 * This is not the official version, it's just a modified,If you don't want to use it, please go to the [PojavLauncherTeam](https://github.com/PojavLauncherTeam/PojavLauncher)
 
 ## Notice:
