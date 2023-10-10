@@ -313,6 +313,6 @@
     <string name="preference_category_custom_path">自定义路径</string>
     <string name="mcl_setting_renderer_virgl">virglrenderer - (1.7 及以上版本可用，速度较慢)</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度较快)</string>
-    <string name="mcl_setting_renderer_vulkan_warlip">Zink Mesa21.0.3 (Vulkan)- (所有版本可用,非常慢)</string>
-    <string name="app_start_toast">#欢迎使用beta版!!!!</string>
+    <string name="mcl_setting_renderer_vulkan_warlip">Zink Mesa21.0.3 (Vulkan) - (所有版本可用,非常慢)</string>
+    <string name="app_start_toast">#欢迎使用Pojav beta!!!!</string>
 </resources>
