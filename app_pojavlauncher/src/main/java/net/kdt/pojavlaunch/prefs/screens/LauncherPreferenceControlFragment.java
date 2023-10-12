@@ -51,7 +51,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
 
         CustomSeekBarPreference deadzoneSeek = findPreference("gamepad_deadzone_scale");
         deadzoneSeek.setRange(50, 200);
-        deadzoneSeek.setValue((int) joystickDeadzone * 100);
+        deadzoneSeek.setValue((int) (joystickDeadzone * 100f));
         deadzoneSeek.setSuffix(" %");
 
 
