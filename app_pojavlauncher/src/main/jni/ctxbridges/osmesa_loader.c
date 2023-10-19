@@ -28,11 +28,11 @@ void dlsym_OSMesa() {
     char* main_path = NULL;
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
     if(asprintf(&main_path, "%s/libOSMesa_8.so", getenv("POJAV_NATIVEDIR")) == -1) {
-        abort();
+    abort();
     }
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
     if(asprintf(&main_path, "%s/libOSMesa_81.so", getenv("POJAV_NATIVEDIR")) == -1) {
-        abort();
+    abort();
     }
     }
     void* dl_handle = NULL;
