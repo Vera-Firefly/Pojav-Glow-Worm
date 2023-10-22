@@ -177,6 +177,12 @@
     <string name="preference_gyro_sample_rate_title">陀螺儀採樣率</string>
     <string name="create_profile">新增設定檔</string>
     <string name="of_dl_progress">正在下載 %s</string>
+    <string name="notification_permission_dialog_title">權限請求</string>
+    <string name="notification_permission_dialog_text">PojavLauncher需要發布通知的權限，以防止您離開應用程序時，停止 遊戲/模組包 的下載。如果沒有此權限，當您將PojavLauncher置于後台時，安卓系統可能會停止您的下載進度</string>
+    <string name="notification_permission_toast">您可以隨時通過進入“系統設置”改變您的主意</string>
+    <string name="preference_ask_for_notification_title">允許通知</string>
+    <string name="preference_ask_for_notification_description">單擊可重新請求通知權限，這是 遊戲/模組包 在後台正常下載所必需的</string>
+
     <!-- App New Annotation -->
     <string name="preference_category_gestures_title">手勢</string>
     <string name="preference_category_buttons_title">按鍵</string>
