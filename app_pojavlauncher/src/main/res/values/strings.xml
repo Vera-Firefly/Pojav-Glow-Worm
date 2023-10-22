@@ -352,6 +352,11 @@
     <string name="preference_verify_manifest_description">When enabled, the launcher will check the game version manifest along with the libraries.</string>
     <string name="notif_download_finished">The game is ready to launch</string>
     <string name="notif_download_finished_desc">Click here to start it!</string>
+    <string name="notification_permission_dialog_title">Permission request</string>
+    <string name="notification_permission_dialog_text">PojavLauncher requires a permission to post notifications to prevent game/modpack downloads from stopping when you leave the app. Without this permission, Android may shut down your downloads when you put PojavLauncher in background mode.</string>
+    <string name="notification_permission_toast">You can always change your mind later by going into Settings</string>
+    <string name="preference_ask_for_notification_title">Allow notifications</string>
+    <string name="preference_ask_for_notification_description">Click to re-request the notification permission, required for game/modpack background downloads to work properly.</string>
 
     <!-- App New Annotation -->
     <string name="preference_category_gestures_title">Gestures</string>
