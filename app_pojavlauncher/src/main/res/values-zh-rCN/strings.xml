@@ -335,4 +335,9 @@
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度较快)</string>
     <string name="mcl_setting_renderer_vulkan_warlip">Zink Mesa21.0.3 (Vulkan) - (所有版本可用,非常慢)</string>
     <string name="app_start_toast">#欢迎使用Pojav beta!!!!</string>
+    <string name="preference_mouse_description">设置游戏内鼠标图标</string>
+    <string name="preference_mouse_title">鼠标图标自定义</string>
+    <string name="notif_mouse">设置完成</string>
+    <string name="preference_mouse_title1">删除设置的鼠标图标</string>
+    <string name="notif_mouse1">删除成功</string>
 </resources>
