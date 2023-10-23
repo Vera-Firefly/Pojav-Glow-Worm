@@ -376,5 +376,9 @@
     <string name="mcl_setting_renderer_vulkan_warlip">Zink (Mesa21.0.3) - (all versions,very slow., low device compat)</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (up to 1.16.5, fast)</string>
     <string name="mcl_setting_renderer_virgl">virglrenderer - (release 1.7+, slow)</string>
-
+    <string name="preference_mouse_title">Mouce customization</string>
+    <string name="preference_mouse_description">Set mouse pointer icon in game</string>
+    <string name="notif_mouse">Set done.</string>
+    <string name="preference_mouse_title1">Remove mouse icon</string>
+    <string name="notif_mouse1">Delete done</string>
 </resources>
