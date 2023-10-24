@@ -201,4 +201,9 @@
     <string name="app_start_toast">#歡迎使用beta版!!!!</string>
     <string name="mcl_setting_renderer_virgl">virglrenderer - (1.7 及以上版本可用，速度較慢)</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度較快)</string>
+    <string name="preference_mouse_description">設置遊戲內鼠標圖標</string>
+    <string name="preference_mouse_title">鼠標圖標自定義</string>
+    <string name="notif_mouse">設置完成</string>
+    <string name="preference_mouse_title1">刪除設置的鼠標圖標</string>
+    <string name="notif_mouse1">刪除成功</string>
 </resources>
