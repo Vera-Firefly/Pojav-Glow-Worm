@@ -39,7 +39,7 @@ public class Touchpad extends FrameLayout implements GrabListener{
     /* Detect a classic android Tap */
     private final GestureDetector mSingleTapDetector = new GestureDetector(getContext(), new SingleTapConfirm());
     /* Resolution scaler option, allow downsizing a window */
-    private final float mScaleFactor = DEFAULT_PREF.getInt("resolutionRatio",100)/100f;
+    private final float mScaleFactor = DEFAULT_PREF.getInt("resolutionRatio",300)/100f;
     /* Current pointer ID to move the mouse */
     private int mCurrentPointerID = -1000;
     /* Previous MotionEvent position, not scale */
