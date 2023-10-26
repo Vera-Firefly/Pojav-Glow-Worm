@@ -33,9 +33,11 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         seek5.setSuffix(" %");
 
         // #724 bug fix
+        /*
         if (seek5.getValue() < 25) {
             seek5.setValue(100);
         }
+        */
 
         // Sustained performance is only available since Nougat
         SwitchPreference sustainedPerfSwitch = requirePreference("sustainedPerformance",
