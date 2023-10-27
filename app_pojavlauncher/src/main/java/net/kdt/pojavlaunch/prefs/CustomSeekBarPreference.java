@@ -117,7 +117,7 @@ public class CustomSeekBarPreference extends SeekBarPreference {
 
     private void updateTextViewWithSuffix(){
         if(!mTextView.getText().toString().endsWith(mSuffix)){
-            mTextView.setText(String.format("%s - %s", mTextView.getText(), mSuffix));
+            mTextView.setText(String.format("%s%s", mTextView.getText(), mSuffix));
         }
     }
 }
