@@ -381,4 +381,5 @@
     <string name="notif_mouse">Set done.</string>
     <string name="preference_mouse_title1">Remove mouse icon</string>
     <string name="notif_mouse1">Delete done</string>
+    <string name="microsoft_login_fragment">Login started!</string>
 </resources>
