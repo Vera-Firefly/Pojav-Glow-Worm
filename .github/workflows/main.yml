@@ -89,7 +89,7 @@ jobs:
 
           repo: Vera-Firefly/lwjgl3-build
 
-          branch: buildjre17
+          branch: main
 
           name: lwjgl
 
