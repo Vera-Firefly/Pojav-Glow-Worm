@@ -69,12 +69,6 @@ jobs:
 
           name: jre17-pojav
 
-      - uses: gradle/gradle-build-action@v2
-
-        with:
-
-          gradle-version: 7.6.1
-      
       - name: Get LWJGL3
 
         uses: dawidd6/action-download-artifact@v2
