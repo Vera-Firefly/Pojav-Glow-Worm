@@ -45,7 +45,7 @@ jobs:
 
           workflow_conclusion: success
 
-          repo: PojavLauncherTeam/android-openjdk-build-multiarch
+          repo: Vera-Firefly/android-openjdk-build
 
           branch: buildjre8
 
@@ -63,7 +63,7 @@ jobs:
 
           workflow_conclusion: success
 
-          repo: PojavLauncherTeam/android-openjdk-build-multiarch
+          repo: Vera-Firefly/android-openjdk-build
 
           branch: buildjre17
 
