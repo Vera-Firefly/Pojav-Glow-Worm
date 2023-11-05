@@ -340,4 +340,5 @@
     <string name="notif_mouse">设置完成</string>
     <string name="preference_mouse_title1">删除设置的鼠标图标</string>
     <string name="notif_mouse1">删除成功</string>
+    <string name="microsoft_login_fragment">开始登陆!</string>
 </resources>
