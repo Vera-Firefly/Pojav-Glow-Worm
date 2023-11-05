@@ -206,4 +206,5 @@
     <string name="notif_mouse">設置完成</string>
     <string name="preference_mouse_title1">刪除設置的鼠標圖標</string>
     <string name="notif_mouse1">刪除成功</string>
+    <string name="microsoft_login_fragment">開始登陸!</string>
 </resources>
