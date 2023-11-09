@@ -210,4 +210,6 @@ dependencies {
     // implementation 'net.sourceforge.streamsupport:streamsupport-cfuture:1.7.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
 }

@@ -27,6 +27,9 @@ public class MinecraftAccount {
     public String xuid;
     public String skinFaceBase64;
     public long expiresAt;
+    public String baseUrl;
+    public String account;
+    public String password;
     
     void updateSkinFace(String uuid) {
         try {
@@ -105,5 +108,30 @@ public class MinecraftAccount {
 
     private static boolean accountExists(String username){
         return new File(Tools.DIR_ACCOUNT_NEW + "/" + username + ".json").exists();
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 }

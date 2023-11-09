@@ -2,6 +2,7 @@ package com.kdt.mcgui;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,9 +21,14 @@ import android.widget.Toast;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import com.externallogin.fragments.OtherLoginFragment;
+import com.externallogin.login.AuthResult;
+import com.externallogin.login.OtherLoginApi;
 
+import net.kdt.pojavlaunch.PojavApplication;
 import net.kdt.pojavlaunch.PojavProfile;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
@@ -34,12 +40,14 @@ import net.kdt.pojavlaunch.authenticator.microsoft.MicrosoftBackgroundLogin;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.extra.ExtraListener;
+import net.kdt.pojavlaunch.fragments.MainMenuFragment;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import fr.spse.extended_view.ExtendedTextView;
 
@@ -132,6 +140,15 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
         return false;
     };
 
+    private final ExtraListener<MinecraftAccount> mOtherLoginListener = (key, value) -> {
+        try {
+            value.save();
+        }catch (IOException e){
+            Log.e("McAccountSpinner", "Failed to save the account : " + e);
+        }
+        mDoneListener.onLoginDone(value);
+        return false;
+    };
 
     @SuppressLint("ClickableViewAccessibility")
     private void init(){
@@ -146,6 +163,7 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
 
         ExtraCore.addExtraListener(ExtraConstants.MOJANG_LOGIN_TODO, mMojangLoginListener);
         ExtraCore.addExtraListener(ExtraConstants.MICROSOFT_LOGIN_TODO, mMicrosoftLoginListener);
+        ExtraCore.addExtraListener(ExtraConstants.OTHER_LOGIN_TODO, mOtherLoginListener);
     }
 
 
@@ -261,7 +279,31 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
 
     private void performLogin(MinecraftAccount minecraftAccount){
         if(minecraftAccount.isLocal()) return;
+        if (!Objects.isNull(minecraftAccount.baseUrl)&&!minecraftAccount.baseUrl.equals("0")&&System.currentTimeMillis() > minecraftAccount.expiresAt){
+            OtherLoginApi.getINSTANCE().setBaseUrl(minecraftAccount.baseUrl);
+            PojavApplication.sExecutorService.execute(()->{
+                try {
+                    OtherLoginApi.getINSTANCE().login(minecraftAccount.account, minecraftAccount.password, new OtherLoginApi.Listener() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            minecraftAccount.expiresAt=System.currentTimeMillis()+30*60*1000;
+                            minecraftAccount.accessToken=authResult.getAccessToken();
+                            ((Activity)getContext()).runOnUiThread(()->{
+                                ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, minecraftAccount);
+                            });
+                        }
 
+                        @Override
+                        public void onFailed(String error) {
+                            mErrorListener.onLoginError(new Throwable(error));
+                        }
+                    });
+                } catch (IOException e) {
+                    mErrorListener.onLoginError(e);
+                }
+            });
+            return;
+        }
         mLoginBarPaint.setColor(getResources().getColor(R.color.minebutton_color));
         if(minecraftAccount.isMicrosoft){
             if(System.currentTimeMillis() > minecraftAccount.expiresAt){
