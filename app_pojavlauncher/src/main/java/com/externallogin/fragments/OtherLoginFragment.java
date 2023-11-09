@@ -103,7 +103,7 @@ public class OtherLoginFragment extends Fragment {
         addServer.setOnClickListener(v -> {
             AlertDialog dialog = new AlertDialog.Builder(requireContext())
                     .setTitle(R.string.other_login_aut)
-                    .setItems(new String[]{R.string.other_login_external, R.string.other_login_pass}, (d, i) -> {
+                    .setItems(String[]{R.string.other_login_external, R.string.other_login_pass}, (d, i) -> {
                         EditText editText = new EditText(requireContext());
                         editText.setMaxLines(1);
                         editText.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -258,7 +258,7 @@ public class OtherLoginFragment extends Fragment {
             }
         }
         if (Objects.isNull(servers)) {
-            serverList.add(R.string.other_login_server_error);
+            serverList.add("No authentication server");
         }
         if (Objects.isNull(serverSpinnerAdapter)) {
             serverSpinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, serverList);
