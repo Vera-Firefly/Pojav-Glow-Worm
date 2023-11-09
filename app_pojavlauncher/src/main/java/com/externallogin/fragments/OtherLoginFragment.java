@@ -103,7 +103,7 @@ public class OtherLoginFragment extends Fragment {
         addServer.setOnClickListener(v -> {
             AlertDialog dialog = new AlertDialog.Builder(requireContext())
                     .setTitle(R.string.other_login_aut)
-                    .setItems(String[]{R.string.other_login_external, R.string.other_login_pass}, (d, i) -> {
+                    .setItems(new String[]{context.getString(R.string.other_login_external), context.getString(R.string.other_login_pass)}, (d, i) -> {
                         EditText editText = new EditText(requireContext());
                         editText.setMaxLines(1);
                         editText.setInputType(InputType.TYPE_CLASS_TEXT);
