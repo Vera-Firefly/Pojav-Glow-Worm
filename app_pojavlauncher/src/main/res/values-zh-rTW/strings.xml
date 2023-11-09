@@ -214,4 +214,15 @@
     <string name="other_login_email">郵箱或使用者名</string>
     <string name="other_login_password">密碼</string>
     <string name="other_login">登錄</string>
+    <string name="other_login_aut">請選擇認證伺服器類型</string>
+    <string name="other_login_tip">提示</string>
+    <string name="other_login_confirm">確認</string>
+    <string name="other_login_cancel">取消</string>
+    <string name="other_login_role">請選擇角色</string>
+    <string name="other_login_warning">警告</string>
+    <string name="other_login_address">請輸入Yggdrasil API 認證伺服器地址</string>
+    <string name="other_login_setid">請輸入32位伺服器ID</string>
+    <string name="other_login_pass">統一通行證</string>
+    <string name="other_login_external">外置登陸</string>
+    <string name="other_login_server_error">无認證伺服器</string>
 </resources>
