@@ -52,4 +52,17 @@
         app:layout_constraintStart_toStartOf="@+id/login_menu"
         app:layout_constraintTop_toBottomOf="@+id/button_microsoft_authentication" />
 
+    <com.kdt.mcgui.MineButton
+        android:id="@+id/button_other_authentication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Other Login"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        app:layout_constraintBottom_toBottomOf="@id/login_menu"
+        app:layout_constraintEnd_toEndOf="@+id/login_menu"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/login_menu"
+        app:layout_constraintTop_toBottomOf="@+id/button_local_authentication" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
