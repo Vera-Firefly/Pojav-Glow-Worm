@@ -397,4 +397,7 @@
     <string name="other_login_warning">Warning</string>
     <string name="other_login_address">Please enter the Yggdrasil API authentication server address</string>
     <string name="other_login_setid">Please enter a 32-bit server ID</string>
+    <string name="other_login_pass">Uniform Pass</string>
+    <string name="other_login_external">External Landing</string>
+    <string name="other_login_server_error">No authentication server</string>
 </resources>
