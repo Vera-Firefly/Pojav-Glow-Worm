@@ -383,6 +383,7 @@
     <string name="notif_mouse1">Delete done</string>
     <string name="microsoft_login_fragment">Login started!</string>
     <!-- Other login -->
+    <string name="other_login_api">Other Login</string>
     <string name="other_login_authentication_server">Authentication server</string>
     <string name="other_login_register">register</string>
     <string name="other_login_email">Email or user name</string>

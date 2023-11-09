@@ -179,7 +179,7 @@
     <string name="of_dl_progress">正在下載 %s</string>
     <string name="notification_permission_dialog_title">權限請求</string>
     <string name="notification_permission_dialog_text">PojavLauncher需要發布通知的權限，以防止您離開應用程序時，停止 遊戲/模組包 的下載。如果沒有此權限，當您將PojavLauncher置于後台時，安卓系統可能會停止您的下載進度</string>
-    <string name="notification_permission_toast">您可以隨時通過進入“系統設置”改變您的主意</string>
+    <string name="notification_permission_toast">您可以隨時通過進入"系統設置"改變您的主意</string>
     <string name="preference_ask_for_notification_title">允許通知</string>
     <string name="preference_ask_for_notification_description">單擊可重新請求通知權限，這是 遊戲/模組包 在後台正常下載所必需的</string>
 
@@ -207,4 +207,11 @@
     <string name="preference_mouse_title1">刪除設置的鼠標圖標</string>
     <string name="notif_mouse1">刪除成功</string>
     <string name="microsoft_login_fragment">開始登陸!</string>
+    <!-- Other login -->
+    <string name="other_login_api">外置登錄</string>
+    <string name="other_login_authentication_server">身份驗證伺服器</string>
+    <string name="other_login_register">註冊</string>
+    <string name="other_login_email">郵箱或使用者名</string>
+    <string name="other_login_password">密碼</string>
+    <string name="other_login">登錄</string>
 </resources>

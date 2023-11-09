@@ -56,7 +56,7 @@
         android:id="@+id/button_other_authentication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Other Login"
+        android:text="@string/other_login_api"
         android:textSize="@dimen/_12ssp"
         android:layout_marginHorizontal="@dimen/_25sdp"
         app:layout_constraintBottom_toBottomOf="@id/login_menu"

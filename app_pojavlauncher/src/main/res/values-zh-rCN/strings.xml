@@ -341,4 +341,11 @@
     <string name="preference_mouse_title1">删除设置的鼠标图标</string>
     <string name="notif_mouse1">删除成功</string>
     <string name="microsoft_login_fragment">开始登陆!</string>
+    <!-- Other login -->
+    <string name="other_login_api">外置登录</string>
+    <string name="other_login_authentication_server">身份验证服务器</string>
+    <string name="other_login_register">注册</string>
+    <string name="other_login_email">邮箱或用户名</string>
+    <string name="other_login_password">密码</string>
+    <string name="other_login">登录</string>
 </resources>
