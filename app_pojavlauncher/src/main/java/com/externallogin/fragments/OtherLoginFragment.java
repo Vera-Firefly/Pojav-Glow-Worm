@@ -258,7 +258,7 @@ public class OtherLoginFragment extends Fragment {
             }
         }
         if (Objects.isNull(servers)) {
-            serverList.add("No authentication server");
+            serverList.add(getString(R.string.other_login_server_error));
         }
         if (Objects.isNull(serverSpinnerAdapter)) {
             serverSpinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, serverList);
