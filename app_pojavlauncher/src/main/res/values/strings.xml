@@ -389,4 +389,15 @@
     <string name="other_login_email">Email or user name</string>
     <string name="other_login_password">Password</string>
     <string name="other_login">Login</string>
+    <string name="other_login_aut">Please select the authentication server type</string>
+    <string name="other_login_tip">Tip</string>
+    <string name="other_login_confirm">Confirm</string>
+    <string name="other_login_cancel">Cancel</string>
+    <string name="other_login_role">Please select a role</string>
+    <string name="other_login_warning">Warning</string>
+    <string name="other_login_address">Please enter the Yggdrasil API authentication server address</string>
+    <string name="other_login_setid">Please enter a 32-bit server ID</string>
+    <string name="other_login_pass">Uniform Pass</string>
+    <string name="other_login_external">External Landing</string>
+    <string name="other_login_server_error">No authentication server</string>
 </resources>

@@ -348,4 +348,15 @@
     <string name="other_login_email">邮箱或用户名</string>
     <string name="other_login_password">密码</string>
     <string name="other_login">登录</string>
+    <string name="other_login_aut">请选择认证服务器类型</string>
+    <string name="other_login_tip">提示</string>
+    <string name="other_login_confirm">确定</string>
+    <string name="other_login_cancel">取消</string>
+    <string name="other_login_role">请选择角色</string>
+    <string name="other_login_warning">警告</string>
+    <string name="other_login_address">请输入Yggdrasil API 认证服务器地址</string>
+    <string name="other_login_setid">请输入32位服务器ID</string>
+    <string name="other_login_pass">统一通行证</string>
+    <string name="other_login_external">外置登陆</string>
+    <string name="other_login_server_error">无认证服务器</string>
 </resources>
