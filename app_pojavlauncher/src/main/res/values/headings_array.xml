@@ -6,6 +6,7 @@
         <item name="4">@string/mcl_setting_renderer_vulkan_zink</item>
         <item name="5">@string/mcl_setting_renderer_virgl</item>
         <item name="6">@string/mcl_setting_renderer_angle</item>
+        <item name="7">@string/mcl_setting_renderer_vulkan_warlip</item>
     </string-array>
 
     <string-array name="menu_customcontrol">
@@ -43,6 +44,7 @@
         <item>vulkan_zink</item> <!-- zinkrenderer with Vulkan OpenGL4.6 -->
         <item>opengles3_virgl</item> <!-- virglrenderer with OpenGL ES 3 -->
         <item>opengles3_desktopgl_angle_vulkan</item>
+        <item>vulkan_warlip</item>
     </string-array>
     <string-array name="download_source_names">
         <item>@string/global_default</item>
