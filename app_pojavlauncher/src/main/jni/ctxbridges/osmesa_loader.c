@@ -1,5 +1,5 @@
 //
-// Modifile by Vera-Firefly on 28.08.2023.
+// Modifile by Vera-Firefly on 2.10.2023.
 //
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +11,7 @@
 #define RENDERER_VK_ZINK 2
 #define RENDERER_VIRGL 3
 #define RENDERER_VULKAN 4
+#define RENDERER_VK_WARLIP 5
 
 GLboolean (*OSMesaMakeCurrent_p) (OSMesaContext ctx, void *buffer, GLenum type,
                                          GLsizei width, GLsizei height);
@@ -33,6 +34,10 @@ void dlsym_OSMesa() {
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
     if(asprintf(&main_path, "%s/libOSMesa_81.so", getenv("POJAV_NATIVEDIR")) == -1) {
     abort();
+    }
+    } else if(pojav_environ->config_renderer == RENDERER_VK_WARLIP) {
+    if(asprintf(&main_path, "%s/libOSMesa_82.so", getenv("POJAV_NATIVEDIR")) == -1) {
+        abort();
     }
     }
     void* dl_handle = NULL;
