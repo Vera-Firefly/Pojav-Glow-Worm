@@ -202,8 +202,16 @@ public class JREUtils {
 
         envMap.put("MESA_GLSL_CACHE_DIR", Tools.DIR_CACHE.getAbsolutePath());
         if (LOCAL_RENDERER != null) {
-            envMap.put("MESA_GL_VERSION_OVERRIDE", LOCAL_RENDERER.equals("opengles3_virgl")?"3.2":"4.6");
-            envMap.put("MESA_GLSL_VERSION_OVERRIDE", LOCAL_RENDERER.equals("opengles3_virgl")?"320":"460");
+            if(LOCAL_RENDERER.equals("vulkan_zink")){
+                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
+            }else if(LOCAL_RENDERER.equals("opengles3_virgl")){
+                envMap.put("MESA_GL_VERSION_OVERRIDE", "3.2");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "320");
+            }else if(LOCAL_RENDERER.equals("vulkan_warlip")){
+                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
+            }
         }
         envMap.put("force_glsl_extensions_warn", "true");
         envMap.put("allow_higher_compat_version", "true");
@@ -467,6 +475,9 @@ public class JREUtils {
                 break;
             case "vulkan_zink":
                 renderLibrary = "libOSMesa_8.so";
+                break;
+            case "vulkan_warlip":
+                renderLibrary = "libOSMesa_82.so";
                 break;
             case "opengles3_desktopgl_angle_vulkan":
                 renderLibrary = "libtinywrapper.so";
