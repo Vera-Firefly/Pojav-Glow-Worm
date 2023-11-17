@@ -420,7 +420,6 @@ EXTERNAL_API void pojavSwapBuffers() {
         OSMesaContext ctx = OSMesaGetCurrentContext_p();
         if(ctx == NULL) {
             printf("Zink: attempted to swap buffers without context!");
-            break;
         }
         OSMesaMakeCurrent_p(ctx,buf.bits,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
         glFinish_p();
