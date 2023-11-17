@@ -318,13 +318,13 @@
     <string name="preference_ask_for_notification_description">单击可重新请求通知权限，这是 游戏/整合包 在后台正常下载所必需的</string>
 
     <!-- App New Annotation -->
-    <string name="preference_category_gestures_title">手势</string>
-    <string name="preference_category_buttons_title">按键</string>
-    <string name="preference_category_experimental_fuckury_title">实验性的补丁</string>
-    <string name="preference_category_java_tweaks_title">Java调整</string>
-    <string name="preference_category_categories_title">更多设置</string>
-    <string name="preference_category_miscellaneous_settings_title">其他设置</string>
-    <string name="preference_category_video_settings_title">视频和渲染器</string>
+    <string name="preference_category_gestures">手势</string>
+    <string name="preference_category_buttons">按键</string>
+    <string name="preference_category_experimental_settings">实验性的补丁</string>
+    <string name="preference_category_java_tweaks">Java调整</string>
+    <string name="preference_category_categories">更多设置</string>
+    <string name="preference_category_miscellaneous">其他设置</string>
+    <string name="preference_category_video">视频和渲染器</string>
     <string name="preference_category_visibility_title">可见性</string>
     <string name="preference_category_in_game_title">游戏内显示</string>
     <string name="preference_category_in_menu_title">游戏外显示</string>
