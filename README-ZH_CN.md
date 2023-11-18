@@ -12,9 +12,11 @@ Click to switch to <a href="/README.md">English</a>
 
 * 在正式发行包中会提供旧Mesa版本zink渲染器,以便于搭载骁龙处理器的设备体验光影
 
-* 该软件并不是官方原包，我只参与魔改，更多详细内容请前往[官方](https://github.com/PojavLauncherTeam/PojavLauncher)查看
+* 该魔改版本的lwjgl采用[Vera-Firefly](https://github.com/Vera-Firefly)的[lwjgl3-build](https://github.com/Vera-Firefly/lwjgl3-build)存储库自动构建中的最新内容
 
-* 
+* 此外,该魔改版本的java运行时同样采用Vera-Firefly的[android-openjdk-build](https://github.com/Vera-Firefly/android-openjdk-build)存储库自动构建中的最新内容
+
+* 该软件并不是官方原包，我只参与魔改，更多详细内容请前往[官方](https://github.com/PojavLauncherTeam/PojavLauncher)查看
 ## 注意:
 * 若您使用的是搭载骁龙处理器的设备,且要使用zink渲染器开光影,请注意辨别Mesa版本
 

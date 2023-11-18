@@ -8,7 +8,11 @@ A Minecraft: Java Edition Launcher for Android based on Boardwalk.
 
 * Add vgpu render,vgpu1.4.0 OpenGL4.4
 
-* Virgl render is already working.
+* Virgl render is already working
+
+* This modified version of lwjgl uses the latest content from [Vera-Firefly](https://github.com/Vera-Firefly) [lwjgl3-build](https://github.com/Vera-Firefly/lwjgl3-build) repository for automated builds
+
+* In addition, this modified version of the Java runtime also uses the latest content from Vera-Firefly [android-openjdk-build](https://github.com/Vera-Firefly/android-openjdk-build) repository for automated builds
 
 * This is not the official version, it's just a modified,If you don't want to use it, please go to the [PojavLauncherTeam](https://github.com/PojavLauncherTeam/PojavLauncher)
 
