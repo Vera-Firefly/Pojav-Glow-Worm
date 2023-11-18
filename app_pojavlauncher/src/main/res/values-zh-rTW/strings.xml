@@ -182,6 +182,9 @@
     <string name="notification_permission_toast">您可以隨時通過進入"系統設置"改變您的主意</string>
     <string name="preference_ask_for_notification_title">允許通知</string>
     <string name="preference_ask_for_notification_description">單擊可重新請求通知權限，這是 遊戲/模組包 在後台正常下載所必需的</string>
+    <string name="preference_vsync_in_zink_title">允許在使用 Zink 時啟用垂直同步</string>
+    <string name="preference_vsync_in_zink_description">允許啟動器使用內部系統 API 為 Zink 啟用垂直同步,如果您的啟動器在系統更新后在使用 Zink 時突然崩潰,請關閉這個選項</string>
+    <string name="exception_failed_to_unpack_jre17">無法安裝 JRE 17</string>
 
     <!-- App New Annotation -->
     <string name="preference_category_gestures">手勢</string>
