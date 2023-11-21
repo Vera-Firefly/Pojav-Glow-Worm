@@ -25,4 +25,4 @@ A Minecraft: Java Edition Launcher for Android based on Boardwalk.
 
 * Given that the launcher update will produce some magical features that prevent some devices from entering or starting the game, the Beta version can be installed back and forth between all versions, so you don't have to worry about your game data unless you uninstall it by hand.
 
-## [Get it](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink-CN/releases) on release
+## [Get it](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink/releases) on release
