@@ -25,15 +25,18 @@ void (*glClear_p) (GLbitfield mask);
 void (*glReadPixels_p) (GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void * data);
 
 void dlsym_OSMesa() {
+    char* main_osm_libname = getenv("POJAVEXEC_OSMESA");
     char* main_path = NULL;
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
-    if(asprintf(&main_path, "%s/libOSMesa_8.so", getenv("POJAV_NATIVEDIR")) == -1 || asprintf(&main_path, "%s/libOSMesa_pan.so", getenv("POJAV_NATIVEDIR")) == -1) {
-    abort();
-    }
+        if(main_osm_libname == NULL) main_osm_libname = "libOSMesa_8.so";
+        if(asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), main_osm_libname) == -1) {
+            abort();
+        }
+        free(main_path);
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
-    if(asprintf(&main_path, "%s/libOSMesa_81.so", getenv("POJAV_NATIVEDIR")) == -1) {
-    abort();
-    }
+        if(asprintf(&main_path, "%s/libOSMesa_81.so", getenv("POJAV_NATIVEDIR")) == -1) {
+            abort();
+        }
     }
     void* dl_handle = NULL;
     dl_handle = dlopen(main_path, RTLD_GLOBAL);
