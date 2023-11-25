@@ -258,7 +258,7 @@ int pojavInitOpenGL() {
     } else if (strcmp(renderer, "malihw_panfrost") == 0) {
         pojav_environ->config_renderer = RENDERER_VK_ZINK;
         setenv("GALLIUM_DRIVER", "panfrost", 1);
-        setenv("PAN_DEBUG","gofaster",1);
+        setenv("PAN_DEBUG","gofaster", 0);
         set_osm_bridge_tbl();
     }
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
