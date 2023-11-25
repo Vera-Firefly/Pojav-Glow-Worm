@@ -202,8 +202,16 @@ public class JREUtils {
 
         envMap.put("MESA_GLSL_CACHE_DIR", Tools.DIR_CACHE.getAbsolutePath());
         if (LOCAL_RENDERER != null) {
-            envMap.put("MESA_GL_VERSION_OVERRIDE", LOCAL_RENDERER.equals("opengles3_virgl")?"3.2":"4.6");
-            envMap.put("MESA_GLSL_VERSION_OVERRIDE", LOCAL_RENDERER.equals("opengles3_virgl")?"320":"460");
+            if(LOCAL_RENDERER.equals("vulkan_zink")){
+                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
+            }else if(LOCAL_RENDERER.equals("opengles3_virgl")){
+                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
+            }else if(LOCAL_RENDERER.equals("malihw_panfrost")){
+                envMap.put("MESA_GL_VERSION_OVERRIDE", "3.3");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "330");
+            }
         }
         envMap.put("force_glsl_extensions_warn", "true");
         envMap.put("allow_higher_compat_version", "true");
@@ -228,6 +236,9 @@ public class JREUtils {
             }
             if(LOCAL_RENDERER.equals("malihw_panfrost")) {
                 envMap.put("POJAVEXEC_OSMESA", "libOSMesa_pan.so");
+                //envMap.put("MESA_SHADER_CACHE_DISABLE", "true");
+                envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
+                envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
             }
         }
         if(LauncherPreferences.PREF_BIG_CORE_AFFINITY) envMap.put("POJAV_BIG_CORE_AFFINITY", "1");
