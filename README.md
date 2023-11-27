@@ -2,9 +2,9 @@
 A Minecraft: Java Edition Launcher for Android based on Boardwalk.
 点击切换<a href="/README-ZH_CN.md">中文</a>
 ## Introduction:
-* This app will be aligned with the Pojav team's main branch update →[v3_openjdk](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk)
+* This repository was forked on [PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
-* It will remain updated until the new Mesa version of the zink renderer is merged into [v3_openjdk](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk)
+* This app will be aligned with the Pojav team's main branch update →[v3_openjdk](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk)
 
 * Add vgpu render,vgpu1.4.0 OpenGL4.4
 
@@ -14,7 +14,7 @@ A Minecraft: Java Edition Launcher for Android based on Boardwalk.
 
 * In addition, this modified version of the Java runtime also uses the latest content from Vera-Firefly [android-openjdk-build](https://github.com/Vera-Firefly/android-openjdk-build) repository for automated builds
 
-* This is not the official version, it's just a modified,If you don't want to use it, please go to the [PojavLauncherTeam](https://github.com/PojavLauncherTeam/PojavLauncher)
+* This is not the official version, it's just a modified,If you don't want to use it, please go to the [PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
 * Provide own Curseforge API key
 
