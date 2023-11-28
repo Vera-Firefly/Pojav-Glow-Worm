@@ -1,5 +1,5 @@
 //
-// Modifile by Vera-Firefly on 28.08.2023.
+// Modifile by Vera-Firefly on 28.11.2023.
 //
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +26,7 @@ void (*glReadPixels_p) (GLint x, GLint y, GLsizei width, GLsizei height, GLenum 
 
 void dlsym_OSMesa() {
     char* main_path = NULL;
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
     if(asprintf(&main_path, "%s/libOSMesa_8.so", getenv("POJAV_NATIVEDIR")) == -1) {
     abort();
     }
