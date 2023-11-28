@@ -67,6 +67,7 @@ void bigcore_set_affinity();
 #define RENDERER_VK_ZINK 2
 #define RENDERER_VIRGL 3
 #define RENDERER_VULKAN 4
+#define RENDERER_VK_ZINK_PREF 6
 
 void* egl_make_current(void* window);
 
@@ -251,10 +252,17 @@ int pojavInitOpenGL() {
         pojav_environ->config_renderer = RENDERER_GL4ES;
         set_gl_bridge_tbl();
     } else if (strcmp(renderer, "vulkan_zink") == 0) {
-        pojav_environ->config_renderer = RENDERER_VK_ZINK;
         load_vulkan();
         setenv("GALLIUM_DRIVER","zink",1);
-        set_osm_bridge_tbl();
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
+            pojav_environ->config_renderer = RENDERER_VK_ZINK;
+            set_osm_bridge_tbl();
+            printf("Bridge: Set osm bridge tbl\n");
+        } else {
+            pojav_environ->config_renderer = RENDERER_VK_ZINK_PREF;
+            loadSymbols();
+            printf("Bridge: Use old bridge\n");
+        }
     }
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
         if(br_init()) {
