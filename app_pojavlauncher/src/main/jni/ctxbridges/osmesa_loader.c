@@ -11,6 +11,7 @@
 #define RENDERER_VK_ZINK 2
 #define RENDERER_VIRGL 3
 #define RENDERER_VULKAN 4
+#define RENDERER_VK_ZINK_PREF 6
 
 GLboolean (*OSMesaMakeCurrent_p) (OSMesaContext ctx, void *buffer, GLenum type,
                                          GLsizei width, GLsizei height);
