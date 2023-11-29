@@ -1,5 +1,5 @@
 //
-// Modifile by Vera-Firefly on 11.23.2023.
+// Modifile by Vera-Firefly on 29.11.2023.
 //
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +11,7 @@
 #define RENDERER_VK_ZINK 2
 #define RENDERER_VIRGL 3
 #define RENDERER_VULKAN 4
+#define RENDERER_VK_ZINK_PREF 6
 
 GLboolean (*OSMesaMakeCurrent_p) (OSMesaContext ctx, void *buffer, GLenum type,
                                          GLsizei width, GLsizei height);
@@ -27,7 +28,7 @@ void (*glReadPixels_p) (GLint x, GLint y, GLsizei width, GLsizei height, GLenum 
 void dlsym_OSMesa() {
     char* main_osm_libname = getenv("POJAVEXEC_OSMESA");
     char* main_path = NULL;
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
         if(main_osm_libname == NULL) main_osm_libname = "libOSMesa_8.so";
         if(asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), main_osm_libname) == -1) {
             abort();

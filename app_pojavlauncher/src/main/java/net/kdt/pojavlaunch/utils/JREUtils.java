@@ -9,6 +9,7 @@ import static net.kdt.pojavlaunch.Tools.shareLog;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_DUMP_SHADERS;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_VSYNC_IN_ZINK;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_ZINK_PREFER_SYSTEM_DRIVER;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_ZINK_CRASH_HANDLE;
 
 import android.app.*;
 import android.content.*;
@@ -193,6 +194,8 @@ public class JREUtils {
             envMap.put("POJAV_ZINK_PREFER_SYSTEM_DRIVER", "1");
         if(PREF_VSYNC_IN_ZINK)
             envMap.put("POJAV_VSYNC_IN_ZINK", "1");
+        if(PREF_ZINK_CRASH_HANDLE)
+            envMap.put("POJAV_ZINK_CRASH_HANDLE", "1");
 
 
         // The OPEN GL version is changed according

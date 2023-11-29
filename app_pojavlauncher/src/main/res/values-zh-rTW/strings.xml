@@ -210,6 +210,8 @@
     <string name="preference_mouse_title1">刪除設置的鼠標圖標</string>
     <string name="notif_mouse1">刪除成功</string>
     <string name="microsoft_login_fragment">開始登陸!</string>
+    <string name="preference_zink_crash_handle_title">使用舊的Bridge</string>
+    <string name="preference_zink_crash_handle">在使用zink啟動1.20.x-forge崩潰時開啟它,僅影響zink</string>
     <!-- Other login -->
     <string name="other_login_api">外置登錄</string>
     <string name="other_login_authentication_server">身份驗證伺服器</string>
