@@ -51,7 +51,7 @@
     <string name="mcl_setting_subtitle_javaargs">注意，非专业人士修改此值可能导致游戏崩溃。</string>
     <string name="mcl_setting_category_renderer">渲染器</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES -（全版本可用，速度较快）</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink Mesa23.0.4（Vulkan）-（所有版本、中）</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink Mesa23.2.0（Vulkan）-（所有版本、中）</string>
     <string name="mcl_setting_renderer_angle">ANGLE（Vulkan）-（仅 1.17 以上、中）</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照</string>
@@ -344,6 +344,8 @@
     <string name="preference_mouse_title1">删除设置的鼠标图标</string>
     <string name="notif_mouse1">删除成功</string>
     <string name="microsoft_login_fragment">开始登陆!</string>
+    <string name="preference_zink_crash_handle_title">使用旧的Bridge</string>
+    <string name="preference_zink_crash_handle">在使用zink启动1.20.x-forge崩溃时开启它,仅影响zink</string>
     <!-- Other login -->
     <string name="other_login_api">外置登录</string>
     <string name="other_login_authentication_server">身份验证服务器</string>
