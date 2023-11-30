@@ -211,6 +211,9 @@ public class JREUtils {
             }else if(LOCAL_RENDERER.equals("opengles3_virgl")){
                 envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
+            }else if(LOCAL_RENDERER.equals("vulkan_warlip")){
+                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
             }else if(LOCAL_RENDERER.equals("malihw_panfrost")){
                 envMap.put("MESA_GL_VERSION_OVERRIDE", "3.3");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE", "330");
@@ -484,6 +487,9 @@ public class JREUtils {
                 break;
             case "vulkan_zink":
                 renderLibrary = "libOSMesa_8.so";
+                break;
+            case "vulkan_warlip":
+                renderLibrary = "libOSMesa_82.so";
                 break;
             case "malihw_panfrost":
                 renderLibrary = "libOSMesa_pan.so";
