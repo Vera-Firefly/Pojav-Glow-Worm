@@ -1,5 +1,5 @@
 //
-// Modifile by Vera-Firefly on 29.11.2023.
+// Modifile by Vera-Firefly on 30.11.2023.
 //
 #include <jni.h>
 #include <assert.h>
@@ -67,6 +67,7 @@ void bigcore_set_affinity();
 #define RENDERER_VK_ZINK 2
 #define RENDERER_VIRGL 3
 #define RENDERER_VULKAN 4
+#define RENDERER_VK_WARLIP 5
 #define RENDERER_VK_ZINK_PREF 6
 
 void* egl_make_current(void* window);
@@ -89,6 +90,9 @@ EXTERNAL_API void pojavTerminate() {
 
             //case RENDERER_VIRGL:
         case RENDERER_VK_ZINK: {
+            // Nothing to do here
+        } break;
+        case RENDERER_VK_WARLIP: {
             // Nothing to do here
         } break;
         case RENDERER_VK_ZINK_PREF: {
@@ -115,7 +119,7 @@ don't touch the code here
 EXTERNAL_API void* pojavGetCurrentContext() {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
         return br_get_current();
-    } else if(pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF || pojav_environ->config_renderer == RENDERER_VIRGL) {
+    } else if(pojav_environ->config_renderer == RENDERER_VK_WARLIP || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF || pojav_environ->config_renderer == RENDERER_VIRGL) {
         return (void *)OSMesaGetCurrentContext_p();
     }
 }
@@ -129,6 +133,10 @@ void loadSymbols() {
             break;
         case RENDERER_VK_ZINK_PREF:
             dlsym_OSMesa();
+            break;
+        case RENDERER_VK_WARLIP:
+            dlsym_OSMesa();
+            dlsym_EGL();
             break;
     }
 }
@@ -279,6 +287,10 @@ int pojavInitOpenGL() {
         setenv("GALLIUM_DRIVER", "panfrost", 1);
         setenv("PAN_DEBUG","gofaster", 0);
         set_osm_bridge_tbl();
+    } else if (strcmp(renderer, "vulkan_warlip") == 0) {
+        pojav_environ->config_renderer = RENDERER_VK_WARLIP;
+        setenv("GALLIUM_DRIVER","zink",1);
+        loadSymbols();
     }
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
         if(br_init()) {
@@ -374,7 +386,7 @@ int pojavInitOpenGL() {
         usleep(100*1000); // need enough time for the server to init
     }
 
-    if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF || pojav_environ->config_renderer == RENDERER_VIRGL) {
+    if (pojav_environ->config_renderer == RENDERER_VK_WARLIP || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF || pojav_environ->config_renderer == RENDERER_VIRGL) {
         if(OSMesaCreateContext_p == NULL) {
             printf("OSMDroid: %s\n",dlerror());
             return 0;
@@ -423,7 +435,7 @@ EXTERNAL_API void pojavSwapBuffers() {
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
         glFinish_p();
         vtest_swap_buffers_p();
-    } else if(pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
+    } else if(pojav_environ->config_renderer == RENDERER_VK_WARLIP || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
         OSMesaContext ctx = OSMesaGetCurrentContext_p();
         if(ctx == NULL) {
             printf("Zink: attempted to swap buffers without context!");
@@ -476,7 +488,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
 
         pojavSwapBuffers();
         return;
-    } else if(pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
+    } else if(pojav_environ->config_renderer == RENDERER_VK_WARLIP || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
         printf("OSMDroid: making current %p\n", pojav_environ->pojavWindow);
         ANativeWindow_lock(pojav_environ->pojavWindow,&buf,NULL);
         OSMesaMakeCurrent_p((OSMesaContext)window,buf.bits,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
@@ -500,7 +512,7 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
         return br_init_context((basic_render_window_t*)contextSrc);
-    } else if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF || pojav_environ->config_renderer == RENDERER_VIRGL) {
+    } else if (pojav_environ->config_renderer == RENDERER_VK_WARLIP || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF || pojav_environ->config_renderer == RENDERER_VIRGL) {
         pojavInitOpenGL();
         printf("OSMDroid: generating context\n");
         void* ctx = OSMesaCreateContext_p(OSMESA_RGBA,contextSrc);
@@ -524,7 +536,7 @@ EXTERNAL_API void pojavSwapInterval(int interval) {
         br_swap_interval(interval);
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
         eglSwapInterval_p(potatoBridge.eglDisplay, interval);
-    } else if(pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
+    } else if(pojav_environ->config_renderer == RENDERER_VK_WARLIP || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
         printf("eglSwapInterval: NOT IMPLEMENTED YET!\n");
         // Nothing to do here
     }
