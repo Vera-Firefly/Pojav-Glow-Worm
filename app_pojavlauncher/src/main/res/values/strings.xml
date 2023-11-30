@@ -65,7 +65,7 @@
     <string name="mcl_setting_subtitle_javaargs">Be careful, this may make game crash if modified without knowledge.</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (all versions, fast)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink Mesa23.0.4(Vulkan) - (all versions, mid)</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink Mesa23.2.0(Vulkan) - (all versions, mid)</string>
     <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (1.17+ only, mid)</string>
     <string name="mcl_setting_veroption_release">Release</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -385,6 +385,8 @@
     <string name="preference_mouse_title1">Remove mouse icon</string>
     <string name="notif_mouse1">Delete done</string>
     <string name="microsoft_login_fragment">Login started!</string>
+    <string name="preference_zink_crash_handle_title">Use old bridge</string>
+    <string name="preference_zink_crash_handle">Turn it on when 1.20.x-forge crashes when you start with zink,only affects zink</string>
     <!-- Other login -->
     <string name="other_login_api">Other Login</string>
     <string name="other_login_authentication_server">Authentication server</string>
