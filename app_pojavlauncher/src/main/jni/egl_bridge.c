@@ -250,7 +250,7 @@ int pojavInitOpenGL() {
         pojav_environ->force_vsync = true;
 
     // NOTE: Override for now.
-    const char *renderer = getenv("POJAV_RENDERER");
+    const char *renderer = getenv("POJAV_BETA_RENDERER");
     if (strncmp("opengles3_virgl", renderer, 15) == 0) {
         pojav_environ->config_renderer = RENDERER_VIRGL;
         setenv("GALLIUM_DRIVER","virpipe",1);
