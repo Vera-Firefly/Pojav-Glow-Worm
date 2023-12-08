@@ -1,4 +1,4 @@
-# PojavLauncher-Experimental-Edition
+# PojavLauncher-Beta-Zink
 基于Boardwalk的Java版Android启动器
 Click to switch to <a href="/README.md">English</a>
 ## 介绍
