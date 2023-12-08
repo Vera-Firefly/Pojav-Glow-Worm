@@ -1,10 +1,10 @@
-# PojavLauncher-Beta-Zink
+# PojavLauncher-Experimental-Edition
 基于Boardwalk的Java版Android启动器
 Click to switch to <a href="/README.md">English</a>
 ## 介绍
-* 该Beta版将会与Pojav团队主要分支[v3_openjdk](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk)更新进度保持一致
+* 该存储库Fork自[PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
-* 在新Mesa版本的zink渲染器合并至[v3_openjdk](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk)之前会一直保持更新
+* 该Beta版将会与Pojav团队主要分支[v3_openjdk](https://github.com/PojavLauncherTeam/PojavLauncher/tree/v3_openjdk)更新进度保持一致
 
 * 添加了vgpu渲染器,vgpu1.4.0 OpenGL4.4
 
@@ -25,4 +25,7 @@ Click to switch to <a href="/README.md">English</a>
 * 新Mesa版本zink渲染器目前不太稳定,谦容性极差,若您使用它进入游戏时多次闪退请重启设备,如还无法解决请回退到旧Mesa版本zink渲染器
 
 * 考虑到该启动器更新时会产生一些神奇的特性导致部分设备无法进入或启动游戏,所以该Beta版所有版本之间可来回覆盖安装,所以不必担心你的游戏数据,除非你手贱卸载了它
+
+## 更多:
+* 如果你想试试全新的体验可以尝试使用[Pojav EXP](https://github.com/Vera-Firefly/PojavLauncher-Experimental-Edition)
 ## 修改作者: [𝓞𝔀𝓮梓](https://qm.qq.com/cgi-bin/qm/qr?k=Hfz2ZNFGeXjrANr6H8WjZfKLg9Yi-SgT&noverify=0&personal_qrcode_source=3)
