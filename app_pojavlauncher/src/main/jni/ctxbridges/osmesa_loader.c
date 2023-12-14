@@ -6,12 +6,7 @@
 #include <dlfcn.h>
 #include "environ/environ.h"
 #include "osmesa_loader.h"
-
-#define RENDERER_GL4ES 1
-#define RENDERER_VK_ZINK 2
-#define RENDERER_VIRGL 3
-#define RENDERER_VULKAN 4
-#define RENDERER_VK_ZINK_PREF 6
+#include "renderer_config.h"
 
 GLboolean (*OSMesaMakeCurrent_p) (OSMesaContext ctx, void *buffer, GLenum type,
                                          GLsizei width, GLsizei height);
