@@ -55,6 +55,7 @@ import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.multirt.Runtime;
 import net.kdt.pojavlaunch.plugins.FFmpegPlugin;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
+import net.kdt.pojavlaunch.utils.DateUtils;
 import net.kdt.pojavlaunch.utils.DownloadUtils;
 import net.kdt.pojavlaunch.utils.JREUtils;
 import net.kdt.pojavlaunch.utils.JSONUtils;
@@ -80,8 +81,10 @@ import java.io.StringWriter;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -349,6 +352,17 @@ public final class Tools {
         }
 
         String userType = "mojang";
+        try {
+            Date creationDate = DateUtils.getOriginalReleaseDate(versionInfo);
+            // Minecraft 22w43a which adds chat reporting (and signing) was released on
+            // 26th October 2022. So, if the date is not before that (meaning it is equal or higher)
+            // change the userType to MSA to fix the missing signature
+            if(creationDate != null && !DateUtils.dateBefore(creationDate, 2022, 9, 26)) {
+                userType = "msa";
+            }
+        }catch (ParseException e) {
+            Log.e("CheckForProfileKey", "Failed to determine profile creation date, using \"mojang\"", e);
+        }
 
         Map<String, String> varArgMap = new ArrayMap<>();
         varArgMap.put("auth_session", profile.accessToken); // For legacy versions of MC
