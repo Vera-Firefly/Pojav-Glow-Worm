@@ -2,6 +2,9 @@ package net.kdt.pojavlaunch.modloaders.modpacks.api;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -28,6 +31,7 @@ import java.util.zip.ZipFile;
 
 public class CurseforgeApi implements ModpackApi{
     private static final Pattern sMcVersionPattern = Pattern.compile("([0-9]+)\\.([0-9]+)\\.?([0-9]+)?");
+    private static final int ALGO_SHA_1 = 1;
     // Stolen from
     // https://github.com/AnzhiZhang/CurseForgeModpackDownloader/blob/6cb3f428459f0cc8f444d16e54aea4cd1186fd7b/utils/requester.py#L93
     private static final int CURSEFORGE_MINECRAFT_GAME_ID = 432;
@@ -103,11 +107,14 @@ public class CurseforgeApi implements ModpackApi{
         String[] versionNames = new String[length];
         String[] mcVersionNames = new String[length];
         String[] versionUrls = new String[length];
+        String[] hashes = new String[length];
         for(int i = 0; i < allModDetails.size(); i++) {
             JsonObject modDetail = allModDetails.get(i);
             versionNames[i] = modDetail.get("displayName").getAsString();
+
             JsonElement downloadUrl = modDetail.get("downloadUrl");
             versionUrls[i] = downloadUrl.getAsString();
+
             JsonArray gameVersions = modDetail.getAsJsonArray("gameVersions");
             for(JsonElement jsonElement : gameVersions) {
                 String gameVersion = jsonElement.getAsString();
@@ -117,8 +124,10 @@ public class CurseforgeApi implements ModpackApi{
                 mcVersionNames[i] = gameVersion;
                 break;
             }
+
+            hashes[i] = getSha1FromResponse(modDetail);
         }
-        return new ModDetail(item, versionNames, mcVersionNames, versionUrls);
+        return new ModDetail(item, versionNames, mcVersionNames, versionUrls, hashes);
     }
 
     @Override
@@ -137,6 +146,7 @@ public class CurseforgeApi implements ModpackApi{
         if(response == null) return CURSEFORGE_PAGINATION_ERROR;
         JsonArray data = response.getAsJsonArray("data");
         if(data == null) return CURSEFORGE_PAGINATION_ERROR;
+
         for(int i = 0; i < data.size(); i++) {
             JsonObject fileInfo = data.get(i).getAsJsonObject();
             if(fileInfo.get("isServerPack").getAsBoolean()) continue;
@@ -166,7 +176,7 @@ public class CurseforgeApi implements ModpackApi{
                     if(url == null && curseFile.required)
                         throw new IOException("Failed to obtain download URL for "+curseFile.projectID+" "+curseFile.fileID);
                     else if(url == null) return null;
-                    return new ModDownloader.FileInfo(url, FileUtils.getFileName(url));
+                    return new ModDownloader.FileInfo(url, FileUtils.getFileName(url), getDownloadSha1(curseFile.projectID, curseFile.fileID));
                 });
             }
             modDownloader.awaitFinish((c,m)->
@@ -222,6 +232,26 @@ public class CurseforgeApi implements ModpackApi{
             return String.format("https://edge.forgecdn.net/files/%s/%s/%s", id/1000, id % 1000, modData.get("fileName").getAsString());
         }
 
+        return null;
+    }
+
+    private @Nullable String getDownloadSha1(long projectID, long fileID) {
+        // Try the api endpoint, die in the other case
+        JsonObject response = mApiHandler.get("mods/"+projectID+"/files/"+fileID, JsonObject.class);
+        if (response == null || response.get("data").isJsonNull()) return null;
+        
+        return getSha1FromResponse(response);
+    }
+
+    private String getSha1FromResponse(@NonNull JsonElement element) {
+        JsonArray hashes = element.getAsJsonObject().get("data").getAsJsonObject().getAsJsonArray("hashes");
+        for (JsonElement jsonElement : hashes) {
+            // The sha1 = 1; md5 = 2;
+            JsonElement algo = jsonElement.getAsJsonObject().get("algo");
+            if(algo != null && algo.getAsInt() == ALGO_SHA_1){
+                return jsonElement.getAsJsonObject().get("value").getAsString();
+            }
+        }
         return null;
     }
 
