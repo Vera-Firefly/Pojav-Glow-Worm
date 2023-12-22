@@ -185,6 +185,9 @@
     <string name="preference_vsync_in_zink_title">允許在使用 Zink 時啟用垂直同步</string>
     <string name="preference_vsync_in_zink_description">允許啟動器使用內部系統 API 為 Zink 啟用垂直同步,如果您的啟動器在系統更新后在使用 Zink 時突然崩潰,請關閉這個選項</string>
     <string name="exception_failed_to_unpack_jre17">無法安裝 JRE 17</string>
+    <string name="newdl_starting">正在讀取遊戲元數據...</string>
+    <string name="newdl_downloading_metadata">正在下載遊戲元數據 (%s)</string>
+    <string name="newdl_downloading_game_files">正在下載遊戲文件... (%d/%d, %.2f MB)</string>
 
     <!-- App New Annotation -->
     <string name="preference_category_gestures">手勢</string>
