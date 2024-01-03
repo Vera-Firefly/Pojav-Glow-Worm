@@ -1,5 +1,5 @@
 //
-// Modifile by Vera-Firefly on 30.11.2023.
+// Modifile by Vera-Firefly on 03.01.2024.
 //
 #include <jni.h>
 #include <assert.h>
@@ -286,6 +286,18 @@ int pojavInitOpenGL() {
         pojav_environ->config_renderer = RENDERER_VK_WARLIP;
         setenv("GALLIUM_DRIVER","zink",1);
         loadSymbols();
+    } else if (strcmp(renderer, "vulkan_freedreno") == 0) {
+        setenv("GALLIUM_DRIVER", "freedreno", 1);
+        setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
+            pojav_environ->config_renderer = RENDERER_VK_ZINK;
+            set_osm_bridge_tbl();
+            printf("Bridge: Set osm bridge tbl\n");
+        } else {
+            pojav_environ->config_renderer = RENDERER_VK_ZINK_PREF;
+            loadSymbols();
+            printf("Bridge: Use old bridge\n");
+        }
     }
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
         if(br_init()) {
