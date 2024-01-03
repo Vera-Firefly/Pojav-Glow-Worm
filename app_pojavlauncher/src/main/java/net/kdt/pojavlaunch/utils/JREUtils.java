@@ -220,19 +220,19 @@ public class JREUtils {
 
         if (LOCAL_RENDERER != null) {
             envMap.put("POJAV_BETA_RENDERER", LOCAL_RENDERER);
-            if(LOCAL_RENDERER.equals("vulkan_zink")){
+            if (LOCAL_RENDERER.equals("vulkan_zink")) {
                 envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
             }
-            if(LOCAL_RENDERER.equals("opengles3_virgl")){
+            if (LOCAL_RENDERER.equals("opengles3_virgl")) {
                 envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
             }
-            if(LOCAL_RENDERER.equals("vulkan_warlip")){
+            if (LOCAL_RENDERER.equals("vulkan_warlip")) {
                 envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
             }
-            if(LOCAL_RENDERER.equals("malihw_panfrost")){
+            if (LOCAL_RENDERER.equals("malihw_panfrost")) {
                 envMap.put("MESA_GL_VERSION_OVERRIDE", "3.3");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE", "330");
                 envMap.put("POJAVEXEC_OSMESA", "libOSMesa_pan.so");
@@ -240,7 +240,11 @@ public class JREUtils {
                 envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
                 envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
             }
-            if(LOCAL_RENDERER.equals("opengles3_desktopgl_angle_vulkan")) {
+            if (LOCAL_RENDERER.equals("vulkan_freedreno")) {
+                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
+            }
+            if (LOCAL_RENDERER.equals("opengles3_desktopgl_angle_vulkan")) {
                 envMap.put("LIBGL_ES", "3");
                 envMap.put("POJAVEXEC_EGL","libEGL_angle.so"); // Use ANGLE EGL
             }
@@ -488,6 +492,9 @@ public class JREUtils {
                 break;
             case "malihw_panfrost":
                 renderLibrary = "libOSMesa_pan.so";
+                break;
+            case "vulkan_freedreno":
+                renderLibrary = "libOSMesa_8.so";
                 break;
             case "opengles3_desktopgl_angle_vulkan":
                 renderLibrary = "libtinywrapper.so";
