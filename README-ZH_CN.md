@@ -28,4 +28,4 @@ Click to switch to <a href="/README.md">English</a>
 
 ## 更多:
 * 如果你想试试全新的体验可以尝试使用[Pojav EXP](https://github.com/Vera-Firefly/PojavLauncher-Experimental-Edition)
-## 修改作者: 𝓞𝔀𝓮梓 mail: 1964762970@qq.com
+## 修改作者: 𝓞𝔀𝓮梓(1964762970@qq.com)
