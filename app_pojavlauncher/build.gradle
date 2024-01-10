@@ -148,6 +148,11 @@ android {
         jniLibs {
             useLegacyPackaging = true
         }
+        pickFirst '**/libbytehook.so'
+    }
+
+    buildFeatures {
+        prefab true
     }
 
     buildToolsVersion = '33.0.2'
