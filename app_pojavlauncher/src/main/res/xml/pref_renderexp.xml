@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app2="http://schemas.android.com/apk/res-auto">
+    <net.kdt.pojavlaunch.prefs.BackButtonPreference/>
+    <PreferenceCategory
+    android:title="@string/preference_category_renderer_experimental_settings">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ExperimentalSetup"
+            android:title="@string/preference_renderer_setup_title"
+            android:summary="@string/preference_renderer_setup"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="zinkCrashhandle"
+            android:summary="@string/preference_zink_crash_handle"
+            android:title="@string/preference_zink_crash_handle_title"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="radioGroupPref"
+        android:title="@string/preference_renderer_setup_extra">
+
+        <SwitchPreference
+            android:key="ZinkF"
+            android:title="@string/preference_renderer_setup_default"/>
+        <SwitchPreference
+            android:key="ZinkS"
+            android:title="@string/preference_renderer_setup_second"/>
+        <SwitchPreference
+            android:key="VulkanLwarlip"
+            android:title="@string/preference_renderer_setup_vwl"/>
+        <SwitchPreference
+            android:key="Rvirpipe"
+            android:title="@string/preference_renderer_setup_rvir"/>
+        <SwitchPreference
+            android:key="Rpanfrost"
+            android:title="@string/preference_renderer_setup_rpan"/>
+        <SwitchPreference
+            android:key="Rfreedreno"
+            android:title="@string/preference_renderer_setup_freedreno"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

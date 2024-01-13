@@ -37,10 +37,10 @@
             android:title="@string/preference_vulkan_driver_system_title"/>
 
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="zinkCrashhandle"
-            android:summary="@string/preference_zink_crash_handle"
-            android:title="@string/preference_zink_crash_handle_title"/>
+            android:defaultValue="true"
+            android:key="FireflyAlertDialog"
+            android:summary="@string/alertdialog_firefly"
+            android:title="Firefly AlertDialog"/>
 
     </PreferenceCategory>
     <Preference
