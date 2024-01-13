@@ -64,11 +64,19 @@ public class LauncherPreferences {
     public static boolean PREF_BIG_CORE_AFFINITY = false;
     public static boolean PREF_ZINK_PREFER_SYSTEM_DRIVER = false;
     public static boolean PREF_ZINK_CRASH_HANDLE = false;
+    public static boolean PREF_EXP_SETUP = false;
+    public static boolean PREF_EXP_SETUP_DEFAULT = false;
+    public static boolean PREF_EXP_SETUP_S = false;
+    public static boolean PREF_EXP_SETUP_LW = false;
+    public static boolean PREF_EXP_SETUP_VIRGL = false;
+    public static boolean PREF_EXP_SETUP_PAN = false;
+    public static boolean PREF_EXP_SETUP_FD = false;
 
     public static boolean PREF_VERIFY_MANIFEST = true;
     public static String PREF_DOWNLOAD_SOURCE = "default";
     public static boolean PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = false;
     public static boolean PREF_VSYNC_IN_ZINK = true;
+    public static boolean PREF_SHOW_FIREFLY_AD = true;
 
 
     public static void loadPreferences(Context ctx) {
@@ -116,6 +124,15 @@ public class LauncherPreferences {
         PREF_VERIFY_MANIFEST = DEFAULT_PREF.getBoolean("verifyManifest", true);
         PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = DEFAULT_PREF.getBoolean(PREF_KEY_SKIP_NOTIFICATION_CHECK, false);
         PREF_VSYNC_IN_ZINK = DEFAULT_PREF.getBoolean("vsync_in_zink", true);
+        PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
+        PREF_EXP_SETUP_DEFAULT = DEFAULT_PREF.getBoolean("ZinkF", false);
+        PREF_EXP_SETUP_S = DEFAULT_PREF.getBoolean("ZinkS", false);
+        PREF_EXP_SETUP_LW  = DEFAULT_PREF.getBoolean("VulkanLwarlip", false);
+        PREF_EXP_SETUP_VIRGL  = DEFAULT_PREF.getBoolean("Rvirpipe", false);
+        PREF_EXP_SETUP_PAN  = DEFAULT_PREF.getBoolean("Rpanfrost", false);
+        PREF_EXP_SETUP_FD  = DEFAULT_PREF.getBoolean("Rfreedreno", false);
+
+        PREF_SHOW_FIREFLY_AD  = DEFAULT_PREF.getBoolean("FireflyAlertDialog", true);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
