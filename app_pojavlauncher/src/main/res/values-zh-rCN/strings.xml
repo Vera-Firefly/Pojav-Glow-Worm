@@ -51,7 +51,7 @@
     <string name="mcl_setting_subtitle_javaargs">注意，非专业人士修改此值可能导致游戏崩溃。</string>
     <string name="mcl_setting_category_renderer">渲染器</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES -（全版本可用，速度较快）</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink（Vulkan）-（所有版本、中）</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Mesa(Vulkan)</string>
     <string name="mcl_setting_renderer_angle">ANGLE（Vulkan）-（仅 1.17 以上、中）</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照</string>
@@ -337,12 +337,8 @@
     <string name="preference_category_microsoft_account_title">微软账号</string>
     <string name="preference_category_local_account_title">离线账号</string>
     <string name="preference_category_custom_path">自定义路径</string>
-    <string name="mcl_setting_renderer_virgl">virglrenderer - (1.7 及以上版本可用，速度较慢)</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度较快)</string>
-    <string name="mcl_setting_renderer_vulkan_warlip">Zink Mesa21.0.3 (Vulkan) - (所有版本可用,非常慢)</string>
-    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali) - (所有版本可用,中)</string>
-    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (所有版本可用, 中)</string>
-    <string name="app_start_toast">#欢迎使用Pojav beta!!!!</string>
+    <string name="app_start_toast">#欢迎使用Pojav Beta!!!!</string>
     <string name="preference_mouse_description">设置游戏内鼠标图标</string>
     <string name="preference_mouse_title">鼠标图标自定义</string>
     <string name="notif_mouse">设置完成</string>
@@ -370,4 +366,30 @@
     <string name="other_login_pass">统一通行证</string>
     <string name="other_login_external">外置登陆</string>
     <string name="other_login_server_error">无认证服务器</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_rendererexp_title">渲染器实验性设置</string>
+    <string name="preference_rendererexp_description">针对于Mesa的实验性设置</string>
+    <string name="preference_category_renderer_experimental_settings">渲染器实验性设置</string>
+    <string name="preference_renderer_setup_title">启用渲染器实验性设置</string>
+    <string name="preference_renderer_setup">针对于Mesa的实验性设置</string>
+    <string name="preference_renderer_setup_extra">实验性设置(Extra)</string>
+    <string name="preference_renderer_setup_default">使用默认配置</string>
+    <!-- Dialog box prompt -->
+    <string name="preference_rendererexp_alertdialog_warning">警告</string>
+    <string name="preference_rendererexp_alertdialog_message">您已打开实验性设置,此功能可能会产生意想不到的bug,是否继续使用?</string>
+    <string name="preference_rendererexp_alertdialog_done">不要管我</string>
+    <string name="preference_rendererexp_alertdialog_cancel">畏惧</string>
+    <string name="preference_alertdialog_know">我已知晓</string>
+    <string name="alertdialog_tipa">不要忘记选择Mesa渲染器!</string>
+    <string name="alertdialog_tipb">此实验性设置仅适用于Mesa渲染器哦~</string>
+    <string name="alertdialog_tipc">在使用这些功能之前,请记得检查您的设备是否支持这些功能!</string>
+    <string name="alertdialog_done">确定</string>
+    <string name="alertdialog_cancel">取消</string>
+    <string name="alertdialog_firefly">打开启动器时的弹窗 (默认: 开启)</string>
+    <string name="ad_time_aaa">凌晨时刻\n你真是个奇怪的家伙!</string>
+    <string name="ad_time_aab">清晨的时光总是美好的\n欢迎使用Pojav Beta!</string>
+    <string name="ad_time_aac">午间总是很疲惫的\n小睡一会儿再来吧!</string>
+    <string name="ad_time_aad">傍晚时刻总是浪漫的\n出去走走吧!</string>
+    <string name="ad_time_aae">快乐的时光总是很短暂\n深夜了\n祝君好梦!</string>
+    <string name="ad_time_aaf">静待一树花开,盼你叶落归来\n笙歌不见故人散,十里长欢难再寻\n欢迎使用Pojav Beta!!!</string>
 </resources>
