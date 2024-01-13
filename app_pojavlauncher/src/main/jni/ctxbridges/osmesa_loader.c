@@ -21,14 +21,29 @@ void (*glClear_p) (GLbitfield mask);
 void (*glReadPixels_p) (GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void * data);
 
 void dlsym_OSMesa() {
-    char* main_osm_libname = getenv("POJAVEXEC_OSMESA");
     char* main_path = NULL;
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
-        if(main_osm_libname == NULL) main_osm_libname = "libOSMesa_8.so";
-        if(asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), main_osm_libname) == -1) {
-            abort();
+        if(getenv("POJAV_EXP_SETUP") != NULL) {
+            if(getenv("POJAV_EXP_SETUP_DEFAULT") != NULL || getenv("POJAV_EXP_SETUP_FD") != NULL) {
+                if(asprintf(&main_path, "%s/libOSMesa_8.so", getenv("POJAV_NATIVEDIR")) == -1) {
+                    abort();
+                }
+            }
+            if(getenv("POJAV_EXP_SETUP_S") != NULL) {
+                if(asprintf(&main_path, "%s/libOSMesa.so", getenv("POJAV_NATIVEDIR")) == -1) {
+                    abort();
+                }
+            }
+            if(getenv("POJAV_EXP_SETUP_PAN") != NULL) {
+                if(asprintf(&main_path, "%s/libOSMesa_pan.so", getenv("POJAV_NATIVEDIR")) == -1) {
+                    abort();
+                }
+            }
+        } else {
+            if(asprintf(&main_path, "%s/libOSMesa_8.so", getenv("POJAV_NATIVEDIR")) == -1) {
+                abort();
+            }
         }
-        free(main_path);
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
         if(asprintf(&main_path, "%s/libOSMesa_81.so", getenv("POJAV_NATIVEDIR")) == -1) {
             abort();
