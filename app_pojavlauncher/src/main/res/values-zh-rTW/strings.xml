@@ -203,9 +203,7 @@
     <string name="preference_category_microsoft_account_title">微軟賬號</string>
     <string name="preference_category_local_account_title">離線賬號</string>
     <string name="preference_category_custom_path">自定義路徑</string>
-    <string name="mcl_setting_renderer_vulkan_warlip">Zink Mesa21.0.3 - (所有版本可用,非常慢)</string>
-    <string name="app_start_toast">#歡迎使用beta版!!!!</string>
-    <string name="mcl_setting_renderer_virgl">virglrenderer - (1.7 及以上版本可用，速度較慢)</string>
+    <string name="app_start_toast">#歡迎使用Pojav Beta!!!!</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度較快)</string>
     <string name="preference_mouse_description">設置遊戲內鼠標圖標</string>
     <string name="preference_mouse_title">鼠標圖標自定義</string>
@@ -234,4 +232,30 @@
     <string name="other_login_pass">統一通行證</string>
     <string name="other_login_external">外置登陸</string>
     <string name="other_login_server_error">无認證伺服器</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_rendererexp_title">渲染器實驗性設置</string>
+    <string name="preference_rendererexp_description">針對於Mesa的實驗性設置</string>
+    <string name="preference_category_renderer_experimental_settings">渲染器實驗性設置</string>
+    <string name="preference_renderer_setup_title">使用渲染器實驗性設置</string>
+    <string name="preference_renderer_setup">針對於Mesa的實驗性設置</string>
+    <string name="preference_renderer_setup_extra">實驗性設置(Extra)</string>
+    <string name="preference_renderer_setup_default">使用默認配置</string>
+    <!-- Dialog box prompt -->
+    <string name="preference_rendererexp_alertdialog_warning">警告</string>
+    <string name="preference_rendererexp_alertdialog_message">您已打開實驗性設置,此功能可能會產生意想不到的bug,是否繼續使用?</string>
+    <string name="preference_rendererexp_alertdialog_done">不要管我</string>
+    <string name="preference_rendererexp_alertdialog_cancel">畏懼</string>
+    <string name="preference_alertdialog_know">我已知曉</string>
+    <string name="alertdialog_tipa">不要忘記選擇Mesa渲染器!</string>
+    <string name="alertdialog_tipb">該實驗性設置僅適用於Mesa渲染器</string>
+    <string name="alertdialog_tipc">在使用這些功能之前,請記得檢查你的設備是否支持這些功能!</string>
+    <string name="alertdialog_done">確定</string>
+    <string name="alertdialog_cancel">取消</string>
+    <string name="alertdialog_firefly">打開啟動器時的彈窗 (默認: 開啟)</string>
+    <string name="ad_time_aaa">淩晨時刻\n你真是個奇怪的傢夥!</string>
+    <string name="ad_time_aab">清晨的時光總是美好的\n歡迎使用Pojav Beta!</string>
+    <string name="ad_time_aac">午間總是很疲憊的\n小睡一會兒再來吧!</string>
+    <string name="ad_time_aad">傍晚時刻總是浪漫的\n出去走走吧!</string>
+    <string name="ad_time_aae">快樂的時光總是很短暫\n深夜了\n祝君好夢!</string>
+    <string name="ad_time_aaf">靜等一樹花開,盼你落葉歸來\n笙歌不見故人散,十里長歡難再尋\n歡迎使用Pojav Beta!!!</string>
 </resources>
