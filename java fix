@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/tapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tap Me!"
+        android:layout_centerInParent="true"/>
+</RelativeLayout> 
+
+
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Button tapButton;
+    private int tapCount = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        tapButton = findViewById(R.id.tapButton);
+
+        tapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tapCount++;
+                Toast.makeText(MainActivity.this, "Taps: " + tapCount, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Set a countdown timer for 30 seconds
+        new CountDownTimer(30000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // You can update a timer display here if needed
+            }
+
+            public void onFinish() {
+                // Game over, show final score
+                Toast.makeText(MainActivity.this, "Game Over! Taps: " + tapCount, Toast.LENGTH_LONG).show();
+                tapButton.setEnabled(false); // Disable tapping after the game ends
+            }
+        }.start();
+    }
+}
