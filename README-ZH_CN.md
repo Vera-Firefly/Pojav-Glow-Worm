@@ -52,20 +52,20 @@
 3. 你可以从源代码[构建](#构建)
 ## 构建
 如果要从源代码构建,请执行以下步骤.
-### Java Runtime Environment (JRE)
-- JRE for Android is [here](https://github.com/Vera-Firefly/android-openjdk-build)
-- Follow build instruction on build script [README.md](https://github.com/Vera-Firefly/android-openjdk-build/blob/buildjre8/README.md).
-- You can also get [CI auto builds](https://github.com/Vera-Firefly/android-openjdk-build/actions) if you are lazy or are failing to build it for some reason.
-* Either get the `jre8-pojav` artifact from auto builds, or split all artifacts by yourself:</br>
-   - Get JREs for all of 4 supported architectures (arm, arm64, x86, x86_64) </br> 
-      - Split JRE into parts:</br>
-                Platform-independent: .jar files, libraries, configs, etc...</br>
-                Platform-dependent: .so files, etc...</br>
-        - Create:</br>
-                A file named `universal.tar.xz` with all platform-independent files</br>
-                4 files named `bin-<arch>.tar.xz` with all platform-dependent files per-architecture</br>
-        - Put these in the `assets/components/jre/` folder</br>
-        - (If needed) update the Version file with the current date</br>
+### Javan运行时环境(JRE)
+- 适用于Android的JRE[这里](https://github.com/Vera-Firefly/android-openjdk-build)
+- 遵循构建脚本上的构建说明[README.md](https://github.com/Vera-Firefly/android-openjdk-build/blob/buildjre8/README.md).
+- 如果你懒惰或者出于某种原因,你还可以从[自动构建](https://github.com/Vera-Firefly/android-openjdk-build/actions)获取它
+* 要么获取 `jre8-pojav` 的移动构建文件, 或自己拆分所有工作流:</br>
+   - 获取4种受支持的处理器架构(arm, arm64, x86, x86_64) </br> 
+      - 将JRE拆分为以下几个部分:</br>
+                Platform-independent: .jar 文件,库,配置文件等...</br>
+                Platform-dependent: .so 文件等...</br>
+        - 创建:</br>
+                一个名为 `universal.tar.xz` 的Platform-independent文件</br>
+                4个名为 `bin-<arch>.tar.xz` 的与platform-dependent有关的处理器架构文件</br>
+        - 把这些放在 `assets/components/jre/` 文件夹</br>
+        - (如果需要)使用当前日期更新版本文件</br>
 
 ### LWJGL
 * 自定义LWJGL的构建说明可参照[LWJGL repository](https://github.com/PojavLauncherTeam/lwjgl3)
