@@ -12,7 +12,7 @@
 
 * It can run almost every version of Minecraft, allowing you to use .jar only installers to install modloaders such as [Forge](https://files.minecraftforge.net/) and [Fabric](http://fabricmc.net/), mods like [OptiFine](https://optifine.net) and [LabyMod](https://www.labymod.net/en), as well as hack clients like [Wurst](https://www.wurstclient.net/), and much more!
 ## Some notes to start with
-- I only post videos on the [BiliBili](https://space.bilibili.com/1412062866?spm_id_from=333.1007.0.0) platform, and everywhere else they appear are fake
+- I only post videos on the [BiliBili](https://space.bilibili.com/1412062866?spm_id_from=333.1007.0.0) platform, all other places are transported
 
 - This repository was forked on [PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
