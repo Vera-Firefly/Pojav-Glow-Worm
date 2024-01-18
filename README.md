@@ -3,8 +3,9 @@
 <img src="https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
 [![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink/actions)
-[![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
 ---------
+* <a href="/README-ZH_CN.md">中文</a>
+
 * From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes here comes PojavLauncher!
 
 * PojavLauncher is a launcher that allows you to play Minecraft: Java Edition on your Android device!
@@ -25,7 +26,7 @@
 
 ## Navigation
 - [Introduction](#introduction)  
-- [Getting PojavLauncher](#getting-pojavlauncher)
+- [Getting PojavLauncher](#getting-pojavlauncher-beta-zink)
 - [Building](#building) 
 - [Current status](#current-status) 
 - [License](#license) 
@@ -40,7 +41,7 @@
 * This repository contains source code for Android. 
 * Pojav Beta·Zink does not support IOS
 
-## Getting PojavLauncher
+## Getting PojavLauncher Beta Zink
 
 You can get PojavLauncher via three methods:
 
