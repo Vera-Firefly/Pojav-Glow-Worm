@@ -26,7 +26,7 @@
 
 ## Navigation
 - [Introduction](#introduction)  
-- [Getting PojavLauncher](#getting-pojavlauncher-beta-zink)
+- [Getting Pojav Beta·Zink](#getting-pojavlauncher-beta-zink)
 - [Building](#building) 
 - [Current status](#current-status) 
 - [License](#license) 
