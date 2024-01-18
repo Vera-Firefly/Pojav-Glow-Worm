@@ -8,7 +8,7 @@
 
 * 基于 [Boardwalk](https://github.com/zhuowei/Boardwalk) 而制作的PojavLauncher!
 
-* PoJavLauncher是一个允许你在Android设备上玩《Minecraft:Java Edition》的启动器!
+* PojavLauncher是一个允许你在Android设备上玩《Minecraft:Java Edition》的启动器!
 
 * 它几乎可以运行Mincraft的每个版本,允许您使用.jar仅安装程序来安装modloader,比如[Forge](https://files.minecraftforge.net/)和[Fabric](http://fabricmc.net/),模组比如[OptiFine](https://optifine.net)和[LabyMod](https://www.labymod.net/en),以及黑客客户端,比如[Wurst](https://www.wurstclient.net/),还有更多!
 ## 开始时的一些注意事项
@@ -52,7 +52,7 @@
 3. 你可以从源代码[构建](#构建)
 ## 构建
 如果要从源代码构建,请执行以下步骤.
-### Javan运行时环境(JRE)
+### Java运行时环境(JRE)
 - 适用于Android的JRE[这里](https://github.com/Vera-Firefly/android-openjdk-build)
 - 遵循构建脚本上的构建说明[README.md](https://github.com/Vera-Firefly/android-openjdk-build/blob/buildjre8/README.md).
 - 如果你懒惰或者出于某种原因,你还可以从[自动构建](https://github.com/Vera-Firefly/android-openjdk-build/actions)获取它
