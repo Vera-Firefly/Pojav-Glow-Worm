@@ -12,7 +12,7 @@
 
 * 它几乎可以运行Mincraft的每个版本,允许您使用.jar仅安装程序来安装modloader,比如[Forge](https://files.minecraftforge.net/)和[Fabric](http://fabricmc.net/),模组比如[OptiFine](https://optifine.net)和[LabyMod](https://www.labymod.net/en),以及黑客客户端,比如[Wurst](https://www.wurstclient.net/),还有更多!
 ## 开始时的一些注意事项
-- 我仅在[BiliBili](https://space.bilibili.com/1412062866?spm_id_from=333.1007.0.0)平台发布视频,其它地方出现都是假的
+- 我仅在[BiliBili](https://space.bilibili.com/1412062866?spm_id_from=333.1007.0.0)平台发布视频,其它地方出现均为搬运
 
 - 该存储库fork自[PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
