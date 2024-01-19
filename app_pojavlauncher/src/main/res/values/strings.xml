@@ -424,7 +424,7 @@
     <string name="mcl_setting_renderer_default">Zink Mesa24.0.0 (Vulkan)</string>
     <string name="mcl_setting_renderer_zinks">Zink Mesa23.0.4 (Vulkan)</string>
     <string name="mcl_setting_renderer_zinkt">Zink Mesa21.0.3 (Vulkan)</string>
-    <string name="mcl_setting_renderer_virgl">Virglrenderer Mesa22.1.2</string>
+    <string name="mcl_setting_renderer_virgl">Virglrenderer</string>
     <string name="mcl_setting_renderer_pan">Panfrost (Mali)</string>
     <string name="mcl_setting_renderer_fd">Freedreno (Adreno)</string>
     <!-- Dialog box prompt -->
