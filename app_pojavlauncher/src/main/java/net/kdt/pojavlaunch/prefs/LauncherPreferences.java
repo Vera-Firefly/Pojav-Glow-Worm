@@ -76,7 +76,7 @@ public class LauncherPreferences {
     public static String PREF_DOWNLOAD_SOURCE = "default";
     public static boolean PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = false;
     public static boolean PREF_VSYNC_IN_ZINK = true;
-    public static boolean PREF_SHOW_FIREFLY_AD = true;
+    public static boolean PREF_SHOW_FIREFLY_AD = false;
 
 
     public static void loadPreferences(Context ctx) {
@@ -132,7 +132,7 @@ public class LauncherPreferences {
         PREF_EXP_SETUP_PAN  = DEFAULT_PREF.getBoolean("Rpanfrost", false);
         PREF_EXP_SETUP_FD  = DEFAULT_PREF.getBoolean("Rfreedreno", false);
 
-        PREF_SHOW_FIREFLY_AD  = DEFAULT_PREF.getBoolean("FireflyAlertDialog", true);
+        PREF_SHOW_FIREFLY_AD  = DEFAULT_PREF.getBoolean("FireflyAlertDialog", false);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
