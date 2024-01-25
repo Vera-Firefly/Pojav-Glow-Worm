@@ -44,12 +44,8 @@ void dlsym_OSMesa() {
                 abort();
             }
         }
-    } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
+    } else if(pojav_environ->config_renderer == RENDERER_VIRGL || pojav_environ->config_renderer == RENDERER_VK_WARLIP) {
         if(asprintf(&main_path, "%s/libOSMesa_81.so", getenv("POJAV_NATIVEDIR")) == -1) {
-            abort();
-        }
-    } else if(pojav_environ->config_renderer == RENDERER_VK_WARLIP) {
-        if(asprintf(&main_path, "%s/libOSMesa_82.so", getenv("POJAV_NATIVEDIR")) == -1) {
             abort();
         }
     }
