@@ -370,4 +370,14 @@
     <string name="other_login_pass">统一通行证</string>
     <string name="other_login_external">外置登陆</string>
     <string name="other_login_server_error">无认证服务器</string>
+    <!-- Dialog box prompt -->
+    <string name="alertdialog_done">确定</string>
+    <string name="alertdialog_cancel">取消</string>
+    <string name="alertdialog_firefly">打开启动器时的弹窗 (默认: 开启)</string>
+    <string name="ad_time_aaa">凌晨时刻\n你真是个奇怪的家伙!</string>
+    <string name="ad_time_aab">清晨的时光总是美好的\n欢迎使用Pojav Beta!</string>
+    <string name="ad_time_aac">午间总是很疲惫的\n小睡一会儿再来吧!</string>
+    <string name="ad_time_aad">傍晚时刻总是浪漫的\n出去走走吧!</string>
+    <string name="ad_time_aae">快乐的时光总是很短暂\n深夜了\n祝君好梦!</string>
+    <string name="ad_time_aaf">静待一树花开,盼你叶落归来\n笙歌不见故人散,十里长欢难再寻\n欢迎使用Pojav Beta!!!</string>
 </resources>
