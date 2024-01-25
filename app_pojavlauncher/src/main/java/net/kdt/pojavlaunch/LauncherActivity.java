@@ -1,9 +1,13 @@
 package net.kdt.pojavlaunch;
 
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SHOW_FIREFLY_AD;
+
 import android.Manifest;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -47,9 +51,12 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LauncherActivity extends BaseActivity {
     public static final String SETTING_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
     public final ActivityResultLauncher<Object> modInstallerLauncher =
             registerForActivityResult(new OpenDocumentWithExtension("jar"), (data)->{
@@ -194,6 +201,51 @@ public class LauncherActivity extends BaseActivity {
         mProgressLayout.observe(ProgressLayout.INSTALL_MODPACK);
         mProgressLayout.observe(ProgressLayout.AUTHENTICATE_MICROSOFT);
         mProgressLayout.observe(ProgressLayout.DOWNLOAD_VERSION_LIST);
+
+        if (PREF_SHOW_FIREFLY_AD) {
+            Date currentTime = new Date();
+            String currentTimeString = sdf.format(currentTime);
+            String[] timePeriods = {
+            "00:00-06:00",
+            "06:00-09:00",
+            "12:30-14:00",
+            "17:30-19:30",
+            "23:00-24:00"
+            };
+            String[] timePeriodChars = {
+            getString(R.string.ad_time_aaa),
+            getString(R.string.ad_time_aab),
+            getString(R.string.ad_time_aac),
+            getString(R.string.ad_time_aad),
+            getString(R.string.ad_time_aae)
+            };
+
+            int matchedIndex = -1;
+            for (int i =0; i < timePeriods.length; i++) {
+                String[] timeSplit = timePeriods[i].split("-");
+                String startTime = timeSplit[0];
+                String endTime = timeSplit[1];
+                if (isTimeBetween(currentTimeString, startTime, endTime)) {
+                    matchedIndex = i;
+                    break;
+                }
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Firefly");
+            if (matchedIndex != -1) {
+                builder.setMessage(timePeriodChars[matchedIndex]);
+            } else {
+            builder.setMessage(getString(R.string.ad_time_aaf));
+            }
+            builder.setPositiveButton(getString(R.string.alertdialog_done), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
     }
 
     @Override
@@ -324,5 +376,19 @@ public class LauncherActivity extends BaseActivity {
         mDeleteAccountButton = findViewById(R.id.delete_account_button);
         mAccountSpinner = findViewById(R.id.account_spinner);
         mProgressLayout = findViewById(R.id.progress_layout);
+    }
+
+    private boolean isTimeBetween(String currentTime, String startTime, String endTime) {
+        try {
+            Date currentDate = sdf.parse(currentTime);
+            Date startDate = sdf.parse(startTime);
+            Date endDate = sdf.parse(endTime);
+            if (currentDate.after(startDate) && currentDate.before(endDate)) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
