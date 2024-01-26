@@ -524,7 +524,6 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
     } else if (pojav_environ->config_renderer == RENDERER_VK_WARLIP
         || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
         || pojav_environ->config_renderer == RENDERER_VIRGL) {
-        pojavInitOpenGL();
         printf("OSMDroid: generating context\n");
         void* ctx = OSMesaCreateContext_p(OSMESA_RGBA,contextSrc);
         printf("OSMDroid: context=%p\n",ctx);
