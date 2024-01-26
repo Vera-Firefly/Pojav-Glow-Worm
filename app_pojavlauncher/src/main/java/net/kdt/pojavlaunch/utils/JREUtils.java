@@ -213,6 +213,8 @@ public class JREUtils {
             envMap.put("POJAV_VSYNC_IN_ZINK", "1");
         if(PREF_ZINK_CRASH_HANDLE)
             envMap.put("POJAV_ZINK_CRASH_HANDLE", "1");
+        if(Tools.deviceHasHangingLinker())
+            envMap.put("POJAV_EMUI_ITERATOR_MITIGATE", "1");
 
         if(FFmpegPlugin.isAvailable) {
             envMap.put("PATH", FFmpegPlugin.libraryPath+":"+envMap.get("PATH"));
