@@ -490,7 +490,6 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
         return br_init_context((basic_render_window_t*)contextSrc);
     } else if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF || pojav_environ->config_renderer == RENDERER_VIRGL) {
-        pojavInitOpenGL();
         printf("OSMDroid: generating context\n");
         void* ctx = OSMesaCreateContext_p(OSMESA_RGBA,contextSrc);
         printf("OSMDroid: context=%p\n",ctx);
