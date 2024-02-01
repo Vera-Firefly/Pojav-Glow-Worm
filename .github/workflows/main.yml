@@ -25,6 +25,7 @@ jobs:
     env:
 
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+      VERA_KEYSTORE_PASSWORD: ${{ secrets.VERA_KEYSTORE_PASSWORD }}
 
     steps:
 
@@ -102,6 +103,11 @@ jobs:
 
           java-version: '17'
 
+      - name: Build Release
+        if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'xxxbranchname'
+        run: |
+          gradle :app_pojavlauncher:assemblerelease
+
       - name: Build Debug.apk
 
         run: |
@@ -109,6 +115,16 @@ jobs:
           # Build the launcher
 
           gradle :app_pojavlauncher:assembleDebug
+
+      - name: Upload release
+        continue-on-error: true
+        if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'xxxbranchname'
+        uses: actions/upload-artifact@v3
+        with:
+
+          name: app-release
+        
+          path: app_pojavlauncher/build/outputs/apk/release/*
 
       - name: Upload APK
 
