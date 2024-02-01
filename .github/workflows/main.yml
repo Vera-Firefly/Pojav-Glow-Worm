@@ -132,7 +132,7 @@ jobs:
 
         with:
 
-          name: app-debug-release
+          name: app-debug
 
           path: app_pojavlauncher/build/outputs/apk/debug/*
 
