@@ -91,11 +91,6 @@ android {
     signingConfigs {
         releaseBuild {
             def pwd = System.getenv("VERA_KEYSTORE_PASSWORD")
-            if (pwd == null) {
-                Properties prop = new Properties()
-                prop.load(new FileInputStream("${rootDir}/local.properties"))
-                pwd = prop.get("pwd")
-            }
             storeFile file("key-store.jks")
             storePassword pwd
             keyAlias "Firefly"
