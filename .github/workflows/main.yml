@@ -25,6 +25,7 @@ jobs:
     env:
 
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+      VERA_KEYSTORE_PASSWORD: ${{ secrets.VERA_KEYSTORE_PASSWORD }}
 
     steps:
 
@@ -129,7 +130,7 @@ jobs:
 
         with:
 
-          name: app-debug-release
+          name: app-debug
 
           path: app_pojavlauncher/build/outputs/apk/debug/*
 
