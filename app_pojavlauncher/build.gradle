@@ -89,6 +89,18 @@ android {
     }
 
     signingConfigs {
+        releaseBuild {
+            def pwd = System.getenv("VERA_KEYSTORE_PASSWORD")
+            if (pwd == null) {
+                Properties prop = new Properties()
+                prop.load(new FileInputStream("${rootDir}/local.properties"))
+                pwd = prop.get("pwd")
+            }
+            storeFile file("key-store.jks")
+            storePassword pwd
+            keyAlias "Firefly"
+            keyPassword pwd
+        }
         customDebug {
             storeFile file("debug.keystore")
             storePassword "android"
@@ -122,6 +134,17 @@ android {
             initWith debug
             minifyEnabled true
             shrinkResources true
+        }
+        release {
+            // Don't set to true or java.awt will be a.a or something similar.
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // defaultConfig already set
+            // multiDexEnabled = true
+            // debuggable = true
+            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.beta'
+            resValue 'string', 'application_package', 'net.kdt.pojavlaunch.beta'
+            signingConfig signingConfigs.releaseBuild
         }
     }
 
