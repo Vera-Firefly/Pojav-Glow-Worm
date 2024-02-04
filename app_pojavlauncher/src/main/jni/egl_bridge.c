@@ -513,7 +513,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
         || pojav_environ->config_renderer == RENDERER_VK_WARLIP
         || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
         printf("OSMDroid: making current\n");
-        OSMesaMakeCurrent_p((OSMesaContext)window,buf.bits,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
+        OSMesaMakeCurrent_p((OSMesaContext)window,setbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
         if (pojav_environ->config_renderer == RENDERER_VK_WARLIP
          || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
             ANativeWindow_lock(pojav_environ->pojavWindow,&buf,NULL);
