@@ -217,6 +217,8 @@ public class JREUtils {
             envMap.put("POJAV_EMUI_ITERATOR_MITIGATE", "1");
         if(PREF_EXP_SETUP)
             envMap.put("POJAV_EXP_SETUP", "1");
+        if(PREF_EXP_FRAME_BUFFER)
+            envMap.put("POJAV_EXP_FRAME_BUFFER", "1");
 
         if(FFmpegPlugin.isAvailable) {
             envMap.put("PATH", FFmpegPlugin.libraryPath+":"+envMap.get("PATH"));

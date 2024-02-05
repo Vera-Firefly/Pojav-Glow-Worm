@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">Pojav Beta·Zink</string>
-    <string name="app_short_name">Pojav Beta·Zink</string>
+    <string name="app_name">Pojav EXP</string>
+    <string name="app_short_name">Pojav EXP</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -338,7 +338,7 @@
     <string name="preference_category_local_account_title">离线账号</string>
     <string name="preference_category_custom_path">自定义路径</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度较快)</string>
-    <string name="app_start_toast">#欢迎使用Pojav Beta!!!!</string>
+    <string name="app_start_toast">#欢迎使用Pojav EXP!!!!</string>
     <string name="preference_mouse_description">设置游戏内鼠标图标</string>
     <string name="preference_mouse_title">鼠标图标自定义</string>
     <string name="notif_mouse">设置完成</string>
@@ -346,7 +346,7 @@
     <string name="notif_mouse1">删除成功</string>
     <string name="microsoft_login_fragment">开始登陆!</string>
     <string name="preference_zink_crash_handle_title">使用旧的Bridge</string>
-    <string name="preference_zink_crash_handle">在使用zink启动1.20.x-forge崩溃时开启它,仅影响zink</string>
+    <string name="preference_zink_crash_handle">在使用zink渲染器崩溃时开启它,仅影响zink</string>
     <string name="customctrl_absolute_tracking">绝对手指跟踪</string>
     <!-- Other login -->
     <string name="other_login_api">外置登录</string>
@@ -372,6 +372,8 @@
     <string name="preference_category_renderer_experimental_settings">渲染器实验性设置</string>
     <string name="preference_renderer_setup_title">启用渲染器实验性设置</string>
     <string name="preference_renderer_setup">针对于Mesa的实验性设置</string>
+    <string name="preference_exp_framebuffer_title">帧缓冲区</string>
+    <string name="preference_exp_framebuffer">开启帧缓冲区,当你使用Mesa渲染器随机闪退时</string>
     <string name="preference_renderer_setup_extra">实验性设置(Extra)</string>
     <string name="preference_renderer_setup_default">使用默认配置</string>
     <!-- Dialog box prompt -->
@@ -387,9 +389,9 @@
     <string name="alertdialog_cancel">取消</string>
     <string name="alertdialog_firefly">打开启动器时的弹窗 (默认: 开启)</string>
     <string name="ad_time_aaa">凌晨时刻\n你真是个奇怪的家伙!</string>
-    <string name="ad_time_aab">清晨的时光总是美好的\n欢迎使用Pojav Beta!</string>
+    <string name="ad_time_aab">清晨的时光总是美好的\n欢迎使用Pojav EXP!</string>
     <string name="ad_time_aac">午间总是很疲惫的\n小睡一会儿再来吧!</string>
     <string name="ad_time_aad">傍晚时刻总是浪漫的\n出去走走吧!</string>
     <string name="ad_time_aae">快乐的时光总是很短暂\n深夜了\n祝君好梦!</string>
-    <string name="ad_time_aaf">静待一树花开,盼你叶落归来\n笙歌不见故人散,十里长欢难再寻\n欢迎使用Pojav Beta!!!</string>
+    <string name="ad_time_aaf">静待一树花开,盼你叶落归来\n笙歌不见故人散,十里长欢难再寻\n欢迎使用Pojav EXP!!!</string>
 </resources>
