@@ -89,6 +89,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
     }
 
     private void computeVisibility(){
+        requirePreference("ExpFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ZinkF").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ZinkS").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("VulkanLwarlip").setVisible(LauncherPreferences.PREF_EXP_SETUP);

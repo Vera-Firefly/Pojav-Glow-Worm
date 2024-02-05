@@ -212,7 +212,7 @@
     <string name="notif_mouse1">刪除成功</string>
     <string name="microsoft_login_fragment">開始登陸!</string>
     <string name="preference_zink_crash_handle_title">使用舊的Bridge</string>
-    <string name="preference_zink_crash_handle">在使用zink啟動1.20.x-forge崩潰時開啟它,僅影響zink</string>
+    <string name="preference_zink_crash_handle">在使用zink渲染器崩潰時開啟它,僅影響zink</string>
     <string name="customctrl_absolute_tracking">絕對手指跟蹤</string>
     <!-- Other login -->
     <string name="other_login_api">外置登錄</string>
@@ -238,6 +238,8 @@
     <string name="preference_category_renderer_experimental_settings">渲染器實驗性設置</string>
     <string name="preference_renderer_setup_title">使用渲染器實驗性設置</string>
     <string name="preference_renderer_setup">針對於Mesa的實驗性設置</string>
+    <string name="preference_exp_framebuffer_title">幀緩冲區</string>
+    <string name="preference_exp_framebuffer">開啟幀緩冲區,當你使用Mesa渲染器隨機閃退時</string>
     <string name="preference_renderer_setup_extra">實驗性設置(Extra)</string>
     <string name="preference_renderer_setup_default">使用默認配置</string>
     <!-- Dialog box prompt -->
