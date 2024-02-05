@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">Pojav EXP</string>
-    <string name="app_short_name">Pojav EXP</string>
+    <string name="app_name">Pojav Beta·Zink</string>
+    <string name="app_short_name">Pojav Beta·Zink</string>
 
     <!-- Action bar part -->
 
@@ -379,7 +379,7 @@
     <string name="preference_category_microsoft_account_title">Microsoft Account</string>
     <string name="preference_category_local_account_title">Local account</string>
     <string name="preference_category_custom_path">Custom path</string>
-    <string name="app_start_toast">#Welcome to Pojav EXP!!!!</string>
+    <string name="app_start_toast">#Welcome to Pojav Beta!!!!</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (up to 1.16.5, fast)</string>
     <string name="preference_mouse_title">Mouce customization</string>
     <string name="preference_mouse_description">Set mouse pointer icon in game</string>
@@ -442,7 +442,7 @@
     <string name="alertdialog_cancel">Cancel</string>
     <string name="alertdialog_firefly">Show Alertdialog when the launcher is opened (Default: Open)</string>
     <string name="ad_time_aaa">It\'s the wee hours of the morning.\nYou\'re a strange guy!</string>
-    <string name="ad_time_aab">The time in the morning always represents beauty.\nWelcome to PojavLauncher</string>
+    <string name="ad_time_aab">The time in the morning always represents beauty.\nWelcome to Pojav Beta</string>
     <string name="ad_time_aac">Noon time always so tired.\nTake a nap and come back!</string>
     <string name="ad_time_aad">The evening is always so romantic.\nLet\'s go out for a walk!</string>
     <string name="ad_time_aae">Time is always so short, late at night.\nHurry to have a good sleep!</string>
