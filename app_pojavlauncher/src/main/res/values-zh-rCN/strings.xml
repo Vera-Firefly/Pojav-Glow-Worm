@@ -350,7 +350,9 @@
     <string name="notif_mouse1">删除成功</string>
     <string name="microsoft_login_fragment">开始登陆!</string>
     <string name="preference_zink_crash_handle_title">使用旧的Bridge</string>
-    <string name="preference_zink_crash_handle">在使用zink启动1.20.x-forge崩溃时开启它,仅影响zink</string>
+    <string name="preference_zink_crash_handle">在使用zink渲染器崩溃时开启它,仅影响zink</string>
+    <string name="preference_exp_framebuffer_title">帧缓冲区</string>
+    <string name="preference_exp_framebuffer">开启帧缓冲区,当你使用Mesa渲染器随机闪退时</string>
     <string name="customctrl_absolute_tracking">绝对手指跟踪</string>
     <!-- Other login -->
     <string name="other_login_api">外置登录</string>
