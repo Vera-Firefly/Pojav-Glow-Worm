@@ -48,6 +48,12 @@
             android:summary="@string/alertdialog_firefly"
             android:title="Firefly AlertDialog"/>
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ExpFrameBuffer"
+            android:title="@string/preference_exp_framebuffer_title"
+            android:summary="@string/preference_exp_framebuffer"/>
+
     </PreferenceCategory>
     <Preference
             android:key="control_mouse_setting"
