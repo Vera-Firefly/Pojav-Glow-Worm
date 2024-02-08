@@ -75,6 +75,25 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                         ((SwitchPreference) customMesaVersionPref.getPreference(i)).setChecked(false);
                     }
                     ((SwitchPreference) custommvs).setChecked(true);
+                    if (custommvs.getKey().equals("ebCustom")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(getString(R.string.preference_rendererexp_alertdialog_warning));
+                        builder.setMessage(getString(R.string.preference_exp_alertdialog_glmessage));
+                        builder.setPositiveButton(getString(R.string.preference_rendererexp_alertdialog_done), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.setNegativeButton(getString(R.string.preference_rendererexp_alertdialog_cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ((SwitchPreference) custommvs).setChecked(false);
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        builder.show();
+                    }
                     return true;
                 }
             });
@@ -107,33 +126,6 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                         ((SwitchPreference) experimentalSetUpPreference).setChecked(false);
                         SharedPreferences.Editor editor = p.edit();
                         editor.putBoolean("ExperimentalSetup", false);
-                        editor.apply();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                builder.show();
-            }
-        }
-        if (s.equals("ebCustom")) {
-            Preference enableCustomMesaVersion = requirePreference("ebCustom");
-            boolean isebCustomEnabled = p.getBoolean("ebCustom", false);
-
-            if (isebCustomEnabled) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getString(R.string.preference_rendererexp_alertdialog_warning));
-                builder.setMessage(getString(R.string.preference_exp_alertdialog_glmessage));
-                builder.setPositiveButton(getString(R.string.preference_rendererexp_alertdialog_done), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton(getString(R.string.preference_rendererexp_alertdialog_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((SwitchPreference) enableCustomMesaVersion).setChecked(false);
-                        SharedPreferences.Editor editor = p.edit();
-                        editor.putBoolean("ebCustom", false);
                         editor.apply();
                     }
                 });
