@@ -233,36 +233,26 @@ public class JREUtils {
                 if(PREF_EXP_SETUP){
                     if(PREF_EXP_ENABLE_SPECIFIC){
                         if(PREF_EXP_SETUP_DEFAULT){
-                            envMap.put("POJAV_EXP_SETUP_DEFAULT", "1");
                             envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
                         }
                         if(PREF_EXP_SETUP_S){
-                            envMap.put("POJAV_EXP_SETUP_S", "1");
                             envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
                         }
                         if(PREF_EXP_SETUP_VIRGL){
-                            envMap.put("POJAV_EXP_SETUP_VIRGL", "1");
                             envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
                             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
                         }
                         if(PREF_EXP_SETUP_LW){
-                            envMap.put("POJAV_EXP_SETUP_LW", "1");
                             envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
                         }
                         if(PREF_EXP_SETUP_PAN){
-                            envMap.put("POJAV_EXP_SETUP_PAN", "1");
                             envMap.put("MESA_GL_VERSION_OVERRIDE", "3.3");
                             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "330");
-                            //envMap.put("POJAVEXEC_OSMESA", "libOSMesa_pan.so");
-                            //envMap.put("MESA_SHADER_CACHE_DISABLE", "true");
-                            envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
-                            envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
                         }
                         if(PREF_EXP_SETUP_FD){
-                            envMap.put("POJAV_EXP_SETUP_FD", "1");
                             envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
                         }
