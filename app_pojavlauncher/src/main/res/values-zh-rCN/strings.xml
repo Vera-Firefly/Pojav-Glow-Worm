@@ -394,4 +394,14 @@
     <string name="ad_time_aad">傍晚时刻总是浪漫的\n出去走走吧!</string>
     <string name="ad_time_aae">快乐的时光总是很短暂\n深夜了\n祝君好梦!</string>
     <string name="ad_time_aaf">静待一树花开,盼你叶落归来\n笙歌不见故人散,十里长欢难再寻\n欢迎使用Pojav Beta·Zink!!!</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_alertdialog_glmessage">在你执行此操作之前你必须知道你在做什么\n你真的确定你要开启它吗?</string>
+    <string name="preference_exp_custommv">GL/GLSL版本</string>
+    <string name="preference_exp_ebsystem">跟随系统</string>
+    <string name="preference_exp_ebspecific">使用固定版本</string>
+    <string name="preference_exp_ebcustom">自定义</string>
+    <string name="preference_rendererexp_custom_glversion_title">自定义GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">允许您自定义Mesa GL/GLSL版本</string>
+    <string name="custom_gl_version">Mesa GL版本:</string>
+    <string name="custom_glsl_version">Mesa GLSL版本:</string>
 </resources>

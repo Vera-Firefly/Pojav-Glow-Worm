@@ -447,4 +447,14 @@
     <string name="ad_time_aad">The evening is always so romantic.\nLet\'s go out for a walk!</string>
     <string name="ad_time_aae">Time is always so short, late at night.\nHurry to have a good sleep!</string>
     <string name="ad_time_aaf">Happy Hour</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_alertdialog_glmessage">Before you do this, you must know what you are doing\nAre you sure you want to open it?</string>
+    <string name="preference_exp_custommv">GL/GLSL Version</string>
+    <string name="preference_exp_ebsystem">Select according to system</string>
+    <string name="preference_exp_ebspecific">Use a specific version</string>
+    <string name="preference_exp_ebcustom">Custom</string>
+    <string name="preference_rendererexp_custom_glversion_title">Custom GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">Allow custom Mesa GL/GLSL version</string>
+    <string name="custom_gl_version">Mesa GL version:</string>
+    <string name="custom_glsl_version">Mesa GLSL version:</string>
 </resources>

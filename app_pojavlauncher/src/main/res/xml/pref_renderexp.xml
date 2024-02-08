@@ -49,4 +49,27 @@
             android:title="@string/preference_renderer_setup_freedreno"/>
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="customMesaVersionPref"
+        android:title="@string/preference_exp_custommv">
+
+        <SwitchPreference
+            android:key="ebSystem"
+            android:title="@string/preference_exp_ebsystem"/>
+        <SwitchPreference
+            android:key="ebSpecific"
+            android:title="@string/preference_exp_ebspecific"/>
+        <SwitchPreference
+            android:key="ebCustom"
+            android:title="@string/preference_exp_ebcustom"/>
+
+    </PreferenceCategory>
+    
+        <Preference
+            android:key="SetGLVersion"
+            android:title="@string/preference_rendererexp_custom_glversion_title"
+            android:summary="@string/preference_rendererexp_custom_glversion"
+            android:icon="@drawable/ic_mesa_gl"/>
+
 </PreferenceScreen>

@@ -72,7 +72,11 @@ public class LauncherPreferences {
     public static boolean PREF_EXP_SETUP_VIRGL = false;
     public static boolean PREF_EXP_SETUP_PAN = false;
     public static boolean PREF_EXP_SETUP_FD = false;
+
     public static boolean PREF_EXP_FRAME_BUFFER = false;
+    public static boolean PREF_EXP_ENABLE_SYSTEM = false;
+    public static boolean PREF_EXP_ENABLE_SPECIFIC = false;
+    public static boolean PREF_EXP_ENABLE_CUSTOM = false;
 
     public static boolean PREF_VERIFY_MANIFEST = true;
     public static String PREF_DOWNLOAD_SOURCE = "default";
@@ -80,6 +84,8 @@ public class LauncherPreferences {
     public static boolean PREF_VSYNC_IN_ZINK = true;
     public static boolean PREF_SHOW_FIREFLY_AD = false;
 
+    public static String PREF_MESA_GL_VERSION;
+    public static String PREF_MESA_GLSL_VERSION;
 
     public static void loadPreferences(Context ctx) {
         //Required for the data folder.
@@ -128,6 +134,10 @@ public class LauncherPreferences {
 
         PREF_ZINK_CRASH_HANDLE = DEFAULT_PREF.getBoolean("zinkCrashhandle", false);
         PREF_EXP_FRAME_BUFFER = DEFAULT_PREF.getBoolean("ExpFrameBuffer", false);
+        PREF_EXP_ENABLE_SYSTEM = DEFAULT_PREF.getBoolean("ebSystem", false);
+        PREF_EXP_ENABLE_SPECIFIC = DEFAULT_PREF.getBoolean("ebSpecific", false);
+        PREF_EXP_ENABLE_CUSTOM = DEFAULT_PREF.getBoolean("ebCustom", false);
+
         PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
         PREF_EXP_SETUP_DEFAULT = DEFAULT_PREF.getBoolean("ZinkF", false);
         PREF_EXP_SETUP_S = DEFAULT_PREF.getBoolean("ZinkS", false);
@@ -136,8 +146,10 @@ public class LauncherPreferences {
         PREF_EXP_SETUP_PAN  = DEFAULT_PREF.getBoolean("Rpanfrost", false);
         PREF_EXP_SETUP_FD  = DEFAULT_PREF.getBoolean("Rfreedreno", false);
 
-
         PREF_SHOW_FIREFLY_AD  = DEFAULT_PREF.getBoolean("FireflyAlertDialog", false);
+
+        PREF_MESA_GL_VERSION = DEFAULT_PREF.getString("mesaGLVersion", "4.6");
+        PREF_MESA_GLSL_VERSION = DEFAULT_PREF.getString("mesaGLSLVersion", "460");
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
