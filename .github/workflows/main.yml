@@ -103,7 +103,7 @@ jobs:
 
           java-version: '17'
 
-      - name: Build Release
+      - name: Build Release.apk
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
         run: |
           gradle :app_pojavlauncher:assemblerelease
@@ -116,7 +116,7 @@ jobs:
 
           gradle :app_pojavlauncher:assembleDebug
 
-      - name: Upload release
+      - name: Upload Release
         continue-on-error: true
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
         uses: actions/upload-artifact@v3
@@ -124,7 +124,7 @@ jobs:
           name: app-release
           path: app_pojavlauncher/build/outputs/apk/release/*
 
-      - name: Upload APK
+      - name: Upload Debug
 
         uses: actions/upload-artifact@v3
 
