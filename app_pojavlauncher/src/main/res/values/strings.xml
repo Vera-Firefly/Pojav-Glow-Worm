@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">Pojav Beta·Zink</string>
-    <string name="app_short_name">Pojav Beta·Zink</string>
+    <string name="app_name">Pojav Glow·Worm</string>
+    <string name="app_short_name">Pojav Glow·Worm</string>
 
     <!-- Action bar part -->
 
@@ -379,7 +379,7 @@
     <string name="preference_category_microsoft_account_title">Microsoft Account</string>
     <string name="preference_category_local_account_title">Local account</string>
     <string name="preference_category_custom_path">Custom path</string>
-    <string name="app_start_toast">#Welcome to Pojav beta!!!!</string>
+    <string name="app_start_toast">#Welcome to Pojav Glow·Worm!!!!</string>
     <string name="mcl_setting_renderer_vulkan_warlip">Zink (Mesa21.0.3) - (all versions,very slow., low device compat)</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (up to 1.16.5, fast)</string>
     <string name="mcl_setting_renderer_virgl">virglrenderer - (release 1.7+, slow)</string>

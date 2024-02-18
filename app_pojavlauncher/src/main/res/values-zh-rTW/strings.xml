@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">Pojav Beta·Zink</string>
-    <string name="app_short_name">Pojav Beta·Zink</string>
+    <string name="app_name">Pojav Glow·Worm</string>
+    <string name="app_short_name">Pojav Glow·Worm</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -204,7 +204,7 @@
     <string name="preference_category_local_account_title">離線賬號</string>
     <string name="preference_category_custom_path">自定義路徑</string>
     <string name="mcl_setting_renderer_vulkan_warlip">Zink Mesa21.0.3 - (所有版本可用,非常慢)</string>
-    <string name="app_start_toast">#歡迎使用beta版!!!!</string>
+    <string name="app_start_toast">#歡迎使用Pojav Glow·Worm!!!!</string>
     <string name="mcl_setting_renderer_virgl">virglrenderer - (1.7 及以上版本可用，速度較慢)</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度較快)</string>
     <string name="preference_mouse_description">設置遊戲內鼠標圖標</string>
