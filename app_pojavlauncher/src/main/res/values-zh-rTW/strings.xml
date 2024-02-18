@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">Pojav Beta·Zink</string>
-    <string name="app_short_name">Pojav Beta·Zink</string>
+    <string name="app_name">Pojav Glow·Worm</string>
+    <string name="app_short_name">Pojav Glow·Worm</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -203,7 +203,7 @@
     <string name="preference_category_microsoft_account_title">微軟賬號</string>
     <string name="preference_category_local_account_title">離線賬號</string>
     <string name="preference_category_custom_path">自定義路徑</string>
-    <string name="app_start_toast">#歡迎使用Pojav Beta!!!!</string>
+    <string name="app_start_toast">#歡迎使用Pojav Glow·Worm!!!!</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度較快)</string>
     <string name="preference_mouse_description">設置遊戲內鼠標圖標</string>
     <string name="preference_mouse_title">鼠標圖標自定義</string>
@@ -255,11 +255,11 @@
     <string name="alertdialog_cancel">取消</string>
     <string name="alertdialog_firefly">打開啟動器時的彈窗 (默認: 開啟)</string>
     <string name="ad_time_aaa">淩晨時刻\n你真是個奇怪的傢夥!</string>
-    <string name="ad_time_aab">清晨的時光總是美好的\n歡迎使用Pojav Beta!</string>
+    <string name="ad_time_aab">清晨的時光總是美好的\n歡迎使用Pojav Glow·Worm!</string>
     <string name="ad_time_aac">午間總是很疲憊的\n小睡一會兒再來吧!</string>
     <string name="ad_time_aad">傍晚時刻總是浪漫的\n出去走走吧!</string>
     <string name="ad_time_aae">快樂的時光總是很短暫\n深夜了\n祝君好夢!</string>
-    <string name="ad_time_aaf">靜等一樹花開,盼你落葉歸來\n笙歌不見故人散,十里長歡難再尋\n歡迎使用Pojav Beta!!!</string>
+    <string name="ad_time_aaf">靜等一樹花開,盼你落葉歸來\n笙歌不見故人散,十里長歡難再尋\n歡迎使用Pojav Glow·Worm!!!</string>
     <!-- Custom GL/GLSL Version -->
     <string name="preference_exp_alertdialog_glmessage">在你執行此操作之前你必須知道你在做什麼\n你真的確定你要開啟它嗎?</string>
     <string name="preference_exp_custommv">GL/GLSL版本</string>

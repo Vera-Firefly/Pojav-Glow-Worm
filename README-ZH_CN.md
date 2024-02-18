@@ -1,8 +1,8 @@
-<H1 align="center">Pojav Beta·Zink</H1>
+<H1 align="center">Pojav Glow·Worm</H1>
 
 <img src="https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
-[![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Vera-Firefly/Pojav-Beta-Zink/actions)
+[![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Vera-Firefly/Pojav-Glow-Worm/actions)
 ---------
 * <a href="/README.md">English</a>
 
@@ -26,7 +26,7 @@
 
 ## 导航
 - [介绍](#介绍)  
-- [获取 Pojav Beta·Zink](#获取Pojav-Beta-Zink)
+- [获取 Pojav Glow·Worm](#获取Pojav-Glow-Worm)
 - [构建](#构建) 
 - [当前状态](#当前状态) 
 - [许可证](#许可证) 
@@ -39,13 +39,13 @@
 * 这个启动器可以运行几乎所有可用的Minecraft版本，从rd-132211到最新的快照快照版本(包括战斗测试版本)
 * 还支持通过Forge和Fabric进行修改
 * 此存储库包含Android的源代码
-* Pojav Beta·Zink不支持IOS!!!
+* Pojav Glow·Worm不支持IOS!!!
 
-## 获取Pojav Beta Zink
+## 获取Pojav Glow·Worm
 
 你可以通过以下三种方法获取:
 
-1. 你可以从[正式包](https://github.com/Vera-Firefly/Pojav-Beta-Zink/releases)或[自动构建](https://github.com/Vera-Firefly/Pojav-Beta-Zink/actions)获取
+1. 你可以从[正式包](https://github.com/Vera-Firefly/Pojav-Glow-Worm/releases)或[自动构建](https://github.com/Vera-Firefly/Pojav-Glow-Worm/actions)获取
 
 2. 你可以从[网盘](https://www.123pan.com/s/O0EDVv-ZJT13)获取
 
@@ -118,7 +118,7 @@ scripts\languagelist_updater.bat
 - 可能更多,这就是为什么我们有一个错误追踪器
 
 ## 许可证
-- [GNU GPLv3](https://github.com/Vera-Firefly/Pojav-Beta-Zink/blob/v3_openjdk/LICENSE).
+- [GNU GPLv3](https://github.com/Vera-Firefly/Pojav-Glow-Worm/blob/v3_openjdk/LICENSE).
 
 ## 贡献
 欢迎投稿!我们欢迎任何类型的贡献,不仅仅是代码.例如,您可以帮忙翻译!
@@ -140,4 +140,4 @@ scripts\languagelist_updater.bat
 - 感谢[MCHeads](https://mc-heads.net)提供Minecraft头像组件
 
 ## 更多
-* 如果你想要一种不同的体验,试试实验版本:[Pojav EXP](https://github.com/Vera-Firefly/Pojav-Experimental-Edition)
+* 如果你想要一种不同的体验,试试实验版本:[Pojav EXP](https://github.com/Vera-Firefly/PojavLauncher-Experimental-Edition)

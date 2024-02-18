@@ -1,8 +1,8 @@
-<H1 align="center">Pojav Beta·Zink</H1>
+<H1 align="center">Pojav Glow·Worm</H1>
 
 <img src="https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
-[![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Vera-Firefly/Pojav-Beta-Zink/actions)
+[![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Vera-Firefly/Pojav-Glow-Worm/actions)
 ---------
 * <a href="/README-ZH_CN.md">中文</a>
 
@@ -26,7 +26,7 @@
 
 ## Navigation
 - [Introduction](#introduction)  
-- [Getting Pojav Beta·Zink](#getting-Pojav-Beta-zink)
+- [Getting Pojav Glow·Worm](#getting-pojav-glow-worm)
 - [Building](#building) 
 - [Current status](#current-status) 
 - [License](#license) 
@@ -39,13 +39,13 @@
 * This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.19 snapshots (including Combat Test versions). 
 * Modding via Forge and Fabric are also supported. 
 * This repository contains source code for Android. 
-* Pojav Beta·Zink does not support IOS
+* Pojav Glow·Worm does not support IOS
 
-## Getting Pojav Beta Zink
+## Getting Pojav Glow·Worm
 
 You can get PojavLauncher via three methods:
 
-1. You can get the prebuilt app from [stable releases](https://github.com/Vera-Firefly/Pojav-Beta-Zink/releases) or [automatic builds](https://github.com/Vera-Firefly/Pojav-Beta-Zink/actions).
+1. You can get the prebuilt app from [stable releases](https://github.com/Vera-Firefly/Pojav-Glow-Worm/releases) or [automatic builds](https://github.com/Vera-Firefly/Pojav-Glow-Worm/actions).
 
 2. You can [build](#building) from source.
 ## Building
@@ -116,7 +116,7 @@ Then, run these commands ~~or build using Android Studio~~.
 - Probably more, that's why we have a bug tracker
 
 ## License
-- PojavLauncher is licensed under [GNU GPLv3](https://github.com/Vera-Firefly/Pojav-Beta-Zink/blob/v3_openjdk/LICENSE).
+- PojavLauncher is licensed under [GNU GPLv3](https://github.com/Vera-Firefly/Pojav-Glow-Worm/blob/v3_openjdk/LICENSE).
 
 ## Contributing
 Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help the wiki shape up. You can help the translation too!
@@ -139,4 +139,4 @@ Any code change to this repository should be submitted as a pull request. The de
 - Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
 
 ## More
-* If you want a different experience, try experimental version:[Pojav EXP](https://github.com/Vera-Firefly/Pojav-Experimental-Edition)
+* If you want a different experience, try experimental version:[Pojav EXP](https://github.com/Vera-Firefly/PojavLauncher-Experimental-Edition)
