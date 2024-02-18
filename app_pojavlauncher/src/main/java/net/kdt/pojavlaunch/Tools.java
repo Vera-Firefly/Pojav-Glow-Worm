@@ -99,7 +99,7 @@ public final class Tools {
 
     public static final Gson GLOBAL_GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static final String URL_HOME = "https://github.com/Vera-Firefly/PojavLauncher-Beta-Zink";
+    public static final String URL_HOME = "https://github.com/Vera-Firefly/Pojav-Glow-Worm";
     public static String NATIVE_LIB_DIR;
     public static String DIR_DATA; //Initialized later to get context
     public static File DIR_CACHE;
