@@ -210,7 +210,7 @@ public final class Tools {
             }
         }
 
-        getCacioJavaArgs(javaArgList, runtime.javaVersion == 8);
+        getCacioJavaArgs(javaArgList, runtime.javaVersion == 8, runtime.javaVersion == 8);
 
         if (versionInfo.logging != null) {
             String configFile = Tools.DIR_DATA + "/security/" + versionInfo.logging.client.file.id.replace("client", "log4j-rce-patch");
