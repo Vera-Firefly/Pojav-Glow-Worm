@@ -70,86 +70,15 @@ int (*vtest_main_p) (int argc, char** argv);
 void (*vtest_swap_buffers_p) (void);
 void bigcore_set_affinity();
 
-void* gbuffer;
-
 void* egl_make_current(void* window);
 
-static void set_vulkan_ptr(void* ptr) {
-    char envval[64];
-    sprintf(envval, "%"PRIxPTR, (uintptr_t)ptr);
-    setenv("VULKAN_PTR", envval, 1);
-}
+#ifdef FRAME_BUFFER_SUPPOST
 
-void load_vulkan() {
-    if(getenv("POJAV_ZINK_PREFER_SYSTEM_DRIVER") == NULL && android_get_device_api_level() >= 28) {
-    // the loader does not support below that
-#ifdef ADRENO_POSSIBLE
-        void* result = load_turnip_vulkan();
-        if(result != NULL) {
-            printf("AdrenoSupp: Loaded Turnip, loader address: %p\n", result);
-            set_vulkan_ptr(result);
-            return;
-        }
+void* gbuffer;
+
 #endif
-    }
-    printf("OSMDroid: loading vulkan regularly...\n");
-    void* vulkan_ptr = dlopen("libvulkan.so", RTLD_LAZY | RTLD_LOCAL);
-    printf("OSMDroid: loaded vulkan, ptr=%p\n", vulkan_ptr);
-    set_vulkan_ptr(vulkan_ptr);
-}
 
-JNIEXPORT void JNICALL
-Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPAT jclass clazz, jobject surface) {
-    pojav_environ->pojavWindow = ANativeWindow_fromSurface(env, surface);
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(br_setup_window != NULL) br_setup_window();
-    }
-}
 
-JNIEXPORT void JNICALL
-Java_net_kdt_pojavlaunch_utils_JREUtils_releaseBridgeWindow(ABI_COMPAT JNIEnv *env, ABI_COMPAT jclass clazz) {
-    ANativeWindow_release(pojav_environ->pojavWindow);
-}
-
-EXTERNAL_API JNIEXPORT jlong JNICALL
-Java_org_lwjgl_vulkan_VK_getVulkanDriverHandle(ABI_COMPAT JNIEnv *env, ABI_COMPAT jclass thiz) {
-    printf("EGLBridge: LWJGL-side Vulkan loader requested the Vulkan handle\n");
-    // The code below still uses the env var because
-    // 1. it's easier to do that
-    // 2. it won't break if something will try to load vulkan and osmesa simultaneously
-    if(getenv("VULKAN_PTR") == NULL) load_vulkan();
-    return strtoul(getenv("VULKAN_PTR"), NULL, 0x10);
-}
-
-EXTERNAL_API JNIEXPORT void JNICALL
-Java_org_lwjgl_opengl_GL_nativeRegalMakeCurrent(JNIEnv *env, jclass clazz) {
-    if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL && pojav_environ->config_renderer != RENDERER_VK_ZINK) {
-        /*printf("Regal: making current");
-    
-        RegalMakeCurrent_func *RegalMakeCurrent = (RegalMakeCurrent_func *) dlsym(RTLD_DEFAULT, "RegalMakeCurrent");
-        RegalMakeCurrent(potatoBridge.eglContext);*/
-
-        printf("regal removed\n");
-        abort();
-    }
-}
-
-EXTERNAL_API JNIEXPORT jlong JNICALL
-Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
-    if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL && pojav_environ->config_renderer != RENDERER_VK_ZINK) {
-        return &gbuffer;
-    }
-}
-
-EXTERNAL_API JNIEXPORT jintArray JNICALL
-Java_org_lwjgl_opengl_GL_getNativeWidthHeight(JNIEnv *env, jobject thiz) {
-    if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL && pojav_environ->config_renderer != RENDERER_VK_ZINK) {
-        jintArray ret = (*env)->NewIntArray(env,2);
-        jint arr[] = {pojav_environ->savedWidth, pojav_environ->savedHeight};
-        (*env)->SetIntArrayRegion(env,ret,0,2,arr);
-        return ret;
-    }
-}
 
 EXTERNAL_API void pojavTerminate() {
     printf("EGLBridge: Terminating\n");
@@ -178,6 +107,19 @@ EXTERNAL_API void pojavTerminate() {
             // Nothing to do here
         } break;
     }
+}
+
+JNIEXPORT void JNICALL
+Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPAT jclass clazz, jobject surface) {
+    pojav_environ->pojavWindow = ANativeWindow_fromSurface(env, surface);
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
+        if(br_setup_window != NULL) br_setup_window();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_net_kdt_pojavlaunch_utils_JREUtils_releaseBridgeWindow(ABI_COMPAT JNIEnv *env, ABI_COMPAT jclass clazz) {
+    ANativeWindow_release(pojav_environ->pojavWindow);
 }
 
 /*If you don't want your renderer for
@@ -227,6 +169,30 @@ bool loadSymbolsVirGL() {
     vtest_swap_buffers_p = dlsym(handle, "vtest_swap_buffers");
 
     free(fileName);
+}
+
+static void set_vulkan_ptr(void* ptr) {
+    char envval[64];
+    sprintf(envval, "%"PRIxPTR, (uintptr_t)ptr);
+    setenv("VULKAN_PTR", envval, 1);
+}
+
+void load_vulkan() {
+    if(getenv("POJAV_ZINK_PREFER_SYSTEM_DRIVER") == NULL && android_get_device_api_level() >= 28) {
+    // the loader does not support below that
+#ifdef ADRENO_POSSIBLE
+        void* result = load_turnip_vulkan();
+        if(result != NULL) {
+            printf("AdrenoSupp: Loaded Turnip, loader address: %p\n", result);
+            set_vulkan_ptr(result);
+            return;
+        }
+#endif
+    }
+    printf("OSMDroid: loading vulkan regularly...\n");
+    void* vulkan_ptr = dlopen("libvulkan.so", RTLD_LAZY | RTLD_LOCAL);
+    printf("OSMDroid: loaded vulkan, ptr=%p\n", vulkan_ptr);
+    set_vulkan_ptr(vulkan_ptr);
 }
 
 int pojavInitOpenGL() {
@@ -411,6 +377,7 @@ int pojavInitOpenGL() {
             return 0;
         }
         if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL) {
+#ifdef FRAME_BUFFER_SUPPOST
             printf("OSMDroid: width=%i;height=%i, reserving %i bytes for frame buffer\n",
                pojav_environ->savedWidth, pojav_environ->savedHeight,
                pojav_environ->savedWidth * 4 * pojav_environ->savedHeight);
@@ -422,6 +389,7 @@ int pojavInitOpenGL() {
                 printf("OSMDroid: can't generate frame buffer\n");
                 return 0;
             }
+#endif
         } else {
             printf("OSMDroid: do not set frame buffer\n");
         }
@@ -512,7 +480,9 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
         || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
         printf("OSMDroid: making current\n");
         if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL) {
+#ifdef FRAME_BUFFER_SUPPOST
             OSMesaMakeCurrent_p((OSMesaContext)window,gbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
+#endif
         } else {
             OSMesaMakeCurrent_p((OSMesaContext)window,setbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
         }
@@ -554,6 +524,48 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
         return ctx;
     }
 }
+
+EXTERNAL_API JNIEXPORT jlong JNICALL
+Java_org_lwjgl_vulkan_VK_getVulkanDriverHandle(ABI_COMPAT JNIEnv *env, ABI_COMPAT jclass thiz) {
+    printf("EGLBridge: LWJGL-side Vulkan loader requested the Vulkan handle\n");
+    // The code below still uses the env var because
+    // 1. it's easier to do that
+    // 2. it won't break if something will try to load vulkan and osmesa simultaneously
+    if(getenv("VULKAN_PTR") == NULL) load_vulkan();
+    return strtoul(getenv("VULKAN_PTR"), NULL, 0x10);
+}
+
+#ifdef FRAME_BUFFER_SUPPOST
+EXTERNAL_API JNIEXPORT void JNICALL
+Java_org_lwjgl_opengl_GL_nativeRegalMakeCurrent(JNIEnv *env, jclass clazz) {
+    if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL && pojav_environ->config_renderer != RENDERER_VK_ZINK) {
+        /*printf("Regal: making current");
+    
+        RegalMakeCurrent_func *RegalMakeCurrent = (RegalMakeCurrent_func *) dlsym(RTLD_DEFAULT, "RegalMakeCurrent");
+        RegalMakeCurrent(potatoBridge.eglContext);*/
+
+        printf("regal removed\n");
+        abort();
+    }
+}
+
+EXTERNAL_API JNIEXPORT jlong JNICALL
+Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
+    if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL && pojav_environ->config_renderer != RENDERER_VK_ZINK) {
+        return &gbuffer;
+    }
+}
+
+EXTERNAL_API JNIEXPORT jintArray JNICALL
+Java_org_lwjgl_opengl_GL_getNativeWidthHeight(JNIEnv *env, jobject thiz) {
+    if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL && pojav_environ->config_renderer != RENDERER_VK_ZINK) {
+        jintArray ret = (*env)->NewIntArray(env,2);
+        jint arr[] = {pojav_environ->savedWidth, pojav_environ->savedHeight};
+        (*env)->SetIntArrayRegion(env,ret,0,2,arr);
+        return ret;
+    }
+}
+#endif
 
 EXTERNAL_API void pojavSwapInterval(int interval) {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
