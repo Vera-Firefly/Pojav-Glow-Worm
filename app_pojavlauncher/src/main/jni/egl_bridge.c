@@ -1,5 +1,5 @@
 //
-// Modifile by Vera-Firefly on 02.06.2024.
+// Modifile by Vera-Firefly on 23.02.2024.
 //
 #include <jni.h>
 #include <assert.h>
@@ -52,6 +52,9 @@ void* load_turnip_vulkan();
 
 #endif
 
+// If you do not want to use a framebuffer
+// delete the following definition
+// After that, it will be stored in normal memory
 #ifndef FRAME_BUFFER_SUPPOST
 #define FRAME_BUFFER_SUPPOST
 
@@ -390,6 +393,8 @@ int pojavInitOpenGL() {
                 printf("OSMDroid: can't generate frame buffer\n");
                 return 0;
             }
+#else
+            printf("[WORNING]: Macro FRAME_BUFFER_SUPPOST is undefined,defult to close\n");
 #endif
         } else {
             printf("OSMDroid: do not set frame buffer\n");
@@ -483,6 +488,8 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
         if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL) {
 #ifdef FRAME_BUFFER_SUPPOST
             OSMesaMakeCurrent_p((OSMesaContext)window,gbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
+#else
+            OSMesaMakeCurrent_p((OSMesaContext)window,setbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
 #endif
         } else {
             OSMesaMakeCurrent_p((OSMesaContext)window,setbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
