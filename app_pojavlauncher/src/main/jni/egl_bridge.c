@@ -52,6 +52,13 @@ void* load_turnip_vulkan();
 
 #endif
 
+#ifndef FRAME_BUFFER_SUPPOST
+#define FRAME_BUFFER_SUPPOST
+
+void* gbuffer;
+
+#endif
+
 // endregion OSMESA internals
 struct PotatoBridge {
 
@@ -71,12 +78,6 @@ void (*vtest_swap_buffers_p) (void);
 void bigcore_set_affinity();
 
 void* egl_make_current(void* window);
-
-#ifdef FRAME_BUFFER_SUPPOST
-
-void* gbuffer;
-
-#endif
 
 
 
