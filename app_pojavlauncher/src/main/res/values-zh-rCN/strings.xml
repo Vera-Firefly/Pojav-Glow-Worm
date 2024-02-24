@@ -353,6 +353,7 @@
     <string name="preference_zink_crash_handle_title">使用旧的Bridge</string>
     <string name="preference_zink_crash_handle">在使用zink渲染器崩溃时开启它,仅影响zink</string>
     <string name="customctrl_absolute_tracking">绝对手指跟踪</string>
+    <string name="control_view_logout">日志输出：</string>
     <!-- Other login -->
     <string name="other_login_api">外置登录</string>
     <string name="other_login_authentication_server">身份验证服务器</string>
