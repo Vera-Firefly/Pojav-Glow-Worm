@@ -32,3 +32,4 @@
     <!-- Misc paddings -->
     <dimen name="profile_editor_image_padding">@dimen/padding_small</dimen>
 </resources>
+

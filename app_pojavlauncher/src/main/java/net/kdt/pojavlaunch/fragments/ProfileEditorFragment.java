@@ -140,7 +140,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         loadValues(LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, ""), view.getContext());
     }
 
-
     private void loadValues(@NonNull String profile, @NonNull Context context){
         if(mTempProfile == null){
             mTempProfile = getProfile(profile);
@@ -187,7 +186,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         }
         return minecraftProfile;
     }
-
 
     private void bindViews(@NonNull View view){
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);

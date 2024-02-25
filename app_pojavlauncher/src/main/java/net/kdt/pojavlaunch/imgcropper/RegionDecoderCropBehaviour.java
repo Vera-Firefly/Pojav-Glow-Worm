@@ -217,3 +217,4 @@ public class RegionDecoderCropBehaviour extends BitmapCropBehaviour {
         return returnBitmap;
     }
 }
+

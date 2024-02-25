@@ -209,3 +209,4 @@ public class CropperView extends View {
         return mCropperBehaviour.crop(targetMaxSide);
     }
 }
+

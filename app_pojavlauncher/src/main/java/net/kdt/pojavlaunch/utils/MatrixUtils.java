@@ -176,3 +176,4 @@ public class MatrixUtils {
         matrix[8] = temp8 * invDet;
     }
 }
+

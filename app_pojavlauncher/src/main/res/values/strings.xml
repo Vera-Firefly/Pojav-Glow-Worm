@@ -48,7 +48,6 @@
     <string name="mcl_options">Options</string>
     <string name="mcl_option_customcontrol">Custom controls</string>
 
-
     <string name="mcl_setting_title_use_surface_view">Use alternate surface rendering</string>
     <string name="mcl_setting_subtitle_use_surface_view">May help performance in GPU bound scenarios.</string>
     <string name="mcl_setting_title_ignore_notch">Ignore notch</string>

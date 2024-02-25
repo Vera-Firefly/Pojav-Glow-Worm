@@ -194,6 +194,7 @@
     <string name="cropper_reset">重置</string>
     <string name="cropper_select_cancelled">已取消選擇</string>
 
+
     <!-- App New Annotation -->
     <string name="preference_category_gestures">手勢</string>
     <string name="preference_category_buttons">按鍵</string>

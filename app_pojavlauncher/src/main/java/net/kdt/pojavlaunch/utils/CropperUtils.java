@@ -99,7 +99,6 @@ public class CropperUtils {
         });
     }
 
-
     private static CropperBehaviour createBehaviour(CropperView cropImageView,
                                       ContentResolver contentResolver,
                                       Uri selectedUri) throws Exception {

@@ -158,3 +158,4 @@ public class BitmapCropBehaviour implements CropperBehaviour{
         refresh();
     }
 }
+

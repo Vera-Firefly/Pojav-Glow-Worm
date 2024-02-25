@@ -106,3 +106,4 @@ public class ProfileIconCache {
         return Base64.decode(inputString.substring(commaAfterSemicolon+1), 0);
     }
 }
+

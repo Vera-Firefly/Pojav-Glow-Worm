@@ -98,3 +98,4 @@ public interface CropperBehaviour {
         }
     };
 }
+
