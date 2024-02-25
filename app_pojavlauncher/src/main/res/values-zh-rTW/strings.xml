@@ -220,6 +220,7 @@
     <string name="preference_zink_crash_handle_title">使用舊的Bridge</string>
     <string name="preference_zink_crash_handle">在使用zink渲染器崩潰時開啟它,僅影響zink</string>
     <string name="customctrl_absolute_tracking">絕對手指跟蹤</string>
+    <string name="control_view_logout">日誌輸出：</string>
     <!-- Other login -->
     <string name="other_login_api">外置登錄</string>
     <string name="other_login_authentication_server">身份驗證伺服器</string>
