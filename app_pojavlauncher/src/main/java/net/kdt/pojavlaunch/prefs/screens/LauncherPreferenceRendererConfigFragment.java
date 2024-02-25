@@ -204,9 +204,9 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                 LauncherPreferences.PREF_MESA_GLSL_VERSION = mMesaGLSLVersion.getText().toString();
 
                 LauncherPreferences.DEFAULT_PREF.edit()
-                    .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION).putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION).apply();
-                // LauncherPreferences.DEFAULT_PREF.edit()
-                //     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION).apply();
+                    .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
+                    .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
+                    .apply();
                 dialog.dismiss();
             }
         });
