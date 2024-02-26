@@ -97,10 +97,10 @@ scripts\languagelist_updater.bat
 
 ## 当前状态
 - [x] ~~OpenJDK 9 Mobile port: ARM32, ARM64, x86, x86_64.~~ 替换为 JRE8.
-- [x] [OpenJDK 8](https://github.com/adoptium/jdk8u) 移动端口: ARM32, ARM64, x86, x86_64
-- [x] [OpenJDK 11](https://github.com/adoptium/jdk11u) 移动端口: ARM32, ARM64, x86, x86_64
-- [x] [OpenJDK 17](https://github.com/adoptium/jdk17u) 移动端口: ARM32, ARM64, x86, x86_64
-- [x] [OpenJDK 21](https://github.com/adoptium/jdk21u) 移动端口: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 8](https://github.com/openjdk/jdk8u) 移动端口: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 11](https://github.com/openjdk/jdk11u) 移动端口: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 17](https://github.com/openjdk/jdk17u) 移动端口: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 21](https://github.com/openjdk/jdk21u) 移动端口: ARM32, ARM64, x86, x86_64
 - [x] [Caciocavallo](https://openjdk.java.net/projects/caciocavallo/)
 - [x] [Caciocavallo11](https://github.com/FCL-Team/caciocavallo11-FCL)
 - [x] 无脑模组安装程序

@@ -95,10 +95,10 @@ Then, run these commands ~~or build using Android Studio~~.
 
 ## Current status
 - [x] ~~OpenJDK 9 Mobile port: ARM32, ARM64, x86, x86_64.~~ Replaced by JRE8.
-- [x] [OpenJDK 8](https://github.com/adoptium/jdk8u) Mobile port: ARM32, ARM64, x86, x86_64
-- [x] [OpenJDK 11](https://github.com/adoptium/jdk11u) Mobile port: ARM32, ARM64, x86, x86_64
-- [x] [OpenJDK 17](https://github.com/adoptium/jdk17u) Mobile port: ARM32, ARM64, x86, x86_64
-- [x] [OpenJDK 21](https://github.com/adoptium/jdk21u) Mobile port: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 8](https://github.com/openjdk/jdk8u) Mobile port: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 11](https://github.com/openjdk/jdk11u) Mobile port: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 17](https://github.com/openjdk/jdk17u) Mobile port: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 21](https://github.com/openjdk/jdk21u) Mobile port: ARM32, ARM64, x86, x86_64
 - [x] [Caciocavallo](https://openjdk.java.net/projects/caciocavallo/)
 - [x] [Caciocavallo11](https://github.com/FCL-Team/caciocavallo11-FCL)
 - [x] Headless mod installer
