@@ -116,8 +116,14 @@ EXTERNAL_API void pojavTerminate() {
 JNIEXPORT void JNICALL
 Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPAT jclass clazz, jobject surface) {
     pojav_environ->pojavWindow = ANativeWindow_fromSurface(env, surface);
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         if(br_setup_window != NULL) br_setup_window();
+    } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
+        if(getenv("POJAV_EXP_SETUP") != NULL) {
+            gl_setup_window();
+        } else {
+            if(br_setup_window != NULL) br_setup_window();
+        }
     }
 }
 
@@ -131,8 +137,14 @@ the Mesa class to crash in your launcher
 don't touch the code here
 */
 EXTERNAL_API void* pojavGetCurrentContext() {
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         return br_get_current();
+    } else if(pojav_environ->config_renderer == RENDERER_GL4ES){
+        if(getenv("POJAV_EXP_SETUP") != NULL) {
+            return (void *)eglGetCurrentContext_p();
+        } else {
+            return br_get_current();
+        }
     } else if(pojav_environ->config_renderer == RENDERER_VK_WARLIP
         || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
         || pojav_environ->config_renderer == RENDERER_VIRGL) {
@@ -209,7 +221,9 @@ int pojavInitOpenGL() {
     const char *renderer = getenv("POJAV_BETA_RENDERER");
     if (strncmp("opengles", renderer, 8) == 0) {
         pojav_environ->config_renderer = RENDERER_GL4ES;
-        set_gl_bridge_tbl();
+        if(getenv("POJAV_EXP_SETUP") == NULL) {
+            set_gl_bridge_tbl();
+        }
     } else if (strcmp(renderer, "vulkan_zink") == 0) {
         if(getenv("POJAV_EXP_SETUP") != NULL) {
             printf("Bridge: Use Experimental Setup\n");
@@ -279,9 +293,21 @@ int pojavInitOpenGL() {
             }
         }
     }
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         if(br_init()) {
             br_setup_window();
+        }
+    } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
+        if(getenv("POJAV_EXP_SETUP") != NULL) {
+            if(gl_init()) {
+                gl_setup_window();
+                return 1;
+            }
+            return 0;
+        } else {
+            if(br_init()) {
+                br_setup_window();
+            }
         }
     }
     if (pojav_environ->config_renderer == RENDERER_VIRGL) {
@@ -438,8 +464,14 @@ EXTERNAL_API void pojavSwapBuffers() {
     if (stopSwapBuffers) {
         return;
     }
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_swap_buffers();
+    } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
+        if(getenv("POJAV_EXP_SETUP") != NULL) {
+            gl_swap_buffers();
+        } else {
+            br_swap_buffers();
+        }
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
         glFinish_p();
         vtest_swap_buffers_p();
@@ -479,8 +511,14 @@ void* egl_make_current(void* window) {
 
 EXTERNAL_API void pojavMakeCurrent(void* window) {
     if(getenv("POJAV_BIG_CORE_AFFINITY") != NULL) bigcore_set_affinity();
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_make_current((basic_render_window_t*)window);
+    } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
+        if(getenv("POJAV_EXP_SETUP") != NULL) {
+            gl_make_current((render_window_t*)window);
+        } else {
+            br_make_current((basic_render_window_t*)window);
+        }
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL
         || pojav_environ->config_renderer == RENDERER_VK_WARLIP
         || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
@@ -521,8 +559,14 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
         return (void *) pojav_environ->pojavWindow;
     }
 
-    if (pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if (pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         return br_init_context((basic_render_window_t*)contextSrc);
+    } else if (pojav_environ->config_renderer == RENDERER_GL4ES) {
+        if(getenv("POJAV_EXP_SETUP") != NULL) {
+            return gl_init_context(contextSrc);
+        } else {
+            return br_init_context((basic_render_window_t*)contextSrc);
+        }
     } else if (pojav_environ->config_renderer == RENDERER_VK_WARLIP
         || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
         || pojav_environ->config_renderer == RENDERER_VIRGL) {
@@ -576,8 +620,14 @@ Java_org_lwjgl_opengl_GL_getNativeWidthHeight(JNIEnv *env, jobject thiz) {
 #endif
 
 EXTERNAL_API void pojavSwapInterval(int interval) {
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_swap_interval(interval);
+    } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
+        if(getenv("POJAV_EXP_SETUP") != NULL) {
+            gl_swap_interval(interval);
+        } else {
+            br_swap_interval(interval);
+        }
     } else if(pojav_environ->config_renderer == RENDERER_VIRGL) {
         eglSwapInterval_p(potatoBridge.eglDisplay, interval);
     } else if(pojav_environ->config_renderer == RENDERER_VK_WARLIP || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
