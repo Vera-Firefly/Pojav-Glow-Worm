@@ -119,7 +119,7 @@ Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPA
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         if(br_setup_window != NULL) br_setup_window();
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_EXP_SETUP") != NULL) {
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
             gl_setup_window();
         } else {
             if(br_setup_window != NULL) br_setup_window();
@@ -140,7 +140,7 @@ EXTERNAL_API void* pojavGetCurrentContext() {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         return br_get_current();
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES){
-        if(getenv("POJAV_EXP_SETUP") != NULL) {
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
             return (void *)eglGetCurrentContext_p();
         } else {
             return br_get_current();
@@ -221,7 +221,7 @@ int pojavInitOpenGL() {
     const char *renderer = getenv("POJAV_BETA_RENDERER");
     if (strncmp("opengles", renderer, 8) == 0) {
         pojav_environ->config_renderer = RENDERER_GL4ES;
-        if(getenv("POJAV_EXP_SETUP") == NULL) {
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
             set_gl_bridge_tbl();
         }
     } else if (strcmp(renderer, "vulkan_zink") == 0) {
@@ -298,7 +298,7 @@ int pojavInitOpenGL() {
             br_setup_window();
         }
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_EXP_SETUP") != NULL) {
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
             if(gl_init()) {
                 gl_setup_window();
                 return 1;
@@ -467,7 +467,7 @@ EXTERNAL_API void pojavSwapBuffers() {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_swap_buffers();
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_EXP_SETUP") != NULL) {
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
             gl_swap_buffers();
         } else {
             br_swap_buffers();
@@ -514,7 +514,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_make_current((basic_render_window_t*)window);
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_EXP_SETUP") != NULL) {
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
             gl_make_current((gl_render_window_t*)window);
         } else {
             br_make_current((basic_render_window_t*)window);
@@ -562,7 +562,7 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         return br_init_context((basic_render_window_t*)contextSrc);
     } else if (pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_EXP_SETUP") != NULL) {
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
             return gl_init_context(contextSrc);
         } else {
             return br_init_context((basic_render_window_t*)contextSrc);
@@ -623,7 +623,7 @@ EXTERNAL_API void pojavSwapInterval(int interval) {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_swap_interval(interval);
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_EXP_SETUP") != NULL) {
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
             gl_swap_interval(interval);
         } else {
             br_swap_interval(interval);
