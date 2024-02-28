@@ -392,7 +392,7 @@
     <string name="notif_mouse1">Delete done</string>
     <string name="microsoft_login_fragment">Login started!</string>
     <string name="preference_zink_crash_handle_title">Use old bridge</string>
-    <string name="preference_zink_crash_handle">Turns on when using zink renderer crash, only affects zink</string>
+    <string name="preference_zink_crash_handle">Turns on when using zink/Holy renderer crash, only affects zink/Holy</string>
     <string name="control_view_logout">Log output:</string>
     <!-- Other login -->
     <string name="other_login_api">Other Login</string>
