@@ -515,7 +515,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
         br_make_current((basic_render_window_t*)window);
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
         if(getenv("POJAV_EXP_SETUP") != NULL) {
-            gl_make_current((render_window_t*)window);
+            gl_make_current((gl_render_window_t*)window);
         } else {
             br_make_current((basic_render_window_t*)window);
         }
