@@ -118,7 +118,11 @@ void gl_make_current(gl_render_window_t* bundle) {
     }
     bool hasSetMainWindow = false;
     if(pojav_environ->mainWindowBundle == NULL) {
-        pojav_environ->mainWindowBundle = (basic_render_window_t*)bundle;
+        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+            pojav_environ->mainWindowBundle = bundle;
+        } else {
+            pojav_environ->mainWindowBundle = (basic_render_window_t*)bundle;
+        }
         __android_log_print(ANDROID_LOG_INFO, g_LogTag, "Main window bundle is now %p", pojav_environ->mainWindowBundle);
         pojav_environ->mainWindowBundle->newNativeSurface = pojav_environ->pojavWindow;
         hasSetMainWindow = true;
@@ -132,7 +136,11 @@ void gl_make_current(gl_render_window_t* bundle) {
     }else {
         if(hasSetMainWindow) {
             pojav_environ->mainWindowBundle->newNativeSurface = NULL;
-            gl_swap_surface((gl_render_window_t*)pojav_environ->mainWindowBundle);
+            if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+                gl_swap_surface(pojav_environ->mainWindowBundle);
+            } else {
+                gl_swap_surface((gl_render_window_t*)pojav_environ->mainWindowBundle);
+            }
             pojav_environ->mainWindowBundle = NULL;
         }
         __android_log_print(ANDROID_LOG_ERROR, g_LogTag, "eglMakeCurrent returned with error: %04x", eglGetError_p());

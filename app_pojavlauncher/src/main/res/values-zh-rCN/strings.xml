@@ -352,7 +352,7 @@
     <string name="notif_mouse1">删除成功</string>
     <string name="microsoft_login_fragment">开始登陆!</string>
     <string name="preference_zink_crash_handle_title">使用旧的Bridge</string>
-    <string name="preference_zink_crash_handle">在使用zink渲染器崩溃时开启它,仅影响zink</string>
+    <string name="preference_zink_crash_handle">在使用zink/Holy渲染器崩溃时开启它,仅影响zink/Holy</string>
     <string name="customctrl_absolute_tracking">绝对手指跟踪</string>
     <string name="control_view_logout">日志输出：</string>
     <!-- Other login -->
