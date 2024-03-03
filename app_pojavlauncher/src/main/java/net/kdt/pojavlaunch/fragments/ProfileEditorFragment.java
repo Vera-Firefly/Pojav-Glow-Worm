@@ -36,13 +36,13 @@ import net.kdt.pojavlaunch.utils.CropperUtils;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static net.kdt.pojavlaunch.Tools.getGameDirPath;
 
@@ -52,6 +52,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
     private String mProfileKey;
     private MinecraftProfile mTempProfile = null;
+    private String mProfileLang = "zh_cn";
     private String mValueToConsume = "";
     private Button mSaveButton, mDeleteButton, mControlSelectButton, mGameDirButton, mVersionSelectButton;
     private Spinner mDefaultRuntime, mDefaultRenderer;
@@ -95,7 +96,11 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         // Set up behaviors
         mSaveButton.setOnClickListener(v -> {
             ProfileIconCache.dropIcon(mProfileKey);
-            save();
+            try {
+                save();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             Tools.removeCurrentFragment(requireActivity());
         });
 
@@ -208,7 +213,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mProfileIcon = view.findViewById(R.id.vprof_editor_profile_icon);
     }
 
-    private void save(){
+    private void save() throws Exception {
         //First, check for potential issues in the inputs
         mTempProfile.lastVersionId = mDefaultVersion.getText().toString();
         mTempProfile.controlFile = mDefaultControl.getText().toString();
@@ -222,12 +227,44 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
             mTempProfile.gameDir = null;
         }else {
             File optionFile = new File((getGameDirPath(mTempProfile.gameDir)) + File.separator + "options.txt");
-            if (!optionFile.exists() && optionFile.isFile()) {
-                try {
-                    optionFile.createNewFile();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+            if (!optionFile.exists()) { // Create an options.txt file in the game path
+                optionFile.createNewFile();
+            }
+
+            ArrayList<String> options = new ArrayList<>();
+            boolean foundMatch = false;
+
+            try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = optionFileReader.readLine()) != null) {
+                    // Match the "lang: xxx" format with a regular expression
+                    Pattern pattern = Pattern.compile("lang:(\\S+)");
+                    Matcher matcher = pattern.matcher(line);
+
+                    if (matcher.find()) {
+                        line = matcher.replaceAll("lang:" + mProfileLang);
+                        foundMatch = true;
+                    }
+
+                    options.add(line);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            // If the file is empty, or no matching field is found, the "lang" field is added by default
+            if (!foundMatch) {
+                options.add("lang:" + mProfileLang);
+            }
+
+            try (BufferedWriter optionFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(optionFile), StandardCharsets.UTF_8))) {
+                for (String option : options) {
+                    optionFileWriter.write(option);
+                    optionFileWriter.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
