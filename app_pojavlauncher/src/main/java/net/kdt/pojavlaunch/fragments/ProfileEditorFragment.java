@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.kdt.pojavlaunch.profiles.ProfileLanguage.getMatchingLanguage;
 import static net.kdt.pojavlaunch.Tools.getGameDirPath;
 
 public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener{
@@ -300,16 +301,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
     }
 
-    public static String getMatchingLanguage(int index) {
-        switch(index) {
-            case (1):
-                return "zh_cn";
-            case (2):
-                return "zh_hk";
-            case (0):
-            default: return "en_us";
-        }
-    }
+
 
     @Override
     public void onCropped(Bitmap contentBitmap) {
