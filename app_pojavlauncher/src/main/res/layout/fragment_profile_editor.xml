@@ -31,7 +31,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/avatars"
-                    android:layout_marginEnd="12dp"/>
+                    android:layout_marginEnd="16dp"/>
             <ImageView
                 android:layout_width="@dimen/_14sdp"
                 android:layout_height="@dimen/_14sdp"
@@ -50,11 +50,10 @@
                     app:layout_constraintEnd_toStartOf="@+id/vprof_editor_language_name"
                     app:layout_constraintHorizontal_bias="0.0"
             />
-
             <Spinner
                     android:id="@+id/vprof_editor_language_name"
-                    android:layout_width="291dp"
-                    android:layout_height="54dp"
+                    android:layout_width="@dimen/_200sdp"
+                    android:layout_height="@dimen/_42sdp"
                     android:background="@drawable/background_line"
                     android:dropDownWidth="match_parent"
                     android:paddingVertical="0px"

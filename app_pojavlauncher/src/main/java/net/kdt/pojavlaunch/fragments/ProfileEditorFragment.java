@@ -301,8 +301,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
     }
 
-
-
     @Override
     public void onCropped(Bitmap contentBitmap) {
         mProfileIcon.setImageBitmap(contentBitmap);
