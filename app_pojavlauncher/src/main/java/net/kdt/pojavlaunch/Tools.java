@@ -188,7 +188,6 @@ public final class Tools {
         Runtime runtime = MultiRTUtils.forceReread(Tools.pickRuntime(minecraftProfile, versionJavaRequirement));
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionId);
         LauncherProfiles.load();
-        ProfileLanguage.createOptionsFile(minecraftProfile);
 
         File gamedir = Tools.getGameDirPath(minecraftProfile);
 
@@ -196,6 +195,8 @@ public final class Tools {
         // Pre-process specific files
         disableSplash(gamedir);
         String[] launchArgs = getMinecraftClientArgs(minecraftAccount, versionInfo, gamedir);
+
+        ProfileLanguage.createOptionsFile(minecraftProfile);
 
         // Select the appropriate openGL version
         OldVersionsUtils.selectOpenGlVersion(versionInfo);
