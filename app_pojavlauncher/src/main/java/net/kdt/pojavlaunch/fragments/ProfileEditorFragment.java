@@ -214,15 +214,14 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
 
-        File optionFile = new File(mTempProfile.gameDir + "\\options.txt");
-        System.out.println(optionFile);
-        /*if (!optionFile.exists()) {
+        File optionFile = new File(getGameDirPath(mTempProfile.gameDir) + "\\options.txt");
+        if (!optionFile.exists()) {
             try {
                 optionFile.createNewFile();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }*/
+        }
 
         if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
         if(mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
@@ -239,6 +238,16 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
+    }
+
+    public static File getGameDirPath(String gameDir){
+        if(gameDir != null){
+            if(gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
+                return new File(gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,Tools.DIR_GAME_HOME+"/"));
+            else
+                return new File(Tools.DIR_GAME_HOME, gameDir);
+        }
+        return new File(Tools.DIR_GAME_NEW);
     }
 
     @Override
