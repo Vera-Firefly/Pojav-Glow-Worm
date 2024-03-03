@@ -214,20 +214,19 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
 
-        if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
-        if(mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
-        if(mTempProfile.gameDir.isEmpty()) {
-            mTempProfile.gameDir = null;
-        }else {
-            File optionFile = new File(mTempProfile.gameDir + "\\options.txt");
-            if (!optionFile.exists()) {
-                try {
-                    optionFile.createNewFile();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        File optionFile = new File(mTempProfile.gameDir + "\\options.txt");
+        System.out.println(optionFile);
+        if (!optionFile.exists()) {
+            try {
+                optionFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
+
+        if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
+        if(mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
+        if(mTempProfile.gameDir.isEmpty()) mTempProfile.gameDir = null;
 
         Runtime selectedRuntime = (Runtime) mDefaultRuntime.getSelectedItem();
         mTempProfile.javaDir = (selectedRuntime.name.equals("<Default>") || selectedRuntime.versionString == null)
