@@ -250,6 +250,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
             ArrayList<String> options = new ArrayList<>();
             boolean foundMatch = false;
+            String language = getMatchingLanguage((mLanguageSelection.getSelectedItemPosition() + 1));
 
             try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
                 String line;
@@ -259,7 +260,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
                     Matcher matcher = pattern.matcher(line);
 
                     if (matcher.find()) {
-                        line = matcher.replaceAll("lang:" + getMatchingLanguage(mLanguageSelection.getSelectedItemPosition()));
+                        line = matcher.replaceAll("lang:" + language);
                         foundMatch = true;
                     }
 
@@ -272,7 +273,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
             // If the file is empty, or no matching field is found, the "lang" field is added by default
             if (!foundMatch) {
-                options.add("lang:" + getMatchingLanguage(mLanguageSelection.getSelectedItemPosition()) + 1);
+                options.add("lang:" + language);
             }
 
             try (BufferedWriter optionFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(optionFile), StandardCharsets.UTF_8))) {
