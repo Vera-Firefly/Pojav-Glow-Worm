@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import static net.kdt.pojavlaunch.Tools.getGameDirPath;
 
-public class ProfileLanguage {
+public class ProfileLanguageSelector {
     public static String getMatchingLanguage(int index) {
         switch(index) {
             case 1: return "af_za";
