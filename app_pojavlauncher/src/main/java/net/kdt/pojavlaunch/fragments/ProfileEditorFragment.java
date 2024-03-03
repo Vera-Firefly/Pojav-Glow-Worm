@@ -2,6 +2,7 @@ package net.kdt.pojavlaunch.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -216,7 +217,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
 
-        File optionFile = new File(getGameDirPath(mTempProfile.gameDir).getAbsolutePath() + "\\options.txt");
+        File optionFile = new File((getGameDirPath(mTempProfile.gameDir)) + File.separator + "options.txt");
         if (!optionFile.exists()) {
             try {
                 optionFile.createNewFile();
