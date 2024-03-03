@@ -250,7 +250,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
             ArrayList<String> options = new ArrayList<>();
             boolean foundMatch = false;
-            String language = getMatchingLanguage((mLanguageSelection.getSelectedItemPosition() + 1));
+            String language;
+            if (mLanguageSelection.getSelectedItemPosition() == mControlSelectButton.length()) language = getMatchingLanguage(LauncherPreferences.PREF_LANGUAGE_SELECTION);
+            else  language = getMatchingLanguage((mLanguageSelection.getSelectedItemPosition() + 1));
 
             try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
                 String line;
