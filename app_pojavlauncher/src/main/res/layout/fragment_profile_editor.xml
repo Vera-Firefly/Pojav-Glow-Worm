@@ -56,12 +56,14 @@
                     android:layout_width="291dp"
                     android:layout_height="54dp"
                     android:background="@drawable/background_line"
-                    android:textSize="@dimen/_13ssp"
+                    android:dropDownWidth="match_parent"
+                    android:paddingVertical="0px"
 
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="20dp"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0" />
+
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_8sdp"
