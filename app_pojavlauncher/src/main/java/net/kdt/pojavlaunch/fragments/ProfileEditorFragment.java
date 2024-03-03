@@ -237,47 +237,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mTempProfile.gameDir.isEmpty()) {
             mTempProfile.gameDir = null;
         }else {
-            File optionFile = new File((getGameDirPath(mTempProfile.gameDir)) + File.separator + "options.txt");
-            if (!optionFile.exists()) { // Create an options.txt file in the game path
-                optionFile.createNewFile();
-            }
 
-            ArrayList<String> options = new ArrayList<>();
-            boolean foundMatch = false;
-            String language = getMatchingLanguage((mLanguageSelection.getSelectedItemPosition() + 1));
-
-            try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
-                String line;
-                while ((line = optionFileReader.readLine()) != null) {
-                    // Match the "lang: xxx" format with a regular expression
-                    Pattern pattern = Pattern.compile("lang:(\\S+)");
-                    Matcher matcher = pattern.matcher(line);
-
-                    if (matcher.find()) {
-                        line = matcher.replaceAll("lang:" + language);
-                        foundMatch = true;
-                    }
-
-                    options.add(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-
-            // If the file is empty, or no matching field is found, the "lang" field is added by default
-            if (!foundMatch) {
-                options.add("lang:" + language);
-            }
-
-            try (BufferedWriter optionFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(optionFile), StandardCharsets.UTF_8))) {
-                for (String option : options) {
-                    optionFileWriter.write(option);
-                    optionFileWriter.newLine();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
         Runtime selectedRuntime = (Runtime) mDefaultRuntime.getSelectedItem();
@@ -287,8 +247,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mDefaultRenderer.getSelectedItemPosition() == mRenderNames.size()) mTempProfile.pojavRendererName = null;
         else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
 
-        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = null;
-        else mTempProfile.language = mLanguageLists.get(mLanguageSelection.getSelectedItemPosition());
+        mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
 
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);

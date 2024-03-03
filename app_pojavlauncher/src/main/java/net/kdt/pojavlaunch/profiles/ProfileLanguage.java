@@ -1,5 +1,15 @@
 package net.kdt.pojavlaunch.profiles;
 
+import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static net.kdt.pojavlaunch.Tools.getGameDirPath;
+
 public class ProfileLanguage {
     public static String getMatchingLanguage(int index) {
         switch(index) {
@@ -133,6 +143,50 @@ public class ProfileLanguage {
             case 128: return "zlm_arab";
 
             default: return "en_us";
+        }
+    }
+
+    public static void createOptionsFile(MinecraftProfile minecraftProfile) throws Exception {
+        File optionFile = new File((getGameDirPath(minecraftProfile.gameDir)) + File.separator + "options.txt");
+        if (!optionFile.exists()) { // Create an options.txt file in the game path
+            optionFile.createNewFile();
+        }
+
+        ArrayList<String> options = new ArrayList<>();
+        boolean foundMatch = false;
+        String language = getMatchingLanguage(minecraftProfile.language);
+
+        try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = optionFileReader.readLine()) != null) {
+                // Match the "lang: xxx" format with a regular expression
+                Pattern pattern = Pattern.compile("lang:(\\S+)");
+                Matcher matcher = pattern.matcher(line);
+
+                if (matcher.find()) {
+                    line = matcher.replaceAll("lang:" + language);
+                    foundMatch = true;
+                }
+
+                options.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // If the file is empty, or no matching field is found, the "lang" field is added by default
+        if (!foundMatch) {
+            options.add("lang:" + language);
+        }
+
+        try (BufferedWriter optionFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(optionFile), StandardCharsets.UTF_8))) {
+            for (String option : options) {
+                optionFileWriter.write(option);
+                optionFileWriter.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
