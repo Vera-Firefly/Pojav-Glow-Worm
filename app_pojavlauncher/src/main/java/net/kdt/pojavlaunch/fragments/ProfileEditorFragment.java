@@ -37,6 +37,7 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -215,7 +216,18 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
         if(mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
-        if(mTempProfile.gameDir.isEmpty()) mTempProfile.gameDir = null;
+        if(mTempProfile.gameDir.isEmpty()) {
+            mTempProfile.gameDir = null;
+        }else {
+            File optionFile = new File(mTempProfile.gameDir + "\\options.txt");
+            if (!optionFile.exists()) {
+                try {
+                    optionFile.createNewFile();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
 
         Runtime selectedRuntime = (Runtime) mDefaultRuntime.getSelectedItem();
         mTempProfile.javaDir = (selectedRuntime.name.equals("<Default>") || selectedRuntime.versionString == null)
