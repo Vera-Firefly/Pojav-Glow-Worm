@@ -216,13 +216,13 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         File optionFile = new File(mTempProfile.gameDir + "\\options.txt");
         System.out.println(optionFile);
-        if (!optionFile.exists()) {
+        /*if (!optionFile.exists()) {
             try {
                 optionFile.createNewFile();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
+        }*/
 
         if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
         if(mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
