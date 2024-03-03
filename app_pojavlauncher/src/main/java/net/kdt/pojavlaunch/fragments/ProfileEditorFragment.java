@@ -98,7 +98,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mLanguageLists = languagesList.LanguageIds;
         List<String> languageList = new ArrayList<>(languagesList.Language.length + 1);
         languageList.addAll(Arrays.asList(languagesList.Language));
-        languageList.add(view.getContext().getString(R.string.global_default));
         mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
 
         // Set up behaviors
@@ -176,13 +175,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(jvmIndex == -1) jvmIndex = runtimes.size() - 1;
         mDefaultRuntime.setSelection(jvmIndex);
 
-        // Language spinner
-        int languageIndex = mLanguageSelection.getAdapter().getCount() - 1;
-        if(mTempProfile.language != null) {
-            int nindex = mLanguageLists.indexOf(mTempProfile.language);
-            if(nindex != -1) languageIndex = nindex;
-        }
-        mLanguageSelection.setSelection(languageIndex);
+        // Default language selection
+        mLanguageSelection.setSelection(26);
 
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
@@ -250,9 +244,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
             ArrayList<String> options = new ArrayList<>();
             boolean foundMatch = false;
-            String language;
-            if (mLanguageSelection.getSelectedItemPosition() == mControlSelectButton.length()) language = getMatchingLanguage(LauncherPreferences.PREF_LANGUAGE_SELECTION);
-            else  language = getMatchingLanguage((mLanguageSelection.getSelectedItemPosition() + 1));
+            String language = getMatchingLanguage((mLanguageSelection.getSelectedItemPosition() + 1));
 
             try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
                 String line;
