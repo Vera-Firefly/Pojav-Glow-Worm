@@ -44,6 +44,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static net.kdt.pojavlaunch.Tools.getGameDirPath;
+
 public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener{
     public static final String TAG = "ProfileEditorFragment";
     public static final String DELETED_PROFILE = "deleted_profile";
@@ -214,7 +216,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
 
-        File optionFile = new File(getGameDirPath(mTempProfile.gameDir) + "\\options.txt");
+        File optionFile = new File(getGameDirPath(mTempProfile.gameDir).getAbsolutePath() + "\\options.txt");
         if (!optionFile.exists()) {
             try {
                 optionFile.createNewFile();
@@ -238,16 +240,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
-    }
-
-    public static File getGameDirPath(String gameDir){
-        if(gameDir != null){
-            if(gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                return new File(gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,Tools.DIR_GAME_HOME+"/"));
-            else
-                return new File(Tools.DIR_GAME_HOME, gameDir);
-        }
-        return new File(Tools.DIR_GAME_NEW);
     }
 
     @Override
