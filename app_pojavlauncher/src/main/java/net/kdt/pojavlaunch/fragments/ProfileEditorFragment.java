@@ -272,7 +272,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
             // If the file is empty, or no matching field is found, the "lang" field is added by default
             if (!foundMatch) {
-                options.add("lang:" + getMatchingLanguage(mLanguageSelection.getSelectedItemPosition()));
+                options.add("lang:" + getMatchingLanguage(mLanguageSelection.getSelectedItemPosition()) + 1);
             }
 
             try (BufferedWriter optionFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(optionFile), StandardCharsets.UTF_8))) {
