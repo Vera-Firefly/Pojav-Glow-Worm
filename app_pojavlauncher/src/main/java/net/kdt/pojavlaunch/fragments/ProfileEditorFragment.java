@@ -63,7 +63,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private List<String> mLanguageLists;
     private List<String> mRenderNames;
 
-    public ProfileEditorFragment(String mProfileKey){
+    public ProfileEditorFragment(){
         super(R.layout.fragment_profile_editor);
     }
 
