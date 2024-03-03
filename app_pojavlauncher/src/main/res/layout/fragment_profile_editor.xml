@@ -21,18 +21,17 @@
             android:paddingHorizontal="@dimen/fragment_padding_medium">
 
             <ImageView
-                android:id="@+id/vprof_editor_profile_icon"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginTop="@dimen/padding_heavy"
-                android:paddingHorizontal="@dimen/profile_editor_image_padding"
+                    android:id="@+id/vprof_editor_profile_icon"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginTop="12dp"
+                    android:paddingHorizontal="@dimen/profile_editor_image_padding"
 
-                android:paddingVertical="@dimen/profile_editor_image_padding"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
-
+                    android:paddingVertical="@dimen/profile_editor_image_padding"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" app:layout_constraintHorizontal_bias="0.619"
+                    android:layout_marginEnd="12dp"/>
             <ImageView
                 android:layout_width="@dimen/_14sdp"
                 android:layout_height="@dimen/_14sdp"
@@ -42,12 +41,46 @@
                 app:layout_constraintEnd_toEndOf="@+id/vprof_editor_profile_icon"/>
 
             <TextView
+                    android:id="@+id/vprof_editor_profile_language_sub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/preference_category_language"
+                    app:layout_constraintBottom_toTopOf="@+id/vprof_editor_profile_name_sub"
+                    app:layout_constraintStart_toStartOf="@+id/vprof_editor_profile_name"
+                    app:layout_constraintEnd_toStartOf="@+id/vprof_editor_language_name"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginBottom="48dp" />
+
+            <Spinner
+                    android:id="@+id/vprof_editor_language_name"
+                    android:layout_width="285dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/background_line"
+                    android:textSize="@dimen/_13ssp"
+
+
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="100dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="32dp"/>
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_8sdp"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:rotation="180"
+                    android:src="@drawable/spinner_arrow"
+
+                    app:layout_constraintBottom_toBottomOf="@+id/vprof_editor_language_name"
+                    app:layout_constraintEnd_toEndOf="@+id/vprof_editor_language_name"
+                    app:layout_constraintTop_toTopOf="@+id/vprof_editor_language_name" />
+
+            <TextView
                 android:id="@+id/vprof_editor_profile_name_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profiles_profile_name"
                 app:layout_constraintBottom_toTopOf="@+id/vprof_editor_profile_name"
                 app:layout_constraintStart_toStartOf="@+id/vprof_editor_profile_name" />
+
 
             <EditText
                 android:id="@+id/vprof_editor_profile_name"

@@ -126,6 +126,7 @@ public final class Tools {
     public static String OBSOLETE_RESOURCES_PATH;
     public static String CTRLMAP_PATH;
     public static String CTRLDEF_FILE;
+    private static LanguagesList sCompatibleLanguages;
     private static RenderersList sCompatibleRenderers;
 
 
@@ -1131,6 +1132,33 @@ public final class Tools {
         return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("huawei");
     }
 
+    public static class LanguagesList {
+        public final List<String> LanguageIds;
+        public final String[] Language;
+
+        public LanguagesList(List<String> LanguageIds, String[] Language) {
+            this.LanguageIds = LanguageIds;
+            this.Language = Language;
+        }
+    }
+
+    public static LanguagesList getCompatibleLanguages(Context context) {
+        if(sCompatibleLanguages != null) return sCompatibleLanguages;
+        Resources resources = context.getResources();
+        String[] defaultLanguages = resources.getStringArray(R.array.language_values);
+        String[] defaultLanguageNames = resources.getStringArray(R.array.language);
+        List<String> LanguageIds = new ArrayList<>(defaultLanguages.length);
+        List<String> LanguageNames = new ArrayList<>(defaultLanguageNames.length);
+        for(int i = 0; i < defaultLanguages.length; i++) {
+            String rendererId = defaultLanguages[i];
+            LanguageIds.add(rendererId);
+            LanguageNames.add(defaultLanguageNames[i]);
+        }
+        sCompatibleLanguages = new LanguagesList(LanguageIds,
+                LanguageNames.toArray(new String[0]));
+
+        return sCompatibleLanguages;
+    }
 
     public static class RenderersList {
         public final List<String> rendererIds;

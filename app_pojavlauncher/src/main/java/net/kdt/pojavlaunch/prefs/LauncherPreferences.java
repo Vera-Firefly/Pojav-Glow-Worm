@@ -86,6 +86,7 @@ public class LauncherPreferences {
 
     public static String PREF_MESA_GL_VERSION;
     public static String PREF_MESA_GLSL_VERSION;
+    public static String PREF_LANGUAGE_SELECTION = "english";
 
     public static void loadPreferences(Context ctx) {
         //Required for the data folder.
@@ -150,6 +151,8 @@ public class LauncherPreferences {
 
         PREF_MESA_GL_VERSION = DEFAULT_PREF.getString("mesaGLVersion", "4.6");
         PREF_MESA_GLSL_VERSION = DEFAULT_PREF.getString("mesaGLSLVersion", "460");
+
+        PREF_LANGUAGE_SELECTION = DEFAULT_PREF.getString("languageSelection", "english");
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {

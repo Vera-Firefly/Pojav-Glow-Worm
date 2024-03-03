@@ -52,18 +52,18 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
     private String mProfileKey;
     private MinecraftProfile mTempProfile = null;
-    private String mProfileLang = "zh_cn";
     private String mValueToConsume = "";
     private Button mSaveButton, mDeleteButton, mControlSelectButton, mGameDirButton, mVersionSelectButton;
-    private Spinner mDefaultRuntime, mDefaultRenderer;
+    private Spinner mLanguageSelection, mDefaultRuntime, mDefaultRenderer;
     private EditText mDefaultName, mDefaultJvmArgument;
     private TextView mDefaultPath, mDefaultVersion, mDefaultControl;
     private ImageView mProfileIcon;
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
+    private List<String> mLanguageLists;
     private List<String> mRenderNames;
 
-    public ProfileEditorFragment(){
+    public ProfileEditorFragment(String mProfileKey){
         super(R.layout.fragment_profile_editor);
     }
 
@@ -92,6 +92,13 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         renderList.addAll(Arrays.asList(renderersList.rendererDisplayNames));
         renderList.add(view.getContext().getString(R.string.global_default));
         mDefaultRenderer.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, renderList));
+
+        Tools.LanguagesList languagesList = Tools.getCompatibleLanguages(view.getContext());
+        mLanguageLists = languagesList.LanguageIds;
+        List<String> languageList = new ArrayList<>(languagesList.Language.length + 1);
+        languageList.addAll(Arrays.asList(languagesList.Language));
+        languageList.add(view.getContext().getString(R.string.global_default));
+        mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
 
         // Set up behaviors
         mSaveButton.setOnClickListener(v -> {
@@ -168,6 +175,14 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(jvmIndex == -1) jvmIndex = runtimes.size() - 1;
         mDefaultRuntime.setSelection(jvmIndex);
 
+        // Language spinner
+        int languageIndex = mLanguageSelection.getAdapter().getCount() - 1;
+        if(mTempProfile.language != null) {
+            int nindex = mLanguageLists.indexOf(mTempProfile.language);
+            if(nindex != -1) languageIndex = nindex;
+        }
+        mLanguageSelection.setSelection(languageIndex);
+
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
         if(mTempProfile.pojavRendererName != null) {
@@ -196,6 +211,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     }
 
     private void bindViews(@NonNull View view){
+        mLanguageSelection = view.findViewById(R.id.vprof_editor_language_name);
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
         mDefaultRenderer = view.findViewById(R.id.vprof_editor_profile_renderer);
@@ -242,7 +258,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
                     Matcher matcher = pattern.matcher(line);
 
                     if (matcher.find()) {
-                        line = matcher.replaceAll("lang:" + mProfileLang);
+                        line = matcher.replaceAll("lang:" + getMatchingLanguage(mLanguageSelection.getSelectedItemPosition()));
                         foundMatch = true;
                     }
 
@@ -255,7 +271,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
             // If the file is empty, or no matching field is found, the "lang" field is added by default
             if (!foundMatch) {
-                options.add("lang:" + mProfileLang);
+                options.add("lang:" + getMatchingLanguage(mLanguageSelection.getSelectedItemPosition()));
             }
 
             try (BufferedWriter optionFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(optionFile), StandardCharsets.UTF_8))) {
@@ -275,10 +291,24 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mDefaultRenderer.getSelectedItemPosition() == mRenderNames.size()) mTempProfile.pojavRendererName = null;
         else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
 
+        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = null;
+        else mTempProfile.language = mLanguageLists.get(mLanguageSelection.getSelectedItemPosition());
+
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
+    }
+
+    public static String getMatchingLanguage(int index) {
+        switch(index) {
+            case (1):
+                return "zh_cn";
+            case (2):
+                return "zh_hk";
+            case (0):
+            default: return "en_us";
+        }
     }
 
     @Override
