@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 import static net.kdt.pojavlaunch.Tools.getGameDirPath;
 
 public class ProfileLanguageSelector {
+    private ProfileLanguageSelector() {
+    }
+
     public static String getMatchingLanguage(int index) {
             switch(index) {
                 case 1: return "af_za";
@@ -160,6 +163,28 @@ public class ProfileLanguageSelector {
         return builder.toString();
     }
 
+    public static String getVersion(String versionId) {
+        int firstDotIndex = versionId.indexOf('.');
+        int secondDotIndex = versionId.indexOf('.', firstDotIndex + 1);
+
+        if (secondDotIndex == -1) {
+            if (firstDotIndex != -1) {
+                return versionId.substring(firstDotIndex + 1);
+            }
+            return "0";
+        } else {
+            return versionId.substring(firstDotIndex + 1, secondDotIndex);
+        }
+    }
+
+    public static String getLanguage(String versionId, MinecraftProfile minecraftProfile) {
+        int version = Integer.parseInt(getVersion(versionId));
+
+        // 1.1 - 1.10
+        if (1 <= version && version < 11) return getOlderMatchingLanguage(minecraftProfile.language);
+        else return getMatchingLanguage(minecraftProfile.language); // ? & 1.0
+    }
+
     public static void languageChangers(MinecraftProfile minecraftProfile) throws Exception {
         File optionFile = new File((getGameDirPath(minecraftProfile.gameDir)) + File.separator + "options.txt");
         if (!optionFile.exists()) { // Create an options.txt file in the game path
@@ -168,9 +193,10 @@ public class ProfileLanguageSelector {
 
         ArrayList<String> options = new ArrayList<>();
         boolean foundMatch = false;
-        String language;
+        /*String language;
         if (minecraftProfile.languageOlderVersions) language = getOlderMatchingLanguage(minecraftProfile.language);
-        else language = getMatchingLanguage(minecraftProfile.language);
+        else language = getMatchingLanguage(minecraftProfile.language);*/
+        String language = getLanguage(minecraftProfile.lastVersionId, minecraftProfile);
 
         try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
             String line;
