@@ -52,7 +52,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
     private List<String> mLanguageLists;
-    private CheckBox mLanguageOlderVersions;
     private List<String> mRenderNames;
 
     public ProfileEditorFragment(){
@@ -94,11 +93,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         // Set up behaviors
         mSaveButton.setOnClickListener(v -> {
             ProfileIconCache.dropIcon(mProfileKey);
-            try {
-                save();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            save();
+
             Tools.removeCurrentFragment(requireActivity());
         });
 
@@ -173,8 +169,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         }
         mLanguageSelection.setSelection(languageIndex);
 
-        mLanguageOlderVersions.setChecked(mTempProfile.languageOlderVersions);
-
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
         if(mTempProfile.pojavRendererName != null) {
@@ -204,7 +198,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
     private void bindViews(@NonNull View view){
         mLanguageSelection = view.findViewById(R.id.vprof_editor_language_name);
-        mLanguageOlderVersions = view.findViewById(R.id.vprof_editor_language_older_versions_checkbox);
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
         mDefaultRenderer = view.findViewById(R.id.vprof_editor_profile_renderer);
@@ -222,7 +215,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mProfileIcon = view.findViewById(R.id.vprof_editor_profile_icon);
     }
 
-    private void save() throws Exception {
+    private void save() {
         //First, check for potential issues in the inputs
         mTempProfile.lastVersionId = mDefaultVersion.getText().toString();
         mTempProfile.controlFile = mDefaultControl.getText().toString();
@@ -241,14 +234,16 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mDefaultRenderer.getSelectedItemPosition() == mRenderNames.size()) mTempProfile.pojavRendererName = null;
         else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
 
-        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 26;
-        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
-
-        mTempProfile.languageOlderVersions = mLanguageOlderVersions.isChecked();
+        saveLanguage();
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
+    }
+
+    private void saveLanguage() {
+        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 26;
+        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
     }
 
     @Override

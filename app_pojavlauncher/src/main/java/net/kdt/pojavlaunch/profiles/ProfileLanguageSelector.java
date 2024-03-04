@@ -11,8 +11,10 @@ import java.util.regex.Pattern;
 import static net.kdt.pojavlaunch.Tools.getGameDirPath;
 
 public class ProfileLanguageSelector {
-    public static String getMatchingLanguage(int index, boolean olderVersion) {
-        if (!olderVersion) {
+    private ProfileLanguageSelector() {
+    }
+
+    public static String getMatchingLanguage(int index) {
             switch(index) {
                 case 1: return "af_za";
                 case 2: return "ar_sa";
@@ -145,143 +147,101 @@ public class ProfileLanguageSelector {
 
                 default: return "en_us";
             }
-        } else {
-            switch(index) {
-                case 1: return "af_ZA";
-                case 2: return "ar_SA";
-                case 3: return "ast_ES";
-                case 4: return "az_AZ";
-                case 5: return "ba_RU";
-                case 6: return "bar";
-                case 7: return "be_BY";
-                case 8: return "bg_BG";
-                case 9: return "br_FR";
-                case 10: return "brb";
-                case 11: return "bs_BA";
-                case 12: return "ca_ES";
-                case 13: return "cs_CZ";
-                case 14: return "cy_GB";
-                case 15: return "da_DK";
-                case 16: return "de_AT";
-                case 17: return "de_CH";
-                case 18: return "de_DE";
-                case 19: return "el_GR";
-                case 20: return "en_AU";
-                case 21: return "en_CA";
-                case 22: return "en_GB";
-                case 23: return "en_NZ";
-                case 24: return "en_PT";
-                case 25: return "en_UD";
-                case 26: return "en_US";
-                case 27: return "enp";
-                case 28: return "enws";
-                case 29: return "eo_UY";
-                case 30: return "es_AR";
-                case 31: return "es_CL";
-                case 32: return "es_EC";
-                case 33: return "es_ES";
-                case 34: return "es_MX";
-                case 35: return "es_UY";
-                case 36: return "es_VE";
-                case 37: return "esan";
-                case 38: return "et_EE";
-                case 39: return "eu_ES";
-                case 40: return "fa_IR";
-                case 41: return "fi_FI";
-                case 42: return "fil_PH";
-                case 43: return "fo_FO";
-                case 44: return "fr_CA";
-                case 45: return "fr_FR";
-                case 46: return "fra_DE";
-                case 47: return "fur_IT";
-                case 48: return "fy_NL";
-                case 49: return "ga_IE";
-                case 50: return "gd_GB";
-                case 51: return "gl_ES";
-                case 52: return "haw_US";
-                case 53: return "he_IL";
-                case 54: return "hi_IN";
-                case 55: return "hr_HR";
-                case 56: return "hu_HU";
-                case 57: return "hy_AM";
-                case 58: return "id_ID";
-                case 59: return "ig_NG";
-                case 60: return "io_EN";
-                case 61: return "is_IS";
-                case 62: return "isv";
-                case 63: return "it_IT";
-                case 64: return "ja_JP";
-                case 65: return "jbo_EN";
-                case 66: return "ka_GE";
-                case 67: return "kk_KZ";
-                case 68: return "kn_IN";
-                case 69: return "ko_KR";
-                case 70: return "ksh";
-                case 71: return "kw_GB";
-                case 72: return "la_LA";
-                case 73: return "lb_LU";
-                case 74: return "li_LI";
-                case 75: return "lmo";
-                case 76: return "lo_LA";
-                case 77: return "lol_US";
-                case 78: return "lt_LT";
-                case 79: return "lv_LV";
-                case 80: return "lzh";
-                case 81: return "mk_MK";
-                case 82: return "mn_MN";
-                case 83: return "ms_MY";
-                case 84: return "mt_MT";
-                case 85: return "nah";
-                case 86: return "nds_DE";
-                case 87: return "nl_BE";
-                case 88: return "nl_NL";
-                case 89: return "nn_NO";
-                case 90: return "no_NO";
-                case 91: return "oc_FR";
-                case 92: return "ovd";
-                case 93: return "pl_PL";
-                case 94: return "pt_BR";
-                case 95: return "pt_PT";
-                case 96: return "qya_AA";
-                case 97: return "ro_RO";
-                case 98: return "rpr";
-                case 99: return "ru_RU";
-                case 100: return "ry_UA";
-                case 101: return "sah_SAH";
-                case 102: return "se_NO";
-                case 103: return "sk_SK";
-                case 104: return "sl_SI";
-                case 105: return "so_SO";
-                case 106: return "sq_AL";
-                case 107: return "sr_CS";
-                case 108: return "sr_SP";
-                case 109: return "sv_SE";
-                case 110: return "sxu";
-                case 111: return "szl";
-                case 112: return "ta_IN";
-                case 113: return "th_TH";
-                case 114: return "tl_PH";
-                case 115: return "tlh_AA";
-                case 116: return "tok";
-                case 117: return "tr_TR";
-                case 118: return "tt_RU";
-                case 119: return "uk_UA";
-                case 120: return "val_ES";
-                case 121: return "vec_IT";
-                case 122: return "vi_VN";
-                case 123: return "yi_DE";
-                case 124: return "yo_NG";
-                case 125: return "zh_CN";
-                case 126: return "zh_HK";
-                case 127: return "zh_TW";
-                case 128: return "zlm_ARAB";
-
-                default: return "en_US";
-            }
-        }
     }
 
-    public static void createOptionsFile(MinecraftProfile minecraftProfile) throws Exception {
+    public static String getOlderMatchingLanguage(int index) {
+        String temp = getMatchingLanguage(index);
+        StringBuilder builder = new StringBuilder(temp);
+        int underscoreIndex = temp.indexOf('_');
+
+        if (underscoreIndex != -1) {
+            for (int i = underscoreIndex; i < temp.length(); i++) {
+                builder.setCharAt(i, Character.toUpperCase(temp.charAt(i)));
+            } // Convert to uppercase only the characters after the underscore
+        }
+
+        return builder.toString();
+    }
+
+    public static String getVersion(String versionId) {
+        int firstDotIndex = versionId.indexOf('.');
+        int secondDotIndex = versionId.indexOf('.', firstDotIndex + 1);
+
+        if (firstDotIndex != -1) { // It's the official version
+            if (secondDotIndex == -1) return versionId.substring(firstDotIndex + 1);
+                else return versionId.substring(firstDotIndex + 1, secondDotIndex);
+        } else return versionId;
+    }
+
+    public static String getDigitsBeforeFirstLetter(String input) {
+        // Regular expressions match numeric characters
+        Pattern pattern = Pattern.compile("^\\d*");
+        Matcher matcher = pattern.matcher(input);
+
+        return matcher.find() ? matcher.group() : "";
+    }
+
+    public static String getDigitsBetweenFirstAndSecondLetter(String input) {
+        Pattern pattern = Pattern.compile("([a-zA-Z])(\\d*)([a-zA-Z])");
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.find()) {
+            return matcher.group(2);
+        }
+        return "";
+    }
+
+    public static boolean containsLetter(String input) {
+        return input.matches(".*[a-zA-Z].*");
+    }
+
+    public static String getLanguage(String versionId, MinecraftProfile minecraftProfile) {
+        int version = 1;
+
+        String optifineSuffix = "OptiFine"; // "1.20.4-OptiFine_HD_U_I7_pre3"
+        String forgeSuffix = "forge"; // "1.20.2-forge-48.1.0"
+        String fabricSuffix = "fabric-loader"; // "fabric-loader-0.15.7-1.20.4"
+        String quiltSuffix = "quilt-loader"; // "quilt-loader-0.23.1-1.20.4"
+        String regex = "^\\d+[a-zA-Z]\\d+[a-zA-Z]$";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(versionId);
+
+        if (containsLetter(versionId)) {
+            if (versionId.contains(optifineSuffix) || versionId.contains(forgeSuffix)) { // OptiFine & Forge
+                int lastIndex = versionId.indexOf('-');
+                if (lastIndex != -1) {
+                    version = Integer.parseInt(getVersion(versionId.substring(0, lastIndex)));
+                }
+            } else if (versionId.contains(fabricSuffix) || versionId.contains(quiltSuffix)) { // Fabric & Quilt
+                int lastIndex = versionId.lastIndexOf('-');
+
+                if (lastIndex != -1) {
+                    version = Integer.parseInt(getVersion(versionId.substring(lastIndex + 1)));
+                }
+            } else if (matcher.matches()) { // Development versions "24w09a" "16w20a"
+                int result1 = Integer.parseInt(getDigitsBeforeFirstLetter(versionId));
+                int result2 = Integer.parseInt(getDigitsBetweenFirstAndSecondLetter(versionId));
+
+                if(result1 < 16) {
+                    return getOlderMatchingLanguage(minecraftProfile.language);
+                } else if (result1 == 16 & result2 <= 32) {
+                    return getOlderMatchingLanguage(minecraftProfile.language);
+                }
+
+                return getMatchingLanguage(minecraftProfile.language);
+            }
+        }
+
+        // 1.10 -
+        if (version < 11) {
+            return getOlderMatchingLanguage(minecraftProfile.language);
+        }
+
+        return getMatchingLanguage(minecraftProfile.language); // ? & 1.0
+    }
+
+    public static void languageChangers(MinecraftProfile minecraftProfile) throws IOException {
         File optionFile = new File((getGameDirPath(minecraftProfile.gameDir)) + File.separator + "options.txt");
         if (!optionFile.exists()) { // Create an options.txt file in the game path
             optionFile.createNewFile();
@@ -289,7 +249,7 @@ public class ProfileLanguageSelector {
 
         ArrayList<String> options = new ArrayList<>();
         boolean foundMatch = false;
-        String language = getMatchingLanguage(minecraftProfile.language, minecraftProfile.languageOlderVersions);
+        String language = getLanguage(minecraftProfile.lastVersionId, minecraftProfile);
 
         try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
             String line;
