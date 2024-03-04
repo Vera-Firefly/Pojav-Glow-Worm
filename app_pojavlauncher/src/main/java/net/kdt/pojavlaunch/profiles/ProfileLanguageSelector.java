@@ -200,7 +200,7 @@ public class ProfileLanguageSelector {
             String result1 = getDigitsBeforeFirstLetter(versionId);
             String result2 = getDigitsBetweenFirstAndSecondLetter(versionId);
 
-            if(Integer.parseInt(result1) <= 16 && Integer.parseInt(result2) <= 20) return getOlderMatchingLanguage(minecraftProfile.language);
+            if(Integer.parseInt(result1) <= 16 & Integer.parseInt(result2) <= 20) return getOlderMatchingLanguage(minecraftProfile.language);
             else return getMatchingLanguage(minecraftProfile.language);
         }
 
