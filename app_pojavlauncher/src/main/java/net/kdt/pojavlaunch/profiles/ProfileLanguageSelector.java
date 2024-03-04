@@ -160,7 +160,7 @@ public class ProfileLanguageSelector {
         return builder.toString();
     }
 
-    public static void createOptionsFile(MinecraftProfile minecraftProfile) throws Exception {
+    public static void languageChangers(MinecraftProfile minecraftProfile) throws Exception {
         File optionFile = new File((getGameDirPath(minecraftProfile.gameDir)) + File.separator + "options.txt");
         if (!optionFile.exists()) { // Create an options.txt file in the game path
             optionFile.createNewFile();

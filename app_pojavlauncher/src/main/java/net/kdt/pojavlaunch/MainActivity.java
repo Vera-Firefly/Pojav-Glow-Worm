@@ -64,6 +64,7 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.lwjgl.glfw.CallbackBridge;
+import top.defaults.checkerboarddrawable.BuildConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -350,7 +351,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         LauncherProfiles.load();
         int requiredJavaVersion = 8;
         if(version.javaVersion != null) requiredJavaVersion = version.javaVersion.majorVersion;
-        ProfileLanguageSelector.createOptionsFile(minecraftProfile); // Language Selector
+        ProfileLanguageSelector.languageChangers(minecraftProfile); // Language Selector
         Tools.launchMinecraft(this, minecraftAccount, minecraftProfile, versionId, requiredJavaVersion);
         //Note that we actually stall in the above function, even if the game crashes. But let's be safe.
         Tools.runOnUiThread(()-> mServiceBinder.isActive = false);
