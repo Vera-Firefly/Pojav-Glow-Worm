@@ -42,8 +42,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.kdt.pojavlaunch.Tools.getGameDirPath;
-
 public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener{
     public static final String TAG = "ProfileEditorFragment";
     public static final String DELETED_PROFILE = "deleted_profile";
@@ -173,7 +171,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultRuntime.setSelection(jvmIndex);
 
         // Default language selection
-        mLanguageSelection.setSelection(26 - 1);
+        int languageIndex = mLanguageSelection.getSelectedItemPosition() - 1;
+        mDefaultRenderer.setSelection(languageIndex);
 
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
@@ -240,8 +239,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mDefaultRenderer.getSelectedItemPosition() == mRenderNames.size()) mTempProfile.pojavRendererName = null;
         else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
 
-        mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
-
+        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 26;
+        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
