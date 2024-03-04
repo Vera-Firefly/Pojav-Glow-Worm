@@ -24,14 +24,16 @@
                     android:id="@+id/vprof_editor_profile_icon"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="28dp"
                     android:paddingHorizontal="@dimen/profile_editor_image_padding"
 
                     android:paddingVertical="@dimen/profile_editor_image_padding"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/avatars"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="28dp"
+                    app:layout_constraintBottom_toTopOf="@+id/vprof_editor_profile_name"
+                    app:layout_constraintVertical_bias="0.04"/>
             <ImageView
                 android:layout_width="@dimen/_14sdp"
                 android:layout_height="@dimen/_14sdp"
@@ -50,6 +52,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/vprof_editor_language_name"
                     app:layout_constraintHorizontal_bias="0.0"
             />
+
             <Spinner
                     android:id="@+id/vprof_editor_language_name"
                     android:layout_width="@dimen/_200sdp"
@@ -59,10 +62,9 @@
                     android:paddingVertical="0px"
 
 
-                    app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="40dp"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintEnd_toStartOf="@+id/vprof_editor_profile_icon"/>
-
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_8sdp"
@@ -73,6 +75,15 @@
                     app:layout_constraintBottom_toBottomOf="@+id/vprof_editor_language_name"
                     app:layout_constraintEnd_toEndOf="@+id/vprof_editor_language_name"
                     app:layout_constraintTop_toTopOf="@+id/vprof_editor_language_name" />
+
+            <CheckBox
+                    android:id="@+id/vprof_editor_language_older_versions_checkbox"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:text="@string/preference_category_language_older_versions"
+                    app:layout_constraintBottom_toTopOf="@+id/vprof_editor_language_name"
+                    app:layout_constraintStart_toEndOf="@+id/vprof_editor_profile_language_sub"
+                    app:layout_constraintTop_toTopOf="@+id/vprof_editor_profile_language_sub" />
 
             <TextView
                     android:id="@+id/vprof_editor_profile_name_sub"

@@ -10,12 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.*;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -57,6 +52,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
     private List<String> mLanguageLists;
+    private CheckBox mLanguageOlderVersions;
     private List<String> mRenderNames;
 
     public ProfileEditorFragment(){
@@ -177,6 +173,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         }
         mLanguageSelection.setSelection(languageIndex);
 
+        mLanguageOlderVersions.setChecked(mTempProfile.languageOlderVersions);
+
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
         if(mTempProfile.pojavRendererName != null) {
@@ -206,6 +204,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
     private void bindViews(@NonNull View view){
         mLanguageSelection = view.findViewById(R.id.vprof_editor_language_name);
+        mLanguageOlderVersions = view.findViewById(R.id.vprof_editor_language_older_versions_checkbox);
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
         mDefaultRenderer = view.findViewById(R.id.vprof_editor_profile_renderer);
@@ -244,6 +243,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 26;
         else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
+
+        mTempProfile.languageOlderVersions = mLanguageOlderVersions.callOnClick();
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
