@@ -175,7 +175,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mTempProfile.language != 26) {
             languageIndex = mTempProfile.language;
         }
-        mDefaultRenderer.setSelection(languageIndex);
+        mLanguageSelection.setSelection(languageIndex);
 
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
