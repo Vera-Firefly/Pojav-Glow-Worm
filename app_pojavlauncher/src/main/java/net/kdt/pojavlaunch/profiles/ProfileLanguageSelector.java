@@ -167,25 +167,55 @@ public class ProfileLanguageSelector {
         int firstDotIndex = versionId.indexOf('.');
         int secondDotIndex = versionId.indexOf('.', firstDotIndex + 1);
 
-        if (secondDotIndex == -1) {
-            if (firstDotIndex != -1) {
-                return versionId.substring(firstDotIndex + 1);
-            }
-            return "0";
-        } else {
-            return versionId.substring(firstDotIndex + 1, secondDotIndex);
+        if (firstDotIndex != -1) { // It's the official version
+            if (secondDotIndex == -1) return versionId.substring(firstDotIndex + 1);
+                else return versionId.substring(firstDotIndex + 1, secondDotIndex);
+        } else return versionId;
+    }
+
+    public static String getDigitsBeforeFirstLetter(String input) {
+        // Regular expressions match numeric characters
+        Pattern pattern = Pattern.compile("^\\d*");
+        Matcher matcher = pattern.matcher(input);
+
+        return matcher.find() ? matcher.group() : "";
+    }
+
+    public static String getDigitsBetweenFirstAndSecondLetter(String input) {
+        Pattern pattern = Pattern.compile("([a-zA-Z])(\\d*)([a-zA-Z])");
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.find()) {
+            return matcher.group(2);
         }
+        return "";
+    }
+
+    public static boolean containsLetter(String input) {
+        return input.matches(".*[a-zA-Z].*");
     }
 
     public static String getLanguage(String versionId, MinecraftProfile minecraftProfile) {
+        if (containsLetter(versionId)) {
+            String result1 = getDigitsBeforeFirstLetter(versionId);
+            String result2 = getDigitsBetweenFirstAndSecondLetter(versionId);
+
+            if(Integer.parseInt(result1) <= 16 && Integer.parseInt(result2) <= 20) return getMatchingLanguage(minecraftProfile.language);
+            else return getOlderMatchingLanguage(minecraftProfile.language);
+        }
+
         int version = Integer.parseInt(getVersion(versionId));
 
         // 1.1 - 1.10
-        if (1 <= version && version < 11) return getOlderMatchingLanguage(minecraftProfile.language);
-        else return getMatchingLanguage(minecraftProfile.language); // ? & 1.0
+        if (1 <= version && version < 11) {
+            return getOlderMatchingLanguage(minecraftProfile.language);
+        }
+        else {
+            return getMatchingLanguage(minecraftProfile.language); // ? & 1.0
+        }
     }
 
-    public static void languageChangers(MinecraftProfile minecraftProfile) throws Exception {
+    public static void languageChangers(MinecraftProfile minecraftProfile) throws IOException {
         File optionFile = new File((getGameDirPath(minecraftProfile.gameDir)) + File.separator + "options.txt");
         if (!optionFile.exists()) { // Create an options.txt file in the game path
             optionFile.createNewFile();
@@ -193,9 +223,6 @@ public class ProfileLanguageSelector {
 
         ArrayList<String> options = new ArrayList<>();
         boolean foundMatch = false;
-        /*String language;
-        if (minecraftProfile.languageOlderVersions) language = getOlderMatchingLanguage(minecraftProfile.language);
-        else language = getMatchingLanguage(minecraftProfile.language);*/
         String language = getLanguage(minecraftProfile.lastVersionId, minecraftProfile);
 
         try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
