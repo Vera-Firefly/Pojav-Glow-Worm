@@ -198,31 +198,34 @@ public class ProfileLanguageSelector {
     public static String getLanguage(String versionId, MinecraftProfile minecraftProfile) {
         int version = 1;
 
-        String forgeSuffix = "-forge";
-        String fabricSuffix = "fabric-loader";
-        String quiltSuffix = "quilt-loader";
+        String optifineSuffix = "OptiFine"; // "1.20.4-OptiFine_HD_U_I7_pre3"
+        String forgeSuffix = "forge"; // "1.20.2-forge-48.1.0"
+        String fabricSuffix = "fabric-loader"; // "fabric-loader-0.15.7-1.20.4"
+        String quiltSuffix = "quilt-loader"; // "quilt-loader-0.23.1-1.20.4"
         String regex = "^\\d+[a-zA-Z]\\d+[a-zA-Z]$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(versionId);
 
         if (containsLetter(versionId)) {
-            if (versionId.contains(forgeSuffix)) { // Forge
-                int forge = versionId.indexOf(forgeSuffix);
-                version = Integer.parseInt(getVersion(versionId.substring(0, forge)));
+            if (versionId.contains(optifineSuffix) || versionId.contains(forgeSuffix)) { // OptiFine & Forge
+                int lastIndex = versionId.indexOf('-');
+                if (lastIndex != -1) {
+                    version = Integer.parseInt(getVersion(versionId.substring(0, lastIndex)));
+                }
             } else if (versionId.contains(fabricSuffix) || versionId.contains(quiltSuffix)) { // Fabric & Quilt
                 int lastIndex = versionId.lastIndexOf('-');
 
                 if (lastIndex != -1) {
                     version = Integer.parseInt(getVersion(versionId.substring(lastIndex + 1)));
                 }
-            } else if (matcher.matches()) { // Development versions
+            } else if (matcher.matches()) { // Development versions "24w09a" "16w20a"
                 int result1 = Integer.parseInt(getDigitsBeforeFirstLetter(versionId));
                 int result2 = Integer.parseInt(getDigitsBetweenFirstAndSecondLetter(versionId));
 
                 if(result1 < 16) {
                     return getOlderMatchingLanguage(minecraftProfile.language);
-                } else if (result1 == 16 & result2 <= 20) {
+                } else if (result1 == 16 & result2 <= 32) {
                     return getOlderMatchingLanguage(minecraftProfile.language);
                 }
 
