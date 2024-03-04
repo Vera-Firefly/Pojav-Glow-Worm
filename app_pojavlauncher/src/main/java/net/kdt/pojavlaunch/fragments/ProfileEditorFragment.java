@@ -173,7 +173,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         // Default language selection
         int languageIndex = 26 - 1;
         if(mTempProfile.language != 26) {
-            languageIndex = mTempProfile.language;
+            languageIndex = mTempProfile.language - 1;
         }
         mLanguageSelection.setSelection(languageIndex);
 
