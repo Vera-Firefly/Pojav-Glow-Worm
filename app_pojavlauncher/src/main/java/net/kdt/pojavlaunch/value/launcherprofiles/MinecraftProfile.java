@@ -10,6 +10,8 @@ public class MinecraftProfile {
 	public String created;
 	public String lastUsed;
 	public String icon;
+	public int language;
+	public boolean languageOlderVersions;
 	public String lastVersionId;
 	public String gameDir;
 	public String javaDir;
@@ -24,6 +26,8 @@ public class MinecraftProfile {
 	public static MinecraftProfile createTemplate(){
 		MinecraftProfile TEMPLATE = new MinecraftProfile();
 		TEMPLATE.name = "New";
+		TEMPLATE.language = 26;
+		TEMPLATE.languageOlderVersions = false;
 		TEMPLATE.lastVersionId = "latest-release";
 		return TEMPLATE;
 	}
@@ -31,6 +35,8 @@ public class MinecraftProfile {
 	public static MinecraftProfile getDefaultProfile(){
 		MinecraftProfile defaultProfile = new MinecraftProfile();
 		defaultProfile.name = "Default";
+		defaultProfile.language = 26;
+		defaultProfile.languageOlderVersions = false;
 		defaultProfile.lastVersionId = "1.7.10";
 		return defaultProfile;
 	}
@@ -43,6 +49,8 @@ public class MinecraftProfile {
 		created = profile.created;
 		lastUsed = profile.lastUsed;
 		icon = profile.icon;
+		language = profile.language;
+		languageOlderVersions = profile.languageOlderVersions;
 		lastVersionId = profile.lastVersionId;
 		gameDir = profile.gameDir;
 		javaDir = profile.javaDir;
