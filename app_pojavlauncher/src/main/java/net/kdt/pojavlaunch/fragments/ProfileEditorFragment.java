@@ -171,7 +171,10 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultRuntime.setSelection(jvmIndex);
 
         // Default language selection
-        int languageIndex = mLanguageSelection.getSelectedItemPosition() - 1;
+        int languageIndex = 26 - 1;
+        if(mTempProfile.language != 26) {
+            languageIndex = mTempProfile.language;
+        }
         mDefaultRenderer.setSelection(languageIndex);
 
         // Renderer spinner
