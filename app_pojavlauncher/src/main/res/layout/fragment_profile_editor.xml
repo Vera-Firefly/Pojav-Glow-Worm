@@ -78,8 +78,8 @@
 
             <CheckBox
                     android:id="@+id/vprof_editor_language_older_versions_checkbox"
-                    android:layout_width="100dp"
-                    android:layout_height="24dp"
+                    android:layout_width="203dp"
+                    android:layout_height="26dp"
                     android:text="@string/preference_category_language_older_versions"
                     app:layout_constraintBottom_toTopOf="@+id/vprof_editor_language_name"
                     app:layout_constraintTop_toTopOf="@+id/vprof_editor_profile_language_sub"
