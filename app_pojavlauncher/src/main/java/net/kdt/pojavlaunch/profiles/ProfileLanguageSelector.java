@@ -230,8 +230,8 @@ public class ProfileLanguageSelector {
             }
         }
 
-        // 1.1 - 1.10
-        if (1 <= version & version < 11) {
+        // 1.10 -
+        if (version < 11) {
             return getOlderMatchingLanguage(minecraftProfile.language);
         }
 
