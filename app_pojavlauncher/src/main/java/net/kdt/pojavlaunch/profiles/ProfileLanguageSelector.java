@@ -196,23 +196,46 @@ public class ProfileLanguageSelector {
     }
 
     public static String getLanguage(String versionId, MinecraftProfile minecraftProfile) {
+        int version = 1;
+
+        String forgeSuffix = "-forge";
+        String fabricSuffix = "fabric-loader";
+        String quiltSuffix = "quilt-loader";
+        String regex = "^\\d+[a-zA-Z]\\d+[a-zA-Z]$";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(versionId);
+
         if (containsLetter(versionId)) {
-            String result1 = getDigitsBeforeFirstLetter(versionId);
-            String result2 = getDigitsBetweenFirstAndSecondLetter(versionId);
+            if (versionId.contains(forgeSuffix)) { // Forge
+                int forge = versionId.indexOf(forgeSuffix);
+                version = Integer.parseInt(getVersion(versionId.substring(0, forge)));
+            } else if (versionId.contains(fabricSuffix) || versionId.contains(quiltSuffix)) { // Fabric & Quilt
+                int lastIndex = versionId.lastIndexOf('-');
 
-            if(Integer.parseInt(result1) <= 16 & Integer.parseInt(result2) <= 20) return getOlderMatchingLanguage(minecraftProfile.language);
-            else return getMatchingLanguage(minecraftProfile.language);
+                if (lastIndex != -1) {
+                    version = Integer.parseInt(getVersion(versionId.substring(lastIndex + 1)));
+                }
+            } else if (matcher.matches()) { // Development versions
+                int result1 = Integer.parseInt(getDigitsBeforeFirstLetter(versionId));
+                int result2 = Integer.parseInt(getDigitsBetweenFirstAndSecondLetter(versionId));
+
+                if(result1 < 16) {
+                    return getOlderMatchingLanguage(minecraftProfile.language);
+                } else if (result1 == 16 & result2 <= 20) {
+                    return getOlderMatchingLanguage(minecraftProfile.language);
+                }
+
+                return getMatchingLanguage(minecraftProfile.language);
+            }
         }
-
-        int version = Integer.parseInt(getVersion(versionId));
 
         // 1.1 - 1.10
-        if (1 <= version && version < 11) {
+        if (1 <= version & version < 11) {
             return getOlderMatchingLanguage(minecraftProfile.language);
         }
-        else {
-            return getMatchingLanguage(minecraftProfile.language); // ? & 1.0
-        }
+
+        return getMatchingLanguage(minecraftProfile.language); // ? & 1.0
     }
 
     public static void languageChangers(MinecraftProfile minecraftProfile) throws IOException {

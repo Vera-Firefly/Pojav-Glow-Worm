@@ -52,7 +52,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
     private List<String> mLanguageLists;
-    private CheckBox mLanguageOlderVersions;
     private List<String> mRenderNames;
 
     public ProfileEditorFragment(){
@@ -170,8 +169,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         }
         mLanguageSelection.setSelection(languageIndex);
 
-        mLanguageOlderVersions.setChecked(mTempProfile.languageOlderVersions);
-
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
         if(mTempProfile.pojavRendererName != null) {
@@ -201,7 +198,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
     private void bindViews(@NonNull View view){
         mLanguageSelection = view.findViewById(R.id.vprof_editor_language_name);
-        mLanguageOlderVersions = view.findViewById(R.id.vprof_editor_language_older_versions_checkbox);
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
         mDefaultRenderer = view.findViewById(R.id.vprof_editor_profile_renderer);
@@ -248,8 +244,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private void saveLanguage() {
         if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 26;
         else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
-
-        mTempProfile.languageOlderVersions = mLanguageOlderVersions.isChecked();
     }
 
     @Override
