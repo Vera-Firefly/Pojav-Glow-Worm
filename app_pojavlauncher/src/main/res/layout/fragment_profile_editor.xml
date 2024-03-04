@@ -74,17 +74,18 @@
 
                     app:layout_constraintBottom_toBottomOf="@+id/vprof_editor_language_name"
                     app:layout_constraintEnd_toEndOf="@+id/vprof_editor_language_name"
-                    app:layout_constraintTop_toTopOf="@+id/vprof_editor_language_name" />
+                    app:layout_constraintTop_toTopOf="@+id/vprof_editor_language_name" android:id="@+id/imageView2"/>
 
             <CheckBox
                     android:id="@+id/vprof_editor_language_older_versions_checkbox"
-                    android:layout_width="120dp"
-                    android:layout_height="30dp"
+                    android:layout_width="100dp"
+                    android:layout_height="24dp"
                     android:text="@string/preference_category_language_older_versions"
                     app:layout_constraintBottom_toTopOf="@+id/vprof_editor_language_name"
+                    app:layout_constraintTop_toTopOf="@+id/vprof_editor_profile_language_sub"
+                    app:layout_constraintVertical_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/vprof_editor_profile_language_sub"
-                    app:layout_constraintTop_toTopOf="@+id/vprof_editor_profile_language_sub" />
-
+                    android:layout_marginStart="6dp"/>
             <TextView
                     android:id="@+id/vprof_editor_profile_name_sub"
                     android:layout_width="wrap_content"

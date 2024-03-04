@@ -244,7 +244,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 26;
         else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
 
-        mTempProfile.languageOlderVersions = mLanguageOlderVersions.callOnClick();
+        mTempProfile.languageOlderVersions = mLanguageOlderVersions.isChecked();
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
