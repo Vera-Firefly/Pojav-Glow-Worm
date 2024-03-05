@@ -92,8 +92,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
 
         mFollowGameLanguage.setOnClickListener(view1 -> {
-            mLanguageSelection.setEnabled(mTempProfile.followGameLanguage);
-            if (mTempProfile.followGameLanguage) mLanguageSelection.setSelection(0);
+            mLanguageSelection.setEnabled(!mTempProfile.followGameLanguage);
         });
 
         // Set up behaviors
@@ -172,7 +171,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         // Default language selection
         if (mTempProfile.followGameLanguage) {
-            mLanguageSelection.setSelection(0);
             mLanguageSelection.setEnabled(false);
         } else {
             int languageIndex = 26 - 1;
