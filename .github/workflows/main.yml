@@ -201,7 +201,7 @@ jobs:
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
         uses: actions/upload-artifact@v3
         with:
-          name: app-release
+          name: app-release-noruntime
           path: app_output/noruntime/app-release-noruntime.apk
 
       - name: Upload Debug
@@ -210,7 +210,7 @@ jobs:
 
         with:
 
-          name: app-debug
+          name: app-debug-noruntime
 
           path: app_output/noruntime/app-debug-noruntime.apk
 
