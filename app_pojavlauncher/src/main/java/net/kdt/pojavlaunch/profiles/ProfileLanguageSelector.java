@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch.profiles;
 
+import net.kdt.pojavlaunch.Logger;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
@@ -250,6 +251,7 @@ public class ProfileLanguageSelector {
         File optionFile = new File((getGameDirPath(minecraftProfile.gameDir)) + File.separator + "options.txt");
         if (!optionFile.exists()) { // Create an options.txt file in the game path
             optionFile.createNewFile();
+            Logger.appendToLog("Language Selector -> Created a new options.txt file.");
         }
 
         ArrayList<String> options = new ArrayList<>();
@@ -283,6 +285,7 @@ public class ProfileLanguageSelector {
         // If the file is empty, or no matching field is found, the "lang" field is added by default
         if (!foundMatch) {
             options.add("lang:" + language);
+            Logger.appendToLog("Language Selector -> The \"lang:" + language + "\" field has been added to the options.txt file.");
         }
 
         try (BufferedWriter optionFileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(optionFile), StandardCharsets.UTF_8))) {

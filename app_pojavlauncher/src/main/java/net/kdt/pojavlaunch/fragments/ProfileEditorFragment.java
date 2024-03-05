@@ -89,6 +89,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         List<String> languageList = new ArrayList<>(languagesList.Language.length + 1);
         languageList.add(view.getContext().getString(R.string.global_default));
         languageList.addAll(Arrays.asList(languagesList.Language));
+        languageList.set(1, view.getContext().getString(R.string.preference_category_follow_game_language));
         mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
 
         // Set up behaviors
