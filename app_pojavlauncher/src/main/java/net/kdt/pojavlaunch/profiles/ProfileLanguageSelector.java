@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch.profiles;
 
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import java.io.*;
@@ -197,7 +198,7 @@ public class ProfileLanguageSelector {
         return input.matches(".*[a-zA-Z].*");
     }
 
-    public static String getLanguage(String versionId, MinecraftProfile minecraftProfile) {
+    public static String getLanguage(String versionId, int index) {
         int version = 1;
 
         String optifineSuffix = "OptiFine"; // "1.20.4-OptiFine_HD_U_I7_pre3"
@@ -226,22 +227,22 @@ public class ProfileLanguageSelector {
                 int result2 = Integer.parseInt(getDigitsBetweenFirstAndSecondLetter(versionId));
 
                 if(result1 < 16) {
-                    return getOlderMatchingLanguage(minecraftProfile.language);
+                    return getOlderMatchingLanguage(index);
                 } else if (result1 == 16 & result2 <= 32) {
-                    return getOlderMatchingLanguage(minecraftProfile.language);
+                    return getOlderMatchingLanguage(index);
                 }
 
-                return getMatchingLanguage(minecraftProfile.language);
+                return getMatchingLanguage(index);
             }
         }
         version = Integer.parseInt(getVersion(versionId));
 
         // 1.10 -
         if (version < 11) {
-            return getOlderMatchingLanguage(minecraftProfile.language);
+            return getOlderMatchingLanguage(index);
         }
 
-        return getMatchingLanguage(minecraftProfile.language); // ? & 1.0
+        return getMatchingLanguage(index); // ? & 1.0
     }
 
     public static void languageChangers(MinecraftProfile minecraftProfile) throws IOException {
@@ -252,7 +253,12 @@ public class ProfileLanguageSelector {
 
         ArrayList<String> options = new ArrayList<>();
         boolean foundMatch = false;
-        String language = getLanguage(minecraftProfile.lastVersionId, minecraftProfile);
+        String language;
+        if (minecraftProfile.language == 0) {
+            language = getLanguage(minecraftProfile.lastVersionId, LauncherPreferences.DEFAULT_PREF.getInt("gameLanguage", 25));
+        } else {
+            language = getLanguage(minecraftProfile.lastVersionId, minecraftProfile.language);
+        }
 
         try (BufferedReader optionFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(optionFile), StandardCharsets.UTF_8))) {
             String line;

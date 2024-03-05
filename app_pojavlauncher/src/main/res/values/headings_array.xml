@@ -46,267 +46,265 @@
     </string-array>
 
     <string-array name="language">
-        <item name="0">@string/global_default</item>
-        <item name="1">Afrikaans</item>
-        <item name="2">اللغة العربية</item>
-        <item name="3">Asturianu</item>
-        <item name="4">Azərbaycanca</item>
-        <item name="5">Башҡортса</item>
-        <item name="6">Boarisch</item>
-        <item name="7">Беларуская</item>
-        <item name="8">Български</item>
-        <item name="9">Brezhoneg</item>
-        <item name="10">Braobans</item>
-        <item name="11">Bosanski</item>
-        <item name="12">Català</item>
-        <item name="13">Čeština</item>
-        <item name="14">Cymraeg</item>
-        <item name="15">Dansk</item>
-        <item name="16">Österreichisches Deitsch</item>
-        <item name="17">Schwiizerdutsch</item>
-        <item name="18">Deutsch</item>
-        <item name="19">Ελληνικά</item>
-        <item name="20">English （Australia）</item>
-        <item name="21">English （Canada）</item>
-        <item name="22">English （United Kingdom）</item>
-        <item name="23">English （New Zealand）</item>
-        <item name="24">Pirate Speak</item>
-        <item name="25">ɥsᴉꞁᵷuƎ （uʍoᗡ ǝpᴉsd∩）</item>
-        <item name="26">English（US）</item>
-        <item name="27">Anglish</item>
-        <item name="28">Shakespearean English</item>
-        <item name="29">Esperanto</item>
-        <item name="30">Español （Argentina）</item>
-        <item name="31">Español （Chile）</item>
-        <item name="32">Español （Ecuador）</item>
-        <item name="33">Español （España）</item>
-        <item name="34">Español （México）</item>
-        <item name="35">Español （Uruguay）</item>
-        <item name="36">Español （Venezuela）</item>
-        <item name="37">Andalûh</item>
-        <item name="38">Eesti</item>
-        <item name="39">Euskara</item>
-        <item name="40">فارسی</item>
-        <item name="41">Suomi</item>
-        <item name="42">Filipino</item>
-        <item name="43">Føroyskt</item>
-        <item name="44">Français québécois</item>
-        <item name="45">Français</item>
-        <item name="46">Frängisch</item>
-        <item name="47">Furlan</item>
-        <item name="48">Frysk</item>
-        <item name="49">Gaeilge</item>
-        <item name="50">Gàidhlig</item>
-        <item name="51">Galego</item>
-        <item name="52">ʻŌlelo Hawaiʻi</item>
-        <item name="53">עברית</item>
-        <item name="54">हिन्दी</item>
-        <item name="55">Hrvatski</item>
-        <item name="56">Magyar</item>
-        <item name="57">Հայերեն</item>
-        <item name="58">Bahasa Indonesia</item>
-        <item name="59">Igbo</item>
-        <item name="60">Ido</item>
-        <item name="61">Íslenska</item>
-        <item name="62">Medžuslovjansky</item>
-        <item name="63">Italiano</item>
-        <item name="64">日本語</item>
-        <item name="65">la .lojban.</item>
-        <item name="66">ქართული</item>
-        <item name="67">Қазақша</item>
-        <item name="68">ಕನ್ನಡ</item>
-        <item name="69">한국어</item>
-        <item name="70">Kölsch/Ripoarisch</item>
-        <item name="71">Kernewek</item>
-        <item name="72">Latina</item>
-        <item name="73">Lëtzebuergesch</item>
-        <item name="74">Limburgs</item>
-        <item name="75">Lombard</item>
-        <item name="76">ລາວ（ປະເທດລາວ）</item>
-        <item name="77">LOLCAT</item>
-        <item name="78">Lietuvių</item>
-        <item name="79">Latviešu</item>
-        <item name="80">文言（華夏）</item>
-        <item name="81">Македонски</item>
-        <item name="82">Монгол</item>
-        <item name="83">Bahasa Melayu</item>
-        <item name="84">Malti</item>
-        <item name="85">Mēxikatlahtōlli</item>
-        <item name="86">Platdüütsk</item>
-        <item name="87">Vlaams</item>
-        <item name="88">Nederlands</item>
-        <item name="89">Norsk nynorsk</item>
-        <item name="90">Norsk Bokmål</item>
-        <item name="91">Occitan</item>
-        <item name="92">Övdalsk</item>
-        <item name="93">Polski</item>
-        <item name="94">Português （Brasil）</item>
-        <item name="95">Português （Portugal）</item>
-        <item name="96">Quenya</item>
-        <item name="97">Română</item>
-        <item name="98">Дореформенный русскій</item>
-        <item name="99">Русский</item>
-        <item name="100">Руснацькый</item>
-        <item name="101">Сахалыы（Cаха Сирэ）</item>
-        <item name="102">Davvisámegiella</item>
-        <item name="103">Slovenčina</item>
-        <item name="104">Slovenščina</item>
-        <item name="105">Af-Soomaali</item>
-        <item name="106">Shqip</item>
-        <item name="107">Srpski</item>
-        <item name="108">Српски</item>
-        <item name="109">Svenska</item>
-        <item name="110">Säggs\'sch</item>
-        <item name="111">Ślōnskŏ</item>
-        <item name="112">தமிழ்</item>
-        <item name="113">ภาษาไทย</item>
-        <item name="114">Tagalog</item>
-        <item name="115">tlhIngan Hol</item>
-        <item name="116">toki pona</item>
-        <item name="117">Türkçe</item>
-        <item name="118">Татарча</item>
-        <item name="119">Українська</item>
-        <item name="120">Català （Valencià）</item>
-        <item name="121">Vèneto</item>
-        <item name="122">Tiếng Việt</item>
-        <item name="123">ייִדיש</item>
-        <item name="124">Yorùbá</item>
-        <item name="125">简体中文（中国大陆）</item>
-        <item name="126">繁體中文（香港特別行政區）</item>
-        <item name="127">繁體中文（台灣）</item>
-        <item name="128">بهاس ملايو</item>
+        <item name="0">Afrikaans</item>
+        <item name="1">اللغة العربية</item>
+        <item name="2">Asturianu</item>
+        <item name="3">Azərbaycanca</item>
+        <item name="4">Башҡортса</item>
+        <item name="5">Boarisch</item>
+        <item name="6">Беларуская</item>
+        <item name="7">Български</item>
+        <item name="8">Brezhoneg</item>
+        <item name="9">Braobans</item>
+        <item name="10">Bosanski</item>
+        <item name="11">Català</item>
+        <item name="12">Čeština</item>
+        <item name="13">Cymraeg</item>
+        <item name="14">Dansk</item>
+        <item name="15">Österreichisches Deitsch</item>
+        <item name="16">Schwiizerdutsch</item>
+        <item name="17">Deutsch</item>
+        <item name="18">Ελληνικά</item>
+        <item name="19">English （Australia）</item>
+        <item name="20">English （Canada）</item>
+        <item name="21">English （United Kingdom）</item>
+        <item name="22">English （New Zealand）</item>
+        <item name="23">Pirate Speak</item>
+        <item name="24">ɥsᴉꞁᵷuƎ （uʍoᗡ ǝpᴉsd∩）</item>
+        <item name="25">English（US）</item>
+        <item name="26">Anglish</item>
+        <item name="27">Shakespearean English</item>
+        <item name="28">Esperanto</item>
+        <item name="29">Español （Argentina）</item>
+        <item name="30">Español （Chile）</item>
+        <item name="31">Español （Ecuador）</item>
+        <item name="32">Español （España）</item>
+        <item name="33">Español （México）</item>
+        <item name="34">Español （Uruguay）</item>
+        <item name="35">Español （Venezuela）</item>
+        <item name="36">Andalûh</item>
+        <item name="37">Eesti</item>
+        <item name="38">Euskara</item>
+        <item name="39">فارسی</item>
+        <item name="40">Suomi</item>
+        <item name="41">Filipino</item>
+        <item name="42">Føroyskt</item>
+        <item name="43">Français québécois</item>
+        <item name="44">Français</item>
+        <item name="45">Frängisch</item>
+        <item name="46">Furlan</item>
+        <item name="47">Frysk</item>
+        <item name="48">Gaeilge</item>
+        <item name="49">Gàidhlig</item>
+        <item name="50">Galego</item>
+        <item name="51">ʻŌlelo Hawaiʻi</item>
+        <item name="52">עברית</item>
+        <item name="53">हिन्दी</item>
+        <item name="54">Hrvatski</item>
+        <item name="55">Magyar</item>
+        <item name="56">Հայերեն</item>
+        <item name="57">Bahasa Indonesia</item>
+        <item name="58">Igbo</item>
+        <item name="59">Ido</item>
+        <item name="60">Íslenska</item>
+        <item name="61">Medžuslovjansky</item>
+        <item name="62">Italiano</item>
+        <item name="63">日本語</item>
+        <item name="64">la .lojban.</item>
+        <item name="65">ქართული</item>
+        <item name="66">Қазақша</item>
+        <item name="67">ಕನ್ನಡ</item>
+        <item name="68">한국어</item>
+        <item name="69">Kölsch/Ripoarisch</item>
+        <item name="70">Kernewek</item>
+        <item name="71">Latina</item>
+        <item name="72">Lëtzebuergesch</item>
+        <item name="73">Limburgs</item>
+        <item name="74">Lombard</item>
+        <item name="75">ລາວ（ປະເທດລາວ）</item>
+        <item name="76">LOLCAT</item>
+        <item name="77">Lietuvių</item>
+        <item name="78">Latviešu</item>
+        <item name="79">文言（華夏）</item>
+        <item name="80">Македонски</item>
+        <item name="81">Монгол</item>
+        <item name="82">Bahasa Melayu</item>
+        <item name="83">Malti</item>
+        <item name="84">Mēxikatlahtōlli</item>
+        <item name="85">Platdüütsk</item>
+        <item name="86">Vlaams</item>
+        <item name="87">Nederlands</item>
+        <item name="88">Norsk nynorsk</item>
+        <item name="89">Norsk Bokmål</item>
+        <item name="90">Occitan</item>
+        <item name="91">Övdalsk</item>
+        <item name="92">Polski</item>
+        <item name="93">Português （Brasil）</item>
+        <item name="94">Português （Portugal）</item>
+        <item name="95">Quenya</item>
+        <item name="96">Română</item>
+        <item name="97">Дореформенный русскій</item>
+        <item name="98">Русский</item>
+        <item name="99">Руснацькый</item>
+        <item name="100">Сахалыы（Cаха Сирэ）</item>
+        <item name="101">Davvisámegiella</item>
+        <item name="102">Slovenčina</item>
+        <item name="103">Slovenščina</item>
+        <item name="104">Af-Soomaali</item>
+        <item name="105">Shqip</item>
+        <item name="106">Srpski</item>
+        <item name="107">Српски</item>
+        <item name="108">Svenska</item>
+        <item name="109">Säggs\'sch</item>
+        <item name="110">Ślōnskŏ</item>
+        <item name="111">தமிழ்</item>
+        <item name="112">ภาษาไทย</item>
+        <item name="113">Tagalog</item>
+        <item name="114">tlhIngan Hol</item>
+        <item name="115">toki pona</item>
+        <item name="116">Türkçe</item>
+        <item name="117">Татарча</item>
+        <item name="118">Українська</item>
+        <item name="119">Català （Valencià）</item>
+        <item name="120">Vèneto</item>
+        <item name="121">Tiếng Việt</item>
+        <item name="122">ייִדיש</item>
+        <item name="123">Yorùbá</item>
+        <item name="124">简体中文（中国大陆）</item>
+        <item name="125">繁體中文（香港特別行政區）</item>
+        <item name="126">繁體中文（台灣）</item>
+        <item name="127">بهاس ملايو</item>
     </string-array>
 
     <string-array name="language_values">
-        <item>none</item>
-        <item>af_za</item>
-        <item>ar_sa</item>
-        <item>ast_es</item>
-        <item>az_az</item>
-        <item>ba_ru</item>
-        <item>bar</item>
-        <item>be_by</item>
-        <item>bg_bg</item>
-        <item>br_fr</item>
-        <item>brb</item>
-        <item>bs_ba</item>
-        <item>ca_es</item>
-        <item>cs_cz</item>
-        <item>cy_gb</item>
-        <item>da_dk</item>
-        <item>de_at</item>
-        <item>de_ch</item>
-        <item>de_de</item>
-        <item>el_gr</item>
-        <item>en_au</item>
-        <item>en_ca</item>
-        <item>en_gb</item>
-        <item>en_nz</item>
-        <item>en_pt</item>
-        <item>en_ud</item>
-        <item>en_us</item>
-        <item>enp</item>
-        <item>enws</item>
-        <item>eo_uy</item>
-        <item>es_ar</item>
-        <item>es_cl</item>
-        <item>es_ec</item>
-        <item>es_es</item>
-        <item>es_mx</item>
-        <item>es_uy</item>
-        <item>es_ve</item>
-        <item>esan</item>
-        <item>et_ee</item>
-        <item>eu_es</item>
-        <item>fa_ir</item>
-        <item>fi_fi</item>
-        <item>fil_ph</item>
-        <item>fo_fo</item>
-        <item>fr_ca</item>
-        <item>fr_fr</item>
-        <item>fra_de</item>
-        <item>fur_it</item>
-        <item>fy_nl</item>
-        <item>ga_ie</item>
-        <item>gd_gb</item>
-        <item>gl_es</item>
-        <item>haw_us</item>
-        <item>he_il</item>
-        <item>hi_in</item>
-        <item>hr_hr</item>
-        <item>hu_hu</item>
-        <item>hy_am</item>
-        <item>id_id</item>
-        <item>ig_ng</item>
-        <item>io_en</item>
-        <item>is_is</item>
-        <item>isv</item>
-        <item>it_it</item>
-        <item>ja_jp</item>
-        <item>jbo_en</item>
-        <item>ka_ge</item>
-        <item>kk_kz</item>
-        <item>kn_in</item>
-        <item>ko_kr</item>
-        <item>ksh</item>
-        <item>kw_gb</item>
-        <item>la_la</item>
-        <item>lb_lu</item>
-        <item>li_li</item>
-        <item>lmo</item>
-        <item>lo_la</item>
-        <item>lol_us</item>
-        <item>lt_lt</item>
-        <item>lv_lv</item>
-        <item>lzh</item>
-        <item>mk_mk</item>
-        <item>mn_mn</item>
-        <item>ms_my</item>
-        <item>mt_mt</item>
-        <item>nah</item>
-        <item>nds_de</item>
-        <item>nl_be</item>
-        <item>nl_nl</item>
-        <item>nn_no</item>
-        <item>no_no</item>
-        <item>oc_fr</item>
-        <item>ovd</item>
-        <item>pl_pl</item>
-        <item>pt_br</item>
-        <item>pt_pt</item>
-        <item>qya_aa</item>
-        <item>ro_ro</item>
-        <item>rpr</item>
-        <item>ru_ru</item>
-        <item>ry_ua</item>
-        <item>sah_sah</item>
-        <item>se_no</item>
-        <item>sk_sk</item>
-        <item>sl_si</item>
-        <item>so_so</item>
-        <item>sq_al</item>
-        <item>sr_cs</item>
-        <item>sr_sp</item>
-        <item>sv_se</item>
-        <item>sxu</item>
-        <item>szl</item>
-        <item>ta_in</item>
-        <item>th_th</item>
-        <item>tl_ph</item>
-        <item>tlh_aa</item>
-        <item>tok</item>
-        <item>tr_tr</item>
-        <item>tt_ru</item>
-        <item>uk_ua</item>
-        <item>val_es</item>
-        <item>vec_it</item>
-        <item>vi_vn</item>
-        <item>yi_de</item>
-        <item>yo_ng</item>
-        <item>zh_cn</item>
-        <item>zh_hk</item>
-        <item>zh_tw</item>
-        <item>zlm_arab</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>60</item>
+        <item>61</item>
+        <item>62</item>
+        <item>63</item>
+        <item>64</item>
+        <item>65</item>
+        <item>66</item>
+        <item>67</item>
+        <item>68</item>
+        <item>69</item>
+        <item>70</item>
+        <item>71</item>
+        <item>72</item>
+        <item>73</item>
+        <item>74</item>
+        <item>75</item>
+        <item>76</item>
+        <item>77</item>
+        <item>78</item>
+        <item>79</item>
+        <item>80</item>
+        <item>81</item>
+        <item>82</item>
+        <item>83</item>
+        <item>84</item>
+        <item>85</item>
+        <item>86</item>
+        <item>87</item>
+        <item>88</item>
+        <item>89</item>
+        <item>90</item>
+        <item>91</item>
+        <item>92</item>
+        <item>93</item>
+        <item>94</item>
+        <item>95</item>
+        <item>96</item>
+        <item>97</item>
+        <item>98</item>
+        <item>99</item>
+        <item>100</item>
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>105</item>
+        <item>106</item>
+        <item>107</item>
+        <item>108</item>
+        <item>109</item>
+        <item>110</item>
+        <item>111</item>
+        <item>112</item>
+        <item>113</item>
+        <item>114</item>
+        <item>115</item>
+        <item>116</item>
+        <item>117</item>
+        <item>118</item>
+        <item>119</item>
+        <item>120</item>
+        <item>121</item>
+        <item>122</item>
+        <item>123</item>
+        <item>124</item>
+        <item>125</item>
+        <item>126</item>
+        <item>127</item>
     </string-array>
     <string-array name="download_source_names">
         <item>@string/global_default</item>
