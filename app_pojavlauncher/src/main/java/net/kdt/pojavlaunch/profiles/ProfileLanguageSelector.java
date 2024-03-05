@@ -234,6 +234,7 @@ public class ProfileLanguageSelector {
                 return getMatchingLanguage(minecraftProfile.language);
             }
         }
+        version = Integer.parseInt(getVersion(versionId));
 
         // 1.10 -
         if (version < 11) {

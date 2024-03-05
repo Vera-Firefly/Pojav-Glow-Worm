@@ -87,7 +87,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         Tools.LanguagesList languagesList = Tools.getCompatibleLanguages(view.getContext());
         mLanguageLists = languagesList.LanguageIds;
-        List<String> languageList = new ArrayList<>(languagesList.Language.length + 1);
+        List<String> languageList = new ArrayList<>(languagesList.Language.length);
         languageList.addAll(Arrays.asList(languagesList.Language));
         mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
 
@@ -169,9 +169,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         // Default language selection
 
-        int languageIndex = -1;
+        int languageIndex = 0;
         if(mTempProfile.language != 0) {
-            languageIndex = mTempProfile.language - 1;
+            languageIndex = mTempProfile.language;
         }
         mLanguageSelection.setSelection(languageIndex);
 
@@ -254,8 +254,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     }
 
     private void saveLanguage() {
-        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 26;
-        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
+        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 0;
+        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition();
     }
 
     @Override
