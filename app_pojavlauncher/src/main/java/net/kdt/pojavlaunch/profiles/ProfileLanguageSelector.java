@@ -201,7 +201,7 @@ public class ProfileLanguageSelector {
     }
 
     public static String getLanguage(String versionId, int index) {
-        int version = 1;
+        int version;
 
         String optifineSuffix = "OptiFine"; // "1.20.4-OptiFine_HD_U_I7_pre3"
         String forgeSuffix = "forge"; // "1.20.2-forge-48.1.0"

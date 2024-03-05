@@ -80,8 +80,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         Tools.RenderersList renderersList = Tools.getCompatibleRenderers(view.getContext());
         mRenderNames = renderersList.rendererIds;
         List<String> renderList = new ArrayList<>(renderersList.rendererDisplayNames.length + 1);
-        renderList.add(view.getContext().getString(R.string.global_default));
         renderList.addAll(Arrays.asList(renderersList.rendererDisplayNames));
+        renderList.add(view.getContext().getString(R.string.global_default));
         mDefaultRenderer.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, renderList));
 
         Tools.LanguagesList languagesList = Tools.getCompatibleLanguages(view.getContext());
