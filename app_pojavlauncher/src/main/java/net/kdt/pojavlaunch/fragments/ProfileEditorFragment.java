@@ -167,7 +167,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         int languageIndex = 0;
         if(mTempProfile.language != 0) {
-            languageIndex = mTempProfile.language + 1;
+            if (mTempProfile.language == -1) languageIndex = 1;
+            else languageIndex = mTempProfile.language + 1;
         }
         mLanguageSelection.setSelection(languageIndex);
 
@@ -245,6 +246,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
     private void saveLanguage() {
         if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = -1;
+        else if(mLanguageSelection.getSelectedItemPosition() == 1) mTempProfile.language = -1;
         else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() - 1;
     }
 
