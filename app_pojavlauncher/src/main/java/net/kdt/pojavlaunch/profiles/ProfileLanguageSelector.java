@@ -255,7 +255,7 @@ public class ProfileLanguageSelector {
         boolean foundMatch = false;
         String language;
         if (minecraftProfile.language == 0) {
-            language = getLanguage(minecraftProfile.lastVersionId, Integer.parseInt(LauncherPreferences.DEFAULT_PREF.getString("gameLanguage", "25")));
+            language = getLanguage(minecraftProfile.lastVersionId, Integer.parseInt(LauncherPreferences.DEFAULT_PREF.getString("gameLanguage", "25")) + 1);
         } else {
             language = getLanguage(minecraftProfile.lastVersionId, minecraftProfile.language);
         }
