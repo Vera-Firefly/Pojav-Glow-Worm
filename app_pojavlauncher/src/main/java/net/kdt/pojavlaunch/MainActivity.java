@@ -351,7 +351,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         LauncherProfiles.load();
         int requiredJavaVersion = 8;
         if(version.javaVersion != null) requiredJavaVersion = version.javaVersion.majorVersion;
-        if (!minecraftProfile.followGameLanguage) ProfileLanguageSelector.languageChangers(minecraftProfile); // Language Selector
+        if (minecraftProfile.language != -1) ProfileLanguageSelector.languageChangers(minecraftProfile); // Language Selector
         Tools.launchMinecraft(this, minecraftAccount, minecraftProfile, versionId, requiredJavaVersion);
         //Note that we actually stall in the above function, even if the game crashes. But let's be safe.
         Tools.runOnUiThread(()-> mServiceBinder.isActive = false);

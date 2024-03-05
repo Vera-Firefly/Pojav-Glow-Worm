@@ -51,7 +51,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private ImageView mProfileIcon;
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
-    private CheckBox mFollowGameLanguage;
     private List<String> mLanguageLists;
     private List<String> mRenderNames;
 
@@ -81,18 +80,17 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         Tools.RenderersList renderersList = Tools.getCompatibleRenderers(view.getContext());
         mRenderNames = renderersList.rendererIds;
         List<String> renderList = new ArrayList<>(renderersList.rendererDisplayNames.length + 1);
-        renderList.addAll(Arrays.asList(renderersList.rendererDisplayNames));
         renderList.add(view.getContext().getString(R.string.global_default));
+        renderList.addAll(Arrays.asList(renderersList.rendererDisplayNames));
         mDefaultRenderer.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, renderList));
 
         Tools.LanguagesList languagesList = Tools.getCompatibleLanguages(view.getContext());
         mLanguageLists = languagesList.LanguageIds;
-        List<String> languageList = new ArrayList<>(languagesList.Language.length + 1);
+        List<String> languageList = new ArrayList<>(languagesList.Language.length + 2);
+        languageList.add(view.getContext().getString(R.string.preference_game_language_title));
         languageList.add(view.getContext().getString(R.string.global_default));
         languageList.addAll(Arrays.asList(languagesList.Language));
         mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
-
-        mFollowGameLanguage.setOnClickListener(view1 -> mLanguageSelection.setEnabled(mTempProfile.followGameLanguage));
 
         // Set up behaviors
         mSaveButton.setOnClickListener(v -> {
@@ -166,19 +164,13 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(jvmIndex == -1) jvmIndex = runtimes.size() - 1;
         mDefaultRuntime.setSelection(jvmIndex);
 
-        mFollowGameLanguage.setChecked(mTempProfile.followGameLanguage);
-
         // Default language selection
 
         int languageIndex = 0;
         if(mTempProfile.language != 0) {
-            languageIndex = mTempProfile.language;
+            languageIndex = mTempProfile.language + 1;
         }
         mLanguageSelection.setSelection(languageIndex);
-
-        if (mTempProfile.followGameLanguage) {
-            mLanguageSelection.setEnabled(false);
-        }
 
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
@@ -208,7 +200,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     }
 
     private void bindViews(@NonNull View view){
-        mFollowGameLanguage = view.findViewById(R.id.vprof_editor_follow_game_language_checkbox);
         mLanguageSelection = view.findViewById(R.id.vprof_editor_language_name);
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
@@ -247,7 +238,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
 
         saveLanguage();
-        mTempProfile.followGameLanguage = mFollowGameLanguage.isChecked();
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
@@ -255,8 +245,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     }
 
     private void saveLanguage() {
-        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 0;
-        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition();
+        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = -1;
+        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() - 1;
     }
 
     @Override

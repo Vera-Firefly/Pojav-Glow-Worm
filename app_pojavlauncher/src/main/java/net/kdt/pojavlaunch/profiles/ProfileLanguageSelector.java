@@ -17,7 +17,8 @@ public class ProfileLanguageSelector {
 
     public static String getMatchingLanguage(int index) {
             switch(index) {
-                case 0: return "none";
+                case -1: return "none";
+                case 0: return "default";
 
                 case 1: return "af_za";
                 case 2: return "ar_sa";
@@ -255,7 +256,7 @@ public class ProfileLanguageSelector {
         boolean foundMatch = false;
         String language;
         if (minecraftProfile.language == 0) {
-            language = getLanguage(minecraftProfile.lastVersionId, Integer.parseInt(LauncherPreferences.DEFAULT_PREF.getString("gameLanguage", "25")) + 1);
+            language = getLanguage(minecraftProfile.lastVersionId, Integer.parseInt(LauncherPreferences.DEFAULT_PREF.getString("gameLanguage", "-1")) + 1);
         } else {
             language = getLanguage(minecraftProfile.lastVersionId, minecraftProfile.language);
         }
