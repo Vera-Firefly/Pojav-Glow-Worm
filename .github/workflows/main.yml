@@ -134,3 +134,83 @@ jobs:
 
           path: app_pojavlauncher/build/outputs/apk/debug/*
 
+  buildnoruntime:
+
+    runs-on: ubuntu-22.04
+
+    env:
+
+      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+      VERA_KEYSTORE_PASSWORD: ${{ secrets.VERA_KEYSTORE_PASSWORD }}
+
+    steps:
+
+      - name: Checkout
+
+        uses: actions/checkout@v3
+
+      - name: Get LWJGL3
+
+        uses: dawidd6/action-download-artifact@v2
+
+        with:
+
+          workflow: main.yml
+
+          path: app_pojavlauncher/src/main/assets/components/lwjgl3
+
+          workflow_conclusion: success
+
+          repo: Vera-Firefly/lwjgl3-build
+
+          branch: main
+
+          name: lwjgl
+
+      - uses: gradle/gradle-build-action@v2
+
+        with:
+
+          gradle-version: 7.6.1
+
+      - name: Set up JDK 17
+
+        uses: actions/setup-java@v3
+
+        with:
+
+          distribution: 'temurin'
+
+          java-version: '17'
+
+      - name: Build Release-noruntime.apk
+        if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
+        run: |
+          gradle :app_pojavlauncher:assemblerelease
+          mv app_pojavlauncher/build/outputs/apk/release/app_pojavlauncher-release.apk app_output/noruntime/app-release-noruntime.apk
+
+      - name: Build Debug-noruntime.apk
+
+        run: |
+          # Build the launcher
+          gradle :app_pojavlauncher:assembleDebug
+          mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk app_output/noruntime/app-debug-noruntime.apk
+
+      - name: Upload Release
+        continue-on-error: true
+        if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release
+          path: app_output/noruntime/app-release-noruntime.apk
+
+      - name: Upload Debug
+
+        uses: actions/upload-artifact@v3
+
+        with:
+
+          name: app-debug
+
+          path: app_output/noruntime/app-debug-noruntime.apk
+
