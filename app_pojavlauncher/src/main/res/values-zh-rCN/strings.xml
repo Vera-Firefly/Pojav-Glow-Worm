@@ -342,7 +342,11 @@
     <string name="preference_category_in_menu_title">游戏外显示</string>
     <string name="preference_category_microsoft_account_title">微软账号</string>
     <string name="preference_category_local_account_title">离线账号</string>
+    <string name="preference_category_follow_game_language">跟随游戏语言变化</string>
+    <string name="preference_category_language_default">默认 (跟随游戏语言变化)</string>
     <string name="preference_category_language">语言选择</string>
+    <string name="preference_game_language_title">游戏语言</string>
+    <string name="preference_game_language_description">选择一个默认的语言，创建新的版本配置时，将默认使用此语言作为游戏语言</string>
     <string name="preference_category_custom_path">自定义路径</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度较快)</string>
     <string name="app_start_toast">#欢迎使用Pojav Glow·Worm!!!!</string>

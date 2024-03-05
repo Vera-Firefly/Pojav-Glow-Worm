@@ -25,7 +25,7 @@ public class MinecraftProfile {
 	public static MinecraftProfile createTemplate(){
 		MinecraftProfile TEMPLATE = new MinecraftProfile();
 		TEMPLATE.name = "New";
-		TEMPLATE.language = 26;
+		TEMPLATE.language = 0;
 		TEMPLATE.lastVersionId = "latest-release";
 		return TEMPLATE;
 	}
@@ -33,7 +33,7 @@ public class MinecraftProfile {
 	public static MinecraftProfile getDefaultProfile(){
 		MinecraftProfile defaultProfile = new MinecraftProfile();
 		defaultProfile.name = "Default";
-		defaultProfile.language = 26;
+		defaultProfile.language = 0;
 		defaultProfile.lastVersionId = "1.7.10";
 		return defaultProfile;
 	}

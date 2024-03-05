@@ -80,14 +80,16 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         Tools.RenderersList renderersList = Tools.getCompatibleRenderers(view.getContext());
         mRenderNames = renderersList.rendererIds;
         List<String> renderList = new ArrayList<>(renderersList.rendererDisplayNames.length + 1);
-        renderList.addAll(Arrays.asList(renderersList.rendererDisplayNames));
         renderList.add(view.getContext().getString(R.string.global_default));
+        renderList.addAll(Arrays.asList(renderersList.rendererDisplayNames));
         mDefaultRenderer.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, renderList));
 
         Tools.LanguagesList languagesList = Tools.getCompatibleLanguages(view.getContext());
         mLanguageLists = languagesList.LanguageIds;
         List<String> languageList = new ArrayList<>(languagesList.Language.length + 1);
+        languageList.add(view.getContext().getString(R.string.global_default));
         languageList.addAll(Arrays.asList(languagesList.Language));
+        languageList.set(1, view.getContext().getString(R.string.preference_category_follow_game_language));
         mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
 
         // Set up behaviors
@@ -163,9 +165,11 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultRuntime.setSelection(jvmIndex);
 
         // Default language selection
-        int languageIndex = 26 - 1;
-        if(mTempProfile.language != 26) {
-            languageIndex = mTempProfile.language - 1;
+
+        int languageIndex = 0;
+        if (mTempProfile.language != 0) {
+            languageIndex = mTempProfile.language;
+            if (mTempProfile.language == -1) languageIndex = 1;
         }
         mLanguageSelection.setSelection(languageIndex);
 
@@ -242,8 +246,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     }
 
     private void saveLanguage() {
-        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = 26;
-        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition() + 1;
+        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = -1;
+        else if(mLanguageSelection.getSelectedItemPosition() == 1) mTempProfile.language = -1;
+        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition();
     }
 
     @Override
