@@ -91,9 +91,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         languageList.addAll(Arrays.asList(languagesList.Language));
         mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
 
-        mFollowGameLanguage.setOnClickListener(view1 -> {
-            mLanguageSelection.setEnabled(!mTempProfile.followGameLanguage);
-        });
+        mFollowGameLanguage.setOnClickListener(view1 -> mLanguageSelection.setEnabled(mTempProfile.followGameLanguage));
 
         // Set up behaviors
         mSaveButton.setOnClickListener(v -> {
@@ -170,14 +168,15 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mFollowGameLanguage.setChecked(mTempProfile.followGameLanguage);
 
         // Default language selection
+
+        int languageIndex = -1;
+        if(mTempProfile.language != 0) {
+            languageIndex = mTempProfile.language - 1;
+        }
+        mLanguageSelection.setSelection(languageIndex);
+
         if (mTempProfile.followGameLanguage) {
             mLanguageSelection.setEnabled(false);
-        } else {
-            int languageIndex = 26 - 1;
-            if(mTempProfile.language != 26) {
-                languageIndex = mTempProfile.language - 1;
-            }
-            mLanguageSelection.setSelection(languageIndex);
         }
 
         // Renderer spinner
