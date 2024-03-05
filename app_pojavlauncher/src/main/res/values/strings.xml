@@ -382,6 +382,7 @@
     <string name="preference_category_in_menu_title">In Menu</string>
     <string name="preference_category_microsoft_account_title">Microsoft Account</string>
     <string name="preference_category_local_account_title">Local account</string>
+    <string name="preference_category_follow_game_language">Follow the Language of the Game</string>
     <string name="preference_category_language">Language Selection</string>
     <string name="preference_category_custom_path">Custom path</string>
     <string name="app_start_toast">#Welcome to Pojav Glow·Worm!!!!</string>

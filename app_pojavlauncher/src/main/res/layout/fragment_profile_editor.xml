@@ -41,6 +41,17 @@
                 app:layout_constraintBottom_toBottomOf="@+id/vprof_editor_profile_icon"
                 app:layout_constraintEnd_toEndOf="@+id/vprof_editor_profile_icon"/>
 
+            <CheckBox
+                    android:id="@+id/vprof_editor_follow_game_language_checkbox"
+                    android:layout_width="203dp"
+                    android:layout_height="26dp"
+                    android:text="@string/preference_category_follow_game_language"
+                    app:layout_constraintBottom_toTopOf="@+id/vprof_editor_language_name"
+                    app:layout_constraintTop_toTopOf="@+id/vprof_editor_profile_language_sub"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/vprof_editor_profile_language_sub"
+                    android:layout_marginStart="6dp"/>
+
             <TextView
                     android:id="@+id/vprof_editor_profile_language_sub"
                     android:layout_width="wrap_content"

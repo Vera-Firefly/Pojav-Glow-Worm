@@ -46,6 +46,7 @@
     </string-array>
 
     <string-array name="language">
+        <item name="0">@string/global_default</item>
         <item name="1">Afrikaans</item>
         <item name="2">اللغة العربية</item>
         <item name="3">Asturianu</item>
@@ -177,6 +178,7 @@
     </string-array>
 
     <string-array name="language_values">
+        <item>none</item>
         <item>af_za</item>
         <item>ar_sa</item>
         <item>ast_es</item>

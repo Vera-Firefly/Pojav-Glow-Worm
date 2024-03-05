@@ -342,6 +342,7 @@
     <string name="preference_category_in_menu_title">游戏外显示</string>
     <string name="preference_category_microsoft_account_title">微软账号</string>
     <string name="preference_category_local_account_title">离线账号</string>
+    <string name="preference_category_follow_game_language">跟随游戏语言变化</string>
     <string name="preference_category_language">语言选择</string>
     <string name="preference_category_custom_path">自定义路径</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度较快)</string>

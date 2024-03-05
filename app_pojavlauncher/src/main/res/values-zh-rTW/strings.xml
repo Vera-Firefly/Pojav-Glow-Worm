@@ -208,6 +208,7 @@
     <string name="preference_category_in_menu_title">遊戲外顯示</string>
     <string name="preference_category_microsoft_account_title">微軟賬號</string>
     <string name="preference_category_local_account_title">離線賬號</string>
+    <string name="preference_category_follow_game_language">跟隨遊戲語言變化</string>
     <string name="preference_category_language">語言選擇</string>
     <string name="preference_category_custom_path">自定義路徑</string>
     <string name="app_start_toast">#歡迎使用Pojav Glow·Worm!!!!</string>

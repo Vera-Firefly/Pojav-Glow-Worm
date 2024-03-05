@@ -51,6 +51,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private ImageView mProfileIcon;
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
+    private CheckBox mFollowGameLanguage;
     private List<String> mLanguageLists;
     private List<String> mRenderNames;
 
@@ -89,6 +90,11 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         List<String> languageList = new ArrayList<>(languagesList.Language.length + 1);
         languageList.addAll(Arrays.asList(languagesList.Language));
         mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
+
+        mFollowGameLanguage.setOnClickListener(view1 -> {
+            mLanguageSelection.setEnabled(mTempProfile.followGameLanguage);
+            if (mTempProfile.followGameLanguage) mLanguageSelection.setSelection(0);
+        });
 
         // Set up behaviors
         mSaveButton.setOnClickListener(v -> {
@@ -162,12 +168,19 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(jvmIndex == -1) jvmIndex = runtimes.size() - 1;
         mDefaultRuntime.setSelection(jvmIndex);
 
+        mFollowGameLanguage.setChecked(mTempProfile.followGameLanguage);
+
         // Default language selection
-        int languageIndex = 26 - 1;
-        if(mTempProfile.language != 26) {
-            languageIndex = mTempProfile.language - 1;
+        if (mTempProfile.followGameLanguage) {
+            mLanguageSelection.setSelection(0);
+            mLanguageSelection.setEnabled(false);
+        } else {
+            int languageIndex = 26 - 1;
+            if(mTempProfile.language != 26) {
+                languageIndex = mTempProfile.language - 1;
+            }
+            mLanguageSelection.setSelection(languageIndex);
         }
-        mLanguageSelection.setSelection(languageIndex);
 
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
@@ -197,6 +210,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     }
 
     private void bindViews(@NonNull View view){
+        mFollowGameLanguage = view.findViewById(R.id.vprof_editor_follow_game_language_checkbox);
         mLanguageSelection = view.findViewById(R.id.vprof_editor_language_name);
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
@@ -235,6 +249,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
 
         saveLanguage();
+        mTempProfile.followGameLanguage = mFollowGameLanguage.isChecked();
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
