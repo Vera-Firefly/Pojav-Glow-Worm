@@ -17,9 +17,6 @@ public class ProfileLanguageSelector {
 
     public static String getMatchingLanguage(int index) {
             switch(index) {
-                case -1: return "none";
-                case 0: return "default";
-
                 case 1: return "af_za";
                 case 2: return "ar_sa";
                 case 3: return "ast_es";
