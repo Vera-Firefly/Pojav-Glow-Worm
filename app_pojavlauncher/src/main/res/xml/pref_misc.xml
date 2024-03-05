@@ -25,7 +25,7 @@
             android:summary="@string/preference_download_source_description"
             app2:useSimpleSummaryProvider="true"/>
         <androidx.preference.ListPreference
-            android:defaultValue="25"
+            android:defaultValue="-1"
             android:key="gameLanguage"
             android:entries="@array/language"
             android:entryValues="@array/language_values"
