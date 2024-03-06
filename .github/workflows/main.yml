@@ -187,14 +187,12 @@ jobs:
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
         run: |
           gradle :app_pojavlauncher:assemblerelease
-          mv app_pojavlauncher/build/outputs/apk/release/app_pojavlauncher-release.apk app_output/noruntime/app-release-noruntime.apk
 
       - name: Build Debug-noruntime.apk
 
         run: |
           # Build the launcher
           gradle :app_pojavlauncher:assembleDebug
-          mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk app_output/noruntime/app-debug-noruntime.apk
 
       - name: Upload Release
         continue-on-error: true
@@ -202,7 +200,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-release-noruntime
-          path: app_output/noruntime/app-release-noruntime.apk
+          path: app_pojavlauncher/build/outputs/apk/release/*
 
       - name: Upload Debug
 
@@ -212,5 +210,5 @@ jobs:
 
           name: app-debug-noruntime
 
-          path: app_output/noruntime/app-debug-noruntime.apk
+          path: app_pojavlauncher/build/outputs/apk/debug/*
 
