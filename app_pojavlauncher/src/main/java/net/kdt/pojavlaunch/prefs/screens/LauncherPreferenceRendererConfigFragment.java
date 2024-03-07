@@ -53,8 +53,10 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                         Toast.makeText(getContext(), R.string.mcl_setting_renderer_default, Toast.LENGTH_SHORT).show();
                     } else if (preference.getKey().equals("ZinkS")) {
                         Toast.makeText(getContext(), R.string.mcl_setting_renderer_zinks, Toast.LENGTH_SHORT).show();
-                    } else if (preference.getKey().equals("VulkanLwarlip")) {
+                    } else if (preference.getKey().equals("ZinkT")) {
                         Toast.makeText(getContext(), R.string.mcl_setting_renderer_zinkt, Toast.LENGTH_SHORT).show();
+                    } else if (preference.getKey().equals("VulkanLwarlip")) {
+                        Toast.makeText(getContext(), R.string.mcl_setting_renderer_zinkl, Toast.LENGTH_SHORT).show();
                     } else if (preference.getKey().equals("Rvirpipe")) {
                         Toast.makeText(getContext(), R.string.mcl_setting_renderer_virgl, Toast.LENGTH_SHORT).show();
                     } else if (preference.getKey().equals("Rpanfrost")) {
@@ -142,6 +144,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
         requirePreference("ebCustom").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ZinkF").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ZinkS").setVisible(LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("ZinkT").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("VulkanLwarlip").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("Rvirpipe").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("Rpanfrost").setVisible(LauncherPreferences.PREF_EXP_SETUP);
