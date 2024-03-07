@@ -36,6 +36,9 @@
             android:key="ZinkS"
             android:title="@string/preference_renderer_setup_second"/>
         <SwitchPreference
+            android:key="ZinkT"
+            android:title="@string/preference_renderer_setup_third"/>
+        <SwitchPreference
             android:key="VulkanLwarlip"
             android:title="@string/preference_renderer_setup_vwl"/>
         <SwitchPreference

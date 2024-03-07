@@ -227,7 +227,9 @@ int pojavInitOpenGL() {
     } else if (strcmp(renderer, "vulkan_zink") == 0) {
         if(getenv("POJAV_EXP_SETUP") != NULL) {
             printf("Bridge: Use Experimental Setup\n");
-            if(getenv("POJAV_EXP_SETUP_DEFAULT") != NULL || getenv("POJAV_EXP_SETUP_S") != NULL) {
+            if(getenv("POJAV_EXP_SETUP_DEFAULT") != NULL
+            || getenv("POJAV_EXP_SETUP_S") != NULL
+            || getenv("POJAV_EXP_SETUP_T") != NULL) {
                 load_vulkan();
                 setenv("GALLIUM_DRIVER","zink",1);
                 printf("Bridge: Use Deafult Config\n");

@@ -239,6 +239,10 @@ public class JREUtils {
                             envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
                         }
+                        if(PREF_EXP_SETUP_T){
+                            envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+                            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
+                        }
                         if(PREF_EXP_SETUP_VIRGL){
                             envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
                             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
@@ -264,6 +268,9 @@ public class JREUtils {
                     }
                     if(PREF_EXP_SETUP_S){
                         envMap.put("POJAV_EXP_SETUP_S", "1");
+                    }
+                    if(PREF_EXP_SETUP_T){
+                        envMap.put("POJAV_EXP_SETUP_T", "1");
                     }
                     if(PREF_EXP_SETUP_VIRGL){
                         envMap.put("POJAV_EXP_SETUP_VIRGL", "1");
@@ -541,7 +548,8 @@ public class JREUtils {
                 || PREF_EXP_SETUP_LW){
                     renderLibrary = "libOSMesa_81.so";
                 }
-                if(PREF_EXP_SETUP_PAN){
+                if(PREF_EXP_SETUP_PAN
+                || PREF_EXP_SETUP_T){
                     renderLibrary = "libOSMesa_pan.so";
                 }
                 if(PREF_EXP_SETUP_S){
