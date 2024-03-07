@@ -143,7 +143,7 @@ public class LauncherPreferences {
         PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
         PREF_EXP_SETUP_DEFAULT = DEFAULT_PREF.getBoolean("ZinkF", false);
         PREF_EXP_SETUP_S = DEFAULT_PREF.getBoolean("ZinkS", false);
-        PREF_EXP_SETUP_S = DEFAULT_PREF.getBoolean("ZinkT", false);
+        PREF_EXP_SETUP_T = DEFAULT_PREF.getBoolean("ZinkT", false);
         PREF_EXP_SETUP_LW  = DEFAULT_PREF.getBoolean("VulkanLwarlip", false);
         PREF_EXP_SETUP_VIRGL  = DEFAULT_PREF.getBoolean("Rvirpipe", false);
         PREF_EXP_SETUP_PAN  = DEFAULT_PREF.getBoolean("Rpanfrost", false);
