@@ -34,7 +34,8 @@ void dlsym_OSMesa() {
                     abort();
                 }
             }
-            if(getenv("POJAV_EXP_SETUP_PAN") != NULL) {
+            if(getenv("POJAV_EXP_SETUP_PAN") != NULL
+            || getenv("POJAV_EXP_SETUP_T") != NULL) {
                 if(asprintf(&main_path, "%s/libOSMesa_pan.so", getenv("POJAV_NATIVEDIR")) == -1) {
                     abort();
                 }
