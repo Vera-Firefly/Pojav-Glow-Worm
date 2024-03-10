@@ -133,7 +133,7 @@ public final class Tools {
 
 
     private static File getPojavStorageRoot(Context ctx) {
-        switch (LOCAL_CSTL) {
+        switch (String.valueOf(LOCAL_CSTL)) {
             case 1:{
                 if(SDK_INT >= 29) {
                     return ctx.getExternalFilesDir(null);
