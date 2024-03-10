@@ -29,7 +29,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
         addPreferencesFromResource(R.xml.pref_renderexp);
         computeVisibility();
 
-        findPreference("SetGLVersion").setOnPreferenceClickListener((preference) -> {
+        findPreference("SetGLVersion").setOnPreferenceLongClickListener((preference) -> {
             showSetGLVersionDialog();
             return true;
         });
