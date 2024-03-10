@@ -133,18 +133,10 @@ public final class Tools {
 
 
     private static File getPojavStorageRoot(Context ctx) {
-        if (LOCAL_CSTL == 1) {
-            if(SDK_INT >= 29) {
-                return ctx.getExternalFilesDir(null);
-            }else{
-                return new File(Environment.getExternalStorageDirectory(),"games/PojavGlowWorm");
-            }
-        } else if (LOCAL_CSTL == 2) {
+        if(SDK_INT >= 29) {
             return ctx.getExternalFilesDir(null);
-        } else if (LOCAL_CSTL == 3) {
-            return new File(Environment.getExternalStorageDirectory(),"games/PojavGlowWorm");
         } else {
-            return ctx.getExternalFilesDir(null);
+            return new File(Environment.getExternalStorageDirectory(),"games/PojavGlowWorm");
         }
     }
 
