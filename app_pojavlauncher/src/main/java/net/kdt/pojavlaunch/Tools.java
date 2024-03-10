@@ -104,13 +104,14 @@ public final class Tools {
     public static String DIR_DATA; //Initialized later to get context
     public static File DIR_CACHE;
     public static String MULTIRT_HOME;
+    public static String LOCAL_CSTL = null;
     public static String LOCAL_RENDERER = null;
     public static int DEVICE_ARCHITECTURE;
     public static final String LAUNCHERPROFILES_RTPREFIX = "pojav://";
 
     // New since 3.3.1
     public static String DIR_ACCOUNT_NEW;
-    public static String DIR_GAME_HOME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/games/PojavLauncher";
+    public static String DIR_GAME_HOME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/games/PojavGlowWorm";
     public static String DIR_GAME_NEW;
 
     // New since 3.0.0
@@ -126,6 +127,7 @@ public final class Tools {
     public static String OBSOLETE_RESOURCES_PATH;
     public static String CTRLMAP_PATH;
     public static String CTRLDEF_FILE;
+    private static CStorageList sCompatibleCStorges;
     private static LanguagesList sCompatibleLanguages;
     private static RenderersList sCompatibleRenderers;
 
@@ -134,7 +136,7 @@ public final class Tools {
         if(SDK_INT >= 29) {
             return ctx.getExternalFilesDir(null);
         }else{
-            return new File(Environment.getExternalStorageDirectory(),"games/PojavLauncher");
+            return new File(Environment.getExternalStorageDirectory(),"games/PojavGlowWorm");
         }
     }
 
@@ -1133,6 +1135,33 @@ public final class Tools {
         return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("huawei");
     }
 
+    public static class CStorageList {
+        public final List<String> CStorageLIds;
+        public final String[] CStorageL;
+
+        public CStorageList(List<String> CStorageLIds, String[] CStorageL) {
+            this.CStorageLIds = CStorageLIds;
+            this.CStorageL = CStorageL;
+        }
+    }
+
+   public static CStorageList getCompatibleCStorageL(Context context) {
+        if(sCompatibleCStorges != null) return sCompatibleCStorges;
+        Resources resources = context.getResources();
+        String[] defaultCStorageL = resources.getStringArray(R.array.cstoragel_values);
+        String[] defaultCStorageLNames = resources.getStringArray(R.array.cstoragel);
+        List<String> CStorageLIds = new ArrayList<>(defaultCStorageL.length);
+        List<String> CStorageLNames = new ArrayList<>(defaultCStorageLNames.length);
+        for(int i = 0; i < defaultCStorageL.length; i++) {
+            CStorageLIds.add(defaultCStorageL[i]);
+            CStorageLNames.add(defaultCStorageLNames[i]);
+        }
+        sCompatibleCStorges = new CStorageList(CStorageLIds,
+                CStorageLNames.toArray(new String[0]));
+
+        return sCompatibleCStorges;
+    }
+
     public static class LanguagesList {
         public final List<String> LanguageIds;
         public final String[] Language;
@@ -1151,8 +1180,7 @@ public final class Tools {
         List<String> LanguageIds = new ArrayList<>(defaultLanguages.length);
         List<String> LanguageNames = new ArrayList<>(defaultLanguageNames.length);
         for(int i = 0; i < defaultLanguages.length; i++) {
-            String rendererId = defaultLanguages[i];
-            LanguageIds.add(rendererId);
+            LanguageIds.add(defaultLanguages[i]);
             LanguageNames.add(defaultLanguageNames[i]);
         }
         sCompatibleLanguages = new LanguagesList(LanguageIds,
