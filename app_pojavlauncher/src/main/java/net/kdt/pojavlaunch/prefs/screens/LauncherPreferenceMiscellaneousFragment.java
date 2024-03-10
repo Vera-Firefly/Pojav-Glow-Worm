@@ -49,9 +49,10 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
 
         ListPreference CLStorageLP = requirePreference("CLStorageL", ListPreference.class);
         Tools.CStorageList clstoragelList = Tools.getCompatibleCStorageL(getContext());
+        String LCStorageL = clstoragelList.CStorageLIds;
         CLStorageLP.setEntries(clstoragelList.CStorageL);
         CLStorageLP.setEntryValues(clstoragelList.CStorageLIds.toArray(new String[0]));
-        Tools.LOCAL_CSTL = clstoragelList.CStorageLIds;
+        Tools.LOCAL_CSTL = LCStorageL;
 
     }
     @Override
