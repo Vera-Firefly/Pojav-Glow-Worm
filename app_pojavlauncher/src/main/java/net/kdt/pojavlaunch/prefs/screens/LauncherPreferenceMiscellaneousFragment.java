@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 import android.os.Bundle;
 
 import android.widget.Toast;
-import androidx.preference.Preference;
+import androidx.preference.*;
 
 import com.kdt.pickafile.FileListView;
 import net.kdt.pojavlaunch.R;
