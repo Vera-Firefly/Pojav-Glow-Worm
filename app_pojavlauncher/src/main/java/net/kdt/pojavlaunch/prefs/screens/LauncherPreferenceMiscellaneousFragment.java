@@ -46,6 +46,13 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
             Toast.makeText(getContext(), R.string.notif_mouse1, Toast.LENGTH_SHORT).show();
             return true;
         });
+
+        ListPreference CLStorageLP = requirePreference("CLStorageL",
+                ListPreference.class);
+        Tools.CStorageList clstoragelList = Tools.getCompatibleCStorageL(getContext());
+        CLStorageLP.setEntries(clstoragelList.rendererDisplayNames);
+        CLStorageLP.setEntryValues(clstoragelList.rendererIds.toArray(new String[0]));
+
     }
     @Override
     public void onActivityResult(
