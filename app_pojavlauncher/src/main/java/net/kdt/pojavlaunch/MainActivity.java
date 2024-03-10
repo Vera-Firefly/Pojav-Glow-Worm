@@ -64,7 +64,6 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.lwjgl.glfw.CallbackBridge;
-import top.defaults.checkerboarddrawable.BuildConfig;
 
 import java.io.File;
 import java.io.IOException;
