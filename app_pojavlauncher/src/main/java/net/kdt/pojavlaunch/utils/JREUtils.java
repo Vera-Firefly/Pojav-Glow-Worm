@@ -274,10 +274,12 @@ public class JREUtils {
                     }
                     if(PREF_EXP_SETUP_VIRGL){
                         envMap.put("POJAV_EXP_SETUP_VIRGL", "1");
+                        envMap.put("DCLAT_FRAMEBUFFER", "1");
                         envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
                     }
                     if(PREF_EXP_SETUP_LW){
                         envMap.put("POJAV_EXP_SETUP_LW", "1");
+                        envMap.put("DCLAT_FRAMEBUFFER", "1");
                     }
                     if(PREF_EXP_SETUP_PAN){
                         envMap.put("POJAV_EXP_SETUP_PAN", "1");
