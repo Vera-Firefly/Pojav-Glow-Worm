@@ -530,7 +530,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
 #ifdef FRAME_BUFFER_SUPPOST
             OSMesaMakeCurrent_p((OSMesaContext)window,gbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
 #else
-            OSMesaMakeCurrent_p((OSMesaContext)window,setbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
+            printf("[ERROR]: Macro FRAME_BUFFER_SUPPOST is undefined\n");
 #endif
         } else {
             OSMesaMakeCurrent_p((OSMesaContext)window,setbuffer,GL_UNSIGNED_BYTE,pojav_environ->savedWidth,pojav_environ->savedHeight);
