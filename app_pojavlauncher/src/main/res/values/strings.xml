@@ -387,6 +387,8 @@
     <string name="preference_category_language">Language Selection</string>
     <string name="preference_game_language_title">Game Language</string>
     <string name="preference_game_language_description">Select a default language that will be used as the game language by default when creating a new version configuration.</string>
+    <string name="preference_enable_log_output_desc">Enable the log output interface when the application officially starts running the game</string>
+    <string name="preference_enable_log_output_title">Enable log output on game startup</string>
     <string name="preference_category_custom_path">Custom path</string>
     <string name="app_start_toast">#Welcome to Pojav Glow·Worm!!!!</string>
     <string name="mcl_setting_renderer_vgpu">vgpu - (up to 1.16.5, fast)</string>
