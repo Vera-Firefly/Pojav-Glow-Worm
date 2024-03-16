@@ -427,7 +427,7 @@
     <string name="preference_renderer_setup">experimental setup for the Mesa</string>
     <string name="preference_exp_framebuffer_title">Spare frame buffer</string>
     <string name="preference_exp_framebuffer">Use the frame buffer of the second scheme, close it if launch failed</string>
-    <string name="preference_renderer_setup_extra">Experimental Settings</string>
+    <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
     <string name="preference_renderer_setup_default">Use default configuration</string>
     <string name="preference_renderer_setup_second">Mesa23.0.4(Zink)</string>
     <string name="preference_renderer_setup_third">Mesa23.0.0(Zink)</string>
@@ -460,7 +460,7 @@
     <string name="ad_time_aac">Noon time always so tired.\nTake a nap and come back!</string>
     <string name="ad_time_aad">The evening is always so romantic.\nLet\'s go out for a walk!</string>
     <string name="ad_time_aae">Time is always so short, late at night.\nHurry to have a good sleep!</string>
-    <string name="ad_time_aaf">Happy Hour</string>
+    <string name="ad_time_aaf">Hello!!!!!</string>
     <!-- Custom GL/GLSL Version -->
     <string name="preference_exp_alertdialog_glmessage">Before you do this, you must know what you are doing\nAre you sure you want to open it?</string>
     <string name="preference_exp_custommv">GL/GLSL Version</string>
