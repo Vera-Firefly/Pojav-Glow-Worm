@@ -421,10 +421,10 @@
     <string name="other_login_server_error">No authentication server</string>
     <!-- Renderer Experimental Setup -->
     <string name="preference_rendererexp_title">Renderer Experimental Settings</string>
-    <string name="preference_rendererexp_description">Experimental setup for Mesa</string>
-    <string name="preference_category_renderer_experimental_settings">renderer exp setup</string>
+    <string name="preference_rendererexp_description">Non-professionals should not use it</string>
+    <string name="preference_category_renderer_experimental_settings">Renderer exp setup</string>
     <string name="preference_renderer_setup_title">Enable Renderer Exp Setup</string>
-    <string name="preference_renderer_setup">experimental setup for the Mesa</string>
+    <string name="preference_renderer_setup">Use more renderer-specific settings</string>
     <string name="preference_exp_framebuffer_title">Spare frame buffer</string>
     <string name="preference_exp_framebuffer">Use the frame buffer of the second scheme, close it if launch failed</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
