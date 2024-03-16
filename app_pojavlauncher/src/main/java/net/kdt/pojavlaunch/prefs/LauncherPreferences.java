@@ -88,6 +88,7 @@ public class LauncherPreferences {
     public static String PREF_MESA_GL_VERSION;
     public static String PREF_MESA_GLSL_VERSION;
     public static String PREF_GAME_LANGUAGE = "-1";
+    public static boolean PREF_ENABLE_LOG_OUTPUT = false;
 
     public static void loadPreferences(Context ctx) {
         //Required for the data folder.
@@ -155,6 +156,7 @@ public class LauncherPreferences {
         PREF_MESA_GLSL_VERSION = DEFAULT_PREF.getString("mesaGLSLVersion", "460");
 
         PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("gameLanguage", "-1");
+        PREF_ENABLE_LOG_OUTPUT = DEFAULT_PREF.getBoolean("enableLogOutput", false);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
