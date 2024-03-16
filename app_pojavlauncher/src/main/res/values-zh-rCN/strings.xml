@@ -382,10 +382,10 @@
     <string name="other_login_server_error">无认证服务器</string>
     <!-- Renderer Experimental Setup -->
     <string name="preference_rendererexp_title">渲染器实验性设置</string>
-    <string name="preference_rendererexp_description">针对于Mesa的实验性设置</string>
+    <string name="preference_rendererexp_description">非专业人员请勿使用</string>
     <string name="preference_category_renderer_experimental_settings">渲染器实验性设置</string>
     <string name="preference_renderer_setup_title">启用渲染器实验性设置</string>
-    <string name="preference_renderer_setup">针对于Mesa的实验性设置</string>
+    <string name="preference_renderer_setup">更多的渲染器特定设置</string>
     <string name="preference_exp_framebuffer_title">备用帧缓冲区</string>
     <string name="preference_exp_framebuffer">使用第二方案帧缓冲区,如果启动失败,请关闭</string>
     <string name="preference_renderer_setup_extra">渲染器 (拓展)</string>
