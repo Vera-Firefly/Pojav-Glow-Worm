@@ -219,8 +219,7 @@ int pojavInitOpenGL() {
 
     // NOTE: Override for now.
     const char *renderer = getenv("POJAV_BETA_RENDERER");
-    if (strncmp("opengles2", renderer, 8) == 0
-    || strncmp("opengles2_vgpu", renderer, 8) == 0) {
+    if (strncmp("opengles", renderer, 8) == 0) {
         pojav_environ->config_renderer = RENDERER_GL4ES;
         if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
             set_gl_bridge_tbl();
