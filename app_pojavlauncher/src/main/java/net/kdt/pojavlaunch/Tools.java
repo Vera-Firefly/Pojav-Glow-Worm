@@ -1151,8 +1151,7 @@ public final class Tools {
         List<String> LanguageIds = new ArrayList<>(defaultLanguages.length);
         List<String> LanguageNames = new ArrayList<>(defaultLanguageNames.length);
         for(int i = 0; i < defaultLanguages.length; i++) {
-            String rendererId = defaultLanguages[i];
-            LanguageIds.add(rendererId);
+            LanguageIds.add(defaultLanguages[i]);
             LanguageNames.add(defaultLanguageNames[i]);
         }
         sCompatibleLanguages = new LanguagesList(LanguageIds,
