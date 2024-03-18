@@ -126,6 +126,12 @@ public final class Tools {
     public static String OBSOLETE_RESOURCES_PATH;
     public static String CTRLMAP_PATH;
     public static String CTRLDEF_FILE;
+
+    public static String DRIVER_MODLE = null;
+    public static String MESA_LIBS = null;
+
+    private static CDriverModleList sCompatibleCDriverModle;
+    private static CMesaLibList sCompatibleCMesaLibs;
     private static LanguagesList sCompatibleLanguages;
     private static RenderersList sCompatibleRenderers;
 
@@ -1216,5 +1222,77 @@ public final class Tools {
     public static void releaseRenderersCache() {
         sCompatibleRenderers = null;
         System.gc();
+    }
+
+    public static class CMesaLibList {
+        public final List<String> CMesaLibIds;
+        public final String[] CMesaLibs;
+
+        public CMesaLibList(List<String> CMesaLibIds, String[] CMesaLibs) {
+            this.CMesaLibIds = CMesaLibIds;
+            this.CMesaLibs = CMesaLibs;
+        }
+    }
+
+    public static CMesaLibList getCompatibleCMesaLib(Context context) {
+        if(sCompatibleCMesaLibs != null) return sCompatibleCMesaLibs;
+        Resources resources = context.getResources();
+        String[] defaultCMesaLib = resources.getStringArray(R.array.osmesa_values);
+        String[] defaultCMesaLibNames = resources.getStringArray(R.array.osmesa_library);
+        List<String> CMesaLibIds = new ArrayList<>(defaultCMesaLib.length);
+        List<String> CMesaLibNames = new ArrayList<>(defaultCMesaLibNames.length);
+        for(int i = 0; i < defaultCMesaLib.length; i++) {
+            CMesaLibIds.add(defaultCMesaLib[i]);
+            CMesaLibNames.add(defaultCMesaLibNames[i]);
+        }
+        sCompatibleCMesaLibs = new CMesaLibList(CMesaLibIds,
+                CMesaLibNames.toArray(new String[0]));
+
+        return sCompatibleCMesaLibs;
+    }
+
+    public static class CDriverModleList {
+        public final List<String> CDriverModleIds;
+        public final String[] CDriverModles;
+
+        public CDriverModleList(List<String> CDriverModleIds, String[] CDriverModles) {
+            this.CDriverModleIds = CDriverModleIds;
+            this.CDriverModles = CDriverModles;
+        }
+    }
+
+    public static CDriverModleList getCompatibleCDriverModle(Context context) {
+        if(sCompatibleCDriverModle != null) return sCompatibleCDriverModle;
+        Resources resources = context.getResources();
+        String[] defaultCDriverModle = resources.getStringArray(R.array.driver_modle_values);
+        String[] defaultCDriverModleNames = resources.getStringArray(R.array.driver_modle);
+        List<String> CDriverModleIds = new ArrayList<>(defaultCDriverModle.length);
+        List<String> CDriverModleNames = new ArrayList<>(defaultCDriverModleNames.length);
+        for(int i = 0; i < defaultCDriverModle.length; i++) {
+            String driverModle = defaultCDriverModle[i];
+            switch (MESA_LIBS) {
+                case "mesa2400":{
+                    if(driverModle.contains("virgl")) continue;
+                    if(driverModle.contains("panfrost")) continue;
+                } break;
+                case "mesa2304":{
+                    if(driverModle.contains("virgl")) continue;
+                } break;
+                case "mesa2300d":{
+                    if(driverModle.contains("virgl")) continue;
+                    if(driverModle.contains("freedreno")) continue;
+                } break;
+                case "mesa2205":{
+                    if(driverModle.contains("panfrost")) continue;
+                    if(driverModle.contains("freedreno")) continue;
+                } break;
+            }
+            CDriverModleIds.add(driverModle);
+            CDriverModleNames.add(defaultCDriverModleNames[i]);
+        }
+        sCompatibleCDriverModle = new CDriverModleList(CDriverModleIds,
+                CDriverModleNames.toArray(new String[0]));
+
+        return sCompatibleCDriverModle;
     }
 }
