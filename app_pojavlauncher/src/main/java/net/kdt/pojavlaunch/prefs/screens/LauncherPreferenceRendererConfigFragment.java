@@ -16,6 +16,7 @@ import androidx.preference.*;
 
 import java.util.Random;
 import net.kdt.pojavlaunch.R;
+import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 // Experimental Settings for Mesa renderer
