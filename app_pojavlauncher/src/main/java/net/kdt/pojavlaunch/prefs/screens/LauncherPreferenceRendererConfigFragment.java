@@ -34,6 +34,20 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
             return true;
         });
 
+        ListPreference CMesaLibP = requirePreference("CMesaLibrarys", ListPreference.class);
+        Tools.CMesaLibList cmesalibList = Tools.getCompatibleCMesaLib(getContext());
+        String LCMesaLib = cmesalibList.CMesaLibIds.get(0);
+        CMesaLibP.setEntries(cmesalibList.CMesaLibs);
+        CMesaLibP.setEntryValues(cmesalibList.CMesaLibIds.toArray(new String[0]));
+        Tools.MESA_LIBS = LCMesaLib;
+
+        ListPreference CDriverModleP = requirePreference("CDriverModles", ListPreference.class);
+        Tools.CDriverModleList cdrivermodleList = Tools.getCompatibleCDriverModle(getContext());
+        String LCDriverModle = cdrivermodleList.CDriverModleIds.get(0);
+        CDriverModleP.setEntries(cdrivermodleList.CDriverModles);
+        CDriverModleP.setEntryValues(cdrivermodleList.CDriverModleIds.toArray(new String[0]));
+        Tools.DRIVER_MODLE = LCDriverModle;
+
         // Get RadioGroup Preference for extra
         final PreferenceCategory radioGroupPref = findPreference("radioGroupPref");
         final PreferenceCategory customMesaVersionPref = findPreference("customMesaVersionPref");
