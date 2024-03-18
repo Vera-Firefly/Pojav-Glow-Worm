@@ -35,6 +35,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
             return true;
         });
 
+        // Select Mesa Library
         ListPreference CMesaLibP = requirePreference("CMesaLibrarys", ListPreference.class);
         Tools.CMesaLibList cmesalibList = Tools.getCompatibleCMesaLib(getContext());
         String LCMesaLib = CMesaLibP.getValue();
@@ -42,12 +43,19 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
         CMesaLibP.setEntryValues(cmesalibList.CMesaLibIds.toArray(new String[0]));
         Tools.MESA_LIBS = LCMesaLib;
 
+        // Select the driver model
         ListPreference CDriverModleP = requirePreference("CDriverModles", ListPreference.class);
         Tools.CDriverModleList cdrivermodleList = Tools.getCompatibleCDriverModle(getContext());
         String LCDriverModle = CDriverModleP.getValue();
         CDriverModleP.setEntries(cdrivermodleList.CDriverModles);
         CDriverModleP.setEntryValues(cdrivermodleList.CDriverModleIds.toArray(new String[0]));
         Tools.DRIVER_MODLE = LCDriverModle;
+
+        // Update the selected status of the driving model according to the selected Mesa Library
+        CMesaLibP.setOnPreferenceChangeListener((pre, obj) -> {
+            CDriverModleP.setValueIndex(0); // the index of driver_zink is considered to be 0
+            return true;
+        });
 
         // Get RadioGroup Preference for extra
         final PreferenceCategory radioGroupPref = findPreference("radioGroupPref");
