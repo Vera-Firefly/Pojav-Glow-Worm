@@ -37,14 +37,14 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
 
         ListPreference CMesaLibP = requirePreference("CMesaLibrarys", ListPreference.class);
         Tools.CMesaLibList cmesalibList = Tools.getCompatibleCMesaLib(getContext());
-        String LCMesaLib = CMesaLibP.getValues();
+        String LCMesaLib = CMesaLibP.getValue();
         CMesaLibP.setEntries(cmesalibList.CMesaLibs);
         CMesaLibP.setEntryValues(cmesalibList.CMesaLibIds.toArray(new String[0]));
         Tools.MESA_LIBS = LCMesaLib;
 
         ListPreference CDriverModleP = requirePreference("CDriverModles", ListPreference.class);
         Tools.CDriverModleList cdrivermodleList = Tools.getCompatibleCDriverModle(getContext());
-        String LCDriverModle = CDriverModleP.getValues();
+        String LCDriverModle = CDriverModleP.getValue();
         CDriverModleP.setEntries(cdrivermodleList.CDriverModles);
         CDriverModleP.setEntryValues(cdrivermodleList.CDriverModleIds.toArray(new String[0]));
         Tools.DRIVER_MODLE = LCDriverModle;
