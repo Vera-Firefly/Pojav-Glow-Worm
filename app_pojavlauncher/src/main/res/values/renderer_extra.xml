@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="osmesa_library">
+        <item name="1">@string/preference_renderer_extra_default</item>
+        <item name="2">Mesa23.0.4</item>
+        <item name="3">Mesa23.0.0-devel</item>
+        <item name="4">Mesa22.0.5</item>
+    </string-array>
+
+    <string-array name="osmesa_values">
+        <item>mesa2400</item>
+        <item>mesa2304</item>
+        <item>mesa2300d</item>
+        <item>mesa2205</item>
+    </string-array>
+
+    <string-array name="driver_modle">
+        <item name="1">zink (Vulkan)</item>
+        <item name="2">virgl</item>
+        <item name="3">panfrost (Mali)</item>
+        <item name="4">freedreno (Adreno)</item>
+    </string-array>
+
+    <string-array name="driver_modle_values">
+        <item>driver_zink</item>
+        <item>driver_virgl</item>
+        <item>driver_panfrost</item>
+        <item>driver_freedreno</item>
+    </string-array>
+</resources>

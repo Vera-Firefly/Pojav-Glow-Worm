@@ -428,21 +428,9 @@
     <string name="preference_exp_framebuffer_title">Spare frame buffer</string>
     <string name="preference_exp_framebuffer">Use the frame buffer of the second scheme, close it if launch failed</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_setup_default">Use default configuration</string>
-    <string name="preference_renderer_setup_second">Mesa23.0.4(Zink)</string>
-    <string name="preference_renderer_setup_third">Mesa23.0.0(Zink)</string>
-    <string name="preference_renderer_setup_vwl">Mesa22.0.5(Zink)</string>
-    <string name="preference_renderer_setup_rvir">Mesa22.0.5(Virgl)</string>
-    <string name="preference_renderer_setup_rpan">Panfrost</string>
-    <string name="preference_renderer_setup_freedreno">Freedreno</string>
-    <!-- Renderer Extra Config -->
-    <string name="mcl_setting_renderer_default">Zink Mesa24.0.0 (Vulkan)</string>
-    <string name="mcl_setting_renderer_zinks">Zink Mesa23.0.4 (Vulkan)</string>
-    <string name="mcl_setting_renderer_zinkt">Zink Mesa23.0.0-devel (Vulkan)</string>
-    <string name="mcl_setting_renderer_zinkl">Zink Mesa22.0.5 (Vulkan)</string>
-    <string name="mcl_setting_renderer_virgl">Virglrenderer Mesa22.0.5</string>
-    <string name="mcl_setting_renderer_pan">Panfrost Mesa23.0.0-devel (Mali)</string>
-    <string name="mcl_setting_renderer_fd">Freedreno Mesa24.0.0 (Adreno)</string>
+    <string name="preference_renderer_extra_default">Mesa24.0.0 (Default)</string>
+    <string name="preference_extra_mesa_version">Mesa Version</string>
+    <string name="preference_extra_driver_modle">Driver Modle</string>
     <!-- Dialog box prompt -->
     <string name="preference_rendererexp_alertdialog_warning">Warning</string>
     <string name="preference_rendererexp_alertdialog_message">You have turned on experimental settings.This feature may generate unexpected bugs.Continue to use?</string>
