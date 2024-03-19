@@ -171,6 +171,7 @@ public class JREUtils {
     public static void setJavaEnvironment(Activity activity, String jreHome) throws Throwable {
         String glVersion = PREF_MESA_GL_VERSION;
         String glslVersion = PREF_MESA_GLSL_VERSION;
+        final String localMesaLibrary = loadGraphicsLibrary();
 
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJAV_NATIVEDIR", NATIVE_LIB_DIR);
@@ -213,15 +214,16 @@ public class JREUtils {
             envMap.put("POJAV_ZINK_PREFER_SYSTEM_DRIVER", "1");
         if(PREF_VSYNC_IN_ZINK)
             envMap.put("POJAV_VSYNC_IN_ZINK", "1");
+
         if(PREF_ZINK_CRASH_HANDLE)
             envMap.put("POJAV_ZINK_CRASH_HANDLE", "1");
-        if(Tools.deviceHasHangingLinker())
-            envMap.put("POJAV_EMUI_ITERATOR_MITIGATE", "1");
         if(PREF_EXP_SETUP)
             envMap.put("POJAV_EXP_SETUP", "1");
         if(PREF_EXP_FRAME_BUFFER)
             envMap.put("POJAV_EXP_FRAME_BUFFER", "1");
 
+        if(Tools.deviceHasHangingLinker())
+            envMap.put("POJAV_EMUI_ITERATOR_MITIGATE", "1");
         if(FFmpegPlugin.isAvailable) {
             envMap.put("PATH", FFmpegPlugin.libraryPath+":"+envMap.get("PATH"));
         }
@@ -229,68 +231,42 @@ public class JREUtils {
         if (LOCAL_RENDERER != null) {
             envMap.put("POJAV_BETA_RENDERER", LOCAL_RENDERER);
             if(LOCAL_RENDERER.equals("vulkan_zink")){
+                envMap.put("MESA_LIBRARY", localMesaLibrary);
                 if(PREF_EXP_SETUP){
+                    envMap.put("LOCAL_DRIVER_MODLE", DRIVER_MODLE);
                     if(PREF_EXP_ENABLE_SPECIFIC){
-                        if(PREF_EXP_SETUP_DEFAULT){
-                            envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
-                            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
-                        }
-                        if(PREF_EXP_SETUP_S){
-                            envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
-                            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
-                        }
-                        if(PREF_EXP_SETUP_T){
-                            envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
-                            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
-                        }
-                        if(PREF_EXP_SETUP_VIRGL){
-                            envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
-                            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
-                        }
-                        if(PREF_EXP_SETUP_LW){
-                            envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
-                            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
-                        }
-                        if(PREF_EXP_SETUP_PAN){
-                            envMap.put("MESA_GL_VERSION_OVERRIDE", "3.3");
-                            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "330");
-                        }
-                        if(PREF_EXP_SETUP_FD){
-                            envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
-                            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
+                        switch (DRIVER_MODLE) {
+                            case "driver_zink":{
+                                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+                                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
+                            } break;
+                            case "driver_virgl":{
+                                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
+                                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
+                            } break;
+                            case "driver_panfrost":{
+                                envMap.put("MESA_GL_VERSION_OVERRIDE", "3.3");
+                                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "330");
+                            } break;
+                            case "driver_freedreno":{
+                                envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+                                envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
+                            } break;
                         }
                     } else if(PREF_EXP_ENABLE_CUSTOM){
                         envMap.put("MESA_GL_VERSION_OVERRIDE", glVersion);
                         envMap.put("MESA_GLSL_VERSION_OVERRIDE", glslVersion);
                     }
-                    if(PREF_EXP_SETUP_DEFAULT){
-                        envMap.put("POJAV_EXP_SETUP_DEFAULT", "1");
-                    }
-                    if(PREF_EXP_SETUP_S){
-                        envMap.put("POJAV_EXP_SETUP_S", "1");
-                    }
-                    if(PREF_EXP_SETUP_T){
-                        envMap.put("POJAV_EXP_SETUP_T", "1");
-                    }
-                    if(PREF_EXP_SETUP_VIRGL){
-                        envMap.put("POJAV_EXP_SETUP_VIRGL", "1");
+                    if(MESA_LIBS.equals("mesa2205"))
                         envMap.put("DCLAT_FRAMEBUFFER", "1");
+                    if(DRIVER_MODLE.equals("driver_virgl"))
                         envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
-                    }
-                    if(PREF_EXP_SETUP_LW){
-                        envMap.put("POJAV_EXP_SETUP_LW", "1");
-                        envMap.put("DCLAT_FRAMEBUFFER", "1");
-                    }
-                    if(PREF_EXP_SETUP_PAN){
-                        envMap.put("POJAV_EXP_SETUP_PAN", "1");
-                        //envMap.put("POJAVEXEC_OSMESA", "libOSMesa_pan.so");
-                        //envMap.put("MESA_SHADER_CACHE_DISABLE", "true");
+                    if(DRIVER_MODLE.equals("driver_panfrost")) {
                         envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
                         envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
                     }
-                    if(PREF_EXP_SETUP_FD){
-                        envMap.put("POJAV_EXP_SETUP_FD", "1");
-                    }
+                } else {
+                    envMap.put("LOCAL_DRIVER_MODLE", "driver_zink");
                 }
             }
             if(LOCAL_RENDERER.equals("opengles3_desktopgl_angle_vulkan")) {
@@ -542,20 +518,19 @@ public class JREUtils {
         //Separate Treatment for Mesa
         if(LOCAL_RENDERER.equals("vulkan_zink")){
             if(PREF_EXP_SETUP){
-                if(PREF_EXP_SETUP_DEFAULT
-                || PREF_EXP_SETUP_FD){
-                    renderLibrary = "libOSMesa_8.so";
-                }
-                if(PREF_EXP_SETUP_VIRGL
-                || PREF_EXP_SETUP_LW){
-                    renderLibrary = "libOSMesa_81.so";
-                }
-                if(PREF_EXP_SETUP_PAN
-                || PREF_EXP_SETUP_T){
-                    renderLibrary = "libOSMesa_pan.so";
-                }
-                if(PREF_EXP_SETUP_S){
-                    renderLibrary = "libOSMesa.so";
+                switch (MESA_LIBS) {
+                    case "mesa2400":
+                        renderLibrary = "libOSMesa_8.so";
+                        break;
+                    case "mesa2304":
+                        renderLibrary = "libOSMesa.so";
+                        break;
+                    case "mesa2300d":
+                        renderLibrary = "libOSMesa_pan.so";
+                        break;
+                    case "mesa2205":
+                        renderLibrary = "libOSMesa_81.so";
+                        break;
                 }
             } else {
                 renderLibrary = "libOSMesa_8.so";
