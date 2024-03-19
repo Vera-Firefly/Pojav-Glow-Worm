@@ -116,6 +116,8 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
 
     private void computeVisibility(){
         requirePreference("ExpFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("CDriverModles").setVisible(LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("CMesaLibrarys").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebSystem").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebSpecific").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebCustom").setVisible(LauncherPreferences.PREF_EXP_SETUP);
