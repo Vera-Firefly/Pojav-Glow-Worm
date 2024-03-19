@@ -21,6 +21,8 @@ public class LauncherPreferences {
 
     public static SharedPreferences DEFAULT_PREF;
     public static String PREF_RENDERER = "opengles2";
+    public static String PREF_MESA_LIB = "mesa2400";
+    public static String PREF_DRIVER_MODLE = "driver_zink";
 
 	public static boolean PREF_VERTYPE_RELEASE = true;
 	public static boolean PREF_VERTYPE_SNAPSHOT = false;
@@ -142,13 +144,8 @@ public class LauncherPreferences {
         PREF_EXP_ENABLE_CUSTOM = DEFAULT_PREF.getBoolean("ebCustom", false);
 
         PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
-        PREF_EXP_SETUP_DEFAULT = DEFAULT_PREF.getBoolean("ZinkF", false);
-        PREF_EXP_SETUP_S = DEFAULT_PREF.getBoolean("ZinkS", false);
-        PREF_EXP_SETUP_T = DEFAULT_PREF.getBoolean("ZinkT", false);
-        PREF_EXP_SETUP_LW  = DEFAULT_PREF.getBoolean("VulkanLwarlip", false);
-        PREF_EXP_SETUP_VIRGL  = DEFAULT_PREF.getBoolean("Rvirpipe", false);
-        PREF_EXP_SETUP_PAN  = DEFAULT_PREF.getBoolean("Rpanfrost", false);
-        PREF_EXP_SETUP_FD  = DEFAULT_PREF.getBoolean("Rfreedreno", false);
+        PREF_MESA_LIB = DEFAULT_PREF.getString("CMesaLibrarys", "mesa2400");
+        PREF_DRIVER_MODLE = DEFAULT_PREF.getString("CDriverModles", "driver_zink");
 
         PREF_SHOW_FIREFLY_AD  = DEFAULT_PREF.getBoolean("FireflyAlertDialog", false);
 
