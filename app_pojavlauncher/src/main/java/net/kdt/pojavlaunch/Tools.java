@@ -1224,13 +1224,28 @@ public final class Tools {
         System.gc();
     }
 
-    public static class CMesaLibList {
+    public static interface IListAndArry {
+        List<String> getList();
+        String[] getArray();
+    }
+
+    public static class CMesaLibList implements IListAndArry {
         public final List<String> CMesaLibIds;
         public final String[] CMesaLibs;
 
         public CMesaLibList(List<String> CMesaLibIds, String[] CMesaLibs) {
             this.CMesaLibIds = CMesaLibIds;
             this.CMesaLibs = CMesaLibs;
+        }
+
+        @Override
+        public List<String> getList() {
+            return CMesaLibIds;
+        }
+
+        @Override
+        public String[] getArray() {
+            return CMesaLibs;
         }
     }
 
@@ -1251,7 +1266,7 @@ public final class Tools {
         return sCompatibleCMesaLibs;
     }
 
-    public static class CDriverModleList {
+    public static class CDriverModleList implements IListAndArry {
         public final List<String> CDriverModleIds;
         public final String[] CDriverModles;
 
@@ -1259,10 +1274,19 @@ public final class Tools {
             this.CDriverModleIds = CDriverModleIds;
             this.CDriverModles = CDriverModles;
         }
+
+        @Override
+        public List<String> getList() {
+            return CDriverModleIds;
+        }
+
+        @Override
+        public String[] getArray() {
+            return CDriverModles;
+        }
     }
 
     public static CDriverModleList getCompatibleCDriverModle(Context context) {
-        if(sCompatibleCDriverModle != null) return sCompatibleCDriverModle;
         Resources resources = context.getResources();
         String[] defaultCDriverModle = resources.getStringArray(R.array.driver_modle_values);
         String[] defaultCDriverModleNames = resources.getStringArray(R.array.driver_modle);
