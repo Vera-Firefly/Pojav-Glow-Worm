@@ -35,26 +35,24 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
             return true;
         });
 
-        // Select Mesa Library
-        ListPreference CMesaLibP = requirePreference("CMesaLibrarys", ListPreference.class);
-        Tools.CMesaLibList cmesalibList = Tools.getCompatibleCMesaLib(getContext());
-        String LCMesaLib = CMesaLibP.getValue();
-        CMesaLibP.setEntries(cmesalibList.CMesaLibs);
-        CMesaLibP.setEntryValues(cmesalibList.CMesaLibIds.toArray(new String[0]));
-        Tools.MESA_LIBS = LCMesaLib;
-
-        // Select the driver model
-        ListPreference CDriverModleP = requirePreference("CDriverModles", ListPreference.class);
-        Tools.CDriverModleList cdrivermodleList = Tools.getCompatibleCDriverModle(getContext());
-        String LCDriverModle = CDriverModleP.getValue();
-        CDriverModleP.setEntries(cdrivermodleList.CDriverModles);
-        CDriverModleP.setEntryValues(cdrivermodleList.CDriverModleIds.toArray(new String[0]));
-        Tools.DRIVER_MODLE = LCDriverModle;
-
-        // Update the selected status of the driving model according to the selected Mesa Library
+        final ListPreference CMesaLibP = requirePreference("CMesaLibrarys", ListPreference.class);
+        final ListPreference CDriverModleP = requirePreference("CDriverModles", ListPreference.class);
+        
+        setListPreference(CMesaLibP, "CMesaLibrarys");
+        setListPreference(CDriverModleP, "CDriverModles");
+        
         CMesaLibP.setOnPreferenceChangeListener((pre, obj) -> {
-            CDriverModleP.setValueIndex(0); // the index of driver_zink is considered to be 0
-            return true;
+                Tools.MESA_LIBS = (String)obj;
+                setListPreference(CDriverModleP, "CDriverModles");
+                CDriverModleP.setValueIndex(0);
+                Toast.makeText(getContext(), Tools.MESA_LIBS, Toast.LENGTH_SHORT).show();
+                return true;
+        });
+        
+        CDriverModleP.setOnPreferenceChangeListener((pre, obj) -> {
+                Tools.DRIVER_MODLE = (String)obj;
+                Toast.makeText(getContext(), Tools.DRIVER_MODLE, Toast.LENGTH_SHORT).show();
+                return true;
         });
 
         // Custom GL/GLSL
@@ -122,6 +120,20 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
         requirePreference("ebSpecific").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebCustom").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("SetGLVersion").setVisible(LauncherPreferences.PREF_EXP_ENABLE_CUSTOM);
+    }
+
+    private void setListPreference(ListPreference listPreference, String preferenceKey) {
+        Tools.IListAndArry array = null;
+        String value = listPreference.getValue();
+        if (preferenceKey.equals("CMesaLibrarys")) {
+            array = Tools.getCompatibleCMesaLib(getContext());
+            Tools.MESA_LIBS = value;
+        } else if (preferenceKey.equals("CDriverModles")) {
+            array = Tools.getCompatibleCDriverModle(getContext());
+            Tools.DRIVER_MODLE = value;
+        }
+        listPreference.setEntries(array.getArray());
+        listPreference.setEntryValues(array.getList().toArray(new String[0]));
     }
 
     // Extra dialog
