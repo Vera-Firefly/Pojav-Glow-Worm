@@ -171,7 +171,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                     .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
                     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
                     .apply();
-                dialog.dismiss();
+                dia.dismiss();
             })
             .setNegativeButton(R.string.alertdialog_cancel, null)
             .create();
