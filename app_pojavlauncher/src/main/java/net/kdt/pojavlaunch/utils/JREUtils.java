@@ -3,6 +3,8 @@ package net.kdt.pojavlaunch.utils;
 import static net.kdt.pojavlaunch.Architecture.ARCH_X86;
 import static net.kdt.pojavlaunch.Architecture.is64BitsDevice;
 import static net.kdt.pojavlaunch.Tools.LOCAL_RENDERER;
+import static net.kdt.pojavlaunch.Tools.MESA_LIBS;
+import static net.kdt.pojavlaunch.Tools.DRIVER_MODLE;
 import static net.kdt.pojavlaunch.Tools.NATIVE_LIB_DIR;
 import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
 import static net.kdt.pojavlaunch.Tools.shareLog;
