@@ -45,13 +45,11 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                 Tools.MESA_LIBS = (String)obj;
                 setListPreference(CDriverModleP, "CDriverModles");
                 CDriverModleP.setValueIndex(0);
-                Toast.makeText(getContext(), Tools.MESA_LIBS, Toast.LENGTH_SHORT).show();
                 return true;
         });
         
         CDriverModleP.setOnPreferenceChangeListener((pre, obj) -> {
                 Tools.DRIVER_MODLE = (String)obj;
-                Toast.makeText(getContext(), Tools.DRIVER_MODLE, Toast.LENGTH_SHORT).show();
                 return true;
         });
 
