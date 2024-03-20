@@ -5,9 +5,7 @@ plugins {
 static def getDate() { return new Date().format('yyyyMMdd') }
 
 static def getDateSeconds() {
-    if (System.getenv("GITHUB_ACTIONS") == "true") {
-        return 9999999
-    }
+    return 9999999
 }
 
 def getVersionName = {
@@ -124,11 +122,6 @@ android {
             resValue 'string', 'application_package', 'net.kdt.pojavlaunch.firefly.debug'
             resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.firefly.debug'
             resValue 'string', 'shareProviderAuthority', 'net.kdt.pojavlaunch.scoped.controlfolder.firefly.debug'
-        }
-        proguard {
-            initWith debug
-            minifyEnabled true
-            shrinkResources true
         }
         release {
             // Don't set to true or java.awt will be a.a or something similar.
