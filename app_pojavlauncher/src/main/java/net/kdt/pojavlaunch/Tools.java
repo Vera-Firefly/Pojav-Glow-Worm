@@ -1298,6 +1298,8 @@ public final class Tools {
                 case "mesa2400":{
                     if(driverModle.contains("virgl")) continue;
                     if(driverModle.contains("panfrost")) continue;
+                    if(driverModle.contains("softpipe")) continue;
+                    if(driverModle.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2304":{
                     if(driverModle.contains("virgl")) continue;
@@ -1309,6 +1311,8 @@ public final class Tools {
                 case "mesa2205":{
                     if(driverModle.contains("panfrost")) continue;
                     if(driverModle.contains("freedreno")) continue;
+                    if(driverModle.contains("softpipe")) continue;
+                    if(driverModle.contains("llvmpipe")) continue;
                 } break;
             }
             CDriverModleIds.add(driverModle);
