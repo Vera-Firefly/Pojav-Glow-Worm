@@ -1,4 +1,4 @@
-package com.externallogin.fragments;
+package net.kdt.pojavlaunch.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
