@@ -16,9 +16,11 @@
 
     <string-array name="driver_modle">
         <item name="1">zink (Vulkan)</item>
-        <item name="2">virgl</item>
+        <item name="2">virglrenderer</item>
         <item name="3">panfrost (Mali)</item>
         <item name="4">freedreno (Adreno)</item>
+        <item name="5">softpipe</item>
+        <item name="6">llvmpipe</item>
     </string-array>
 
     <string-array name="driver_modle_values">
@@ -26,5 +28,7 @@
         <item>driver_virgl</item>
         <item>driver_panfrost</item>
         <item>driver_freedreno</item>
+        <item>driver_softpipe</item>
+        <item>driver_llvmpipe</item>
     </string-array>
 </resources>
