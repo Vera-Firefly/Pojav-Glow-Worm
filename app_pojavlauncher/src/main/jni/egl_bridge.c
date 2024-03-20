@@ -203,6 +203,18 @@ void load_vulkan() {
     set_vulkan_ptr(vulkan_ptr);
 }
 
+void renderer_load_config() {
+    if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
+        pojav_environ->config_renderer = RENDERER_VK_ZINK;
+        set_osm_bridge_tbl();
+        printf("Bridge: Set osm bridge tbl\n");
+    } else {
+         pojav_environ->config_renderer = RENDERER_VK_ZINK_PREF;
+         loadSymbols();
+         printf("Bridge: Use old bridge\n");
+    }
+}
+
 int pojavInitOpenGL() {
     // Only affects GL4ES as of now
     const char *forceVsync = getenv("FORCE_VSYNC");
@@ -222,15 +234,7 @@ int pojavInitOpenGL() {
             load_vulkan();
             setenv("GALLIUM_DRIVER","zink",1);
             printf("Bridge: Use Zink Renderer\n");
-            if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
-                pojav_environ->config_renderer = RENDERER_VK_ZINK;
-                set_osm_bridge_tbl();
-                printf("Bridge: Set osm bridge tbl\n");
-            } else {
-                pojav_environ->config_renderer = RENDERER_VK_ZINK_PREF;
-                loadSymbols();
-                printf("Bridge: Use old bridge\n");
-            }
+            renderer_load_config();
         }
         if(strcmp(ldrivermodle, "driver_virgl") == 0) {
             printf("Bridge: Use VirglRenderer\n");
@@ -246,29 +250,25 @@ int pojavInitOpenGL() {
             printf("Bridge: Use Panfrost Renderer\n");
             setenv("GALLIUM_DRIVER", "panfrost", 1);
             setenv("PAN_DEBUG","gofaster", 0);
-            if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
-                pojav_environ->config_renderer = RENDERER_VK_ZINK;
-                set_osm_bridge_tbl();
-                printf("Bridge: Set osm bridge tbl\n");
-            } else {
-                pojav_environ->config_renderer = RENDERER_VK_ZINK_PREF;
-                loadSymbols();
-                printf("Bridge: Use old bridge\n");
-            }
+            renderer_load_config();
         }
         if(strcmp(ldrivermodle, "driver_freedreno") == 0) {
             setenv("GALLIUM_DRIVER", "freedreno", 1);
             setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
             printf("Bridge: Use Freedreno renderer\n");
-            if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
-                pojav_environ->config_renderer = RENDERER_VK_ZINK;
-                set_osm_bridge_tbl();
-                printf("Bridge: Set osm bridge tbl\n");
-            } else {
-                pojav_environ->config_renderer = RENDERER_VK_ZINK_PREF;
-                loadSymbols();
-                printf("Bridge: Use old bridge\n");
-            }
+            renderer_load_config();
+        }
+        if(strcmp(ldrivermodle, "driver_softpipe") == 0) {
+            setenv("GALLIUM_DRIVER", "softpipe", 1);
+            setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
+            printf("Bridge: Use Softpipe renderer\n");
+            renderer_load_config();
+        }
+        if(strcmp(ldrivermodle, "driver_llvmpipe") == 0) {
+            setenv("GALLIUM_DRIVER", "llvmpipe", 1);
+            setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
+            printf("Bridge: Use LLVMpipe renderer\n");
+            renderer_load_config();
         }
     }
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
