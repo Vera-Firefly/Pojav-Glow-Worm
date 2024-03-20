@@ -250,7 +250,9 @@ public class JREUtils {
                                 envMap.put("MESA_GL_VERSION_OVERRIDE", "3.3");
                                 envMap.put("MESA_GLSL_VERSION_OVERRIDE", "330");
                             } break;
-                            case "driver_freedreno":{
+                            case "driver_freedreno":
+                            case "driver_softpipe":
+                            case "driver_llvmpipe":{
                                 envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                                 envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
                             } break;
