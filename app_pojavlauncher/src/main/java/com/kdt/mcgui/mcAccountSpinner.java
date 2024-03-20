@@ -24,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatSpinner;
 
-import com.externallogin.fragments.OtherLoginFragment;
 import com.externallogin.login.AuthResult;
 import com.externallogin.login.OtherLoginApi;
 
@@ -41,6 +40,7 @@ import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.extra.ExtraListener;
 import net.kdt.pojavlaunch.fragments.MainMenuFragment;
+import net.kdt.pojavlaunch.fragments.OtherLoginFragment;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 
 import java.io.File;
