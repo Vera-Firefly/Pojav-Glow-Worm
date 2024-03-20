@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.externallogin.fragments.OtherLoginFragment;
-
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 
