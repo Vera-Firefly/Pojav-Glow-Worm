@@ -205,7 +205,7 @@ jobs:
 
         with:
 
-          name: app-debug-noruntime-${{matrix.arch}}
+          name: app-debug-${{matrix.arch}}-noruntime
 
           path: app_pojavlauncher/build/outputs/apk/debug/*
 
