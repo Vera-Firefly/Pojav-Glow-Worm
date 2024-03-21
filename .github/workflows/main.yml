@@ -22,6 +22,11 @@ jobs:
 
     runs-on: ubuntu-22.04
 
+    strategy:
+      matrix:
+        arch: [ "all", "arm", "arm64", "x86", "x64" ]
+      fail-fast: false
+
     env:
 
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
@@ -103,25 +108,25 @@ jobs:
 
           java-version: '17'
 
-      - name: Build Release.apk
+      - name: Build Release ${{matrix.arch}} .apk
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
         run: |
-          gradle :app_pojavlauncher:assemblerelease
+          gradle :app_pojavlauncher:assemblerelease -Darch=${{matrix.arch}}
 
-      - name: Build Debug.apk
+      - name: Build Debug ${{matrix.arch}} .apk
 
         run: |
 
           # Build the launcher
 
-          gradle :app_pojavlauncher:assembleDebug
+          gradle :app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}}
 
       - name: Upload Release
         continue-on-error: true
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
         uses: actions/upload-artifact@v3
         with:
-          name: app-release
+          name: app-release-${{matrix.arch}}
           path: app_pojavlauncher/build/outputs/apk/release/*
 
       - name: Upload Debug
@@ -130,7 +135,7 @@ jobs:
 
         with:
 
-          name: app-debug
+          name: app-debug-${{matrix.arch}}
 
           path: app_pojavlauncher/build/outputs/apk/debug/*
 
