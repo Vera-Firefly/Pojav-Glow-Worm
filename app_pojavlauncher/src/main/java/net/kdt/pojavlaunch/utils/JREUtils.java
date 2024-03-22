@@ -232,7 +232,7 @@ public class JREUtils {
 
         if (LOCAL_RENDERER != null) {
             envMap.put("POJAV_BETA_RENDERER", LOCAL_RENDERER);
-            if(LOCAL_RENDERER.equals("vulkan_zink")){
+            if(LOCAL_RENDERER.equals("mesa_3d")){
                 envMap.put("MESA_LIBRARY", localMesaLibrary);
                 if(PREF_EXP_SETUP){
                     envMap.put("LOCAL_DRIVER_MODLE", DRIVER_MODLE);
@@ -520,7 +520,7 @@ public class JREUtils {
         }
 
         //Separate Treatment for Mesa
-        if(LOCAL_RENDERER.equals("vulkan_zink")){
+        if(LOCAL_RENDERER.equals("mesa_3d")){
             if(PREF_EXP_SETUP){
                 switch (MESA_LIBS) {
                     case "mesa2400":
