@@ -1,5 +1,5 @@
 //
-// Modifiled by Vera-Firefly on 19.03.2024.
+// Modifiled by Vera-Firefly on 22.03.2024.
 //
 #include <jni.h>
 #include <assert.h>
@@ -229,7 +229,7 @@ int pojavInitOpenGL() {
         if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
             set_gl_bridge_tbl();
         }
-    } else if (strcmp(renderer, "vulkan_zink") == 0) {
+    } else if (strcmp(renderer, "mesa_3d") == 0) {
         if(strcmp(ldrivermodle, "driver_zink") == 0) {
             load_vulkan();
             setenv("GALLIUM_DRIVER","zink",1);
