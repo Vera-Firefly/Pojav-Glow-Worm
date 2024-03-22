@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <application
         android:name=".PojavApplication"
@@ -119,10 +120,17 @@
             </intent-filter>
         </provider>
 
-        <service android:name=".services.ProgressService" />
+        <service 
+            android:name=".services.ProgressService" 
+            android:foregroundServiceType="specialUse"
+            android:exported="false" />
+            
         <service
             android:name=".services.GameService"
-            android:process=":game" />
+            android:foregroundServiceType="specialUse"
+            android:exported="false"
+            android:process=":game"/>
+        
     </application>
     <queries>
         <package android:name="net.kdt.pojavlaunch.ffmpeg"/>
