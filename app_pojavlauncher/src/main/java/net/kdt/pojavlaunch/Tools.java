@@ -1195,16 +1195,10 @@ public final class Tools {
         Resources resources = context.getResources();
         String[] defaultRenderers = resources.getStringArray(R.array.renderer_values);
         String[] defaultRendererNames = resources.getStringArray(R.array.renderer);
-        boolean deviceHasVulkan = checkVulkanSupport(context.getPackageManager());
-        // Currently, only 32-bit x86 does not have the Zink binary
-        boolean deviceHasZinkBinary = !(Architecture.is32BitsDevice() && Architecture.isx86Device());
         List<String> rendererIds = new ArrayList<>(defaultRenderers.length);
         List<String> rendererNames = new ArrayList<>(defaultRendererNames.length);
         for(int i = 0; i < defaultRenderers.length; i++) {
-            String rendererId = defaultRenderers[i];
-            if(rendererId.contains("vulkan") && !deviceHasVulkan) continue;
-            if(rendererId.contains("zink") && !deviceHasZinkBinary) continue;
-            rendererIds.add(rendererId);
+            rendererIds.add(defaultRenderers[i]);
             rendererNames.add(defaultRendererNames[i]);
         }
         sCompatibleRenderers = new RenderersList(rendererIds,
