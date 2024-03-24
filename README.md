@@ -26,7 +26,7 @@
 
 ## Navigation
 - [Introduction](#introduction)  
-- [Getting Pojav Glow·Worm](#getting-pojav-glow-worm)
+- [Getting Pojav Glow·Worm](#getting-pojav-glow·worm)
 - [Building](#building) 
 - [Current status](#current-status) 
 - [License](#license) 
