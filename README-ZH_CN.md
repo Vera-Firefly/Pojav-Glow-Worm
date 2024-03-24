@@ -3,7 +3,7 @@
 <img src="https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
 [![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Vera-Firefly/Pojav-Glow-Worm/actions)
----------
+
 * <a href="/README.md">English</a>
 
 * 基于 [Boardwalk](https://github.com/zhuowei/Boardwalk) 而制作的PojavLauncher!
