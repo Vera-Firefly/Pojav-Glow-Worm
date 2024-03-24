@@ -26,7 +26,7 @@
 
 ## Navigation
 - [Introduction](#introduction)  
-- [Getting Pojav Glow·Worm](#getting-pojav-glow·worm)
+- [Getting Pojav Glow·Worm](#getting-pojav-glow-worm)
 - [Building](#building) 
 - [Current status](#current-status) 
 - [License](#license) 
@@ -41,7 +41,7 @@
 * This repository contains source code for Android. 
 * Pojav Glow·Worm does not support IOS
 
-## Getting Pojav Glow·Worm
+## Getting Pojav Glow-Worm
 
 You can get PojavLauncher via three methods:
 
