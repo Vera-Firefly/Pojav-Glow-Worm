@@ -41,7 +41,7 @@
 * 此存储库包含Android的源代码
 * Pojav Glow·Worm不支持IOS!!!
 
-## 获取Pojav Glow·Worm
+## 获取Pojav Glow-Worm
 
 你可以通过以下三种方法获取:
 
