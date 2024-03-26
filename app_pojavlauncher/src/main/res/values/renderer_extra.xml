@@ -9,7 +9,7 @@
     </string-array>
 
     <string-array name="osmesa_values">
-        <item>dafault</item>
+        <item>default</item>
         <item>mesa2400</item>
         <item>mesa2304</item>
         <item>mesa2300d</item>
