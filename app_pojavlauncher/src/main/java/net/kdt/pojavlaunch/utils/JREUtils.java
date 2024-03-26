@@ -523,17 +523,20 @@ public class JREUtils {
         if(LOCAL_RENDERER.equals("mesa_3d")){
             if(PREF_EXP_SETUP){
                 switch (MESA_LIBS) {
-                    case "mesa2400":
+                    case "default":
                         renderLibrary = "libOSMesa_8.so";
                         break;
-                    case "mesa2304":
+                    case "mesa2400":
                         renderLibrary = "libOSMesa.so";
+                        break;
+                    case "mesa2304":
+                        renderLibrary = "libOSMesa_81.so";
                         break;
                     case "mesa2300d":
                         renderLibrary = "libOSMesa_pan.so";
                         break;
                     case "mesa2205":
-                        renderLibrary = "libOSMesa_81.so";
+                        renderLibrary = "libOSMesa_82.so";
                         break;
                 }
             } else {
