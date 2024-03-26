@@ -428,7 +428,7 @@
     <string name="preference_exp_framebuffer_title">Spare frame buffer</string>
     <string name="preference_exp_framebuffer">Use the frame buffer of the second scheme, close it if launch failed</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.0.0 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa24.0.3 (Default)</string>
     <string name="preference_extra_mesa_version">Mesa Version</string>
     <string name="preference_extra_driver_modle">Driver Modle</string>
     <!-- Dialog box prompt -->
