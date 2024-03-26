@@ -21,7 +21,7 @@ public class LauncherPreferences {
 
     public static SharedPreferences DEFAULT_PREF;
     public static String PREF_RENDERER = "opengles2";
-    public static String PREF_MESA_LIB = "mesa2400";
+    public static String PREF_MESA_LIB = "default";
     public static String PREF_DRIVER_MODLE = "driver_zink";
 
 	public static boolean PREF_VERTYPE_RELEASE = true;
