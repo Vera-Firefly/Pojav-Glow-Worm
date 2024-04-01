@@ -92,7 +92,7 @@ public class LauncherActivity extends BaseActivity {
         // Allow starting the add account only from the main menu, should it be moved to fragment itself ?
         if(!(fragment instanceof MainMenuFragment)) return false;
 
-        Tools.swapFragment(this, SelectAuthFragment.class, SelectAuthFragment.TAG, true, null);
+        Tools.swapFragment(this, SelectAuthFragment.class, SelectAuthFragment.TAG, null);
         return false;
     };
 
@@ -100,12 +100,10 @@ public class LauncherActivity extends BaseActivity {
     private final View.OnClickListener mSettingButtonListener = v -> {
         Fragment fragment = getSupportFragmentManager().findFragmentById(mFragmentView.getId());
         if(fragment instanceof MainMenuFragment){
-            Tools.swapFragment(this, LauncherPreferenceFragment.class, SETTING_FRAGMENT_TAG, true, null);
+            Tools.swapFragment(this, LauncherPreferenceFragment.class, SETTING_FRAGMENT_TAG, null);
         } else{
             // The setting button doubles as a home button now
-            while(!(getSupportFragmentManager().findFragmentById(mFragmentView.getId()) instanceof MainMenuFragment)){
-                getSupportFragmentManager().popBackStackImmediate();
-            }
+            Tools.backToMainMenu(this);
         }
     };
 
@@ -166,6 +164,14 @@ public class LauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pojav_launcher);
+
+        // Manually add the first fragment to the backstack to get easily back to it
+        // There must be a better way to handle the root though...
+        this.getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .addToBackStack("ROOT")
+                .add(R.id.container_fragment, MainMenuFragment.class, null, "ROOT").commit();
+
         IconCacheJanitor.runJanitor();
         mRequestNotificationPermissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
@@ -296,7 +302,10 @@ public class LauncherActivity extends BaseActivity {
                 return;
             }
         }
-
+        // Check if we are at the root then
+        if(getVisibleFragment("ROOT") != null){
+            finish();
+        }
         super.onBackPressed();
     }
 

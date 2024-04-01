@@ -192,7 +192,7 @@ public class OtherLoginFragment extends Fragment {
                                         account.username=authResult.getSelectedProfile().getName();
                                         account.profileId=authResult.getSelectedProfile().getId();
                                         ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
-                                        Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, false, null);
+                                        Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
                                     } else {
                                         List<String> list=new ArrayList<>();
                                         for(AuthResult.AvailableProfiles profiles:authResult.getAvailableProfiles()){
@@ -209,7 +209,7 @@ public class OtherLoginFragment extends Fragment {
                                                         }
                                                     }
                                                     ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
-                                                    Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, false, null);
+                                                    Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
                                                 })
                                                 .setNegativeButton(R.string.other_login_cancel,null)
                                                 .create();
