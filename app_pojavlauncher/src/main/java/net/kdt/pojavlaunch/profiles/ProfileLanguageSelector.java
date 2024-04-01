@@ -216,17 +216,31 @@ public class ProfileLanguageSelector {
             if (versionId.contains(optifineSuffix) || versionId.contains(forgeSuffix)) { // OptiFine & Forge
                 int lastIndex = versionId.indexOf('-');
                 if (lastIndex != -1) {
-                    version = Integer.parseInt(getVersion(versionId.substring(0, lastIndex)));
+                    try {
+                        version = Integer.parseInt(getVersion(versionId.substring(0, lastIndex)));
+                    } catch (NumberFormatException e) {
+                        return getMatchingLanguage(index);
+                    }
                 }
             } else if (versionId.contains(fabricSuffix) || versionId.contains(quiltSuffix)) { // Fabric & Quilt
                 int lastIndex = versionId.lastIndexOf('-');
 
                 if (lastIndex != -1) {
-                    version = Integer.parseInt(getVersion(versionId.substring(lastIndex + 1)));
+                    try {
+                        version = Integer.parseInt(getVersion(versionId.substring(lastIndex + 1)));
+                    } catch (NumberFormatException e) {
+                        return getMatchingLanguage(index);
+                    }
                 }
             } else if (matcher.matches()) { // Development versions "24w09a" "16w20a"
-                int result1 = Integer.parseInt(getDigitsBeforeFirstLetter(versionId));
-                int result2 = Integer.parseInt(getDigitsBetweenFirstAndSecondLetter(versionId));
+                int result1;
+                int result2;
+                try {
+                    result1 = Integer.parseInt(getDigitsBeforeFirstLetter(versionId));
+                    result2 = Integer.parseInt(getDigitsBetweenFirstAndSecondLetter(versionId));
+                } catch (NumberFormatException e) {
+                    return getMatchingLanguage(index);
+                }
 
                 if(result1 < 16) {
                     return getOlderMatchingLanguage(index);
@@ -237,7 +251,11 @@ public class ProfileLanguageSelector {
                 return getMatchingLanguage(index);
             }
         }
-        version = Integer.parseInt(getVersion(versionId));
+        try {
+            version = Integer.parseInt(getVersion(versionId));
+        } catch (NumberFormatException e) {
+            return getMatchingLanguage(index);
+        }
 
         // 1.10 -
         if (version < 11) {
