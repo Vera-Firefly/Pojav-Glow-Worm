@@ -1,7 +1,5 @@
 name: Android CI
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -9,7 +7,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        arch: [ "all", "arm", "arm64", "x86", "x64" ]
+        arch: [ "all", "arm", "arm64", "x86", "x86_64" ]
       fail-fast: false
 
     env:
