@@ -1,6 +1,8 @@
 package net.kdt.pojavlaunch.profiles;
 
+import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.Logger;
+import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
@@ -10,7 +12,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.kdt.pojavlaunch.Tools.DIR_HOME_VERSION;
 import static net.kdt.pojavlaunch.Tools.getGameDirPath;
+import static net.kdt.pojavlaunch.Tools.read;
 
 public class ProfileLanguageSelector {
     private ProfileLanguageSelector() {
@@ -168,101 +172,84 @@ public class ProfileLanguageSelector {
         return builder.toString();
     }
 
-    public static String getVersion(String versionId) {
+    private static int getVersion(String versionId) throws NumberFormatException {
         int firstDotIndex = versionId.indexOf('.');
         int secondDotIndex = versionId.indexOf('.', firstDotIndex + 1);
-
-        if (firstDotIndex != -1) { // It's the official version
-            if (secondDotIndex == -1) return versionId.substring(firstDotIndex + 1);
-                else return versionId.substring(firstDotIndex + 1, secondDotIndex);
-        } else return versionId;
-    }
-
-    public static String getDigitsBeforeFirstLetter(String input) {
-        // Regular expressions match numeric characters
-        Pattern pattern = Pattern.compile("^\\d*");
-        Matcher matcher = pattern.matcher(input);
-
-        return matcher.find() ? matcher.group() : "";
-    }
-
-    public static String getDigitsBetweenFirstAndSecondLetter(String input) {
-        Pattern pattern = Pattern.compile("([a-zA-Z])(\\d*)([a-zA-Z])");
-        Matcher matcher = pattern.matcher(input);
-
-        if (matcher.find()) {
-            return matcher.group(2);
-        }
-        return "";
-    }
-
-    public static boolean containsLetter(String input) {
-        return input.matches(".*[a-zA-Z].*");
-    }
-
-    public static String getLanguage(String versionId, int index) {
         int version;
 
-        String optifineSuffix = "OptiFine"; // "1.20.4-OptiFine_HD_U_I7_pre3"
-        String forgeSuffix = "forge"; // "1.20.2-forge-48.1.0"
-        String fabricSuffix = "fabric-loader"; // "fabric-loader-0.15.7-1.20.4"
-        String quiltSuffix = "quilt-loader"; // "quilt-loader-0.23.1-1.20.4"
-        String regex = "^\\d+[a-zA-Z]\\d+[a-zA-Z]$";
+        if (firstDotIndex != -1) { // 官方版本
+            if (secondDotIndex == -1) version = Integer.parseInt(versionId.substring(firstDotIndex + 1));
+            else version = Integer.parseInt(versionId.substring(firstDotIndex + 1, secondDotIndex));
+        } else version = 12;
+        return version;
+    }
 
+    private static boolean containsDot(String input) {
+        int dotIndex = input.indexOf('.');
+        return dotIndex != -1;
+    }
+
+    private static int[] extractNumbers(String str) {
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(str);
+
+        int[] numbers = new int[2];
+
+        int count = 0;
+        while (matcher.find() && count < 2) {
+            numbers[count] = Integer.parseInt(matcher.group());
+            count++;
+        }
+
+        return numbers;
+    }
+
+    private static String getLanguage(String versionName, int index) {
+        if (versionName == null) return null;
+
+        JMinecraftVersionList.Version version;
+        try {
+            version = Tools.GLOBAL_GSON.fromJson(read(DIR_HOME_VERSION + "/" + versionName + "/" + versionName + ".json"), JMinecraftVersionList.Version.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        String versionId = version.id;
+
+        String regex = "^\\d+[a-zA-Z]\\d+[a-zA-Z]$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(versionId);
 
-        if (containsLetter(versionId)) {
-            if (versionId.contains(optifineSuffix) || versionId.contains(forgeSuffix)) { // OptiFine & Forge
-                int lastIndex = versionId.indexOf('-');
-                if (lastIndex != -1) {
-                    try {
-                        version = Integer.parseInt(getVersion(versionId.substring(0, lastIndex)));
-                    } catch (NumberFormatException e) {
-                        return getMatchingLanguage(index);
-                    }
-                }
-            } else if (versionId.contains(fabricSuffix) || versionId.contains(quiltSuffix)) { // Fabric & Quilt
-                int lastIndex = versionId.lastIndexOf('-');
+        if(containsDot(versionId)) {
+            try {
+                int ver = getVersion(versionId);
 
-                if (lastIndex != -1) {
-                    try {
-                        version = Integer.parseInt(getVersion(versionId.substring(lastIndex + 1)));
-                    } catch (NumberFormatException e) {
-                        return getMatchingLanguage(index);
-                    }
-                }
-            } else if (matcher.matches()) { // Development versions "24w09a" "16w20a"
-                int result1;
-                int result2;
-                try {
-                    result1 = Integer.parseInt(getDigitsBeforeFirstLetter(versionId));
-                    result2 = Integer.parseInt(getDigitsBetweenFirstAndSecondLetter(versionId));
-                } catch (NumberFormatException e) {
-                    return getMatchingLanguage(index);
-                }
-
-                if(result1 < 16) {
+                // 1.10 -
+                if (ver < 11) {
                     return getOlderMatchingLanguage(index);
-                } else if (result1 == 16 & result2 <= 32) {
+                }
+
+                return getMatchingLanguage(index); // ? & 1.0
+            } catch (NumberFormatException e) {
+                return getMatchingLanguage(index);
+            }
+        } else if (matcher.matches()) { // Development versions "24w09a" "16w20a"
+            try {
+                int[] result = extractNumbers(versionId);
+
+                if(result[0] < 16) {
+                    return getOlderMatchingLanguage(index);
+                } else if (result[0] == 16 & result[1] <= 32) {
                     return getOlderMatchingLanguage(index);
                 }
 
                 return getMatchingLanguage(index);
+            } catch (NumberFormatException e) {
+                return getMatchingLanguage(index);
             }
         }
-        try {
-            version = Integer.parseInt(getVersion(versionId));
-        } catch (NumberFormatException e) {
-            return getMatchingLanguage(index);
-        }
 
-        // 1.10 -
-        if (version < 11) {
-            return getOlderMatchingLanguage(index);
-        }
-
-        return getMatchingLanguage(index); // ? & 1.0
+        return getMatchingLanguage(index);
     }
 
     public static void languageChangers(MinecraftProfile minecraftProfile) throws IOException {
