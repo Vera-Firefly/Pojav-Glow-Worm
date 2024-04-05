@@ -1293,8 +1293,7 @@ public final class Tools {
         for(int i = 0; i < defaultCDriverModle.length; i++) {
             String driverModle = defaultCDriverModle[i];
             switch (MESA_LIBS) {
-                case "default":
-                case "mesa2400":{
+                case "default":{
                     if(driverModle.contains("virgl")) continue;
                     if(driverModle.contains("panfrost")) continue;
                     if(driverModle.contains("softpipe")) continue;
