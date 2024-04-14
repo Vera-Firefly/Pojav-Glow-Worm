@@ -24,7 +24,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v3
         with:
           workflow: buildjre8.yml
-          path: app_pojavlauncher/src/main/assets/components/jre
+          path: app_pojavlauncher/src/main/assets/components/jre-8
           workflow_conclusion: success
           repo: Vera-Firefly/android-openjdk-autobuild
           branch: main
@@ -34,7 +34,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v3
         with:
           workflow: buildjre17.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-new
+          path: app_pojavlauncher/src/main/assets/components/jre-17
           workflow_conclusion: success
           repo: Vera-Firefly/android-openjdk-autobuild
           branch: main
