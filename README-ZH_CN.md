@@ -53,9 +53,9 @@
 ## 构建
 如果要从源代码构建,请执行以下步骤.
 ### Java运行时环境(JRE)
-- 适用于Android的JRE[这里](https://github.com/Vera-Firefly/android-openjdk-autobuild)
+- 适用于Android的JRE[这里](https://github.com/Vera-Firefly/android-openjdk-build)
 - 遵循构建脚本上的构建说明[README.md](https://github.com/Vera-Firefly/android-openjdk-build/blob/buildjre8/README.md).
-- 如果你懒惰或者出于某种原因,你还可以从[自动构建](https://github.com/Vera-Firefly/android-openjdk-build/actions)获取它
+- 如果你懒惰或者出于某种原因,你还可以从[自动构建](https://github.com/Vera-Firefly/android-openjdk-autobuild/actions)获取它
 * 要么获取 `jre8-pojav` 的移动构建文件, 或自己拆分所有工作流:</br>
    - 获取4种受支持的处理器架构(arm, arm64, x86, x86_64) </br> 
       - 将JRE拆分为以下几个部分:</br>

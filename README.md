@@ -51,9 +51,9 @@ You can get PojavLauncher via three methods:
 ## Building
 If you want to build from source code, follow the steps below.
 ### Java Runtime Environment (JRE)
-- JRE for Android is [here](https://github.com/Vera-Firefly/android-openjdk-autobuild)
+- JRE for Android is [here](https://github.com/Vera-Firefly/android-openjdk-build)
 - Follow build instruction on build script [README.md](https://github.com/Vera-Firefly/android-openjdk-build/blob/buildjre8/README.md).
-- You can also get [CI auto builds](https://github.com/Vera-Firefly/android-openjdk-build/actions) if you are lazy or are failing to build it for some reason.
+- You can also get [CI auto builds](https://github.com/Vera-Firefly/android-openjdk-autobuild/actions) if you are lazy or are failing to build it for some reason.
 * Either get the `jre8-pojav` artifact from auto builds, or split all artifacts by yourself:</br>
    - Get JREs for all of 4 supported architectures (arm, arm64, x86, x86_64) </br> 
       - Split JRE into parts:</br>
