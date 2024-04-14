@@ -19,7 +19,7 @@ public class JRE17Util {
         String launcher_jre17_version;
         String installed_jre17_version = MultiRTUtils.__internal__readBinpackVersion(NEW_JRE_NAME);
         try {
-            launcher_jre17_version = Tools.read(assetManager.open("components/jre-new/version"));
+            launcher_jre17_version = Tools.read(assetManager.open("components/jre-17/version"));
         }catch (IOException exc) {
             //we don't have a runtime included!
             return installed_jre17_version != null; //if we have one installed -> return true -> proceed (no updates but the current one should be functional)
@@ -33,8 +33,8 @@ public class JRE17Util {
     private static boolean unpackJre17(AssetManager assetManager, String rt_version) {
         try {
             MultiRTUtils.installRuntimeNamedBinpack(
-                    assetManager.open("components/jre-new/universal.tar.xz"),
-                    assetManager.open("components/jre-new/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                    assetManager.open("components/jre-17/universal.tar.xz"),
+                    assetManager.open("components/jre-17/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
                     "Internal-17", rt_version);
             MultiRTUtils.postPrepare("Internal-17");
             return true;

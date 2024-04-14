@@ -31,14 +31,14 @@ public class AsyncAssetManager {
     public static void unpackRuntime(AssetManager am) {
         /* Check if JRE is included */
         String rt_version = null;
-        String current_rt_version = MultiRTUtils.__internal__readBinpackVersion("Internal");
+        String current_rt_version = MultiRTUtils.__internal__readBinpackVersion("Internal-8");
         try {
-            rt_version = Tools.read(am.open("components/jre/version"));
+            rt_version = Tools.read(am.open("components/jre-8/version"));
         } catch (IOException e) {
             Log.e("JREAuto", "JRE was not included on this APK.", e);
         }
         String exactJREName = MultiRTUtils.getExactJreName(8);
-        if(current_rt_version == null && exactJREName != null && !exactJREName.equals("Internal")/*this clause is for when the internal runtime is goofed*/) return;
+        if(current_rt_version == null && exactJREName != null && !exactJREName.equals("Internal-8")/*this clause is for when the internal runtime is goofed*/) return;
         if(rt_version == null) return;
         if(rt_version.equals(current_rt_version)) return;
 
@@ -48,12 +48,40 @@ public class AsyncAssetManager {
 
             try {
                 MultiRTUtils.installRuntimeNamedBinpack(
-                        am.open("components/jre/universal.tar.xz"),
-                        am.open("components/jre/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
-                        "Internal", finalRt_version);
-                MultiRTUtils.postPrepare("Internal");
+                        am.open("components/jre-8/universal.tar.xz"),
+                        am.open("components/jre-8/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                        "Internal-8", finalRt_version);
+                MultiRTUtils.postPrepare("Internal-8");
             }catch (IOException e) {
-                Log.e("JREAuto", "Internal JRE unpack failed", e);
+                Log.e("JREAuto", "Internal-8 JRE unpack failed", e);
+            }
+        });
+    }
+
+    public static void unpackRuntime11(AssetManager am) {
+        String rt_version = null;
+        String current_rt_version = MultiRTUtils.__internal__readBinpackVersion("Internal-11");
+        try {
+            rt_version = Tools.read(am.open("components/jre-11/version"));
+        } catch (IOException e) {
+            Log.e("JREAuto", "JRE was not included on this APK.", e);
+        }
+        String exactJREName = MultiRTUtils.getExactJreName(11);
+        if(current_rt_version == null && exactJREName != null && !exactJREName.equals("Internal-11")) return;
+        if(rt_version == null) return;
+        if(rt_version.equals(current_rt_version)) return;
+
+        String finalRt_version = rt_version;
+        sExecutorService.execute(() -> {
+
+            try {
+                MultiRTUtils.installRuntimeNamedBinpack(
+                        am.open("components/jre-11/universal.tar.xz"),
+                        am.open("components/jre-11/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                        "Internal-11", finalRt_version);
+                MultiRTUtils.postPrepare("Internal-11");
+            }catch (IOException e) {
+                Log.e("JREAuto", "Internal-11 JRE unpack failed", e);
             }
         });
     }

@@ -50,7 +50,6 @@ public class PojavApplication extends Application {
 				Log.e(CRASH_REPORT_TAG, " - Exception attempt saving crash stack trace:", throwable);
 				Log.e(CRASH_REPORT_TAG, " - The crash stack trace was:", th);
 			}
-
 			FatalErrorActivity.showError(PojavApplication.this, crashFile.getAbsolutePath(), storagePermAllowed, th);
 			MainActivity.fullyExit();
 		});
@@ -71,6 +70,7 @@ public class PojavApplication extends Application {
 												.concat("/x86");
 			}
 			AsyncAssetManager.unpackRuntime(getAssets());
+			AsyncAssetManager.unpackRuntime11(getAssets());
 		} catch (Throwable throwable) {
 			Intent ferrorIntent = new Intent(this, FatalErrorActivity.class);
 			ferrorIntent.putExtra("throwable", throwable);
