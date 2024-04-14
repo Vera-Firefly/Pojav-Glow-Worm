@@ -50,7 +50,6 @@ public class PojavApplication extends Application {
 				Log.e(CRASH_REPORT_TAG, " - Exception attempt saving crash stack trace:", throwable);
 				Log.e(CRASH_REPORT_TAG, " - The crash stack trace was:", th);
 			}
-
 			FatalErrorActivity.showError(PojavApplication.this, crashFile.getAbsolutePath(), storagePermAllowed, th);
 			MainActivity.fullyExit();
 		});
