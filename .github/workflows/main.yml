@@ -50,7 +50,7 @@ jobs:
           branch: main
           name: lwjgl
 
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 7.6.1
 
@@ -108,7 +108,7 @@ jobs:
           branch: main
           name: lwjgl
 
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 7.6.1
 
