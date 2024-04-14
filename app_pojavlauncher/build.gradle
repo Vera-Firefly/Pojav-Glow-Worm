@@ -144,7 +144,7 @@ android {
         variant.mergeAssetsProvider.get().doLast {
             def arch = System.getProperty("arch", "all")
             def assetsDir = mergeAssetsProvider.get().outputDir.get()
-            def java = ['jre', 'jre-new']
+            def java = ['jre-8', 'jre-11', 'jre-17', 'jre-21']
             println(arch)
             java.forEach { String str ->
                 def runtimeDir = new File([assetsDir, "components/" + str].join(File.separator))
