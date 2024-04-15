@@ -140,6 +140,8 @@ Any code change to this repository should be submitted as a pull request. The de
 - [xHook](https://github.com/iqiyi/xHook) (Used for exit code trapping): [MIT and BSD-style licenses](https://github.com/iqiyi/xHook/blob/master/LICENSE).
 - [libepoxy](https://github.com/anholt/libepoxy): [MIT License](https://github.com/anholt/libepoxy/blob/master/COPYING).
 - [virglrenderer](https://github.com/PojavLauncherTeam/virglrenderer): [MIT License](https://gitlab.freedesktop.org/virgl/virglrenderer/-/blob/master/COPYING).
+- [terminal-view](https://github.com/termux/termux-app/tree/master/terminal-view): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
+- [terminal-emulator](https://github.com/termux/termux-app/tree/master/terminal-emulator): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
 - Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
 
 ## More
