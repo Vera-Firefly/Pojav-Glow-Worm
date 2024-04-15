@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch.fragments;
 
+import com.qz.terminal2.ConsoleActivity;
 import static net.kdt.pojavlaunch.Tools.shareLog;
 
 import android.content.Intent;
@@ -36,6 +37,7 @@ public class MainMenuFragment extends Fragment {
         Button mNewsButton = view.findViewById(R.id.news_button);
         Button mCustomControlButton = view.findViewById(R.id.custom_control_button);
         Button mInstallJarButton = view.findViewById(R.id.install_jar_button);
+        Button mStartTerminalButton = view.findViewById(R.id.start_terminal_button);
         Button mShareLogsButton = view.findViewById(R.id.share_logs_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
@@ -49,6 +51,7 @@ public class MainMenuFragment extends Fragment {
             runInstallerWithConfirmation(true);
             return true;
         });
+        mStartTerminalButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), ConsoleActivity.class)));
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
         mPlayButton.setOnClickListener(v -> ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true));

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+     android:orientation="vertical">
+
+    <com.termux.view.TerminalView
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+         android:scrollbars="vertical"
+         android:background="@android:color/black"
+         android:focusableInTouchMode="true"
+         android:focusable="true"
+         android:layout_weight="1.0"
+         android:scrollbarThumbVertical="@drawable/terminal_scroll_shape"
+         android:id="@+id/emulatorView" />
+
+    <com.qz.terminal2.ExtraKeysView
+         android:layout_height="55dp"
+         android:layout_width="match_parent"
+         android:background="@android:color/black"
+         android:id="@+id/extraKeysView" />
+
+</LinearLayout>
