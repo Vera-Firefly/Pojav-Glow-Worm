@@ -4,6 +4,8 @@ import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -19,6 +21,10 @@ import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 import org.lwjgl.glfw.CallbackBridge;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * Class dealing with the virtual mouse
@@ -87,7 +93,20 @@ public class Touchpad extends View implements GrabListener, AbstractTouchpad {
 
     private void init(){
         // Setup mouse pointer
-        mMousePointerDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_mouse_pointer, getContext().getTheme());
+        File file = new File(Tools.DIR_GAME_HOME, "mouse");
+        if(file.exists()) {
+            try {
+                InputStream stream1 = new FileInputStream(file);
+                Bitmap bitmap = BitmapFactory.decodeStream(stream1);
+                mMousePointerImageView.setImageBitmap(bitmap);
+                stream1.close();
+            } catch (Exception e) {
+
+            }
+        }
+        else {
+            mMousePointerDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_mouse_pointer, getContext().getTheme());
+        }
         // For some reason it's annotated as Nullable even though it doesn't seem to actually
         // ever return null
         assert mMousePointerDrawable != null;
