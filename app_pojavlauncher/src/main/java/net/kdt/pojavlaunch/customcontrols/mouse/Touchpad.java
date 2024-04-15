@@ -98,7 +98,7 @@ public class Touchpad extends View implements GrabListener, AbstractTouchpad {
             try {
                 InputStream stream1 = new FileInputStream(file);
                 Bitmap bitmap = BitmapFactory.decodeStream(stream1);
-                mMousePointerImageView.setImageBitmap(bitmap);
+                mMousePointerDrawable.setImageBitmap(bitmap);
                 stream1.close();
             } catch (Exception e) {
 
