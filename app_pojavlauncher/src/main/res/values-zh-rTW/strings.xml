@@ -193,6 +193,11 @@
     <string name="cropper_lock_horizontal">H. 鎖定</string>
     <string name="cropper_reset">重置</string>
     <string name="cropper_select_cancelled">已取消選擇</string>
+    <string name="log_view_button_scroll_off">自動滾動\n關閉</string>
+    <string name="log_view_button_scroll_on">自動滾動\n開啟</string>
+    <string name="log_view_button_output_off">輸出\n關閉</string>
+    <string name="log_view_button_output_on">輸出\n開啟</string>
+    <string name="log_view_label_log_output">日誌輸出:</string>
 
 
     <!-- App New Annotation -->
@@ -224,7 +229,6 @@
     <string name="preference_zink_crash_handle_title">備用橋接</string>
     <string name="preference_zink_crash_handle">使用第二方案橋接,如果啟動失敗,請關閉</string>
     <string name="customctrl_absolute_tracking">絕對手指跟蹤</string>
-    <string name="control_view_logout">日誌輸出：</string>
     <!-- Other login -->
     <string name="other_login_api">外置登錄</string>
     <string name="other_login_authentication_server">身份驗證伺服器</string>
