@@ -117,6 +117,7 @@
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/Theme.AppCompat"
+            android:label="@string/main_terminal"
             android:exported="true"/>
 
         <provider
