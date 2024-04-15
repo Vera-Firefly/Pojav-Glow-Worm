@@ -375,6 +375,11 @@
     <string name="cropper_lock_horizontal">H. lock</string>
     <string name="cropper_reset">Reset</string>
     <string name="cropper_select_cancelled">Selection cancelled</string>
+    <string name="log_view_button_scroll_off">Autoscroll\nOFF</string>
+    <string name="log_view_button_scroll_on">Autoscroll\nON</string>
+    <string name="log_view_button_output_off">Output\nOFF</string>
+    <string name="log_view_button_output_on">Output\nON</string>
+    <string name="log_view_label_log_output">Log output:</string>
 
     <!-- App New Annotation -->
     <string name="preference_category_visibility_title">Visibility</string>
@@ -400,7 +405,6 @@
     <string name="microsoft_login_fragment">Login started!</string>
     <string name="preference_zink_crash_handle_title">Standby Bridge</string>
     <string name="preference_zink_crash_handle">Use the second scheme bridge,close if launch failed</string>
-    <string name="control_view_logout">Log output:</string>
     <!-- Other login -->
     <string name="other_login_api">Other Login</string>
     <string name="other_login_authentication_server">Authentication server</string>
