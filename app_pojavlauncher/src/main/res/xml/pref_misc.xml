@@ -49,12 +49,6 @@
             android:summary="@string/preference_vulkan_driver_system_description"
             android:title="@string/preference_vulkan_driver_system_title"/>
 
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="FireflyAlertDialog"
-            android:summary="@string/alertdialog_firefly"
-            android:title="Firefly AlertDialog"/>
-
     </PreferenceCategory>
     <Preference
             android:key="control_mouse_setting"
