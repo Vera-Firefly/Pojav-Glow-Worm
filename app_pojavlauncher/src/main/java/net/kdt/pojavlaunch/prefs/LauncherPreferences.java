@@ -85,7 +85,6 @@ public class LauncherPreferences {
     public static String PREF_DOWNLOAD_SOURCE = "default";
     public static boolean PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = false;
     public static boolean PREF_VSYNC_IN_ZINK = true;
-    public static boolean PREF_SHOW_FIREFLY_AD = false;
 
     public static String PREF_MESA_GL_VERSION;
     public static String PREF_MESA_GLSL_VERSION;
@@ -146,8 +145,6 @@ public class LauncherPreferences {
         PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
         PREF_MESA_LIB = DEFAULT_PREF.getString("CMesaLibrarys", "default");
         PREF_DRIVER_MODLE = DEFAULT_PREF.getString("CDriverModles", "driver_zink");
-
-        PREF_SHOW_FIREFLY_AD  = DEFAULT_PREF.getBoolean("FireflyAlertDialog", false);
 
         PREF_MESA_GL_VERSION = DEFAULT_PREF.getString("mesaGLVersion", "4.6");
         PREF_MESA_GLSL_VERSION = DEFAULT_PREF.getString("mesaGLSLVersion", "460");
