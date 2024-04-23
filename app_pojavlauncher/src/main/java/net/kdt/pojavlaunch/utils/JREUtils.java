@@ -261,8 +261,11 @@ public class JREUtils {
                         envMap.put("MESA_GL_VERSION_OVERRIDE", glVersion);
                         envMap.put("MESA_GLSL_VERSION_OVERRIDE", glslVersion);
                     }
-                    if(MESA_LIBS.equals("mesa2205"))
+                    if(MESA_LIBS.equals("mesa2205")) {
                         envMap.put("DCLAT_FRAMEBUFFER", "1");
+                        if(DRIVER_MODLE.equals("driver_zink"))
+                            envMap.put("POJAV_LEGACY_ZINK_ALLOW", "1");
+                    }
                     if(DRIVER_MODLE.equals("driver_virgl"))
                         envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
                     if(DRIVER_MODLE.equals("driver_panfrost")) {
