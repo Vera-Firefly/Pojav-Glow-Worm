@@ -266,6 +266,11 @@ public class JREUtils {
                         if(DRIVER_MODLE.equals("driver_zink"))
                             envMap.put("POJAV_LEGACY_ZINK_ALLOW", "1");
                     }
+                    if(MESA_LIBS.equals("mesa2103")){
+                        envMap.put("DCLAT_FRAMEBUFFER", "1");
+                        envMap.put("POJAV_LEGACY_ZINK_ALLOW", "1");
+                        envMap.put("POJAV_ZINK_CRASH_HANDLE", "1");
+                    }
                     if(DRIVER_MODLE.equals("driver_virgl"))
                         envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
                     if(DRIVER_MODLE.equals("driver_panfrost")) {
@@ -537,6 +542,9 @@ public class JREUtils {
                         break;
                     case "mesa2205":
                         renderLibrary = "libOSMesa_2205.so";
+                        break;
+                    case "mesa2103":
+                        renderLibrary = "libOSMesa_2103.so";
                         break;
                 }
             } else {
