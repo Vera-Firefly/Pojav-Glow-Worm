@@ -1312,13 +1312,6 @@ public final class Tools {
                     if(driverModle.contains("softpipe")) continue;
                     if(driverModle.contains("llvmpipe")) continue;
                 } break;
-                case "mesa2103":{
-                    if(driverModle.contains("virgl")) continue;
-                    if(driverModle.contains("panfrost")) continue;
-                    if(driverModle.contains("freedreno")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
-                } break;
             }
             CDriverModleIds.add(driverModle);
             CDriverModleNames.add(defaultCDriverModleNames[i]);
