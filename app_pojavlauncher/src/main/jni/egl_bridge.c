@@ -1,5 +1,5 @@
 //
-// Modifiled by Vera-Firefly on 22.03.2024.
+// Modifiled by Vera-Firefly on 23.04.2024.
 //
 #include <jni.h>
 #include <assert.h>
@@ -231,10 +231,11 @@ int pojavInitOpenGL() {
         }
     } else if (strcmp(renderer, "mesa_3d") == 0) {
         if(strcmp(ldrivermodle, "driver_zink") == 0) {
-            load_vulkan();
             setenv("GALLIUM_DRIVER","zink",1);
             printf("Bridge: Use Zink Renderer\n");
             renderer_load_config();
+            if(getenv("POJAV_LEGACY_ZINK_ALLOW") == NULL)
+                load_vulkan();
         }
         if(strcmp(ldrivermodle, "driver_virgl") == 0) {
             printf("Bridge: Use VirglRenderer\n");

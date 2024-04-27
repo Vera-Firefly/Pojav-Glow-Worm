@@ -1,7 +1,5 @@
 package net.kdt.pojavlaunch;
 
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SHOW_FIREFLY_AD;
-
 import android.Manifest;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -207,51 +205,6 @@ public class LauncherActivity extends BaseActivity {
         mProgressLayout.observe(ProgressLayout.INSTALL_MODPACK);
         mProgressLayout.observe(ProgressLayout.AUTHENTICATE_MICROSOFT);
         mProgressLayout.observe(ProgressLayout.DOWNLOAD_VERSION_LIST);
-
-        if (PREF_SHOW_FIREFLY_AD) {
-            Date currentTime = new Date();
-            String currentTimeString = sdf.format(currentTime);
-            String[] timePeriods = {
-            "00:00-06:00",
-            "06:00-09:00",
-            "12:30-14:00",
-            "17:30-19:30",
-            "23:00-24:00"
-            };
-            String[] timePeriodChars = {
-            getString(R.string.ad_time_aaa),
-            getString(R.string.ad_time_aab),
-            getString(R.string.ad_time_aac),
-            getString(R.string.ad_time_aad),
-            getString(R.string.ad_time_aae)
-            };
-
-            int matchedIndex = -1;
-            for (int i =0; i < timePeriods.length; i++) {
-                String[] timeSplit = timePeriods[i].split("-");
-                String startTime = timeSplit[0];
-                String endTime = timeSplit[1];
-                if (isTimeBetween(currentTimeString, startTime, endTime)) {
-                    matchedIndex = i;
-                    break;
-                }
-            }
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Firefly");
-            if (matchedIndex != -1) {
-                builder.setMessage(timePeriodChars[matchedIndex]);
-            } else {
-            builder.setMessage(getString(R.string.ad_time_aaf));
-            }
-            builder.setPositiveButton(getString(R.string.alertdialog_done), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.create().show();
-        }
     }
 
     @Override
