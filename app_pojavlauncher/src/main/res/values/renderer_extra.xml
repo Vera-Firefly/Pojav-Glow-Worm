@@ -5,7 +5,6 @@
         <item name="2">Mesa23.0.4</item>
         <item name="3">Mesa23.0.0-devel</item>
         <item name="4">Mesa22.0.5</item>
-        <item name="5">Mesa21.0.3</item>
     </string-array>
 
     <string-array name="osmesa_values">
@@ -13,7 +12,6 @@
         <item>mesa2304</item>
         <item>mesa2300d</item>
         <item>mesa2205</item>
-        <item>mesa2103</item>
     </string-array>
 
     <string-array name="driver_modle">
