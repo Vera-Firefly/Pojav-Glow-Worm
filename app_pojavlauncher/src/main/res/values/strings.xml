@@ -150,11 +150,11 @@
 
     <string name="customctrl_selectdefault">Select default controlmap</string>
     <string name="customctrl_export">Export controlmap</string>
-    
+
     <string name="main_terminal">Terminal</string>
     <string name="main_termianl_init">Initialization</string>
     <string name="main_terminal_loading">Loading...</string>
- 
+    
     <string name="main_share_logs">Share log file</string>
     <string name="main_install_jar_file">Execute a .jar</string>
     <string name="main_play">Play</string>
@@ -379,6 +379,11 @@
     <string name="cropper_lock_horizontal">H. lock</string>
     <string name="cropper_reset">Reset</string>
     <string name="cropper_select_cancelled">Selection cancelled</string>
+    <string name="log_view_button_scroll_off">Autoscroll\nOFF</string>
+    <string name="log_view_button_scroll_on">Autoscroll\nON</string>
+    <string name="log_view_button_output_off">Output\nOFF</string>
+    <string name="log_view_button_output_on">Output\nON</string>
+    <string name="log_view_label_log_output">Log output:</string>
 
     <!-- App New Annotation -->
     <string name="preference_category_visibility_title">Visibility</string>
@@ -404,7 +409,6 @@
     <string name="microsoft_login_fragment">Login started!</string>
     <string name="preference_zink_crash_handle_title">Standby Bridge</string>
     <string name="preference_zink_crash_handle">Use the second scheme bridge,close if launch failed</string>
-    <string name="control_view_logout">Log output:</string>
     <!-- Other login -->
     <string name="other_login_api">Other Login</string>
     <string name="other_login_authentication_server">Authentication server</string>
@@ -432,7 +436,7 @@
     <string name="preference_exp_framebuffer_title">Spare frame buffer</string>
     <string name="preference_exp_framebuffer">Use the frame buffer of the second scheme, close it if launch failed</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.0.5 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa24.0.6 (Default)</string>
     <string name="preference_extra_mesa_version">Mesa Version</string>
     <string name="preference_extra_driver_modle">Driver Modle</string>
     <!-- Dialog box prompt -->
@@ -446,18 +450,11 @@
     <string name="alertdialog_tipc">Remember to check if your device supports these features before using them</string>
     <string name="alertdialog_done">Done</string>
     <string name="alertdialog_cancel">Cancel</string>
-    <string name="alertdialog_firefly">Show Alertdialog when the launcher is opened (Default: Open)</string>
-    <string name="ad_time_aaa">It\'s the wee hours of the morning.\nYou\'re a strange guy!</string>
-    <string name="ad_time_aab">The time in the morning always represents beauty.\nWelcome to Pojav Glow·Worm</string>
-    <string name="ad_time_aac">Noon time always so tired.\nTake a nap and come back!</string>
-    <string name="ad_time_aad">The evening is always so romantic.\nLet\'s go out for a walk!</string>
-    <string name="ad_time_aae">Time is always so short, late at night.\nHurry to have a good sleep!</string>
-    <string name="ad_time_aaf">Hello!!!!!</string>
     <!-- Custom GL/GLSL Version -->
     <string name="preference_exp_alertdialog_glmessage">Before you do this, you must know what you are doing\nAre you sure you want to open it?</string>
     <string name="preference_exp_custommv">GL/GLSL Version</string>
     <string name="preference_exp_ebsystem">Select according to system</string>
-    <string name="preference_exp_ebspecific">Use a specific version</string>
+    <string name="preference_exp_ebspecific">Use specific version</string>
     <string name="preference_exp_ebcustom">Custom</string>
     <string name="preference_rendererexp_custom_glversion_title">Custom GL/GLSL</string>
     <string name="preference_rendererexp_custom_glversion">Allow custom Mesa GL/GLSL version</string>
