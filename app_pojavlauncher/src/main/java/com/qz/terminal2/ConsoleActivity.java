@@ -21,11 +21,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.qz.utils.KeyboardUtils;
 import com.termux.terminal.TerminalSession;
 import com.termux.view.TerminalView;
 
@@ -168,7 +170,22 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         unbindService(this);
         mTermService.stopSelf();
     }
-
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem keyboard = menu.add("KeyBoard");
+        keyboard.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        keyboard.setIcon(R.drawable.ic_keyboard);
+        keyboard.setOnMenuItemClickListener(m -> {
+            KeyboardUtils.setSoftKeyboardVisibility(() -> {
+                KeyboardUtils.showSoftKeyboard(this, mEmulatorView);
+            }, this, mEmulatorView, !KeyboardUtils.isSoftKeyboardVisible(this));
+                
+            return false;
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
