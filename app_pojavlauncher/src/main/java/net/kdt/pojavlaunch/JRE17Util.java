@@ -86,7 +86,7 @@ public class JRE17Util {
             minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX + appropriateRuntime;
             LauncherProfiles.load();
         } else {
-            if (versionInfo.javaVersion.majorVersion <= 17) {
+            if (versionInfo.javaVersion.majorVersion <= 21) {
                 if (!JRE17Util.checkInternalNewJre(activity.getAssets())){
                     showRuntimeFail(activity, versionInfo);
                     return false;
