@@ -204,10 +204,6 @@ public class MinecraftDownloader {
             throw new IOException("Unable to read Version JSON for version " + versionName);
         }
 
-        if(activity != null && (!JRE17Util.installNewJreIfNeeded(activity, verInfo) || !JRE21Util.installNewJreIfNeeded(activity, verInfo))){
-            return false;
-        }
-
         JAssets assets = downloadAssetsIndex(verInfo);
         if(assets != null) scheduleAssetDownloads(assets);
 
