@@ -40,14 +40,14 @@ public class JRE21Util {
             return false;
         }
     }
-    public static boolean isInternalNewJRE(String s_runtime) {
+    public static boolean isInternalJRE21(String s_runtime) {
         Runtime runtime = MultiRTUtils.read(s_runtime);
         if(runtime == null) return false;
         return JRE_21_NAME.equals(runtime.name);
     }
 
     /** @return true if everything is good, false otherwise.  */
-    public static boolean installNewJreIfNeeded(Activity activity, JMinecraftVersionList.Version versionInfo) {
+    public static boolean installJre21IfNeeded(Activity activity, JMinecraftVersionList.Version versionInfo) {
         if (versionInfo.javaVersion == null || versionInfo.javaVersion.component.equalsIgnoreCase("jre-legacy"))
             return true;
 
@@ -63,13 +63,13 @@ public class JRE21Util {
 
         String appropriateRuntime = MultiRTUtils.getNearestJreName(versionInfo.javaVersion.majorVersion);
         if (appropriateRuntime != null) {
-            if (JRE21Util.isInternalNewJRE(appropriateRuntime)) {
+            if (JRE21Util.isInternalJRE21(appropriateRuntime)) {
                 JRE21Util.checkInternalJre21(activity.getAssets());
             }
             minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX + appropriateRuntime;
             LauncherProfiles.load();
         } else {
-            if (versionInfo.javaVersion.majorVersion >= 18 && versionInfo.javaVersion.majorVersion <= 21) {
+            if (versionInfo.javaVersion.majorVersion <= 17) {
                 if (!JRE21Util.checkInternalJre21(activity.getAssets())){
                     showRuntimeFail(activity, versionInfo);
                     return false;
