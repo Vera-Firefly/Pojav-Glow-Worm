@@ -30,15 +30,15 @@ jobs:
           branch: main
           name: jre8-pojav
 
-      - name: Get JRE17
+      - name: Get JRE21
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: buildjre17.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-17
+          workflow: buildjre21.yml
+          path: app_pojavlauncher/src/main/assets/components/jre-21
           workflow_conclusion: success
           repo: Vera-Firefly/android-openjdk-autobuild
           branch: main
-          name: jre17-pojav
+          name: jre21-pojav
 
       - name: Get LWJGL3
         uses: dawidd6/action-download-artifact@v3
