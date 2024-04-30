@@ -1,15 +1,16 @@
 package net.kdt.pojavlaunch;
 
-import android.R;
+import static net.kdt.pojavlaunch.Architecture.archAsString;
+
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.util.Log;
-import java.io.IOException;
-import net.kdt.pojavlaunch.Architecture.archAsString;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.multirt.Runtime;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
+
+import java.io.IOException;
 
 public class JRE17Util {
     public static final String NEW_JRE_NAME = "Internal-21";
