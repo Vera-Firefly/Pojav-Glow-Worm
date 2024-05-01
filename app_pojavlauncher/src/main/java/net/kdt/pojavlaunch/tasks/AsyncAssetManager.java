@@ -84,8 +84,6 @@ public class AsyncAssetManager {
             }catch (IOException e) {
                 Log.e("JREAuto", "Internal-11 JRE unpack failed", e);
             }
-
-            unpackRuntime17(am);
         });
     }
 
