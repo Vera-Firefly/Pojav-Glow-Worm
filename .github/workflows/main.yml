@@ -50,10 +50,6 @@ jobs:
           branch: main
           name: lwjgl
 
-      - uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: 7.6.1
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -63,11 +59,13 @@ jobs:
       - name: Build Release ${{matrix.arch}} .apk
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
         run: |
-          gradle :app_pojavlauncher:assemblerelease -Darch=${{matrix.arch}}
+          chmod +x gradlew
+          ./gradlew app_pojavlauncher:assemblerelease -Darch=${{matrix.arch}}
 
       - name: Build Debug ${{matrix.arch}} .apk
         run: |
-          gradle :app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}}
+          chmod +x gradlew
+          ./gradlew app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}}
 
       - name: Upload Release
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
@@ -107,10 +105,6 @@ jobs:
           branch: main
           name: lwjgl
 
-      - uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: 7.6.1
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -119,7 +113,8 @@ jobs:
 
       - name: Build Debug-noruntime ${{matrix.arch}} .apk
         run: |
-          gradle :app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}}
+          chmod +x gradlew
+          ./gradlew app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}}
 
       - name: Upload Debug
         uses: actions/upload-artifact@v4
