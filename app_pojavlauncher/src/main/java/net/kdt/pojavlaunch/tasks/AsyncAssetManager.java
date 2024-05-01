@@ -2,6 +2,7 @@ package net.kdt.pojavlaunch.tasks;
 
 
 import static net.kdt.pojavlaunch.Architecture.archAsString;
+import static net.kdt.pojavlaunch.JRE21Util.checkInternalJre21;
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
 
 import android.content.Context;
@@ -83,6 +84,8 @@ public class AsyncAssetManager {
             }catch (IOException e) {
                 Log.e("JREAuto", "Internal-11 JRE unpack failed", e);
             }
+
+            unpackRuntime17(am);
         });
     }
 
@@ -111,6 +114,8 @@ public class AsyncAssetManager {
             }catch (IOException e) {
                 Log.e("JREAuto", "Internal-17 JRE unpack failed", e);
             }
+
+            checkInternalJre21(am);
         });
     }
 
