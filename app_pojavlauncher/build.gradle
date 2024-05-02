@@ -122,6 +122,7 @@ android {
             resValue 'string', 'application_package', 'net.kdt.pojavlaunch.firefly.debug'
             resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.firefly.debug'
             resValue 'string', 'shareProviderAuthority', 'net.kdt.pojavlaunch.scoped.controlfolder.firefly.debug'
+            resValue 'string', 'fileProviderAuthorities', 'net.kdt.pojavlaunch.scoped.FileFileProvider.debug'
         }
         release {
             // Don't set to true or java.awt will be a.a or something similar.
@@ -132,6 +133,7 @@ android {
             // debuggable = true
             resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.firefly'
             resValue 'string', 'application_package', 'net.kdt.pojavlaunch.firefly'
+            resValue 'string', 'fileProviderAuthorities', 'net.kdt.pojavlaunch.scoped.FileFileProvider'
             signingConfig signingConfigs.releaseBuild
         }
     }

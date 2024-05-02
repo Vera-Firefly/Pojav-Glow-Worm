@@ -136,9 +136,9 @@
         </provider>
         
         <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="net.kdt.pojavlaunch.FileProvider"
-            android:exported="false"
+            android:name=".scoped.FileProvider"
+            android:authorities="@string/fileProviderAuthorities"
+            android:exported="true"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"

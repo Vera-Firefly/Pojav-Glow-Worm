@@ -22,6 +22,7 @@ import com.termux.terminal.EmulatorDebug;
 import com.termux.terminal.TerminalSession;
 import com.termux.terminal.TerminalSession.SessionChangedCallback;
 
+import static net.kdt.pojavlaunch.R.string;
 import net.kdt.pojavlaunch.JavaGUILauncherActivity;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
@@ -272,7 +273,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
             } else {
                 File jarFile = new File(type);
                 if (jarFile.exists()) {
-                    Uri modUri = FileProvider.getUriForFile(this, "net.kdt.pojavlaunch.FileProvider", jarFile);
+                    Uri modUri = FileProvider.getUriForFile(this, getString(string.fileProviderAuthorities), jarFile);
                     bundle.putParcelable("modUri", modUri);
                 }
             }
