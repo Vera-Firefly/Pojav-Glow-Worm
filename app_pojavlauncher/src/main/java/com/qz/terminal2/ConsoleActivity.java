@@ -1,5 +1,6 @@
 package com.qz.terminal2;
 
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,35 +21,35 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.qz.utils.KeyboardUtils;
 import com.termux.terminal.TerminalSession;
 import com.termux.view.TerminalView;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import net.kdt.pojavlaunch.R;
-import net.kdt.pojavlaunch.Tools;
+
+import java.util.List;
 
 public class ConsoleActivity extends AppCompatActivity implements ServiceConnection{
 
     private Process process = null;
     
+    private ProgressDialog mDialog;
+    
     public TerminalView mEmulatorView;
     public ExtraKeysView mExtraKeysView;
-    
     private TerminalSession mSession;
-
     public TermuxService mTermService;
     
     private int mFontSize;
     private int MIN_FONTSIZE;
     private int MAX_FONTSIZE = 256;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,48 +61,41 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
     }
 
     private void computeFontSize(){
-        //计算字体大小
         float dipInPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, this.getResources().getDisplayMetrics());
         MIN_FONTSIZE = (int) (4f * dipInPixels);
         int defaultFontSize = Math.round(12 * dipInPixels);
-        // Make it divisible by 2 since that is the minimal adjustment step:
         if (defaultFontSize % 2 == 1) defaultFontSize--;
-
         mFontSize = defaultFontSize;
         mFontSize = Math.max(MIN_FONTSIZE, Math.min(mFontSize, MAX_FONTSIZE));
-
     }
+    
     private  void initView(){
-        ActionBar actionBar=getSupportActionBar();
-        if(actionBar!=null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mEmulatorView = findViewById(R.id.emulatorView) ;
         mExtraKeysView = findViewById(R.id.extraKeysView);
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         mEmulatorView.setTextSize(mFontSize);
         mEmulatorView.requestFocus();
         mEmulatorView.setOnKeyListener(new TermuxViewClient(this));
     }
     
     private void  startService(){
-        File f = new File(Tools.NATIVE_LIB_DIR, "libterm.so");
-        ArrayList<String> cmd = new ArrayList<String>();
-        cmd.add("-l");
-        cmd.add(Tools.NATIVE_LIB_DIR);
-        cmd.add("-t");
-        cmd.add(Tools.DIR_CACHE.getAbsolutePath());
-        cmd.add("-h");
-        cmd.add(getFilesDir().getAbsolutePath());
-        
+        showDialog();
         Intent serviceIntent = new Intent(this, TermuxService.class);
         // Start the service and make it run regardless of who is bound to it:
         serviceIntent.setAction(TermuxService.ACTION_EXECUTE);
-        serviceIntent.setData(Uri.fromFile(f));
-        serviceIntent.putExtra(TermuxService.EXTRA_ARGUMENTS, cmd.toArray(new String[0]));
         startService(serviceIntent);
         if (!bindService(serviceIntent, this, 0))
             throw new RuntimeException("bindService() failed");
+    }
+    
+    private void showDialog() {
+        mDialog = new ProgressDialog(ConsoleActivity.this);
+        mDialog.setTitle(R.string.main_termianl_init);
+        mDialog.setMessage(getString(R.string.main_terminal_loading));
+        mDialog.setCancelable(false);
+        mDialog.create();
+        mDialog.show();
     }
 
     @Override
@@ -109,17 +104,11 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         mEmulatorView.onScreenUpdated();
     }
 
-    /**
-     * Intercepts keys before the view/terminal gets it.
-     */
     private View.OnKeyListener mKeyListener = new View.OnKeyListener() {
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             return backkeyInterceptor(keyCode, event) || keyboardShortcuts(keyCode, event);
         }
 
-        /**
-         * Keyboard shortcuts (tab management, paste)
-         */
         private boolean keyboardShortcuts(int keyCode, KeyEvent event) {
             if (event.getAction() != KeyEvent.ACTION_DOWN) {
                 return false;
@@ -137,7 +126,6 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
                 return true;
             } else if (keyCode == KeyEvent.KEYCODE_V && isCtrlPressed && isShiftPressed) {
                 doPaste();
-
                 return true;
             } else {
                 return false;
@@ -153,6 +141,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
             }
         }
     };
+    
     void doPaste() {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = clipboard.getPrimaryClip();
@@ -166,13 +155,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         return mTermService.getTermSession();
     }
 
-    /**
-     *
-     * Send a URL up to Android to be handled by a browser.
-     * @param link The URL to be opened.
-     */
-    private void execURL(String link)
-    {
+    private void execURL(String link) {
         Uri webLink = Uri.parse(link);
         Intent openLink = new Intent(Intent.ACTION_VIEW, webLink);
         PackageManager pm = getPackageManager();
@@ -187,7 +170,22 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         unbindService(this);
         mTermService.stopSelf();
     }
-
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem keyboard = menu.add("KeyBoard");
+        keyboard.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        keyboard.setIcon(R.drawable.ic_keyboard);
+        keyboard.setOnMenuItemClickListener(m -> {
+            KeyboardUtils.setSoftKeyboardVisibility(() -> {
+                KeyboardUtils.showSoftKeyboard(this, mEmulatorView);
+            }, this, mEmulatorView, !KeyboardUtils.isSoftKeyboardVisible(this));
+                
+            return false;
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -200,6 +198,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
     public void onServiceConnected(ComponentName componentName, IBinder service) {
         mTermService = ((TermuxService.LocalBinder) service).service;
         mEmulatorView.attachSession(mTermService.getTermSession());
+        mDialog.dismiss();
         mTermService.mSessionChangeCallback = new TerminalSession.SessionChangedCallback() {
             @Override
             public void onTextChanged(TerminalSession changedSession) {
@@ -224,7 +223,6 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
 
             @Override
             public void onBell(TerminalSession session) {
-
 
             }
 

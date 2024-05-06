@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ClipboardManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 
+import androidx.core.content.FileProvider;
 import com.kdt.LoggerView;
 
 import net.kdt.pojavlaunch.customcontrols.keyboard.AwtCharSender;
@@ -157,17 +159,25 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
                 return;
             }
             final String javaArgs = extras.getString("javaArgs");
-            final Uri resourceUri = (Uri) extras.getParcelable("modUri");
-            if(extras.getBoolean("openLogOutput", false)) openLogOutput(null);
+            Uri modUri = null;
+            
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+                modUri = (Uri) extras.getParcelable("modUri");
+            } else {
+                modUri = extras.getParcelable("modUri", Uri.class);
+            }
+            
+            final Uri resourceUri = modUri;
+            if (extras.getBoolean("openLogOutput", false)) openLogOutput(null);
             if (javaArgs != null) {
                 startModInstaller(null, javaArgs);
-            }else if(resourceUri != null) {
+            } else if(resourceUri != null) {
                 ProgressDialog barrierDialog = Tools.getWaitingDialog(this, R.string.multirt_progress_caching);
                 PojavApplication.sExecutorService.execute(()->{
                     startModInstallerWithUri(resourceUri);
                     runOnUiThread(barrierDialog::dismiss);
                 });
-            }
+            } 
         } catch (Throwable th) {
             Tools.showError(this, th, true);
         }

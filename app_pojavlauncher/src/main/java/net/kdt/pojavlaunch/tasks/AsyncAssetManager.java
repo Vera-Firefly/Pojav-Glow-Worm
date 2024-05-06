@@ -2,6 +2,7 @@ package net.kdt.pojavlaunch.tasks;
 
 
 import static net.kdt.pojavlaunch.Architecture.archAsString;
+import static net.kdt.pojavlaunch.JRE21Util.checkInternalJre21;
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
 
 import android.content.Context;
@@ -83,6 +84,36 @@ public class AsyncAssetManager {
             }catch (IOException e) {
                 Log.e("JREAuto", "Internal-11 JRE unpack failed", e);
             }
+        });
+    }
+
+    public static void unpackRuntime17(AssetManager am) {
+        String rt_version = null;
+        String current_rt_version = MultiRTUtils.__internal__readBinpackVersion("Internal-17");
+        try {
+            rt_version = Tools.read(am.open("components/jre-17/version"));
+        } catch (IOException e) {
+            Log.e("JREAuto", "JRE was not included on this APK.", e);
+        }
+        String exactJREName = MultiRTUtils.getExactJreName(17);
+        if(current_rt_version == null && exactJREName != null && !exactJREName.equals("Internal-17")) return;
+        if(rt_version == null) return;
+        if(rt_version.equals(current_rt_version)) return;
+
+        String finalRt_version = rt_version;
+        sExecutorService.execute(() -> {
+
+            try {
+                MultiRTUtils.installRuntimeNamedBinpack(
+                        am.open("components/jre-17/universal.tar.xz"),
+                        am.open("components/jre-17/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                        "Internal-17", finalRt_version);
+                MultiRTUtils.postPrepare("Internal-17");
+            }catch (IOException e) {
+                Log.e("JREAuto", "Internal-17 JRE unpack failed", e);
+            }
+
+            checkInternalJre21(am);
         });
     }
 

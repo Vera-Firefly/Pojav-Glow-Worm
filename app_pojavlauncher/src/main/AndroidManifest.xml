@@ -117,8 +117,12 @@
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/Theme.AppCompat"
+            android:resizeableActivity="true"
             android:label="@string/main_terminal"
-            android:exported="true"/>
+            android:taskAffinity=""
+            android:launchMode="singleInstance"
+            android:process=":terminal"
+            android:exported="true" />
 
         <provider
             android:name=".scoped.FolderProvider"
@@ -130,6 +134,17 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
+        
+        <provider
+            android:name=".scoped.FileProvider"
+            android:authorities="@string/fileProviderAuthorities"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
 
         <service
             android:name=".services.ProgressService"
@@ -145,6 +160,7 @@
         <service
             android:name="com.qz.terminal2.TermuxService"
             android:foregroundServiceType="specialUse"
+            android:process=":terminal"
             android:exported="false" />
 
     </application>

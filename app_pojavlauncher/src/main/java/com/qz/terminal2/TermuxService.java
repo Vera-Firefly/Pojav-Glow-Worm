@@ -1,55 +1,57 @@
 package com.qz.terminal2;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.os.PowerManager;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
+import com.qz.utils.Utils;
 import com.termux.terminal.EmulatorDebug;
 import com.termux.terminal.TerminalSession;
 import com.termux.terminal.TerminalSession.SessionChangedCallback;
 
+import static net.kdt.pojavlaunch.R.string;
+import net.kdt.pojavlaunch.JavaGUILauncherActivity;
+import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.PosixFilePermission;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import net.kdt.pojavlaunch.Tools;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public final class TermuxService extends Service implements SessionChangedCallback {
 
-    /** Note that this is a symlink on the Android M preview. */
-    
-    public String HOME_PATH = new File(Tools.DIR_DATA, "files").getAbsolutePath();
-
-    private static final String ACTION_STOP_SERVICE = "com.termux.service_stop";
+    private static final String ACTION_STOP_SERVICE = "com.termux.aservice_stop";
     private static final String ACTION_LOCK_WAKE = "com.termux.service_wake_lock";
     private static final String ACTION_UNLOCK_WAKE = "com.termux.service_wake_unlock";
     /** Intent action to launch a new terminal session. Executed from TermuxWidgetProvider. */
     public static final String ACTION_EXECUTE = "com.termux.service_execute";
-
     public static final String EXTRA_ARGUMENTS = "com.termux.execute.arguments";
-
     public static final String EXTRA_CURRENT_WORKING_DIRECTORY = "com.termux.execute.cwd";
     
+
     /** This service is only bound from inside the same process and never uses IPC. */
     class LocalBinder extends Binder {
         public final TermuxService service = TermuxService.this;
@@ -60,7 +62,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
     private final Handler mHandler = new Handler();
 
     private TerminalSession mTerminalSessions = null;
-
+    
     SessionChangedCallback mSessionChangeCallback;
 
     /** The wake lock and wifi lock are always acquired and released together. */
@@ -69,12 +71,14 @@ public final class TermuxService extends Service implements SessionChangedCallba
 
     /** If the user has executed the {@link #ACTION_STOP_SERVICE} intent. */
     boolean mWantsToStop = false;
+    
+    private int port;
 
     @SuppressLint("Wakelock")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        setFolderPermissions(Tools.MULTIRT_HOME);
-        
+        Utils.setFolderPermissions(Tools.MULTIRT_HOME);
+
         String action = intent.getAction();
         if (ACTION_STOP_SERVICE.equals(action)) {
             mWantsToStop = true;
@@ -102,28 +106,11 @@ public final class TermuxService extends Service implements SessionChangedCallba
 
             }
         } else if (ACTION_EXECUTE.equals(action)) {
-            
-            Uri executableUri = intent.getData();
-            String executablePath = (executableUri == null ? null : executableUri.getPath());
-
-            String[] arguments = (executableUri == null ? null : intent.getStringArrayExtra(EXTRA_ARGUMENTS));
-            String cwd = intent.getStringExtra(EXTRA_CURRENT_WORKING_DIRECTORY);
-
-            mTerminalSessions = createTermSession(executablePath, arguments, cwd, true);
-            
-            if (executablePath != null) {
-                int lastSlash = executablePath.lastIndexOf('/');
-                String name = (lastSlash == -1) ? executablePath : executablePath.substring(lastSlash + 1);
-                name = name.replace('-', ' ');
-                mTerminalSessions.mSessionName = name;
-            }
+            startTerminal(intent);
         } else if (action != null) {
             Log.e(EmulatorDebug.LOG_TAG, "Unknown TermuxService action: '" + action + "'");
         }
 
-
-        // If this service really do get killed, there is no point restarting it automatically - let the user do on next
-        // start of {@link Term):
         return Service.START_NOT_STICKY;
     }
 
@@ -131,34 +118,56 @@ public final class TermuxService extends Service implements SessionChangedCallba
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
-
-    @Override
-    public void onCreate() {
-
-    }
-
-
-    public TerminalSession getTermSession()
-    {
+    
+    
+    public TerminalSession getTermSession() {
         return mTerminalSessions;
     }
+    
+    private File homeFile;
+    private File cacheFile;
+    private File binFile;
+    private File libFile;
+    private File localFile;
+    
+    private String javaHome;
+    
+    private ServerSocket serverSocket;
+    private Socket clientSocket;
+    
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        homeFile = new File(Tools.DIR_DATA, "files");
+        cacheFile = Tools.DIR_CACHE;
+        binFile = new File(cacheFile, "bin");
+        libFile = new File(cacheFile, "lib");
+        localFile = new File(cacheFile, "local");
+        
+        javaHome = Tools.MULTIRT_HOME + "/" + LauncherPreferences.PREF_DEFAULT_RUNTIME;
+        
+        startSocket();
+    }
+    
+    
     @Override
     public void onDestroy() {
         if (mWakeLock != null) mWakeLock.release();
         if (mWifiLock != null) mWifiLock.release();
-
-        stopForeground(true);
+        
+        try {
+            if (serverSocket != null) serverSocket.close();
+            if (clientSocket != null) clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         mTerminalSessions.finishIfRunning();
-
     }
 
     TerminalSession createTermSession(String executablePath, String[] arguments, String cwd, boolean failSafe) {
-       File f= new File(HOME_PATH);
-        if(!f.exists())
-            f.mkdirs();
-
         if (cwd == null)
-            cwd = HOME_PATH;
+            cwd = homeFile.getAbsolutePath();
 
         String[] env = buildEnvironment(failSafe, cwd);
         boolean isLoginShell = false;
@@ -183,7 +192,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
     }
 
     public void removeTermSession() {
-            stopSelf();
+        stopSelf();
     }
 
     @Override
@@ -217,39 +226,143 @@ public final class TermuxService extends Service implements SessionChangedCallba
         if (mSessionChangeCallback != null) mSessionChangeCallback.onColorsChanged(session);
     }
     
-    private void setFolderPermissions(String folderPath) {
-        File folder = new File(folderPath);
-        folder.setReadable(true, false);
-        folder.setWritable(true, false);
-        folder.setExecutable(true, false);
-        File[] files = folder.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    setFolderPermissions(file.getAbsolutePath());
-                } else {
-                    file.setReadable(true, false);
-                    file.setWritable(true, false);
-                    file.setExecutable(true, false);
+    private void startSocket() {
+        new Thread(() ->{
+            try {
+                serverSocket = new ServerSocket(0);
+                port = serverSocket.getLocalPort();
+                while(true) {
+                	clientSocket = serverSocket.accept();
+                    Log.d("TermuxServer", "Socket Running...");
+                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    StringBuilder cmd = new StringBuilder();
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        cmd.append(inputLine);
+                    }
+                    Message message = new Message();
+                    message.obj = cmd.toString();
+                    handler.sendMessage(message);
                 }
+            } catch (IOException e) {
+                    Log.e("TermuxService", e.getMessage());
             }
-        }
+        }).start();
     }
     
+    private Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message message) {
+            super.handleMessage(message);
+            execCommand((String)message.obj);
+        }
+    };
+    
+    private void execCommand(String cmd) {
+        String[] args = cmd.split(" ");
+        if (args.length > 0) {
+            Intent intent  = new Intent(this, JavaGUILauncherActivity.class);
+            Bundle bundle = new Bundle();
+            StringBuilder javaArgs = new StringBuilder();
+            String type = args[0];
+            if (type.equals("jar")) {
+                for (int i = 0; i < args.length; i++) {
+                    javaArgs.append(args[i]).append(" ");
+                }
+                bundle.putString("javaArgs", javaArgs.toString());
+            } else {
+                File jarFile = new File(type);
+                if (jarFile.exists()) {
+                    Uri modUri = FileProvider.getUriForFile(this, getString(string.fileProviderAuthorities), jarFile);
+                    bundle.putParcelable("modUri", modUri);
+                }
+            }
+            intent.putExtras(bundle);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
+
+    private void startTerminal(Intent intent) {
+        CountDownLatch latch = new CountDownLatch(1);
+        
+        if (!binFile.exists() || binFile.length() == 0 || 
+            !libFile.exists() || libFile.length() == 0) {
+            
+            File boot = new File(Tools.NATIVE_LIB_DIR, "libterm-boot.so");
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(() -> {
+                try {
+                    Utils.unzip(boot.getAbsolutePath(), cacheFile.getAbsolutePath());
+                    Utils.unZipFromAssets(getApplicationContext(), "components/term/term.zip", homeFile.getAbsolutePath());
+                } catch (IOException ig) {
+                    ig.printStackTrace();
+                } finally {
+                    latch.countDown();
+                }
+             });
+             executorService.shutdown();
+        } else {
+            latch.countDown();
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        File term = new File(binFile, "tcsh");
+        String executablePath = term.getAbsolutePath();
+
+        String[] arguments = {};
+
+        String cwd = intent.getStringExtra(EXTRA_CURRENT_WORKING_DIRECTORY);
+        mTerminalSessions = createTermSession(executablePath, arguments, cwd, true);
+
+        if (executablePath != null) {
+            int lastSlash = executablePath.lastIndexOf('/');
+            String name = (lastSlash == -1) ? executablePath : executablePath.substring(lastSlash + 1);
+            name = name.replace('-', ' ');
+            mTerminalSessions.mSessionName = name;
+        }
+    }
+
     private String[] buildEnvironment(boolean failSafe, String cwd) {
-        if (cwd == null) cwd = HOME_PATH;
+        if (cwd == null) cwd = homeFile.getAbsolutePath();
 
         final String termEnv = "TERM=xterm-256color";
-        final String homeEnv = "HOME=" + HOME_PATH;
+        final String homeEnv = "HOME=" + homeFile;
         final String androidRootEnv = "ANDROID_ROOT=" + System.getenv("ANDROID_ROOT");
         final String androidDataEnv = "ANDROID_DATA=" + System.getenv("ANDROID_DATA");
         // EXTERNAL_STORAGE is needed for /system/bin/am to work on at least
         // Samsung S7 - see https://plus.google.com/110070148244138185604/posts/gp8Lk3aCGp3.
         final String externalStorageEnv = "EXTERNAL_STORAGE=" + System.getenv("EXTERNAL_STORAGE");
+        final String serverJars = "STANDALONE_SYSTEMSERVER_JARS=" + System.getenv("STANDALONE_SYSTEMSERVER_JARS");
+        final String dex2oatClassPath = "DEX2OATBOOTCLASSPATH=" + System.getenv("DEX2OATBOOTCLASSPATH");
+        final String bootClassPath = "BOOTCLASSPATH=" + System.getenv("BOOTCLASSPATH");
+        final String serverClassPath = "SYSTEMSERVERCLASSPATH=" + System.getenv("SYSTEMSERVERCLASSPATH");
+        final String packageName = "PACKAGE_NAME=" + getPackageName();
+        final String localPort = "LOCAL_PORT=" + port;
+        final String javaHomeEnv = "JAVA_HOME=" +  javaHome;
+        final String binPath = "PATH=" + System.getenv("PATH") + ":" + binFile.getAbsolutePath() + ":" + javaHome + "/bin:" +
+                                LocalEnv.getGccBin(localFile.getAbsolutePath());
+        
+        final String libPath = "LD_LIBRARY_PATH=" + libFile.getAbsolutePath() + ":" + 
+                                LocalEnv.getJavaLibEnv(javaHome);
         if (failSafe) {
             // Keep the default path so that system binaries can be used in the failsafe session.
             final String pathEnv = "PATH=" + System.getenv("PATH");
-            return new String[]{termEnv, homeEnv, androidRootEnv, androidDataEnv, pathEnv, externalStorageEnv};
+            return new String[]{
+                termEnv, homeEnv, 
+                androidRootEnv, androidDataEnv, 
+                pathEnv, externalStorageEnv,
+                serverJars, dex2oatClassPath, 
+                bootClassPath, serverClassPath,
+                packageName, localPort,
+                javaHomeEnv,
+                binPath, libPath
+            };
         } else {
             final String ps1Env = "PS1=$ ";
             final String langEnv = "LANG=en_US.UTF-8";
@@ -258,6 +371,8 @@ public final class TermuxService extends Service implements SessionChangedCallba
             return new String[]{termEnv, homeEnv, ps1Env, langEnv, pwdEnv, androidRootEnv, androidDataEnv, externalStorageEnv};
         }
     }
+    
+    
 
     private String[] setupProcessArgs(String fileToExecute, String[] args) {
         // The file to execute may either be:
@@ -269,7 +384,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
         try {
             File file = new File(fileToExecute);
             FileInputStream in = new FileInputStream(file);
-            try{
+            try {
                 byte[] buffer = new byte[256];
                 int bytesRead = in.read(buffer);
                 if (bytesRead > 4) {
@@ -287,7 +402,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
                     }
                 }
             } catch (IOException e) {
-            // Ignore.
+                // Ignore.
             }
         } catch (IOException e) {
             // Ignore.
@@ -299,5 +414,5 @@ public final class TermuxService extends Service implements SessionChangedCallba
         if (args != null) Collections.addAll(result, args);
         return result.toArray(new String[result.size()]);
     }
-    
+
 }

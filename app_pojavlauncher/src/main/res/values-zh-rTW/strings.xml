@@ -256,7 +256,7 @@
     <string name="preference_exp_framebuffer_title">備用幀緩冲區</string>
     <string name="preference_exp_framebuffer">使用第二方案幀緩衝區,如果啟動失敗,請關閉</string>
     <string name="preference_renderer_setup_extra">實驗性設置(Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.0.5 (默認)</string>
+    <string name="preference_renderer_extra_default">Mesa24.0.6 (默認)</string>
     <string name="preference_extra_mesa_version">Mesa版本</string>
     <string name="preference_extra_driver_modle">驅動模型</string>
     <!-- Dialog box prompt -->
@@ -270,13 +270,6 @@
     <string name="alertdialog_tipc">在使用這些功能之前,請記得檢查你的設備是否支持這些功能!</string>
     <string name="alertdialog_done">確定</string>
     <string name="alertdialog_cancel">取消</string>
-    <string name="alertdialog_firefly">打開啟動器時的彈窗 (默認: 開啟)</string>
-    <string name="ad_time_aaa">淩晨時刻\n你真是個奇怪的傢夥!</string>
-    <string name="ad_time_aab">清晨的時光總是美好的\n歡迎使用Pojav Glow·Worm!</string>
-    <string name="ad_time_aac">午間總是很疲憊的\n小睡一會兒再來吧!</string>
-    <string name="ad_time_aad">傍晚時刻總是浪漫的\n出去走走吧!</string>
-    <string name="ad_time_aae">快樂的時光總是很短暫\n深夜了\n祝君好夢!</string>
-    <string name="ad_time_aaf">靜等一樹花開,盼你落葉歸來\n笙歌不見故人散,十里長歡難再尋\n歡迎使用Pojav Glow·Worm!!!</string>
     <!-- Custom GL/GLSL Version -->
     <string name="preference_exp_alertdialog_glmessage">在你執行此操作之前你必須知道你在做什麼\n你真的確定你要開啟它嗎?</string>
     <string name="preference_exp_custommv">GL/GLSL版本</string>

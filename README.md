@@ -111,7 +111,7 @@ Then, run these commands ~~or build using Android Studio~~.
 - [x] Game surface zooming.
 - [x] New input pipe rewritten to native code to boost performance.
 - [x] Rewritten entire controls system (thanks to @Mathias-Boulay)
-- [ ] Virtual terminal system
+- [x] Virtual terminal system
 - [ ] More to come!
 
 ## Known Issues
