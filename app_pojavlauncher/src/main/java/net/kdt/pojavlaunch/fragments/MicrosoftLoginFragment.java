@@ -105,7 +105,7 @@ public class MicrosoftLoginFragment extends Fragment {
             if(url.startsWith("ms-xal-00000000402b5328")) {
                 // Should be captured by the activity to kill the fragment and get
                 ExtraCore.setValue(ExtraConstants.MICROSOFT_LOGIN_TODO, Uri.parse(url));
-                Toast.makeText(view.getContext(), "Login started !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), R.string.microsoft_login_fragment, Toast.LENGTH_SHORT).show();
                 Tools.backToMainMenu(requireActivity());
 
                 return true;
