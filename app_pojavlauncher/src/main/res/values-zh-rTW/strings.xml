@@ -6,7 +6,7 @@
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
-    <string name="login_online_username_hint">電子郵箱或用戶名</string>
+    <string name="login_online_username_hint">用戶名</string>
     <string name="login_online_login_label">登入</string>
     <!-- Hint -->
     <string name="hint_control_mapping">"點擊上方齒輪符號開啟選單⚙\n點擊以編輯控制鍵大小、按鍵定義、名稱、顏色，或者刪除。"</string>
@@ -265,8 +265,8 @@
     <string name="preference_rendererexp_alertdialog_done">不要管我</string>
     <string name="preference_rendererexp_alertdialog_cancel">畏懼</string>
     <string name="preference_alertdialog_know">我已知曉</string>
-    <string name="alertdialog_tipa">不要忘記選擇Mesa渲染器!</string>
-    <string name="alertdialog_tipb">該實驗性設置僅適用於Mesa渲染器</string>
+    <string name="alertdialog_tipa">注意!\n在您使用自定義GL/GLSL之前你必須知曉什麼是GL/GLSL</string>
+    <string name="alertdialog_tipb">該實驗性設置僅適用於Extra(拓展)</string>
     <string name="alertdialog_tipc">在使用這些功能之前,請記得檢查你的設備是否支持這些功能!</string>
     <string name="alertdialog_done">確定</string>
     <string name="alertdialog_cancel">取消</string>
