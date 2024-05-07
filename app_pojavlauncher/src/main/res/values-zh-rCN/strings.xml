@@ -6,7 +6,7 @@
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
-    <string name="login_online_username_hint">电子邮箱或用户名</string>
+    <string name="login_online_username_hint">用户名</string>
     <string name="login_online_login_label">登录</string>
     <!-- Hint -->
     <string name="hint_control_mapping">"点击顶部中央齿轮图标打开背景菜单⚙\n点击一个按钮进行自定义：编辑、缩放、删除或自定义其键绑定。"</string>
@@ -402,8 +402,8 @@
     <string name="preference_rendererexp_alertdialog_done">不要管我</string>
     <string name="preference_rendererexp_alertdialog_cancel">畏惧</string>
     <string name="preference_alertdialog_know">我已知晓</string>
-    <string name="alertdialog_tipa">不要忘记选择Mesa渲染器!</string>
-    <string name="alertdialog_tipb">此实验性设置仅适用于Mesa渲染器哦~</string>
+    <string name="alertdialog_tipa">注意!\n在使用自定义GL/GLSL之前您必须了解什么是GL/GLSL</string>
+    <string name="alertdialog_tipb">此实验性设置Extra(拓展)仅适用于Mesa 3D哦~</string>
     <string name="alertdialog_tipc">在使用这些功能之前,请记得检查您的设备是否支持这些功能!</string>
     <string name="alertdialog_done">确定</string>
     <string name="alertdialog_cancel">取消</string>
