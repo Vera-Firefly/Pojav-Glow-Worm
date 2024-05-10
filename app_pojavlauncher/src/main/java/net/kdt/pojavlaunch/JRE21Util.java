@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class JRE21Util {
     public static final String JRE_21_NAME = "Internal-21";
+    public static final String JRE_17_NAME = "Internal-17";
     public static boolean checkInternalJre21(AssetManager assetManager) {
         String launcher_jre21_version;
         String installed_jre21_version = MultiRTUtils.__internal__readBinpackVersion(JRE_21_NAME);
@@ -27,12 +28,46 @@ public class JRE21Util {
         else return true;
     }
 
+    private static boolean checkInternalJre17(AssetManager assetManager) {
+        String launcher_jre17_version;
+        String installed_jre17_version = MultiRTUtils.__internal__readBinpackVersion(JRE_17_NAME);
+        try {
+            launcher_jre17_version = Tools.read(assetManager.open("components/jre-17/version"));
+        } catch (IOException exc) {
+            return installed_jre17_version != null;
+        }
+        if (!launcher_jre17_version.equals(installed_jre17_version)) {
+            return unpackJre17(assetManager, launcher_jre17_version);
+        } else {
+            return true;
+        }
+    }
+
+    private static boolean unpackJre17(AssetManager assetManager, String rt_version) {
+        try {
+            MultiRTUtils.installRuntimeNamedBinpack(
+                assetManager.open("components/jre-17/universal.tar.xz"),
+                assetManager.open("components/jre-17/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                "Internal-17", rt_version);
+            MultiRTUtils.postPrepare("Internal-17");
+            return true;
+        } catch (IOException e) {
+            Log.e("JRE17Auto", "Internal JRE unpack failed", e);
+            return false;
+        }
+    }
+    public static boolean isInternalJRE17(String s_runtime) {
+        Runtime runtime = MultiRTUtils.read(s_runtime);
+        if(runtime == null) return false;
+        return JRE_17_NAME.equals(runtime.name);
+    }
+
     private static boolean unpackJre21(AssetManager assetManager, String rt_version) {
         try {
             MultiRTUtils.installRuntimeNamedBinpack(
-                    assetManager.open("components/jre-21/universal.tar.xz"),
-                    assetManager.open("components/jre-21/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
-                    "Internal-21", rt_version);
+                assetManager.open("components/jre-21/universal.tar.xz"),
+                assetManager.open("components/jre-21/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                "Internal-21", rt_version);
             MultiRTUtils.postPrepare("Internal-21");
             return true;
         }catch (IOException e) {
@@ -46,20 +81,53 @@ public class JRE21Util {
         return JRE_21_NAME.equals(runtime.name);
     }
 
-    /** @return true if everything is good, false otherwise.  */
+    public static boolean installJre17IfNeeded(Activity activity, JMinecraftVersionList.Version versionInfo) {
+        if (versionInfo.javaVersion == null || versionInfo.javaVersion.component.equalsIgnoreCase("jre-legacy"))
+            return true;
+
+        LauncherProfiles.load();
+        MinecraftProfile minecraftProfile = LauncherProfiles.getCurrentProfile();
+        String selectedRuntime = Tools.getSelectedRuntime(minecraftProfile);
+        Runtime runtime = MultiRTUtils.read(selectedRuntime);
+
+        if (runtime.javaVersion >= versionInfo.javaVersion.majorVersion)
+            return true;
+
+        String appropriateRuntime = MultiRTUtils.getNearestJreName(versionInfo.javaVersion.majorVersion);
+        if (appropriateRuntime != null) {
+            if (JRE21Util.isInternalJRE17(appropriateRuntime)) {
+                JRE21Util.checkInternalJre17(activity.getAssets());
+            }
+            minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX + appropriateRuntime;
+            LauncherProfiles.load();
+        } else {
+            if (versionInfo.javaVersion.majorVersion <= 17) {
+                if (!JRE21Util.checkInternalJre17(activity.getAssets())) {
+                    showRuntimeFail(activity, versionInfo);
+                    return false;
+                } else {
+                    minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX + JRE21Util.JRE_17_NAME;
+                    LauncherProfiles.load();
+                }
+            } else {
+                showRuntimeFail(activity, versionInfo);
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean installJre21IfNeeded(Activity activity, JMinecraftVersionList.Version versionInfo) {
         if (versionInfo.javaVersion == null || versionInfo.javaVersion.component.equalsIgnoreCase("jre-legacy"))
             return true;
 
         LauncherProfiles.load();
         MinecraftProfile minecraftProfile = LauncherProfiles.getCurrentProfile();
-
         String selectedRuntime = Tools.getSelectedRuntime(minecraftProfile);
-
         Runtime runtime = MultiRTUtils.read(selectedRuntime);
-        if (runtime.javaVersion >= versionInfo.javaVersion.majorVersion) {
+
+        if (runtime.javaVersion >= versionInfo.javaVersion.majorVersion)
             return true;
-        }
 
         String appropriateRuntime = MultiRTUtils.getNearestJreName(versionInfo.javaVersion.majorVersion);
         if (appropriateRuntime != null) {
@@ -69,7 +137,7 @@ public class JRE21Util {
             minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX + appropriateRuntime;
             LauncherProfiles.load();
         } else {
-            if (versionInfo.javaVersion.majorVersion <= 17) {
+            if (versionInfo.javaVersion.majorVersion <= 21) {
                 if (!JRE21Util.checkInternalJre21(activity.getAssets())){
                     showRuntimeFail(activity, versionInfo);
                     return false;
@@ -82,7 +150,6 @@ public class JRE21Util {
                 return false;
             }
         }
-
         return true;
     }
 
