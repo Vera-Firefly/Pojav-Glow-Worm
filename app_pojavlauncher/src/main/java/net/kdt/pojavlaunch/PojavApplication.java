@@ -71,6 +71,7 @@ public class PojavApplication extends Application {
 			}
 			AsyncAssetManager.unpackRuntime(getAssets());
 			AsyncAssetManager.unpackRuntime11(getAssets());
+			UnpackJRE.unpackAllJre(getAssets());
 		} catch (Throwable throwable) {
 			Intent ferrorIntent = new Intent(this, FatalErrorActivity.class);
 			ferrorIntent.putExtra("throwable", throwable);
