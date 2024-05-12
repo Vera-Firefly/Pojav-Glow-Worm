@@ -392,7 +392,7 @@
     <string name="preference_exp_framebuffer_title">备用帧缓冲区</string>
     <string name="preference_exp_framebuffer">使用第二方案帧缓冲区,如果启动失败,请关闭</string>
     <string name="preference_renderer_setup_extra">渲染器 (拓展)</string>
-    <string name="preference_renderer_extra_default">Mesa24.0.6 (默认)</string>
+    <string name="preference_renderer_extra_default">Mesa24.0.7 (默认)</string>
     <string name="preference_extra_mesa_version">Mesa版本</string>
     <string name="preference_extra_driver_modle">驱动模型</string>
     <!-- Dialog box prompt -->
