@@ -218,7 +218,7 @@ public class JREUtils {
             envMap.put("POJAV_VSYNC_IN_ZINK", "1");
 
         if(PREF_ZINK_CRASH_HANDLE)
-            envMap.put("POJAV_ZINK_CRASH_HANDLE", "1");
+            envMap.put("POJAV_SPARE_BRIDGE", "1");
         if(PREF_EXP_SETUP)
             envMap.put("POJAV_EXP_SETUP", "1");
         if(PREF_EXP_FRAME_BUFFER)
