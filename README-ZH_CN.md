@@ -22,8 +22,6 @@
 
 - 这个启动器并非原版,它是魔改版,如果你不想使用它,请到[PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
-- 使用了自己的Curseforge API key
-
 ## 导航
 - [介绍](#介绍)  
 - [获取 Pojav Glow·Worm](#获取Pojav-Glow-Worm)
@@ -147,4 +145,4 @@ scripts\languagelist_updater.bat
 - 感谢[MCHeads](https://mc-heads.net)提供Minecraft头像组件
 
 ## 更多
-* 如果你想要一种不同的体验,试试实验版本:[Pojav EXP](https://github.com/Vera-Firefly/PojavLauncher-Experimental-Edition)
+* 如果你想要一种不同的体验,试试其它的优秀魔改版:[Pojav ZH](https://github.com/HopiHopy/PojavZH)

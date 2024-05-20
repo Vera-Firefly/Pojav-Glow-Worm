@@ -22,8 +22,6 @@
 
 - This is not the official version, it's just a modified,If you don't want to use it, please go to the [PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
-- Provide own Curseforge API key
-
 ## Navigation
 - [Introduction](#introduction)  
 - [Getting Pojav Glow·Worm](#getting-pojav-glow-worm)
@@ -146,4 +144,4 @@ Any code change to this repository should be submitted as a pull request. The de
 - Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
 
 ## More
-* If you want a different experience, try experimental version:[Pojav EXP](https://github.com/Vera-Firefly/PojavLauncher-Experimental-Edition)
+* If you want a different experience, try some of the other good ones:[Pojav ZH](https://github.com/HopiHopy/PojavZH)
