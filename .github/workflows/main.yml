@@ -65,7 +65,7 @@ jobs:
       - name: Build Debug ${{matrix.arch}} .apk
         run: |
           chmod +x gradlew
-          ./gradlew app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}}
+          ./gradlew app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}} -g -rdynamic
 
       - name: Upload Release
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'exp_v3'
@@ -114,7 +114,7 @@ jobs:
       - name: Build Debug-noruntime ${{matrix.arch}} .apk
         run: |
           chmod +x gradlew
-          ./gradlew app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}}
+          ./gradlew app_pojavlauncher:assembleDebug -Darch=${{matrix.arch}} -g -rdynamic
 
       - name: Upload Debug
         uses: actions/upload-artifact@v4
