@@ -225,8 +225,6 @@
     <string name="preference_mouse_title1">刪除設置的鼠標圖標</string>
     <string name="notif_mouse1">刪除成功</string>
     <string name="microsoft_login_fragment">開始登陸!</string>
-    <string name="preference_zink_crash_handle_title">備用橋接</string>
-    <string name="preference_zink_crash_handle">使用第二方案橋接,如果啟動失敗,請關閉</string>
     <string name="customctrl_absolute_tracking">絕對手指跟蹤</string>
     <!-- Other login -->
     <string name="other_login_api">外置登錄</string>
@@ -252,6 +250,8 @@
     <string name="preference_category_renderer_experimental_settings">渲染器實驗性設置</string>
     <string name="preference_renderer_setup_title">使用渲染器實驗性設置</string>
     <string name="preference_renderer_setup">更多的渲染器特定設置</string>
+    <string name="preference_spare_bridge_title">備用橋接</string>
+    <string name="preference_spare_bridge">使用第二方案橋接,如果啟動失敗,請關閉</string>
     <string name="preference_exp_framebuffer_title">備用幀緩冲區</string>
     <string name="preference_exp_framebuffer">使用第二方案幀緩衝區,如果啟動失敗,請關閉</string>
     <string name="preference_renderer_setup_extra">實驗性設置(Extra)</string>

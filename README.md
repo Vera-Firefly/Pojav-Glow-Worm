@@ -22,8 +22,6 @@
 
 - This is not the official version, it's just a modified,If you don't want to use it, please go to the [PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
-- Provide own Curseforge API key
-
 ## Navigation
 - [Introduction](#introduction)  
 - [Getting Pojav Glow·Worm](#getting-pojav-glow-worm)
@@ -138,7 +136,7 @@ Any code change to this repository should be submitted as a pull request. The de
 - [LWJGLX](https://github.com/PojavLauncherTeam/lwjglx) (LWJGL2 API compatibility layer for LWJGL3): unknown license.<br>
 - [Mesa 3D Graphics Library](https://gitlab.freedesktop.org/mesa/mesa): [MIT License](https://docs.mesa3d.org/license.html).
 - [pro-grade](https://github.com/pro-grade/pro-grade) (Java sandboxing security manager): [Apache License 2.0](https://github.com/pro-grade/pro-grade/blob/master/LICENSE.txt).
-- [xHook](https://github.com/iqiyi/xHook) (Used for exit code trapping): [MIT and BSD-style licenses](https://github.com/iqiyi/xHook/blob/master/LICENSE).
+- [bhook](https://github.com/bytedance/bhook) (Used for exit code trapping): [MIT licenses](https://github.com/bytedance/bhook/blob/main/LICENSE).
 - [libepoxy](https://github.com/anholt/libepoxy): [MIT License](https://github.com/anholt/libepoxy/blob/master/COPYING).
 - [virglrenderer](https://github.com/PojavLauncherTeam/virglrenderer): [MIT License](https://gitlab.freedesktop.org/virgl/virglrenderer/-/blob/master/COPYING).
 - [terminal-view](https://github.com/termux/termux-app/tree/master/terminal-view): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
@@ -146,4 +144,4 @@ Any code change to this repository should be submitted as a pull request. The de
 - Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
 
 ## More
-* If you want a different experience, try experimental version:[Pojav EXP](https://github.com/Vera-Firefly/PojavLauncher-Experimental-Edition)
+* If you want a different experience, try some of the other good ones:[Pojav ZH](https://github.com/HopiHopy/PojavZH)

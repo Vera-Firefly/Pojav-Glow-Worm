@@ -116,7 +116,7 @@ Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPA
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         if(br_setup_window != NULL) br_setup_window();
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+        if(getenv("POJAV_SPARE_BRIDGE") != NULL) {
             gl_setup_window();
         } else {
             if(br_setup_window != NULL) br_setup_window();
@@ -137,7 +137,7 @@ EXTERNAL_API void* pojavGetCurrentContext() {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         return br_get_current();
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES){
-        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+        if(getenv("POJAV_SPARE_BRIDGE") != NULL) {
             return (void *)eglGetCurrentContext_p();
         } else {
             return br_get_current();
@@ -204,7 +204,7 @@ void load_vulkan() {
 }
 
 void renderer_load_config() {
-    if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
+    if(getenv("POJAV_SPARE_BRIDGE") == NULL) {
         pojav_environ->config_renderer = RENDERER_VK_ZINK;
         set_osm_bridge_tbl();
         printf("Bridge: Set osm bridge tbl\n");
@@ -226,7 +226,7 @@ int pojavInitOpenGL() {
     const char *ldrivermodle = getenv("LOCAL_DRIVER_MODLE");
     if (strncmp("opengles", renderer, 8) == 0) {
         pojav_environ->config_renderer = RENDERER_GL4ES;
-        if(getenv("POJAV_ZINK_CRASH_HANDLE") == NULL) {
+        if(getenv("POJAV_SPARE_BRIDGE") == NULL) {
             set_gl_bridge_tbl();
         }
     } else if (strcmp(renderer, "mesa_3d") == 0) {
@@ -277,7 +277,7 @@ int pojavInitOpenGL() {
             br_setup_window();
         }
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+        if(getenv("POJAV_SPARE_BRIDGE") != NULL) {
             if(gl_init()) {
                 gl_setup_window();
                 return 1;
@@ -445,7 +445,7 @@ EXTERNAL_API void pojavSwapBuffers() {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_swap_buffers();
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+        if(getenv("POJAV_SPARE_BRIDGE") != NULL) {
             gl_swap_buffers();
         } else {
             br_swap_buffers();
@@ -492,7 +492,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_make_current((basic_render_window_t*)window);
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+        if(getenv("POJAV_SPARE_BRIDGE") != NULL) {
             gl_make_current((gl_render_window_t*)window);
         } else {
             br_make_current((basic_render_window_t*)window);
@@ -538,7 +538,7 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         return br_init_context((basic_render_window_t*)contextSrc);
     } else if (pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+        if(getenv("POJAV_SPARE_BRIDGE") != NULL) {
             return gl_init_context(contextSrc);
         } else {
             return br_init_context((basic_render_window_t*)contextSrc);
@@ -598,7 +598,7 @@ EXTERNAL_API void pojavSwapInterval(int interval) {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK) {
         br_swap_interval(interval);
     } else if(pojav_environ->config_renderer == RENDERER_GL4ES) {
-        if(getenv("POJAV_ZINK_CRASH_HANDLE") != NULL) {
+        if(getenv("POJAV_SPARE_BRIDGE") != NULL) {
             gl_swap_interval(interval);
         } else {
             br_swap_interval(interval);

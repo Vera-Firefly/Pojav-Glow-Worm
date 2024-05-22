@@ -66,7 +66,6 @@ public class LauncherPreferences {
     public static boolean PREF_BIG_CORE_AFFINITY = false;
     public static boolean PREF_ZINK_PREFER_SYSTEM_DRIVER = false;
 
-    public static boolean PREF_ZINK_CRASH_HANDLE = false;
     public static boolean PREF_EXP_SETUP = false;
     public static boolean PREF_EXP_SETUP_DEFAULT = false;
     public static boolean PREF_EXP_SETUP_S = false;
@@ -76,6 +75,7 @@ public class LauncherPreferences {
     public static boolean PREF_EXP_SETUP_PAN = false;
     public static boolean PREF_EXP_SETUP_FD = false;
 
+    public static boolean PREF_SPARE_BRIDGE = false;
     public static boolean PREF_EXP_FRAME_BUFFER = false;
     public static boolean PREF_EXP_ENABLE_SYSTEM = false;
     public static boolean PREF_EXP_ENABLE_SPECIFIC = false;
@@ -136,7 +136,7 @@ public class LauncherPreferences {
         PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = DEFAULT_PREF.getBoolean(PREF_KEY_SKIP_NOTIFICATION_CHECK, false);
         PREF_VSYNC_IN_ZINK = DEFAULT_PREF.getBoolean("vsync_in_zink", true);
 
-        PREF_ZINK_CRASH_HANDLE = DEFAULT_PREF.getBoolean("zinkCrashhandle", false);
+        PREF_SPARE_BRIDGE = DEFAULT_PREF.getBoolean("spareBridge", false);
         PREF_EXP_FRAME_BUFFER = DEFAULT_PREF.getBoolean("ExpFrameBuffer", false);
         PREF_EXP_ENABLE_SYSTEM = DEFAULT_PREF.getBoolean("ebSystem", false);
         PREF_EXP_ENABLE_SPECIFIC = DEFAULT_PREF.getBoolean("ebSpecific", false);

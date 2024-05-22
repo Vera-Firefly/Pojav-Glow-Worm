@@ -22,8 +22,6 @@
 
 - 这个启动器并非原版,它是魔改版,如果你不想使用它,请到[PojavLauncherTeam:PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 
-- 使用了自己的Curseforge API key
-
 ## 导航
 - [介绍](#介绍)  
 - [获取 Pojav Glow·Worm](#获取Pojav-Glow-Worm)
@@ -139,7 +137,7 @@ scripts\languagelist_updater.bat
 - [LWJGLX](https://github.com/PojavLauncherTeam/lwjglx) (LWJGL2 API compatibility layer for LWJGL3): 未知许可证<br>
 - [Mesa 3D图形库](https://gitlab.freedesktop.org/mesa/mesa): [MIT License](https://docs.mesa3d.org/license.html).
 - [pro-grade](https://github.com/pro-grade/pro-grade) (Java沙盒安全管理器): [Apache License 2.0](https://github.com/pro-grade/pro-grade/blob/master/LICENSE.txt).
-- [xHook](https://github.com/iqiyi/xHook) (用于退出代码处理): [MIT and BSD-style licenses](https://github.com/iqiyi/xHook/blob/master/LICENSE).
+- [bhook](https://github.com/bytedance/bhook) (用于退出代码处理): [MIT licenses](https://github.com/bytedance/bhook/blob/main/LICENSE).
 - [libepoxy](https://github.com/anholt/libepoxy): [MIT License](https://github.com/anholt/libepoxy/blob/master/COPYING).
 - [virglrenderer](https://github.com/PojavLauncherTeam/virglrenderer): [MIT License](https://gitlab.freedesktop.org/virgl/virglrenderer/-/blob/master/COPYING).
 - [terminal-view](https://github.com/termux/termux-app/tree/master/terminal-view): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
@@ -147,4 +145,4 @@ scripts\languagelist_updater.bat
 - 感谢[MCHeads](https://mc-heads.net)提供Minecraft头像组件
 
 ## 更多
-* 如果你想要一种不同的体验,试试实验版本:[Pojav EXP](https://github.com/Vera-Firefly/PojavLauncher-Experimental-Edition)
+* 如果你想要一种不同的体验,试试其它的优秀魔改版:[Pojav ZH](https://github.com/HopiHopy/PojavZH)
