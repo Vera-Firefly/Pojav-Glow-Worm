@@ -125,7 +125,7 @@ android {
             resValue 'string', 'fileProviderAuthorities', 'net.kdt.pojavlaunch.scoped.FileFileProvider.debug'
         }
         release {
-            debuggable true
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.releaseBuild
