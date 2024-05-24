@@ -32,9 +32,7 @@ void dlsym_OSMesa() {
     }
     void* dl_handle = NULL;
     dl_handle = dlopen(main_path, RTLD_GLOBAL);
-    if(main_path!=NULL) {
-        free(main_path);
-    }
+    free(main_path);
     if(dl_handle == NULL) abort();
     OSMesaMakeCurrent_p = dlsym(dl_handle, "OSMesaMakeCurrent");
     OSMesaGetCurrentContext_p = dlsym(dl_handle,"OSMesaGetCurrentContext");
