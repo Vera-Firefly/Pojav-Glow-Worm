@@ -29,10 +29,10 @@ void dlsym_OSMesa() {
         if(asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), mesa_library) == -1) {
             abort();
         }
-        free(main_path);
     }
     void* dl_handle = NULL;
     dl_handle = dlopen(main_path, RTLD_GLOBAL);
+    free(main_path);
     if(dl_handle == NULL) abort();
     OSMesaMakeCurrent_p = dlsym(dl_handle, "OSMesaMakeCurrent");
     OSMesaGetCurrentContext_p = dlsym(dl_handle,"OSMesaGetCurrentContext");
