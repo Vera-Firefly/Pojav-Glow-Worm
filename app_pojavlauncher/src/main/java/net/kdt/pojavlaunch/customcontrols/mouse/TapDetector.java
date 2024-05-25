@@ -1,4 +1,4 @@
-package net.kdt.pojavlaunch;
+package net.kdt.pojavlaunch.customcontrols.mouse;
 
 import android.view.MotionEvent;
 
@@ -6,6 +6,8 @@ import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_POINTER_DOWN;
 import static android.view.MotionEvent.ACTION_POINTER_UP;
 import static android.view.MotionEvent.ACTION_UP;
+
+import net.kdt.pojavlaunch.Tools;
 
 /**
  * Class aiming at better detecting X-tap events regardless of the POINTERS
@@ -20,7 +22,7 @@ public class TapDetector {
 
     private final static int TAP_MIN_DELTA_MS = 10;
     private final static int TAP_MAX_DELTA_MS = 300;
-    private final static int TAP_SLOP_SQUARE_PX = (int) Math.pow(Tools.dpToPx(100), 2);
+    private final static int TAP_SLOP_SQUARE_PX = (int) Tools.dpToPx(2500);
 
     private final int mTapNumberToDetect;
     private int mCurrentTapNumber = 0;
@@ -81,8 +83,14 @@ public class TapDetector {
         if(mCurrentTapNumber > 0){
             if  ((deltaTime < TAP_MIN_DELTA_MS || deltaTime > TAP_MAX_DELTA_MS) ||
                 ((deltaX*deltaX + deltaY*deltaY) > TAP_SLOP_SQUARE_PX)) {
-                // We invalidate previous taps, not this one though
-                mCurrentTapNumber = 0;
+                if (mDetectionMethod == DETECTION_METHOD_BOTH && (eventAction == ACTION_UP || eventAction == ACTION_POINTER_UP)) {
+                    // For the both method, the user is expected to start with a down action.
+                    resetTapDetectionState();
+                    return false;
+                } else {
+                    // We invalidate previous taps, not this one though
+                    mCurrentTapNumber = 0;
+                }
             }
         }
 

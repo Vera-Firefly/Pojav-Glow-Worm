@@ -30,9 +30,19 @@ public class ModrinthApi implements ModpackApi{
     @Override
     public SearchResult searchMod(SearchFilters searchFilters, SearchResult previousPageResult) {
         ModrinthSearchResult modrinthSearchResult = (ModrinthSearchResult) previousPageResult;
-        HashMap<String, Object> params = new HashMap<>();
+
+        // Fixes an issue where the offset being equal or greater than total_hits is ignored
+        if (modrinthSearchResult != null && modrinthSearchResult.previousOffset >= modrinthSearchResult.totalResultCount) {
+            ModrinthSearchResult emptyResult = new ModrinthSearchResult();
+            emptyResult.results = new ModItem[0];
+            emptyResult.totalResultCount = modrinthSearchResult.totalResultCount;
+            emptyResult.previousOffset = modrinthSearchResult.previousOffset;
+            return emptyResult;
+        }
+
 
         // Build the facets filters
+        HashMap<String, Object> params = new HashMap<>();
         StringBuilder facetString = new StringBuilder();
         facetString.append("[");
         facetString.append(String.format("[\"project_type:%s\"]", searchFilters.isModpack ? "modpack" : "mod"));
@@ -40,7 +50,7 @@ public class ModrinthApi implements ModpackApi{
             facetString.append(String.format(",[\"versions:%s\"]", searchFilters.mcVersion));
         facetString.append("]");
         params.put("facets", facetString.toString());
-        params.put("query", searchFilters.name.replace(' ', '+'));
+        params.put("query", searchFilters.name);
         params.put("limit", 50);
         params.put("index", "relevance");
         if(modrinthSearchResult != null)
