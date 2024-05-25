@@ -28,9 +28,9 @@ public class LayoutConverter {
                 CustomControls layout = LayoutConverter.convertV2Layout(layoutJobj);
                 layout.save(jsonPath);
                 return layout;
-            } else if (layoutJobj.getInt("version") >= 3 && layoutJobj.getInt("version") <= 5) {
+            }else if (layoutJobj.getInt("version") >= 3 && layoutJobj.getInt("version") <= 5) {
                 return LayoutConverter.convertV3_4Layout(layoutJobj);
-            } else if (layoutJobj.getInt("version") <= 7) {
+            } else if (layoutJobj.getInt("version") == 6 || layoutJobj.getInt("version") == 7) {
                 return Tools.GLOBAL_GSON.fromJson(jsonLayoutData, CustomControls.class);
             } else {
                 return null;
@@ -105,7 +105,6 @@ public class LayoutConverter {
                     LwjglGlfwKeycode.GLFW_KEY_UNKNOWN,
                     LwjglGlfwKeycode.GLFW_KEY_UNKNOWN,
                     LwjglGlfwKeycode.GLFW_KEY_UNKNOWN};
-            n_button.isDynamicBtn = button.getBoolean("isDynamicBtn");
             n_button.dynamicX = button.getString("dynamicX");
             n_button.dynamicY = button.getString("dynamicY");
             if (!Tools.isValidString(n_button.dynamicX) && button.has("x")) {
