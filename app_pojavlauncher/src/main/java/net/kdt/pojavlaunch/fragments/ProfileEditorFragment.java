@@ -10,12 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.*;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -36,8 +31,7 @@ import net.kdt.pojavlaunch.utils.CropperUtils;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,12 +45,13 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private MinecraftProfile mTempProfile = null;
     private String mValueToConsume = "";
     private Button mSaveButton, mDeleteButton, mControlSelectButton, mGameDirButton, mVersionSelectButton;
-    private Spinner mDefaultRuntime, mDefaultRenderer;
+    private Spinner mLanguageSelection, mDefaultRuntime, mDefaultRenderer;
     private EditText mDefaultName, mDefaultJvmArgument;
     private TextView mDefaultPath, mDefaultVersion, mDefaultControl;
     private ImageView mProfileIcon;
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
+    private List<String> mLanguageLists;
     private List<String> mRenderNames;
 
     public ProfileEditorFragment(){
@@ -89,10 +84,19 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         renderList.add(view.getContext().getString(R.string.global_default));
         mDefaultRenderer.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, renderList));
 
+        Tools.LanguagesList languagesList = Tools.getCompatibleLanguages(view.getContext());
+        mLanguageLists = languagesList.LanguageIds;
+        List<String> languageList = new ArrayList<>(languagesList.Language.length + 1);
+        languageList.add(view.getContext().getString(R.string.global_default));
+        languageList.addAll(Arrays.asList(languagesList.Language));
+        languageList.set(1, view.getContext().getString(R.string.preference_category_follow_game_language));
+        mLanguageSelection.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_simple_list_1, languageList));
+
         // Set up behaviors
         mSaveButton.setOnClickListener(v -> {
             ProfileIconCache.dropIcon(mProfileKey);
             save();
+
             Tools.backToMainMenu(requireActivity());
         });
 
@@ -122,8 +126,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
             Bundle bundle = new Bundle(3);
             bundle.putBoolean(FileSelectorFragment.BUNDLE_SELECT_FOLDER, false);
             bundle.putString(FileSelectorFragment.BUNDLE_ROOT_PATH, Tools.CTRLMAP_PATH);
-            mValueToConsume = FileSelectorFragment.BUNDLE_SELECT_FILE;
-
+            mValueToConsume = FileSelectorFragment.BUNDLE_SELECT_FILE);
+            mValueToConsume = "select_file";
+            
             Tools.swapFragment(requireActivity(),
                     FileSelectorFragment.class, FileSelectorFragment.TAG, bundle);
         });
@@ -141,7 +146,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
         loadValues(LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, ""), view.getContext());
     }
-
 
     private void loadValues(@NonNull String profile, @NonNull Context context){
         if(mTempProfile == null){
@@ -162,6 +166,15 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultRuntime.setAdapter(new RTSpinnerAdapter(context, runtimes));
         if(jvmIndex == -1) jvmIndex = runtimes.size() - 1;
         mDefaultRuntime.setSelection(jvmIndex);
+
+        // Default language selection
+
+        int languageIndex = 0;
+        if (mTempProfile.language != 0) {
+            languageIndex = mTempProfile.language;
+            if (mTempProfile.language == -1) languageIndex = 1;
+        }
+        mLanguageSelection.setSelection(languageIndex);
 
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
@@ -190,8 +203,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         return minecraftProfile;
     }
 
-
     private void bindViews(@NonNull View view){
+        mLanguageSelection = view.findViewById(R.id.vprof_editor_language_name);
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
         mDefaultRenderer = view.findViewById(R.id.vprof_editor_profile_renderer);
@@ -209,7 +222,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mProfileIcon = view.findViewById(R.id.vprof_editor_profile_icon);
     }
 
-    private void save(){
+    private void save() {
         //First, check for potential issues in the inputs
         mTempProfile.lastVersionId = mDefaultVersion.getText().toString();
         mTempProfile.controlFile = mDefaultControl.getText().toString();
@@ -228,10 +241,17 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mDefaultRenderer.getSelectedItemPosition() == mRenderNames.size()) mTempProfile.pojavRendererName = null;
         else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
 
+        saveLanguage();
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
+    }
+
+    private void saveLanguage() {
+        if(mLanguageSelection.getSelectedItemPosition() == mLanguageLists.size()) mTempProfile.language = -1;
+        else if(mLanguageSelection.getSelectedItemPosition() == 1) mTempProfile.language = -1;
+        else mTempProfile.language = mLanguageSelection.getSelectedItemPosition();
     }
 
     @Override
