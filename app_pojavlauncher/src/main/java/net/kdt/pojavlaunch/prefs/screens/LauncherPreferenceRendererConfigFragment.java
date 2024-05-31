@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toast.LENGTH_SHORT;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -176,15 +177,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
             // Dialog content
             .setTitle(R.string.preference_rendererexp_custom_glversion_title)
             .setView(view)
-            .setPositiveButton(R.string.alertdialog_done, null)
-            .setNegativeButton(R.string.alertdialog_cancel, null)
-            .create();
-
-            // Set dialog layout
-            dialog.setView(view);
-
-            // Set dialog front buttons
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            .setPositiveButton(R.string.alertdialog_done, (dialogInterface, i) -> {
                 // Gets the GL and GLSL version of the user input
                 String glVersion = mMesaGLVersion.getText().toString();
                 String glslVersion = mMesaGLSLVersion.getText().toString();
@@ -212,7 +205,9 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                     .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
                     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
                     .apply();
-            });
+            })
+            .setNegativeButton(R.string.alertdialog_cancel, null)
+            .create();
         dialog.show();
     }
 
