@@ -182,7 +182,8 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
         dialog.show();
         
         dialog.setOnShowListener(dia -> {
-            dia.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(v -> {
                 // Gets the GL and GLSL version of the user input
                 String glVersion = mMesaGLVersion.getText().toString();
                 String glslVersion = mMesaGLSLVersion.getText().toString();
