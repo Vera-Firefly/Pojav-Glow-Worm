@@ -178,35 +178,39 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
             .setTitle(R.string.preference_rendererexp_custom_glversion_title)
             .setView(view)
             .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
-                    // Gets the GL and GLSL version of the user input
-                    String glVersion = mMesaGLVersion.getText().toString();
-                    String glslVersion = mMesaGLSLVersion.getText().toString();
+                // Gets the GL and GLSL version of the user input
+                String glVersion = mMesaGLVersion.getText().toString();
+                String glslVersion = mMesaGLSLVersion.getText().toString();
 
-                    // Verify that the GL version is within the allowed ran
-                    if (!isValidVersion(glVersion, "2.8", "4.6")) {
-                        showSetGLVersionDialog();
-                        mMesaGLVersion.setError("GL版本必须在2.8到4.6之间");
-                        mMesaGLVersion.requestFocus();
-                        return;
-                    }
+                // Verify that the GL version is within the allowed range
+                if (!isValidVersion(glVersion, "2.8", "4.6") && !isValidVersion(glslVersion, "280", "460") {
+                    showSetGLVersionDialog();
+                    mMesaGLVersion.setError(R.string.customglglsl_alertdialog_error_gl);
+                    mMesaGLVersion.requestFocus();
+                    mMesaGLSLVersion.setError(R.string.customglglsl_alertdialog_error_glsl);
+                    mMesaGLSLVersion.requestFocus();
+                    return;
+                } else if (!isValidVersion(glVersion, "2.8", "4.6")) {
+                    showSetGLVersionDialog();
+                    mMesaGLVersion.setError(R.string.customglglsl_alertdialog_error_gl);
+                    mMesaGLVersion.requestFocus();
+                    return;
+                } else if (!isValidVersion(glslVersion, "280", "460")) {
+                    showSetGLVersionDialog();
+                    mMesaGLSLVersion.setError(R.string.customglglsl_alertdialog_error_glsl);
+                    mMesaGLSLVersion.requestFocus();
+                    return;
+                }
 
-                    // Verify that the GLSL version is within the allowed range
-                    if (!isValidVersion(glslVersion, "280", "460")) {
-                        showSetGLVersionDialog();
-                        mMesaGLSLVersion.setError("GLSL版本必须在280到460之间");
-                        mMesaGLSLVersion.requestFocus();
-                        return;
-                    }
+                // Update preferences
+                LauncherPreferences.PREF_MESA_GL_VERSION = glVersion;
+                LauncherPreferences.PREF_MESA_GLSL_VERSION = glslVersion;
 
-                    // Update preferences
-                    LauncherPreferences.PREF_MESA_GL_VERSION = glVersion;
-                    LauncherPreferences.PREF_MESA_GLSL_VERSION = glslVersion;
-
-                    // Modify the value of GL/GLSL according to the text content
-                    LauncherPreferences.DEFAULT_PREF.edit()
-                        .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
-                        .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
-                        .apply();
+                // Modify the value of GL/GLSL according to the text content
+                LauncherPreferences.DEFAULT_PREF.edit()
+                    .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
+                    .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
+                    .apply();
             })
             .setNegativeButton(R.string.alertdialog_cancel, null)
             .create();
