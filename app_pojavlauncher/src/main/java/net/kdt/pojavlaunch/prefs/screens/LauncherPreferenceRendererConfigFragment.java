@@ -183,7 +183,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                 String glslVersion = mMesaGLSLVersion.getText().toString();
 
                 // Verify that the GL version is within the allowed range
-                if (!isValidVersion(glVersion, "2.8", "4.6") && !isValidVersion(glslVersion, "280", "460") {
+                if (!isValidVersion(glVersion, "2.8", "4.6") && !isValidVersion(glslVersion, "280", "460")) {
                     showSetGLVersionDialog();
                     mMesaGLVersion.setError(R.string.customglglsl_alertdialog_error_gl);
                     mMesaGLVersion.requestFocus();
