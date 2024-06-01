@@ -406,6 +406,8 @@
     <string name="alertdialog_tipc">在使用这些功能之前,请记得检查您的设备是否支持这些功能!</string>
     <string name="alertdialog_done">确定</string>
     <string name="alertdialog_cancel">取消</string>
+    <string name="customglglsl_alertdialog_error_gl">GL版本必须在2.8和4.6之间</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL版本必须在280和460之间</string>
     <!-- Custom GL/GLSL Version -->
     <string name="preference_exp_alertdialog_glmessage">在你执行此操作之前你必须知道你在做什么\n你真的确定你要开启它吗?</string>
     <string name="preference_exp_custommv">GL/GLSL版本</string>

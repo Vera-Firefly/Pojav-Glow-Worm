@@ -1,8 +1,10 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +17,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.preference.*;
 
 import java.util.Random;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
@@ -173,20 +177,56 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
             // Dialog content
             .setTitle(R.string.preference_rendererexp_custom_glversion_title)
             .setView(view)
-            .setPositiveButton(R.string.alertdialog_done, (dia, which) -> {
-                // Gets the value of the saved GL/GLSL
-                LauncherPreferences.PREF_MESA_GL_VERSION = mMesaGLVersion.getText().toString();
-                LauncherPreferences.PREF_MESA_GLSL_VERSION = mMesaGLSLVersion.getText().toString();
+            .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
+                // Gets the GL and GLSL version of the user input
+                String glVersion = mMesaGLVersion.getText().toString();
+                String glslVersion = mMesaGLSLVersion.getText().toString();
+
+                // Verify that the GL version is within the allowed range
+                if (!isValidVersion(glVersion, "2.8", "4.6") && !isValidVersion(glslVersion, "280", "460")) {
+                    showSetGLVersionDialog();
+                    mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
+                    mMesaGLVersion.requestFocus();
+                    mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
+                    mMesaGLSLVersion.requestFocus();
+                    return;
+                } else if (!isValidVersion(glVersion, "2.8", "4.6")) {
+                    showSetGLVersionDialog();
+                    mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
+                    mMesaGLVersion.requestFocus();
+                    return;
+                } else if (!isValidVersion(glslVersion, "280", "460")) {
+                    showSetGLVersionDialog();
+                    mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
+                    mMesaGLSLVersion.requestFocus();
+                    return;
+                }
+
+                // Update preferences
+                LauncherPreferences.PREF_MESA_GL_VERSION = glVersion;
+                LauncherPreferences.PREF_MESA_GLSL_VERSION = glslVersion;
 
                 // Modify the value of GL/GLSL according to the text content
                 LauncherPreferences.DEFAULT_PREF.edit()
                     .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
                     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
                     .apply();
-                dia.dismiss();
             })
             .setNegativeButton(R.string.alertdialog_cancel, null)
             .create();
         dialog.show();
+    }
+
+    // Check whether the GL/GLSL version is within the acceptable range
+    private boolean isValidVersion(String version, String minVersion, String maxVersion) {
+        try {
+            float versionNumber = Float.parseFloat(version);
+            float minVersionNumber = Float.parseFloat(minVersion);
+            float maxVersionNumber = Float.parseFloat(maxVersion);
+
+        return versionNumber >= minVersionNumber && versionNumber <= maxVersionNumber;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
