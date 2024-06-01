@@ -184,17 +184,17 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
 
                     // Verify that the GL version is within the allowed ran
                     if (!isValidVersion(glVersion, "2.8", "4.6")) {
+                        showSetGLVersionDialog();
                         mMesaGLVersion.setError("GL版本必须在2.8到4.6之间");
                         mMesaGLVersion.requestFocus();
-                        new Handler().postDelayed(dia::dismiss, 5000);
                         return;
                     }
 
                     // Verify that the GLSL version is within the allowed range
                     if (!isValidVersion(glslVersion, "280", "460")) {
+                        showSetGLVersionDialog();
                         mMesaGLSLVersion.setError("GLSL版本必须在280到460之间");
                         mMesaGLSLVersion.requestFocus();
-                        new Handler().postDelayed(dia::dismiss, 5000);
                         return;
                     }
 
