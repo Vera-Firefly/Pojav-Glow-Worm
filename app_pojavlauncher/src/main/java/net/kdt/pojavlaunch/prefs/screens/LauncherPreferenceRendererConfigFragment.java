@@ -176,9 +176,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
             // Dialog content
             .setTitle(R.string.preference_rendererexp_custom_glversion_title)
             .setView(view)
-            .setPositiveButton(R.string.alertdialog_done, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int i) {
+            .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
                     // Gets the GL and GLSL version of the user input
                     String glVersion = mMesaGLVersion.getText().toString();
                     String glslVersion = mMesaGLSLVersion.getText().toString();
@@ -187,6 +185,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                     if (!isValidVersion(glVersion, "2.8", "4.6")) {
                         mMesaGLVersion.setError("GL版本必须在2.8到4.6之间");
                         mMesaGLVersion.requestFocus();
+                        new Handler().postDelayed(dialog::dissmiss, 5000);
                         return;
                     }
 
@@ -194,6 +193,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                     if (!isValidVersion(glslVersion, "280", "460")) {
                         mMesaGLSLVersion.setError("GLSL版本必须在280到460之间");
                         mMesaGLSLVersion.requestFocus();
+                        new Handler().postDelayed(dialog::dissmiss, 5000);
                         return;
                     }
 
@@ -208,7 +208,6 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                         .apply();
                     
                     dialog.dismiss();
-                }
             })
             .setNegativeButton(R.string.alertdialog_cancel, null)
             .create();
