@@ -449,6 +449,8 @@
     <string name="alertdialog_tipc">Remember to check if your device supports these features before using them</string>
     <string name="alertdialog_done">Done</string>
     <string name="alertdialog_cancel">Cancel</string>
+    <string name="customglglsl_alertdialog_error_gl">GL version must be between 2.8 and 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL version must be between 280 and 460</string>
     <!-- Custom GL/GLSL Version -->
     <string name="preference_exp_alertdialog_glmessage">Before you do this, you must know what you are doing\nAre you sure you want to open it?</string>
     <string name="preference_exp_custommv">GL/GLSL Version</string>
