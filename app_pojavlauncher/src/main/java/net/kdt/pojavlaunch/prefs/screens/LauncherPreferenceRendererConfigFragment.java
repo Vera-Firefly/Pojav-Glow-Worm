@@ -186,7 +186,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                     if (!isValidVersion(glVersion, "2.8", "4.6")) {
                         mMesaGLVersion.setError("GL版本必须在2.8到4.6之间");
                         mMesaGLVersion.requestFocus();
-                        new Handler().postDelayed(dialog::dismiss, 5000);
+                        new Handler().postDelayed(dia::dismiss, 5000);
                         return;
                     }
 
@@ -194,7 +194,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                     if (!isValidVersion(glslVersion, "280", "460")) {
                         mMesaGLSLVersion.setError("GLSL版本必须在280到460之间");
                         mMesaGLSLVersion.requestFocus();
-                        new Handler().postDelayed(dialog::dismiss, 5000);
+                        new Handler().postDelayed(dia::dismiss, 5000);
                         return;
                     }
 
@@ -207,8 +207,6 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                         .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
                         .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
                         .apply();
-                    
-                    dialog.dismiss();
             })
             .setNegativeButton(R.string.alertdialog_cancel, null)
             .create();
