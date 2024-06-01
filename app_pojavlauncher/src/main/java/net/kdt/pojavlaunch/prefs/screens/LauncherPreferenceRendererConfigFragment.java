@@ -185,19 +185,19 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                 // Verify that the GL version is within the allowed range
                 if (!isValidVersion(glVersion, "2.8", "4.6") && !isValidVersion(glslVersion, "280", "460")) {
                     showSetGLVersionDialog();
-                    mMesaGLVersion.setError(R.string.customglglsl_alertdialog_error_gl);
+                    mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
                     mMesaGLVersion.requestFocus();
-                    mMesaGLSLVersion.setError(R.string.customglglsl_alertdialog_error_glsl);
+                    mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
                     mMesaGLSLVersion.requestFocus();
                     return;
                 } else if (!isValidVersion(glVersion, "2.8", "4.6")) {
                     showSetGLVersionDialog();
-                    mMesaGLVersion.setError(R.string.customglglsl_alertdialog_error_gl);
+                    mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
                     mMesaGLVersion.requestFocus();
                     return;
                 } else if (!isValidVersion(glslVersion, "280", "460")) {
                     showSetGLVersionDialog();
-                    mMesaGLSLVersion.setError(R.string.customglglsl_alertdialog_error_glsl);
+                    mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
                     mMesaGLSLVersion.requestFocus();
                     return;
                 }
