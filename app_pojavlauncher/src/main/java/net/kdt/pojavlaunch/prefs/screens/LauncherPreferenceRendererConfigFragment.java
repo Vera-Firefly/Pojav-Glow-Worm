@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -185,7 +186,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                     if (!isValidVersion(glVersion, "2.8", "4.6")) {
                         mMesaGLVersion.setError("GL版本必须在2.8到4.6之间");
                         mMesaGLVersion.requestFocus();
-                        new Handler().postDelayed(dialog::dissmiss, 5000);
+                        new Handler().postDelayed(dialog::dismiss, 5000);
                         return;
                     }
 
@@ -193,7 +194,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                     if (!isValidVersion(glslVersion, "280", "460")) {
                         mMesaGLSLVersion.setError("GLSL版本必须在280到460之间");
                         mMesaGLSLVersion.requestFocus();
-                        new Handler().postDelayed(dialog::dissmiss, 5000);
+                        new Handler().postDelayed(dialog::dismiss, 5000);
                         return;
                     }
 
