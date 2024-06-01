@@ -121,7 +121,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
         requirePreference("ebSystem").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebSpecific").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebCustom").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("SetGLVersion").setVisible(LauncherPreferences.PREF_EXP_ENABLE_CUSTOM);
+        requirePreference("SetGLVersion").setVisible(LauncherPreferences.PREF_EXP_ENABLE_CUSTOM && LauncherPreferences.PREF_EXP_SETUP);
     }
 
     private void setListPreference(ListPreference listPreference, String preferenceKey) {
