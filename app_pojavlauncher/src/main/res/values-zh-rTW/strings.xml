@@ -255,7 +255,7 @@
     <string name="preference_exp_framebuffer_title">備用幀緩冲區</string>
     <string name="preference_exp_framebuffer">使用第二方案幀緩衝區,如果啟動失敗,請關閉</string>
     <string name="preference_renderer_setup_extra">實驗性設置(Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.1.0 (默認)</string>
+    <string name="preference_renderer_extra_default">Mesa24.1.1 (默認)</string>
     <string name="preference_extra_mesa_version">Mesa版本</string>
     <string name="preference_extra_driver_modle">驅動模型</string>
     <!-- Dialog box prompt -->
