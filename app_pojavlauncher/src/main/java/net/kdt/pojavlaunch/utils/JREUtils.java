@@ -17,6 +17,7 @@ import android.system.*;
 import android.util.*;
 import android.widget.Toast;
 
+import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 import com.oracle.dalvik.*;
 import java.io.*;
 import java.util.*;
@@ -358,7 +359,7 @@ public class JREUtils {
 
         initJavaRuntime(runtimeHome);
         setupExitTrap(activity.getApplication());
-        chdir(gameDirectory == null ? Tools.DIR_GAME_NEW : gameDirectory.getAbsolutePath());
+        chdir(gameDirectory == null ? ProfilePathHome.getGameHome() : gameDirectory.getAbsolutePath());
         userArgs.add(0,"java"); //argv[0] is the program name according to C standard.
 
         final int exitCode = VMLauncher.launchJVM(userArgs.toArray(new String[0]));
@@ -397,7 +398,7 @@ public class JREUtils {
                 "-Duser.language=" + System.getProperty("user.language"),
                 "-Dos.name=Linux",
                 "-Dos.version=Android-" + Build.VERSION.RELEASE,
-                "-Dpojav.path.minecraft=" + Tools.DIR_GAME_NEW,
+                "-Dpojav.path.minecraft=" + ProfilePathHome.getGameHome(),
                 "-Dpojav.path.private.account=" + Tools.DIR_ACCOUNT_NEW,
                 "-Duser.timezone=" + TimeZone.getDefault().getID(),
 

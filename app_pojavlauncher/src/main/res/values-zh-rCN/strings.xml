@@ -75,6 +75,9 @@
     <string name="global_select">选择</string>
     <string name="global_retry">重试</string>
     <string name="global_default">默认</string>
+    <string name="global_rename">重命名</string>
+    <string name="global_return">返回</string>
+    <string name="global_refresh">刷新</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">应用程序/游戏以代码 %d退出，请查看 latestlog.txt 了解更多详情。</string>
     <string name="mcn_exit_confirm">确定强制关闭？</string>
@@ -418,4 +421,13 @@
     <string name="preference_rendererexp_custom_glversion">允许您自定义Mesa GL/GLSL版本</string>
     <string name="custom_gl_version">Mesa GL版本:</string>
     <string name="custom_glsl_version">Mesa GLSL版本:</string>
+    <!-- Customize Game Path  -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm 需要管理设备所有文件的权限，以便自定义保存游戏文件位置，请为 Pojav Glow·Worm 开启权限！</string>
+    <string name="profiles_path_title">游戏路径管理</string>
+    <string name="profiles_path_default">默认路径</string>
+    <string name="profiles_path_create_new">添加新路径</string>
+    <string name="profiles_path_create_new_title">为此路径命名</string>
+    <string name="profiles_path_delete_title">删除此路径</string>
+    <string name="profiles_path_delete_message">启动器将删除此路径，但不会删除对应路径内保存的文件，删除之后仍然可以重新添加此路径</string>
+    <string name="profiles_path_task_in_progress">任务执行中，暂时无法使用路径管理功能</string>
 </resources>

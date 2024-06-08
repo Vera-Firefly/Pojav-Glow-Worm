@@ -8,9 +8,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.TextView;
 
+import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
+
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.R;
-import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.utils.FilteredSubList;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class VersionListAdapter extends BaseExpandableListAdapter implements Exp
         List<JMinecraftVersionList.Version> alphaList = new FilteredSubList<>(versionList, item -> item.type.equals("old_alpha"));
 
         // Query installed versions
-        mInstalledVersions = new File(Tools.DIR_GAME_NEW + "/versions").list();
+        mInstalledVersions = new File(ProfilePathHome.getVersionsHome()).list();
         if(mInstalledVersions != null)
             Arrays.sort(mInstalledVersions);
 

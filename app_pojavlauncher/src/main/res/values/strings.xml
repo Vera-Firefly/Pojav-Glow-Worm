@@ -89,6 +89,9 @@
     <string name="global_select">Select</string>
     <string name="global_retry">Retry</string>
     <string name="global_default">Default</string>
+    <string name="global_rename">Rename</string>
+    <string name="global_return">Return</string>
+    <string name="global_refresh">Refresh</string>
 
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">Application/Game exited with code %d, check latestlog.txt for more details.</string>
@@ -461,4 +464,14 @@
     <string name="preference_rendererexp_custom_glversion">Allow custom Mesa GL/GLSL version</string>
     <string name="custom_gl_version">Mesa GL version:</string>
     <string name="custom_glsl_version">Mesa GLSL version:</string>
+    <!-- Customize Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm requires permission to manage all files on the device in order to customize the location where game files are saved. Please grant permission to Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Game Path Management</string>
+    <string name="profiles_path_default">Default Path</string>
+    <string name="profiles_path_create_new">Add New Path</string>
+    <string name="profiles_path_create_new_title">Name This Path</string>
+    <string name="profiles_path_delete_title">Delete This Path</string>
+    <string name="profiles_path_delete_message">The launcher will delete this path, but it will not delete the files saved in the corresponding path. You can re-add this path after deletion.</string>
+    <string name="profiles_path_task_in_progress">Task in progress, path management features are temporarily unavailable</string>
+
 </resources>

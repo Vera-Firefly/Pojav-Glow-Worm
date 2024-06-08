@@ -8,6 +8,7 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 import com.kdt.mcgui.ProgressLayout;
+import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
@@ -97,10 +98,10 @@ public class AsyncAssetManager {
         ProgressLayout.setProgress(ProgressLayout.EXTRACT_SINGLE_FILES, 0);
         sExecutorService.execute(() -> {
             try {
-                Tools.copyAssetFile(ctx, "options.txt", Tools.DIR_GAME_NEW, false);
+                Tools.copyAssetFile(ctx, "options.txt", ProfilePathHome.getGameHome(), false);
                 Tools.copyAssetFile(ctx, "default.json", Tools.CTRLMAP_PATH, false);
 
-                Tools.copyAssetFile(ctx, "launcher_profiles.json", Tools.DIR_GAME_NEW, false);
+                Tools.copyAssetFile(ctx, "launcher_profiles.json", ProfilePathHome.getGameHome(), false);
                 Tools.copyAssetFile(ctx,"resolv.conf",Tools.DIR_DATA, false);
 
                 File path = new File(Tools.DIR_GAME_HOME + "/login/version");
