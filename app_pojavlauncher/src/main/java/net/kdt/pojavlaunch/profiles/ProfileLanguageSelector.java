@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static net.kdt.pojavlaunch.Tools.DIR_HOME_VERSION;
 import static net.kdt.pojavlaunch.Tools.getGameDirPath;
 import static net.kdt.pojavlaunch.Tools.read;
+
+import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 
 public class ProfileLanguageSelector {
     private ProfileLanguageSelector() {
@@ -209,7 +210,7 @@ public class ProfileLanguageSelector {
 
         JMinecraftVersionList.Version version;
         try {
-            version = Tools.GLOBAL_GSON.fromJson(read(DIR_HOME_VERSION + "/" + versionName + "/" + versionName + ".json"), JMinecraftVersionList.Version.class);
+            version = Tools.GLOBAL_GSON.fromJson(read(ProfilePathHome.getVersionsHome() + "/" + versionName + "/" + versionName + ".json"), JMinecraftVersionList.Version.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

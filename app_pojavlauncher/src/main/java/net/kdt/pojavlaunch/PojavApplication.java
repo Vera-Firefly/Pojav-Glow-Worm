@@ -10,6 +10,9 @@ import android.os.*;
 import androidx.core.app.*;
 
 import android.util.*;
+
+import com.movtery.feature.ResourceManager;
+
 import java.io.*;
 import java.text.*;
 import java.util.*;
@@ -78,6 +81,8 @@ public class PojavApplication extends Application {
 			ferrorIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);
 			startActivity(ferrorIntent);
 		}
+
+		ResourceManager.setResources(this);
 	}
 
 	@Override

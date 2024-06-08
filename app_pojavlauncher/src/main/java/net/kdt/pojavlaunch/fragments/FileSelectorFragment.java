@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.kdt.pickafile.FileListView;
 import com.kdt.pickafile.FileSelectedListener;
+import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
@@ -29,6 +30,7 @@ public class FileSelectorFragment extends Fragment {
     public static final String BUNDLE_SHOW_FILE = "show_file";
     public static final String BUNDLE_SHOW_FOLDER = "show_folder";
     public static final String BUNDLE_ROOT_PATH = "root_path";
+    public static final String BUNDLE_REMOVE_LOCK_PATH = "remove_lock_path";
 
     private Button mSelectFolderButton, mCreateFolderButton;
     private FileListView mFileListView;
@@ -37,8 +39,9 @@ public class FileSelectorFragment extends Fragment {
     private boolean mSelectFolder = true;
     private boolean mShowFiles = true;
     private boolean mShowFolders = true;
+    private boolean mRemoveLockPath = true;
     private String mRootPath = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
-            ? Tools.DIR_GAME_NEW
+            ? ProfilePathHome.getGameHome()
             : Environment.getExternalStorageDirectory().getAbsolutePath();
 
 
@@ -90,8 +93,12 @@ public class FileSelectorFragment extends Fragment {
         });
     }
 
-    private String removeLockPath(String path){
-        return path.replace(mRootPath, ".");
+    private String removeLockPath(String path) {
+        String string = path;
+        if (mRemoveLockPath) {
+            string = path.replace(mRootPath, ".");
+        }
+        return string;
     }
 
     private void parseBundle(){
@@ -100,6 +107,7 @@ public class FileSelectorFragment extends Fragment {
         mSelectFolder = bundle.getBoolean(BUNDLE_SELECT_FOLDER, mSelectFolder);
         mShowFiles = bundle.getBoolean(BUNDLE_SHOW_FILE, mShowFiles);
         mShowFolders = bundle.getBoolean(BUNDLE_SHOW_FOLDER, mShowFolders);
+        mRemoveLockPath = bundle.getBoolean(BUNDLE_REMOVE_LOCK_PATH, mRemoveLockPath);
         mRootPath = bundle.getString(BUNDLE_ROOT_PATH, mRootPath);
     }
 
