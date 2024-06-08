@@ -39,7 +39,7 @@ public class ModpackInstaller {
             });
 
             // Install the modpack
-            modLoaderInfo = installFunction.installModpack(modpackFile, new File(Tools.DIR_GAME_HOME, "custom_instances/"+modpackName));
+            modLoaderInfo = installFunction.installModpack(modpackFile, new File(ProfilePathManager.getCurrentPath(), "custom_instances/"+modpackName));
 
         } finally {
             modpackFile.delete();

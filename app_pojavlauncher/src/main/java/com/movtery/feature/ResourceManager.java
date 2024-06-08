@@ -1,4 +1,4 @@
-package com.movtery.ui.feature;
+package com.movtery.feature;
 
 import android.content.Context;
 import android.content.res.Resources;

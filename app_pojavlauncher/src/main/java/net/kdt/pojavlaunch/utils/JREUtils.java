@@ -18,6 +18,7 @@ import android.util.*;
 import android.widget.Toast;
 
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
+import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 import com.oracle.dalvik.*;
 import java.io.*;
 import java.util.*;
@@ -179,7 +180,7 @@ public class JREUtils {
         Map<String, String> envMap = new ArrayMap<>();
         envMap.put("POJAV_NATIVEDIR", NATIVE_LIB_DIR);
         envMap.put("JAVA_HOME", jreHome);
-        envMap.put("HOME", Tools.DIR_GAME_HOME);
+        envMap.put("HOME", ProfilePathManager.getCurrentPath());
         envMap.put("TMPDIR", Tools.DIR_CACHE.getAbsolutePath());
         envMap.put("LIBGL_MIPMAP", "3");
 
@@ -283,7 +284,7 @@ public class JREUtils {
             }
         }
 
-        File customEnvFile = new File(Tools.DIR_GAME_HOME, "custom_env.txt");
+        File customEnvFile = new File(ProfilePathManager.getCurrentPath(), "custom_env.txt");
         if (customEnvFile.exists() && customEnvFile.isFile()) {
             BufferedReader reader = new BufferedReader(new FileReader(customEnvFile));
             String line;
@@ -394,7 +395,7 @@ public class JREUtils {
                 "-Djava.home=" + runtimeHome,
                 "-Djava.io.tmpdir=" + Tools.DIR_CACHE.getAbsolutePath(),
                 "-Djna.boot.library.path=" + NATIVE_LIB_DIR,
-                "-Duser.home=" + Tools.DIR_GAME_HOME,
+                "-Duser.home=" + ProfilePathManager.getCurrentPath(),
                 "-Duser.language=" + System.getProperty("user.language"),
                 "-Dos.name=Linux",
                 "-Dos.version=Android-" + Build.VERSION.RELEASE,

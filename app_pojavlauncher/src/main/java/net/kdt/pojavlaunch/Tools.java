@@ -234,9 +234,9 @@ public final class Tools {
     public static File getGameDirPath(@NonNull MinecraftProfile minecraftProfile){
         if(minecraftProfile.gameDir != null){
             if(minecraftProfile.gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                return new File(minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,Tools.DIR_GAME_HOME+"/"));
+                return new File(minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,ProfilePathManager.getCurrentPath()+"/"));
             else
-                return new File(Tools.DIR_GAME_HOME,minecraftProfile.gameDir);
+                return new File(ProfilePathManager.getCurrentPath(),minecraftProfile.gameDir);
         }
         return new File(ProfilePathHome.getGameHome());
     }
@@ -244,9 +244,9 @@ public final class Tools {
     public static File getGameDirPath(String gameDir){
         if(gameDir != null){
             if(gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                return new File(gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,Tools.DIR_GAME_HOME+"/"));
+                return new File(gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,ProfilePathManager.getCurrentPath()+"/"));
             else
-                return new File(Tools.DIR_GAME_HOME, gameDir);
+                return new File(ProfilePathManager.getCurrentPath(), gameDir);
         }
         return new File(ProfilePathHome.getGameHome());
     }

@@ -11,7 +11,7 @@ import androidx.core.app.*;
 
 import android.util.*;
 
-import com.movtery.ui.feature.ResourceManager;
+import com.movtery.feature.ResourceManager;
 
 import java.io.*;
 import java.text.*;

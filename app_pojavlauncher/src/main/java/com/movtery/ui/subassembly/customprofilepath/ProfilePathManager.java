@@ -5,7 +5,7 @@ import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.movtery.ui.feature.ResourceManager;
+import com.movtery.feature.ResourceManager;
 
 import net.kdt.pojavlaunch.Tools;
 
