@@ -116,16 +116,11 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void handlePermissionsForAndroid11AndAbove(PermissionGranted permissionGranted) {
         if (!Environment.isExternalStorageManager()) {
-            new AlertDialog.Builder(requireContext())
-                    .setMessage(R.string.permissions_manage_external_storage)
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                        intent.setData(Uri.parse("package:" + requireActivity().getPackageName()));
-                        startActivityForResult(intent, REQUEST_CODE_PERMISSIONS);
-                    })
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .setCancelable(false)
-                    .show();
+            showPermissionRequestDialog(() -> {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.setData(Uri.parse("package:" + requireActivity().getPackageName()));
+                startActivityForResult(intent, REQUEST_CODE_PERMISSIONS);
+            });
         } else {
             permissionGranted.granted();
         }
@@ -133,10 +128,10 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
 
     private void handlePermissionsForAndroid10AndBelow(PermissionGranted permissionGranted) {
         if (!hasStoragePermissions()) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{
+            showPermissionRequestDialog(() -> ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, REQUEST_CODE_PERMISSIONS);
+            }, REQUEST_CODE_PERMISSIONS));
         } else {
             permissionGranted.granted();
         }
@@ -145,6 +140,19 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
     private boolean hasStoragePermissions() {
         return ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void showPermissionRequestDialog(RequestPermissions requestPermissions) {
+        new AlertDialog.Builder(requireContext())
+                .setMessage(R.string.permissions_manage_external_storage)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> requestPermissions.onRequest())
+                .setNegativeButton(android.R.string.cancel, null)
+                .setCancelable(false)
+                .show();
+    }
+
+    private interface RequestPermissions {
+        void onRequest();
     }
 
     private interface PermissionGranted {
