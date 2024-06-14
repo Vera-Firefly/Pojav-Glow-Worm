@@ -527,7 +527,7 @@ public class JREUtils {
      */
     public static String loadGraphicsLibrary(){
         if(LOCAL_RENDERER == null) return null;
-        String renderLibrary;
+        String renderLibrary = null;
         if (LOCAL_RENDERER.equals("mesa_3d")) {
             switch (MESA_LIBS) {
                 case "default":
