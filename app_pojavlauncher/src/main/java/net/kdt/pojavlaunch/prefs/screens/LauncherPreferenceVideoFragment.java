@@ -44,11 +44,12 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 SwitchPreference.class);
         sustainedPerfSwitch.setVisible(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
 
-        ListPreference rendererListPreference = requirePreference("renderer",
-                ListPreference.class);
-        Tools.RenderersList renderersList = Tools.getCompatibleRenderers(getContext());
-        rendererListPreference.setEntries(renderersList.rendererDisplayNames);
-        rendererListPreference.setEntryValues(renderersList.rendererIds.toArray(new String[0]));
+        final ListPreference rendererListPreference = requirePreference("renderer", ListPreference.class);
+        setListPreference(rendererListPreference, "renderer");
+        rendererListPreference.setOnPreferenceChangeListener((pre, obj) -> {
+            Tools.LOCAL_RENDERER = (String)obj;
+            return true;
+        });
 
         computeVisibility();
     }
@@ -62,5 +63,16 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
     private void computeVisibility(){
         requirePreference("force_vsync", SwitchPreferenceCompat.class)
                 .setVisible(LauncherPreferences.PREF_USE_ALTERNATE_SURFACE);
+    }
+
+    private void setListPreference(ListPreference listPreference, String preferenceKey) {
+        Tools.IListAndArry array = null;
+        String value = listPreference.getValue();
+        if (preferenceKey.equals("CDriverModles")) {
+            array = Tools.getCompatibleRenderers(getContext());
+            Tools.LOCAL_RENDERER = value;
+        }
+        listPreference.setEntries(array.getArray());
+        listPreference.setEntryValues(array.getList().toArray(new String[0]));
     }
 }
