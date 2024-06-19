@@ -3,8 +3,10 @@ package net.kdt.pojavlaunch.prefs.screens;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
 
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import androidx.preference.ListPreference;
 import androidx.preference.SwitchPreference;
@@ -19,6 +21,8 @@ import net.kdt.pojavlaunch.prefs.LauncherPreferences;
  * Fragment for any settings video related
  */
 public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment {
+    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
+
     @Override
     public void onCreatePreferences(Bundle b, String str) {
         addPreferencesFromResource(R.xml.pref_video);
@@ -74,5 +78,28 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         }
         listPreference.setEntries(array.getArray());
         listPreference.setEntryValues(array.getList().toArray(new String[0]));
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        preferenceChangeListener = (sharedPreferences, key) -> {
+            if (LauncherPreferences.PREF_EXP_SETUP.equals(key)) {
+                updateRendererList();
+            }
+        };
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+    }
+
+    private void updateRendererList() {
+        setListPreference(rendererListPreference, "renderer");
+        rendererListPreference.setValueIndex(0);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 }
