@@ -84,8 +84,11 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        rendererListPreference = requirePreference("renderer", ListPreference.class);
+        setListPreference(rendererListPreference, "renderer");
+
         preferenceChangeListener = (sharedPreferences, key) -> {
-            if (LauncherPreferences.PREF_EXP_SETUP.equals(key)) {
+            if (LauncherPreferences.PREF_EXP_SETUP.equals("ExperimentalSetup")) {
                 updateRendererList();
             }
         };
@@ -93,8 +96,10 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
     }
 
     private void updateRendererList() {
-        setListPreference(rendererListPreference, "renderer");
-        rendererListPreference.setValueIndex(0);
+        if (rendererListPreference != null) {
+            setListPreference(rendererListPreference, "renderer");
+            rendererListPreference.setValueIndex(0);
+        }
     }
 
     @Override
