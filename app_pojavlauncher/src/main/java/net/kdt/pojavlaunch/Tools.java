@@ -1210,7 +1210,7 @@ public final class Tools {
         List<String> rendererNames = new ArrayList<>(defaultRendererNames.length);
         for(int i = 0; i < defaultRenderers.length; i++) {
             String rendererlist = defaultRenderers[i];
-            if (rendererlist.contains("mesa3d") && !PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("mesa_3d") && !PREF_EXP_SETUP) continue;
             if (rendererlist.contains("zink") && PREF_EXP_SETUP) continue;
             if (rendererlist.contains("virgl") && PREF_EXP_SETUP) continue;
             if (rendererlist.contains("freedreno") && PREF_EXP_SETUP) continue;
