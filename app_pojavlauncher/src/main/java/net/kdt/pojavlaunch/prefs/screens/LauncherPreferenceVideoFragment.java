@@ -68,7 +68,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
     private void setListPreference(ListPreference listPreference, String preferenceKey) {
         Tools.IListAndArry array = null;
         String value = listPreference.getValue();
-        if (preferenceKey.equals("CDriverModles")) {
+        if (preferenceKey.equals("renderer")) {
             array = Tools.getCompatibleRenderers(getContext());
             Tools.LOCAL_RENDERER = value;
         }
