@@ -1,12 +1,11 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
 
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import androidx.preference.ListPreference;
 import androidx.preference.SwitchPreference;
@@ -84,18 +83,18 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rendererListPreference = requirePreference("renderer", ListPreference.class);
+        ListPreference rendererListPreference = requirePreference("renderer", ListPreference.class);
         setListPreference(rendererListPreference, "renderer");
 
         preferenceChangeListener = (sharedPreferences, key) -> {
-            if (LauncherPreferences.PREF_EXP_SETUP.equals("ExperimentalSetup")) {
-                updateRendererList();
+            if (DEFAULT_PREF.getBoolean("ExperimentalSetup", false)) {
+                updateRendererList(rendererListPreference);
             }
         };
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
-    private void updateRendererList() {
+    private void updateRendererList(ListPreference rendererListPreference) {
         if (rendererListPreference != null) {
             setListPreference(rendererListPreference, "renderer");
             rendererListPreference.setValueIndex(0);
