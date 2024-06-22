@@ -20,5 +20,5 @@
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     
-    tools:text="Pojav Glow·Worm version: Edelweiss"
+    tools:text="Pojav Glow·Worm version: Fuchsia"
     />
