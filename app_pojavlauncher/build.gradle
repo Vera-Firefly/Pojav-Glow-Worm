@@ -43,7 +43,7 @@ def getVersionName = {
         TAG_STRING = TAG.toString()
     }else {
          // Used by github actions
-         TAG_STRING =  'edelweiss-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
+         TAG_STRING =  'fuchsia-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
     }
 
     exec {
