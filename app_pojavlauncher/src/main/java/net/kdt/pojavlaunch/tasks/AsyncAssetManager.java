@@ -33,7 +33,7 @@ public class AsyncAssetManager {
         /* Check if JRE is included */
         String jreName = "Internal-8";
         String rt_version = null;
-        String current_rt_version = MultiRTUtils.__internal__readBinpackVersion(jreName);
+        String current_rt_version = MultiRTUtils.readInternalRuntimeVersion(jreName);
         try {
             rt_version = Tools.read(am.open("components/jre-8/version"));
         } catch (IOException e) {
@@ -67,7 +67,7 @@ public class AsyncAssetManager {
     public static void unpackRuntime11(AssetManager am) {
         String jreName = "Internal-11";
         String rt_version = null;
-        String current_rt_version = MultiRTUtils.__internal__readBinpackVersion(jreName);
+        String current_rt_version = MultiRTUtils.readInternalRuntimeVersion(jreName);
         try {
             rt_version = Tools.read(am.open("components/jre-11/version"));
         } catch (IOException e) {

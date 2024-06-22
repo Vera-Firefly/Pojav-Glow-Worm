@@ -1,10 +1,12 @@
-package net.kdt.pojavlaunch;
+package com.movtery.utils;
 
 import static net.kdt.pojavlaunch.Architecture.archAsString;
 
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import net.kdt.pojavlaunch.PojavApplication;
+import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 
 import java.io.IOException;
@@ -20,7 +22,7 @@ public class UnpackJRE {
 
     public static void checkInternalJre(AssetManager assetManager, String jreName, int jreVersion) {
         String launcherJreVersion;
-        String installedJreVersion = MultiRTUtils.__internal__readBinpackVersion(jreName);
+        String installedJreVersion = MultiRTUtils.readInternalRuntimeVersion(jreName);
         try {
             launcherJreVersion = Tools.read(assetManager.open("components/jre-" + jreVersion + "/version"));
         } catch (IOException exc) {
