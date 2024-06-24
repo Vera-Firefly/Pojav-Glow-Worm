@@ -34,7 +34,7 @@
 
 ## 介绍 
 * PojavLauncher是一款Android可用的基于[Boardwalk](https://github.com/zhuowei/Boardwalk)制作的Minecraft: Java Edition启动器
-* 这个启动器可以运行几乎所有可用的Minecraft版本，从rd-132211到最新的快照快照版本(包括战斗测试版本)
+* 这个启动器可以运行几乎所有可用的Minecraft版本，从rd-132211到最新的快照版本(包括战斗测试版本)
 * 还支持通过Forge和Fabric进行修改
 * 此存储库包含Android的源代码
 * Pojav Glow·Worm不支持IOS!!!
@@ -137,7 +137,7 @@ scripts\languagelist_updater.bat
 - [LWJGLX](https://github.com/PojavLauncherTeam/lwjglx) (LWJGL2 API compatibility layer for LWJGL3): 未知许可证<br>
 - [Mesa 3D图形库](https://gitlab.freedesktop.org/mesa/mesa): [MIT License](https://docs.mesa3d.org/license.html).
 - [pro-grade](https://github.com/pro-grade/pro-grade) (Java沙盒安全管理器): [Apache License 2.0](https://github.com/pro-grade/pro-grade/blob/master/LICENSE.txt).
-- [bhook](https://github.com/bytedance/bhook) (用于退出代码处理): [MIT licenses](https://github.com/bytedance/bhook/blob/main/LICENSE).
+- [bhook](https://github.com/bytedance/bhook) (用于退出代码处理): [MIT license](https://github.com/bytedance/bhook/blob/main/LICENSE).
 - [libepoxy](https://github.com/anholt/libepoxy): [MIT License](https://github.com/anholt/libepoxy/blob/master/COPYING).
 - [virglrenderer](https://github.com/PojavLauncherTeam/virglrenderer): [MIT License](https://gitlab.freedesktop.org/virgl/virglrenderer/-/blob/master/COPYING).
 - [terminal-view](https://github.com/termux/termux-app/tree/master/terminal-view): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
