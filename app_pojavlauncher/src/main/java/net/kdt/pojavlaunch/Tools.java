@@ -128,6 +128,7 @@ public final class Tools {
     private static CDriverModleList sCompatibleCDriverModle;
     private static CMesaLibList sCompatibleCMesaLibs;
     private static LanguagesList sCompatibleLanguages;
+    private static RenderersList sCompatibleRenderers;
 
 
     private static File getPojavStorageRoot(Context ctx) {
@@ -1201,20 +1202,26 @@ public final class Tools {
 
     /** Return the renderers that are compatible with this device */
     public static RenderersList getCompatibleRenderers(Context context) {
+        if(sCompatibleRenderers != null) return sCompatibleRenderers;
         Resources resources = context.getResources();
-        String[] defaultRenderers;
-        String[] defaultRendererNames;
-
-        if (PREF_EXP_SETUP) {
-            defaultRenderers = resources.getStringArray(R.array.renderer_values);
-            defaultRendererNames = resources.getStringArray(R.array.renderer);
-        } else {
-            defaultRenderers = resources.getStringArray(R.array.renderer_values_mesa);
-            defaultRendererNames = resources.getStringArray(R.array.renderer_mesa);
+        String[] defaultRenderers = resources.getStringArray(R.array.renderer_values);
+        String[] defaultRendererNames = resources.getStringArray(R.array.renderer);
+        List<String> rendererIds = new ArrayList<>(defaultRenderers.length);
+        List<String> rendererNames = new ArrayList<>(defaultRendererNames.length);
+        for(int i = 0; i < defaultRenderers.length; i++) {
+            String rendererlist = defaultRenderers[i];
+            if (rendererlist.contains("mesa_3d") && !PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("zink") && PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("virgl") && PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("freedreno") && PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("panfrost") && PREF_EXP_SETUP) continue;
+            rendererIds.add(rendererlist);
+            rendererNames.add(defaultRendererNames[i]);
         }
+        sCompatibleRenderers = new RenderersList(rendererIds,
+                rendererNames.toArray(new String[0]));
 
-        return new RenderersList(Arrays.asList(defaultRenderers),
-                defaultRendererNames);
+        return sCompatibleRenderers;
     }
 
     /** Checks if the renderer Id is compatible with the current device */
@@ -1224,6 +1231,7 @@ public final class Tools {
 
     /** Releases the cache of compatible renderers. */
     public static void releaseRenderersCache() {
+        sCompatibleRenderers = null;
         System.gc();
     }
 
