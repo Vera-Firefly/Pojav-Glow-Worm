@@ -6,6 +6,7 @@ import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.preference.ListPreference;
 import androidx.preference.SwitchPreference;
@@ -47,7 +48,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 SwitchPreference.class);
         sustainedPerfSwitch.setVisible(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
 
-        final ListPreference rendererListPreference = requirePreference("renderer", ListPreference.class);
+        ListPreference rendererListPreference = requirePreference("renderer", ListPreference.class);
         setListPreference(rendererListPreference, "renderer");
         rendererListPreference.setOnPreferenceChangeListener((pre, obj) -> {
             Tools.LOCAL_RENDERER = (String)obj;
@@ -73,32 +74,21 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         String value = listPreference.getValue();
         if (preferenceKey.equals("renderer")) {
             array = Tools.getCompatibleRenderers(getContext());
+            listPreference.setEntries(array.getArray());
+            listPreference.setEntryValues(array.getList().toArray(new String[0]));
             Tools.LOCAL_RENDERER = value;
+            if (!array.getList().contains(value)) {
+                listPreference.setValueIndex(0);
+            }
+        } else {
+            listPreference.setEntries(array.getArray());
+            listPreference.setEntryValues(array.getList().toArray(new String[0]));
         }
-        listPreference.setEntries(array.getArray());
-        listPreference.setEntryValues(array.getList().toArray(new String[0]));
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ListPreference rendererListPreference = requirePreference("renderer", ListPreference.class);
-        setListPreference(rendererListPreference, "renderer");
-
-        preferenceChangeListener = (sharedPreferences, key) -> {
-            if (DEFAULT_PREF.getBoolean("ExperimentalSetup", false)) {
-                updateRendererList(rendererListPreference);
-            }
-        };
-        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(preferenceChangeListener);
-    }
-
-    private void updateRendererList(ListPreference rendererListPreference) {
-        if (rendererListPreference != null) {
-            setListPreference(rendererListPreference, "renderer");
-            rendererListPreference.setValueIndex(0);
-        }
     }
 
     @Override
