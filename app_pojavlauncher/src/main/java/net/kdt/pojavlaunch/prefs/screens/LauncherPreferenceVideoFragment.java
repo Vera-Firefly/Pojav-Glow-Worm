@@ -67,7 +67,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         requirePreference("force_vsync", SwitchPreferenceCompat.class)
                 .setVisible(LauncherPreferences.PREF_USE_ALTERNATE_SURFACE);
     }
-
+/*
     private void setListPreference(ListPreference listPreference, String preferenceKey) {
         Tools.IListAndArry array = null;
         String value = listPreference.getValue();
@@ -106,4 +106,5 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         super.onDestroy();
         getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
+*/
 }
