@@ -50,11 +50,6 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         final ListPreference rendererListPreference = requirePreference("renderer", ListPreference.class);
         setListPreference(rendererListPreference, "renderer");
 
-        if (DEFAULT_PREF.getBoolean("ExperimentalSetup", false)) {
-            setListPreference(rendererListPreference, "renderer");
-            rendererListPreference.setValueIndex(0);
-        }
-
         rendererListPreference.setOnPreferenceChangeListener((pre, obj) -> {
             Tools.LOCAL_RENDERER = (String)obj;
             return true;
@@ -83,6 +78,22 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         }
         listPreference.setEntries(array.getArray());
         listPreference.setEntryValues(array.getList().toArray(new String[0]));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (DEFAULT_PREF.getBoolean("ExperimentalSetup", false)) {
+            updateRendererListPreference();
+        }
+    }
+
+    private void updateRendererListPreference() {
+        ListPreference rendererListPreference = findPreference("renderer");
+        if (rendererListPreference != null) {
+            rendererListPreference.setEntries(Tools.getCompatibleRenderers(getContext()).getArray());
+            rendererListPreference.setEntryValues(Tools.getCompatibleRenderers(getContext()).getList().toArray(new String[0]));
+        }
     }
 
 }
