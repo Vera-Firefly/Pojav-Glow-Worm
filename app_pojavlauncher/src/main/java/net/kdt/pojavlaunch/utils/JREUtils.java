@@ -262,6 +262,8 @@ public class JREUtils {
                         envMap.put("POJAV_BETA_RENDERER", LOCAL_RENDERER);
                     } break;
                 }
+            } else {
+                envMap.put("POJAV_BETA_RENDERER", LOCAL_RENDERER);
             }
             if (LOCAL_RENDERER.equals("mesa_3d")) {
                 envMap.put("MESA_LIBRARY", localMesaLibrary);
