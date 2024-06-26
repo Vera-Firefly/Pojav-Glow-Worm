@@ -20,7 +20,6 @@ import net.kdt.pojavlaunch.prefs.LauncherPreferences;
  * Fragment for any settings video related
  */
 public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment {
-    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
 
     @Override
     public void onCreatePreferences(Bundle b, String str) {
