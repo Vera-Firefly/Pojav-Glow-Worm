@@ -5,6 +5,7 @@ import static android.os.Build.VERSION_CODES.P;
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_EXP_SETUP;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -1133,6 +1134,7 @@ public final class Tools {
         return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("huawei");
     }
 
+    // LanguagesList
     public static class LanguagesList {
         public final List<String> LanguageIds;
         public final String[] Language;
@@ -1160,13 +1162,28 @@ public final class Tools {
         return sCompatibleLanguages;
     }
 
-    public static class RenderersList {
+    public static interface IListAndArry {
+        List<String> getList();
+        String[] getArray();
+    }
+
+    public static class RenderersList implements IListAndArry {
         public final List<String> rendererIds;
         public final String[] rendererDisplayNames;
 
         public RenderersList(List<String> rendererIds, String[] rendererDisplayNames) {
             this.rendererIds = rendererIds;
             this.rendererDisplayNames = rendererDisplayNames;
+        }
+
+        @Override
+        public List<String> getList() {
+            return rendererIds;
+        }
+
+        @Override
+        public String[] getArray() {
+            return rendererDisplayNames;
         }
     }
 
@@ -1185,14 +1202,19 @@ public final class Tools {
 
     /** Return the renderers that are compatible with this device */
     public static RenderersList getCompatibleRenderers(Context context) {
-        if(sCompatibleRenderers != null) return sCompatibleRenderers;
         Resources resources = context.getResources();
         String[] defaultRenderers = resources.getStringArray(R.array.renderer_values);
         String[] defaultRendererNames = resources.getStringArray(R.array.renderer);
         List<String> rendererIds = new ArrayList<>(defaultRenderers.length);
         List<String> rendererNames = new ArrayList<>(defaultRendererNames.length);
         for(int i = 0; i < defaultRenderers.length; i++) {
-            rendererIds.add(defaultRenderers[i]);
+            String rendererlist = defaultRenderers[i];
+            if (rendererlist.contains("mesa_3d") && !PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("zink") && PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("virgl") && PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("freedreno") && PREF_EXP_SETUP) continue;
+            if (rendererlist.contains("panfrost") && PREF_EXP_SETUP) continue;
+            rendererIds.add(rendererlist);
             rendererNames.add(defaultRendererNames[i]);
         }
         sCompatibleRenderers = new RenderersList(rendererIds,
@@ -1208,13 +1230,7 @@ public final class Tools {
 
     /** Releases the cache of compatible renderers. */
     public static void releaseRenderersCache() {
-        sCompatibleRenderers = null;
         System.gc();
-    }
-
-    public static interface IListAndArry {
-        List<String> getList();
-        String[] getArray();
     }
 
     public static class CMesaLibList implements IListAndArry {
