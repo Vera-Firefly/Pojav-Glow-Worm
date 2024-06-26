@@ -1202,7 +1202,6 @@ public final class Tools {
 
     /** Return the renderers that are compatible with this device */
     public static RenderersList getCompatibleRenderers(Context context) {
-        if(sCompatibleRenderers != null) return sCompatibleRenderers;
         Resources resources = context.getResources();
         String[] defaultRenderers = resources.getStringArray(R.array.renderer_values);
         String[] defaultRendererNames = resources.getStringArray(R.array.renderer);
