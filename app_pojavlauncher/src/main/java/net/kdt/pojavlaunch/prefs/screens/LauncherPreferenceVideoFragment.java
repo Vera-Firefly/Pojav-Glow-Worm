@@ -80,20 +80,4 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         listPreference.setEntryValues(array.getList().toArray(new String[0]));
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (DEFAULT_PREF.getBoolean("ExperimentalSetup", false)) {
-            updateRendererListPreference();
-        }
-    }
-
-    private void updateRendererListPreference() {
-        ListPreference rendererListPreference = findPreference("renderer");
-        if (rendererListPreference != null) {
-            rendererListPreference.setEntries(Tools.getCompatibleRenderers(getContext()).getArray());
-            rendererListPreference.setEntryValues(Tools.getCompatibleRenderers(getContext()).getList().toArray(new String[0]));
-        }
-    }
-
 }
