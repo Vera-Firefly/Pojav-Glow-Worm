@@ -39,15 +39,15 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
             return true;
         });
 
-        final ListPreference CMesaLibP = requirePreference("CMesaLibrarys", ListPreference.class);
-        final ListPreference CDriverModleP = requirePreference("CDriverModles", ListPreference.class);
+        final ListPreference CMesaLibP = requirePreference("CMesaLibrary", ListPreference.class);
+        final ListPreference CDriverModleP = requirePreference("CDriverModels", ListPreference.class);
         
-        setListPreference(CMesaLibP, "CMesaLibrarys");
-        setListPreference(CDriverModleP, "CDriverModles");
+        setListPreference(CMesaLibP, "CMesaLibrary");
+        setListPreference(CDriverModleP, "CDriverModels");
         
         CMesaLibP.setOnPreferenceChangeListener((pre, obj) -> {
                 Tools.MESA_LIBS = (String)obj;
-                setListPreference(CDriverModleP, "CDriverModles");
+                setListPreference(CDriverModleP, "CDriverModels");
                 CDriverModleP.setValueIndex(0);
                 return true;
         });
@@ -116,8 +116,8 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
 
     private void computeVisibility(){
         requirePreference("ExpFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("CDriverModles").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("CMesaLibrarys").setVisible(LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("CDriverModels").setVisible(LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("CMesaLibrary").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebSystem").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebSpecific").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("ebCustom").setVisible(LauncherPreferences.PREF_EXP_SETUP);
@@ -127,10 +127,10 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
     private void setListPreference(ListPreference listPreference, String preferenceKey) {
         Tools.IListAndArry array = null;
         String value = listPreference.getValue();
-        if (preferenceKey.equals("CMesaLibrarys")) {
+        if (preferenceKey.equals("CMesaLibrary")) {
             array = Tools.getCompatibleCMesaLib(getContext());
             Tools.MESA_LIBS = value;
-        } else if (preferenceKey.equals("CDriverModles")) {
+        } else if (preferenceKey.equals("CDriverModels")) {
             array = Tools.getCompatibleCDriverModle(getContext());
             Tools.DRIVER_MODLE = value;
         }

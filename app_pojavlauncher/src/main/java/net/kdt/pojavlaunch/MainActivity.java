@@ -338,6 +338,15 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     }
 
     private void runCraft(String versionId, JMinecraftVersionList.Version version) throws Throwable {
+        if(Tools.LOCAL_RENDERER == null) {
+            Tools.LOCAL_RENDERER = LauncherPreferences.PREF_RENDERER;
+        }
+        if(Tools.MESA_LIBS == null) {
+            Tools.MESA_LIBS = LauncherPreferences.PREF_MESA_LIB;
+        }
+        if(Tools.DRIVER_MODLE == null) {
+            Tools.DRIVER_MODLE = LauncherPreferences.PREF_DRIVER_MODLE;
+        }
         if(!Tools.checkRendererCompatible(this, Tools.LOCAL_RENDERER)) {
             Tools.RenderersList renderersList = Tools.getCompatibleRenderers(this);
             String firstCompatibleRenderer = renderersList.rendererIds.get(0);

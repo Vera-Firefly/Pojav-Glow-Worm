@@ -1272,11 +1272,11 @@ public final class Tools {
 
     public static class CDriverModleList implements IListAndArry {
         public final List<String> CDriverModleIds;
-        public final String[] CDriverModles;
+        public final String[] CDriverModels;
 
-        public CDriverModleList(List<String> CDriverModleIds, String[] CDriverModles) {
+        public CDriverModleList(List<String> CDriverModleIds, String[] CDriverModels) {
             this.CDriverModleIds = CDriverModleIds;
-            this.CDriverModles = CDriverModles;
+            this.CDriverModels = CDriverModels;
         }
 
         @Override
@@ -1286,14 +1286,14 @@ public final class Tools {
 
         @Override
         public String[] getArray() {
-            return CDriverModles;
+            return CDriverModels;
         }
     }
 
     public static CDriverModleList getCompatibleCDriverModle(Context context) {
         Resources resources = context.getResources();
-        String[] defaultCDriverModle = resources.getStringArray(R.array.driver_modle_values);
-        String[] defaultCDriverModleNames = resources.getStringArray(R.array.driver_modle);
+        String[] defaultCDriverModle = resources.getStringArray(R.array.driver_model_values);
+        String[] defaultCDriverModleNames = resources.getStringArray(R.array.driver_model);
         List<String> CDriverModleIds = new ArrayList<>(defaultCDriverModle.length);
         List<String> CDriverModleNames = new ArrayList<>(defaultCDriverModleNames.length);
         for(int i = 0; i < defaultCDriverModle.length; i++) {
