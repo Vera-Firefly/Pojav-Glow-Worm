@@ -1,4 +1,4 @@
-name: Android CI
+name: Foxx Launcher
 on:
   push:
   pull_request:
@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         arch: [ "all", "arm", "arm64", "x86", "x86_64" ]
-      fail-fast: false
+      fail-fast: true
 
     env:
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
@@ -85,7 +85,7 @@ jobs:
     strategy:
       matrix:
         arch: [ "all", "arm", "arm64", "x86", "x86_64" ]
-      fail-fast: false
+      fail-fast: true
 
     env:
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
