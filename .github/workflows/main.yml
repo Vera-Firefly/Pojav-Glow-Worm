@@ -1,4 +1,4 @@
-name: Foxx Launcher
+name: Pojav-Foxy
 on:
   push:
   pull_request:
