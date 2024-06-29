@@ -116,12 +116,8 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
 
     private void computeVisibility(){
         requirePreference("ExpFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("CDriverModels").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("CMesaLibrary").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("ebSystem").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("ebSpecific").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("ebCustom").setVisible(LauncherPreferences.PREF_EXP_SETUP);
-        requirePreference("SetGLVersion").setVisible(LauncherPreferences.PREF_EXP_ENABLE_CUSTOM && LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("MesaRendererChoose").setVisible(LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("customMesaVersionPref").setVisible(LauncherPreferences.PREF_EXP_SETUP);
     }
 
     private void setListPreference(ListPreference listPreference, String preferenceKey) {
