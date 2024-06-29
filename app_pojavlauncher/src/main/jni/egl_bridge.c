@@ -224,12 +224,22 @@ int pojavInitOpenGL() {
     // NOTE: Override for now.
     const char *renderer = getenv("POJAV_BETA_RENDERER");
     const char *ldrivermodel = getenv("LOCAL_DRIVER_MODLE");
+
+    const char *driver_override = NULL;
+
+    if(strcmp(ldrivermodel, "driver_freedreno") == 0) {
+        driver_override = "kgsl,msm";
+    } else {
+        driver_override = "zink";
+    }
+
     if (strncmp("opengles", renderer, 8) == 0) {
         pojav_environ->config_renderer = RENDERER_GL4ES;
         if(getenv("POJAV_SPARE_BRIDGE") == NULL) {
             set_gl_bridge_tbl();
         }
     } else if (strcmp(renderer, "mesa_3d") == 0) {
+        setenv("MESA_LOADER_DRIVER_OVERRIDE", driver_override, 1);
         if(strcmp(ldrivermodel, "driver_zink") == 0) {
             setenv("GALLIUM_DRIVER","zink",1);
             printf("Bridge: Use Zink Renderer\n");
@@ -255,7 +265,6 @@ int pojavInitOpenGL() {
         }
         if(strcmp(ldrivermodel, "driver_freedreno") == 0) {
             setenv("GALLIUM_DRIVER", "freedreno", 1);
-            setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
             printf("Bridge: Use Freedreno renderer\n");
             renderer_load_config();
         }

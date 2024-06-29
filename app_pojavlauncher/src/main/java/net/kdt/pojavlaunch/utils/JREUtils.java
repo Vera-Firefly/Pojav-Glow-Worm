@@ -237,26 +237,22 @@ public class JREUtils {
                     case "vulkan_zink":{
                         envMap.put("POJAV_BETA_RENDERER", "mesa_3d");
                         envMap.put("LOCAL_DRIVER_MODLE", "driver_zink");
-                        envMap.put("MESA_LOADER_DRIVER_OVERRIDE", "zink");
                         envMap.put("MESA_LIBRARY", localMesaLibrary);
                     } break;
                     case "opengles3_virgl":{
                         envMap.put("POJAV_BETA_RENDERER", "mesa_3d");
                         envMap.put("LOCAL_DRIVER_MODLE", "driver_virgl");
-                        envMap.put("MESA_LOADER_DRIVER_OVERRIDE", "zink");
                         envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
                         envMap.put("MESA_LIBRARY", localMesaLibrary);
                     } break;
                     case "freedreno":{
                         envMap.put("POJAV_BETA_RENDERER", "mesa_3d");
                         envMap.put("LOCAL_DRIVER_MODLE", "driver_freedreno");
-                        envMap.put("MESA_LOADER_DRIVER_OVERRIDE", "msm");
                         envMap.put("MESA_LIBRARY", localMesaLibrary);
                     } break;
                     case "panfrost":{
                         envMap.put("POJAV_BETA_RENDERER", "mesa_3d");
                         envMap.put("LOCAL_DRIVER_MODLE", "driver_panfrost");
-                        envMap.put("MESA_LOADER_DRIVER_OVERRIDE", "zink");
                         envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
                         envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
                         envMap.put("MESA_LIBRARY", localMesaLibrary);
@@ -303,11 +299,6 @@ public class JREUtils {
                 if (DRIVER_MODLE.equals("driver_panfrost")) {
                     envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
                     envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
-                }
-                if (DRIVER_MODLE.equals("driver_freedreno")) {
-                    envMap.put("MESA_LOADER_DRIVER_OVERRIDE", "msm");
-                } else {
-                    envMap.put("MESA_LOADER_DRIVER_OVERRIDE", "zink");
                 }
             }
             if (LOCAL_RENDERER.equals("opengles3_desktopgl_angle_vulkan")) {
