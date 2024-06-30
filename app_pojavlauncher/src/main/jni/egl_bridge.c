@@ -228,7 +228,7 @@ int pojavInitOpenGL() {
     const char *driver_override = NULL;
 
     if(strcmp(ldrivermodel, "driver_freedreno") == 0) {
-        driver_override = "kgsl,msm";
+        driver_override = "kgsl";
     } else {
         driver_override = "zink";
     }
