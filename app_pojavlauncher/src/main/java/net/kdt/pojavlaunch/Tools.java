@@ -1306,11 +1306,16 @@ public final class Tools {
                     if(driverModle.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2304":{
+                    if(driverModle.contains("panfrost")) continue;
                     if(driverModle.contains("virgl")) continue;
+                    if(driverModle.contains("softpipe")) continue;
+                    if(driverModle.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2300d":{
                     if(driverModle.contains("virgl")) continue;
                     if(driverModle.contains("freedreno")) continue;
+                    if(driverModle.contains("softpipe")) continue;
+                    if(driverModle.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2205":{
                     if(driverModle.contains("panfrost")) continue;
