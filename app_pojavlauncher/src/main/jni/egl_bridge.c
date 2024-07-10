@@ -235,8 +235,7 @@ int pojavInitOpenGL() {
             setenv("GALLIUM_DRIVER","zink",1);
             printf("Bridge: Use Zink Renderer\n");
             renderer_load_config();
-            if(getenv("POJAV_LEGACY_ZINK_ALLOW") == NULL)
-                load_vulkan();
+            load_vulkan();
         }
         if(strcmp(ldrivermodel, "driver_virgl") == 0) {
             printf("Bridge: Use VirglRenderer\n");
