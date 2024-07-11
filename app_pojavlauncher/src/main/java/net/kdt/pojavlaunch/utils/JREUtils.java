@@ -561,7 +561,7 @@ public class JREUtils {
                     renderLibrary = "libgl4es_114.so";
                     break;
                 case "opengles2_ptitseb":
-                    renderLibrary = "libgl4es_ptitseb.so"
+                    renderLibrary = "libgl4es_ptitseb.so";
                     break;
                 case "opengles2_vgpu":
                     renderLibrary = "libvgpu.so";
