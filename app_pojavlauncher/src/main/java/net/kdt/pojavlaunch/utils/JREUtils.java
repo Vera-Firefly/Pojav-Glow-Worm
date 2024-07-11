@@ -175,7 +175,6 @@ public class JREUtils {
     public static void setJavaEnvironment(Activity activity, String jreHome) throws Throwable {
         String glVersion = PREF_MESA_GL_VERSION;
         String glslVersion = PREF_MESA_GLSL_VERSION;
-        String libglVersion = PREF_LIBGL_GL_VERSION;
         final String localMesaLibrary = loadGraphicsLibrary();
 
         Map<String, String> envMap = new ArrayMap<>();
@@ -307,13 +306,6 @@ public class JREUtils {
                 envMap.put("LIBGL_ES", "3");
                 envMap.put("POJAVEXEC_EGL","libEGL_angle.so"); // Use ANGLE EGL
             }
-            if (LOCAL_RENDERER.equals("opengles2_ptitseb")) {
-                if (PREF_EXP_ENABLE_CUSTOM) {
-                    envMap.put("LIBGL_GL", libglVersion);
-                } else {
-                    envMap.put("LIBGL_GL", "20");
-                }
-            }
         }
 
         File customEnvFile = new File(ProfilePathManager.getCurrentPath(), "custom_env.txt");
@@ -362,12 +354,14 @@ public class JREUtils {
 
     public static int launchJavaVM(final Activity activity, final Runtime runtime, File gameDirectory, final List<String> JVMArgs, final String userArgsString) throws Throwable {
         String runtimeHome = MultiRTUtils.getRuntimeHome(runtime.name).getAbsolutePath();
+        String libglVersion = PREF_LIBGL_GL_VERSION;
 
         JREUtils.relocateLibPath(runtime, runtimeHome);
 
         setJavaEnvironment(activity, runtimeHome);
 
         final String graphicsLib = loadGraphicsLibrary();
+        Map<String, String> envMap = new ArrayMap<>();
         List<String> userArgs = getJavaArgs(activity, runtimeHome, userArgsString);
 
         //Remove arguments that can interfere with the good working of the launcher
@@ -384,7 +378,24 @@ public class JREUtils {
         //Add automatically generated args
         userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
         userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
-        if(LOCAL_RENDERER != null) userArgs.add("-Dorg.lwjgl.opengl.libname=" + graphicsLib);
+        if(LOCAL_RENDERER != null) {
+            userArgs.add("-Dorg.lwjgl.opengl.libname=" + graphicsLib);
+            if (LOCAL_RENDERER.equals("opengles2_ptitseb")) {
+                if (PREF_EXP_ENABLE_CUSTOM) {
+                    envMap.put("LIBGL_GL", libglVersion);
+                } else {
+                    envMap.put("LIBGL_GL", "21");
+                }
+                for (Map.Entry<String, String> env : envMap.entrySet()) {
+                    Logger.appendToLog("Added custom env: " + env.getKey() + "=" + env.getValue());
+                    try {
+                        Os.setenv(env.getKey(), env.getValue(), true);
+                    } catch (NullPointerException exception) {
+                        Log.e("JREUtils", exception.toString());
+                    }
+                }
+            }
+        }
 
         userArgs.addAll(JVMArgs);
         activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.autoram_info_msg,LauncherPreferences.PREF_RAM_ALLOCATION), Toast.LENGTH_SHORT).show());
