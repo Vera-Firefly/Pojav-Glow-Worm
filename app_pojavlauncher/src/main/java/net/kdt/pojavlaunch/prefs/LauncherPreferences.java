@@ -94,6 +94,7 @@ public class LauncherPreferences {
 
     public static String PREF_MESA_GL_VERSION;
     public static String PREF_MESA_GLSL_VERSION;
+    public static String PREF_LIBGL_GL_VERSION;
     public static String PREF_GAME_LANGUAGE = "-1";
     public static boolean PREF_ENABLE_LOG_OUTPUT = false;
 
@@ -154,6 +155,7 @@ public class LauncherPreferences {
 
         PREF_MESA_GL_VERSION = DEFAULT_PREF.getString("mesaGLVersion", "4.6");
         PREF_MESA_GLSL_VERSION = DEFAULT_PREF.getString("mesaGLSLVersion", "460");
+	PREF_LIBGL_GL_VERSION = DEFAULT_PREF.getString("libglGLVersion", "31");
 
         PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("gameLanguage", "-1");
         PREF_ENABLE_LOG_OUTPUT = DEFAULT_PREF.getBoolean("enableLogOutput", false);
