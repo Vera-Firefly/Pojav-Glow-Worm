@@ -28,6 +28,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
 
     private EditText mMesaGLVersion;
     private EditText mMesaGLSLVersion;
+    private EditText mlibglGLVersion;
 
     @Override
     public void onCreatePreferences(Bundle b, String str) {
@@ -165,10 +166,12 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
         // Define symbol content
         mMesaGLVersion = view.findViewById(R.id.mesa_gl_version);
         mMesaGLSLVersion = view.findViewById(R.id.mesa_glsl_version);
+        mlibglGLVersion = view.findViewById(R.id.libgl_gl_version);
 
         // Set text for GL/GLSL values
         mMesaGLVersion.setText(LauncherPreferences.PREF_MESA_GL_VERSION);
         mMesaGLSLVersion.setText(LauncherPreferences.PREF_MESA_GLSL_VERSION);
+        mlibglGLVersion.setText(LauncherPreferences.PREF_LIBGL_GL_VERSION);
 
         AlertDialog dialog = new AlertDialog.Builder(getContext())
             // Dialog content
@@ -178,6 +181,7 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                 // Gets the GL and GLSL version of the user input
                 String glVersion = mMesaGLVersion.getText().toString();
                 String glslVersion = mMesaGLSLVersion.getText().toString();
+                String libglVersion = mlibglGLVersion.getText().toString();
 
                 // Verify that the GL version is within the allowed range
                 if (!isValidVersion(glVersion, "2.8", "4.6") && !isValidVersion(glslVersion, "280", "460")) {
@@ -202,11 +206,13 @@ public class LauncherPreferenceRendererConfigFragment extends LauncherPreference
                 // Update preferences
                 LauncherPreferences.PREF_MESA_GL_VERSION = glVersion;
                 LauncherPreferences.PREF_MESA_GLSL_VERSION = glslVersion;
+                LauncherPreferences.PREF_LIBGL_GL_VERSION = libglVersion;
 
                 // Modify the value of GL/GLSL according to the text content
                 LauncherPreferences.DEFAULT_PREF.edit()
                     .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
                     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
+                    .putString("libglGLVersion", LauncherPreferences.PREF_LIBGL_GL_VERSION)
                     .apply();
             })
             .setNegativeButton(R.string.alertdialog_cancel, null)
