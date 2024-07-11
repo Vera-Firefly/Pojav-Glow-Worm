@@ -175,6 +175,7 @@ public class JREUtils {
     public static void setJavaEnvironment(Activity activity, String jreHome) throws Throwable {
         String glVersion = PREF_MESA_GL_VERSION;
         String glslVersion = PREF_MESA_GLSL_VERSION;
+        String libglVersion = PREF_LIBGL_GL_VERSION;
         final String localMesaLibrary = loadGraphicsLibrary();
 
         Map<String, String> envMap = new ArrayMap<>();
@@ -305,6 +306,13 @@ public class JREUtils {
             if (LOCAL_RENDERER.equals("opengles3_desktopgl_angle_vulkan")) {
                 envMap.put("LIBGL_ES", "3");
                 envMap.put("POJAVEXEC_EGL","libEGL_angle.so"); // Use ANGLE EGL
+            }
+            if (LOCAL_RENDERER.equals("opengles2_ptitseb")) {
+                if (PREF_EXP_ENABLE_CUSTOM) {
+                    envMap.put("LIBGL_GL", libglVersion);
+                } else {
+                    envMap.put("LIBGL_GL", "20");
+                }
             }
         }
 
@@ -551,6 +559,9 @@ public class JREUtils {
                 case "opengles2_5":
                 case "opengles3":
                     renderLibrary = "libgl4es_114.so";
+                    break;
+                case "opengles2_ptitseb":
+                    renderLibrary = "libgl4es_ptitseb.so"
                     break;
                 case "opengles2_vgpu":
                     renderLibrary = "libvgpu.so";
