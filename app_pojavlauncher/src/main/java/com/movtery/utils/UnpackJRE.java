@@ -5,45 +5,62 @@ import static net.kdt.pojavlaunch.Architecture.archAsString;
 import android.content.res.AssetManager;
 import android.util.Log;
 
-import net.kdt.pojavlaunch.PojavApplication;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 import java.io.IOException;
 
 public class UnpackJRE {
-    public static final String JRE_17_NAME = "Internal-17";
-    public static final String JRE_21_NAME = "Internal-21";
-
     public static void unpackAllJre(AssetManager assetManager) {
-        checkInternalJre(assetManager, JRE_17_NAME, 17);
-        checkInternalJre(assetManager, JRE_21_NAME, 21);
+        checkInternalRuntime(assetManager, InternalRuntime.JRE_8);
+        checkInternalRuntime(assetManager, InternalRuntime.JRE_11);
+        checkInternalRuntime(assetManager, InternalRuntime.JRE_17);
+        checkInternalRuntime(assetManager, InternalRuntime.JRE_21);
     }
 
-    public static void checkInternalJre(AssetManager assetManager, String jreName, int jreVersion) {
-        String launcherJreVersion;
-        String installedJreVersion = MultiRTUtils.readInternalRuntimeVersion(jreName);
+    private static void checkInternalRuntime(AssetManager assetManager, InternalRuntime internalRuntime) {
+        String launcherRuntimeVersion;
+        String installedRuntimeVersion = MultiRTUtils.readInternalRuntimeVersion(internalRuntime.name);
         try {
-            launcherJreVersion = Tools.read(assetManager.open("components/jre-" + jreVersion + "/version"));
+            launcherRuntimeVersion = Tools.read(assetManager.open(internalRuntime.path + "/version"));
         } catch (IOException exc) {
             return;
         }
-        if(!launcherJreVersion.equals(installedJreVersion)) {
-            unpackJre(assetManager, jreName, jreVersion, launcherJreVersion);
+        if (!launcherRuntimeVersion.equals(installedRuntimeVersion)) {
+            unpackInternalRuntime(assetManager, internalRuntime, launcherRuntimeVersion);
         }
     }
 
-    private static void unpackJre(AssetManager assetManager, String jreName, int jreVersion, String rtVersion) {
-        PojavApplication.sExecutorService.execute(() -> {
-            try {
-                MultiRTUtils.installRuntimeNamedBinpack(
-                        assetManager.open("components/jre-" + jreVersion + "/universal.tar.xz"),
-                        assetManager.open("components/jre-" + jreVersion + "/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
-                        jreName, rtVersion);
-                MultiRTUtils.postPrepare(jreName);
-            }catch (IOException e) {
-                Log.e("JRE" + jreVersion + "Auto", "Internal JRE unpack failed", e);
+    private static void unpackInternalRuntime(AssetManager assetManager, InternalRuntime internalRuntime, String version) {
+        try {
+            MultiRTUtils.installRuntimeNamedBinpack(
+                    assetManager.open(internalRuntime.path + "/universal.tar.xz"),
+                    assetManager.open(internalRuntime.path + "/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                    internalRuntime.name, version);
+            if (internalRuntime == InternalRuntime.JRE_8 && LauncherPreferences.PREF_DEFAULT_RUNTIME.isEmpty()) {
+                LauncherPreferences.PREF_DEFAULT_RUNTIME = internalRuntime.name;
+                LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime", LauncherPreferences.PREF_DEFAULT_RUNTIME).apply();
             }
-        });
+            MultiRTUtils.postPrepare(internalRuntime.name);
+        } catch (IOException e) {
+            Log.e("UnpackJREAuto", "Internal JRE unpack failed", e);
+        }
+    }
+
+    private enum InternalRuntime {
+        JRE_8(8, "Internal-8", "components/jre-8"),
+        JRE_11(11, "Internal-11", "components/jre-11"),
+        JRE_17(17, "Internal-17", "components/jre-17"),
+        JRE_21(21, "Internal-21", "components/jre-21");
+        public final int majorVersion;
+        public final String name;
+        public final String path;
+
+        InternalRuntime(int majorVersion, String name, String path) {
+            this.majorVersion = majorVersion;
+            this.name = name;
+            this.path = path;
+        }
     }
 }
