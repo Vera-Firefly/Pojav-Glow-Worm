@@ -7,12 +7,13 @@ import android.content.*;
 import android.content.pm.*;
 import android.content.res.*;
 import android.os.*;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.*;
 
 import android.util.*;
 
 import com.movtery.feature.ResourceManager;
-import com.movtery.utils.UnpackJRE;
 
 import java.io.*;
 import java.text.*;
@@ -72,7 +73,6 @@ public class PojavApplication extends Application {
 												originalJNIDirectory.lastIndexOf("/"))
 												.concat("/x86");
 			}
-			UnpackJRE.unpackAllJre(getAssets());
 		} catch (Throwable throwable) {
 			Intent ferrorIntent = new Intent(this, FatalErrorActivity.class);
 			ferrorIntent.putExtra("throwable", throwable);
@@ -95,7 +95,7 @@ public class PojavApplication extends Application {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         LocaleUtils.setLocale(this);
     }
