@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.movtery.utils.UnpackJRE;
+
 import net.kdt.pojavlaunch.tasks.AsyncAssetManager;
 
 public class TestStorageActivity extends Activity {
@@ -66,6 +68,7 @@ public class TestStorageActivity extends Activity {
         //Only run them once we get a definitive green light to use storage
         AsyncAssetManager.unpackComponents(this);
         AsyncAssetManager.unpackSingleFiles(this);
+        UnpackJRE.unpackAllJre(getAssets());
 
         Intent intent =  new Intent(this, LauncherActivity.class);
         startActivity(intent);
