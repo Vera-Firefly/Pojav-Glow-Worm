@@ -38,7 +38,6 @@ public class UnpackJRE {
                     assetManager.open(internalRuntime.path + "/universal.tar.xz"),
                     assetManager.open(internalRuntime.path + "/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
                     internalRuntime.name, version);
-            //设置默认运行环境
             if (internalRuntime == InternalRuntime.JRE_8 && LauncherPreferences.PREF_DEFAULT_RUNTIME.isEmpty()) {
                 LauncherPreferences.PREF_DEFAULT_RUNTIME = internalRuntime.name;
                 LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime", LauncherPreferences.PREF_DEFAULT_RUNTIME).apply();
