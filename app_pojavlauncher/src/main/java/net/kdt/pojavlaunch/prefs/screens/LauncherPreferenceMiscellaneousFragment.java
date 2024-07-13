@@ -15,7 +15,6 @@ import androidx.preference.Preference;
 import com.kdt.pickafile.FileListView;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
-import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
