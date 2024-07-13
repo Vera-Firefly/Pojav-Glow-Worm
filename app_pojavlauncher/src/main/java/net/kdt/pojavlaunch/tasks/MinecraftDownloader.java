@@ -47,6 +47,16 @@ public class MinecraftDownloader {
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
 
+    private static volatile boolean shouldContinueDownloading = false;
+
+    /**
+     * Check if the user needs to terminate the download
+     * Check before starting the game
+     */
+    public static void stopDownload() {
+        shouldContinueDownloading = true;
+    }
+
     /**
      * Start the game version download process on the global executor service.
      * @param version The JMinecraftVersionList.Version from the version list, if available
@@ -58,12 +68,20 @@ public class MinecraftDownloader {
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         sExecutorService.execute(() -> {
             try {
+                if (shouldContinueDownloading) {
+                    // Terminate the download proces
+                    return
+                }
                 downloadGame(version, realVersion);
                 listener.onDownloadDone();
-            }catch (Exception e) {
-                listener.onDownloadFailed(e);
+            } catch (Exception e) {
+                if (!shouldContinueDownloading) {
+                    // A possible exception is thrown when the user does not terminate the download.
+                    listener.onDownloadFailed(e);
+                }
+            } finally {
+                ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             }
-            ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
         });
     }
 
