@@ -13,7 +13,6 @@ import net.kdt.pojavlaunch.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.lifecycle.ContextExecutorTask;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.tasks.AsyncMinecraftDownloader;
-import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
 import net.kdt.pojavlaunch.utils.NotificationUtils;
 
 public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneListener, ContextExecutorTask {
@@ -34,9 +33,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
 
     @Override
     public void onDownloadDone() {
-        if (MinecraftDownloader.shouldContinueDownloading) {
-            ProgressKeeper.waitUntilDone(()->ContextExecutor.execute(this));
-        }
+        ProgressKeeper.waitUntilDone(()->ContextExecutor.execute(this));
     }
 
     @Override
