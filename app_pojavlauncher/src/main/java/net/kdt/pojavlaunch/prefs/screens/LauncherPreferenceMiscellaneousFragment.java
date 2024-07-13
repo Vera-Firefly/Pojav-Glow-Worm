@@ -16,6 +16,7 @@ import com.kdt.pickafile.FileListView;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences.SKIP_DOWNLOADER;;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -50,8 +51,7 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
             return true;
         });
 
-        boolean onSkipDownload = DEFAULT_PREF.getBoolean("skipDownload", false);
-        if (onSkipDownload) {
+        if (SKIP_DOWNLOADER) {
             MinecraftDownloader.stopDownload();
         }
     }
