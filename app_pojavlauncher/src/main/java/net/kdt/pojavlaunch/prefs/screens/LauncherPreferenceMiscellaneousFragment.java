@@ -24,7 +24,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SKIP_DOWNLOADER;
 
 public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceFragment {
     @Override
@@ -51,9 +50,6 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
             return true;
         });
 
-        if (PREF_SKIP_DOWNLOADER) {
-            MinecraftDownloader.stopDownload();
-        }
     }
     @Override
     public void onActivityResult(
