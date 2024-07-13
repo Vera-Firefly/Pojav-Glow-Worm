@@ -52,11 +52,8 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
 
         boolean onSkipDownload = DEFAULT_PREF.getBoolean("skipDownload", false);
         if (onSkipDownload) {
-            MinecraftDownloader.stopDownload(true);
-        } else {
-            MinecraftDownloader.stopDownload(false);
+            MinecraftDownloader.stopDownload();
         }
-
     }
     @Override
     public void onActivityResult(
