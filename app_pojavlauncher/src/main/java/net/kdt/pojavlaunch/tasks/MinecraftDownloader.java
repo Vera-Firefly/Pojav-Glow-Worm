@@ -52,8 +52,8 @@ public class MinecraftDownloader {
      * Check if the user needs to terminate the download
      * Check before starting the game
      */
-    public static void stopDownload(String val) {
-        shouldContinueDownloading = val;
+    public static void stopDownload() {
+        shouldContinueDownloading = true;
     }
 
     /**
