@@ -16,7 +16,7 @@ import com.kdt.pickafile.FileListView;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
-import net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SKIP_DOWNLOADER;;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SKIP_DOWNLOADER;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
