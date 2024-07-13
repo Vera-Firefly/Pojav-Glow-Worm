@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.tasks;
 
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SKIP_DOWNLOADER;
 
 import android.util.Log;
 
@@ -46,6 +47,19 @@ public class MinecraftDownloader {
     private File mTargetJarFile; // The destination client JAR to which the source will be copied to.
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
+    private static volatile boolean shouldContinueDownloading = false;
+
+    /**
+     * Check if the user needs to terminate the download
+     * Check before starting the game
+     */
+    private void onSkipDownloadtask() {
+        if (PREF_SKIP_DOWNLOADER) {
+            shouldContinueDownloading = true;
+        } else {
+            shouldContinueDownloading = false;
+        }
+    }
 
     /**
      * Start the game version download process on the global executor service.
@@ -58,12 +72,20 @@ public class MinecraftDownloader {
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         sExecutorService.execute(() -> {
             try {
-                downloadGame(version, realVersion);
+                onSkipDownloadtask();
+                if (!shouldContinueDownloading) {
+                    // Terminate the download proces
+                    downloadGame(version, realVersion);
+                }
                 listener.onDownloadDone();
-            }catch (Exception e) {
-                listener.onDownloadFailed(e);
+            } catch (Exception e) {
+                if (!shouldContinueDownloading) {
+                    // A possible exception is thrown when the user does not terminate the download.
+                    listener.onDownloadFailed(e);
+                }
+            } finally {
+                ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             }
-            ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
         });
     }
 

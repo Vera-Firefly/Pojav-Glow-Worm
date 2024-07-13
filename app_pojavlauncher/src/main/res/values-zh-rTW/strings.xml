@@ -229,6 +229,8 @@
     <string name="notif_mouse1">刪除成功</string>
     <string name="microsoft_login_fragment">開始登陸!</string>
     <string name="customctrl_absolute_tracking">絕對手指跟蹤</string>
+    <string name="preference_skip_download_title">不檢查遊戲完整性</string>
+    <string name="preference_skip_download">在啟動遊戲時不檢查遊戲完整性,直接啟動遊戲</string>
     <!-- Other login -->
     <string name="other_login_api">外置登錄</string>
     <string name="other_login_authentication_server">身份驗證伺服器</string>
