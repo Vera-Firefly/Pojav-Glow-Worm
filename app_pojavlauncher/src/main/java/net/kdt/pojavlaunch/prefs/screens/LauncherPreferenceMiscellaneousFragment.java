@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
 
 public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceFragment {
     @Override
