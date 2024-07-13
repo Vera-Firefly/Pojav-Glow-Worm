@@ -16,7 +16,6 @@ import com.kdt.pickafile.FileListView;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
-import net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SKIP_DOWNLOADER;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -25,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SKIP_DOWNLOADER;
 
 public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceFragment {
     @Override
