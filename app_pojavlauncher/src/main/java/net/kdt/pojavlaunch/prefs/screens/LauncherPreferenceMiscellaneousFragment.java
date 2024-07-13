@@ -49,8 +49,8 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
             return true;
         });
 
-        Preference skipDownloadPre = requirePreference("skipDownload");
-        if ((SwitchPreference) skipDownloadPre).getChecked(true)) {
+        boolean onSkipDownload = DEFAULT_PREF.getBoolean("skipDownload", false);
+        if (onSkipDownload) {
             MinecraftDownloader.stopDownload();
         }
 
