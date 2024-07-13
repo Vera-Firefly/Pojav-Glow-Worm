@@ -37,6 +37,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class MinecraftDownloader {
     public static final String MINECRAFT_RES = "https://resources.download.minecraft.net/";
+    public static volatile boolean shouldContinueDownloading = false;
     private AtomicReference<Exception> mDownloaderThreadException;
     private ArrayList<DownloaderTask> mScheduledDownloadTasks;
     private AtomicLong mDownloadFileCounter;
@@ -46,8 +47,6 @@ public class MinecraftDownloader {
     private File mTargetJarFile; // The destination client JAR to which the source will be copied to.
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
-
-    private static volatile boolean shouldContinueDownloading = false;
 
     /**
      * Check if the user needs to terminate the download
