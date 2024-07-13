@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.tasks;
 
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SKIP_DOWNLOADER;
 
 import android.util.Log;
 
@@ -37,7 +38,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class MinecraftDownloader {
     public static final String MINECRAFT_RES = "https://resources.download.minecraft.net/";
-    public static volatile boolean shouldContinueDownloading = false;
     private AtomicReference<Exception> mDownloaderThreadException;
     private ArrayList<DownloaderTask> mScheduledDownloadTasks;
     private AtomicLong mDownloadFileCounter;
@@ -47,13 +47,18 @@ public class MinecraftDownloader {
     private File mTargetJarFile; // The destination client JAR to which the source will be copied to.
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
+    private static volatile boolean shouldContinueDownloading = false;
 
     /**
      * Check if the user needs to terminate the download
      * Check before starting the game
      */
-    public static void stopDownload() {
-        shouldContinueDownloading = true;
+    private void onSkipDownloadtask() {
+        if (PREF_SKIP_DOWNLOADER) {
+            shouldContinueDownloading = true;
+        } else {
+            shouldContinueDownloading = false;
+        }
     }
 
     /**
@@ -67,6 +72,7 @@ public class MinecraftDownloader {
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         sExecutorService.execute(() -> {
             try {
+                onSkipDownloadtask();
                 if (!shouldContinueDownloading) {
                     // Terminate the download proces
                     downloadGame(version, realVersion);
