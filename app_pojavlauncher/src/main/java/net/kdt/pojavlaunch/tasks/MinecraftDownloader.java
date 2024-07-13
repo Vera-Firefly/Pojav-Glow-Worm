@@ -37,6 +37,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class MinecraftDownloader {
     public static final String MINECRAFT_RES = "https://resources.download.minecraft.net/";
+    public static volatile boolean shouldContinueDownloading = false;
     private AtomicReference<Exception> mDownloaderThreadException;
     private ArrayList<DownloaderTask> mScheduledDownloadTasks;
     private AtomicLong mDownloadFileCounter;
@@ -46,6 +47,14 @@ public class MinecraftDownloader {
     private File mTargetJarFile; // The destination client JAR to which the source will be copied to.
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
+
+    /**
+     * Check if the user needs to terminate the download
+     * Check before starting the game
+     */
+    public static void stopDownload(String val) {
+        shouldContinueDownloading = val;
+    }
 
     /**
      * Start the game version download process on the global executor service.
@@ -58,12 +67,19 @@ public class MinecraftDownloader {
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         sExecutorService.execute(() -> {
             try {
-                downloadGame(version, realVersion);
+                if (!shouldContinueDownloading) {
+                    // Terminate the download proces
+                    downloadGame(version, realVersion);
+                }
                 listener.onDownloadDone();
-            }catch (Exception e) {
-                listener.onDownloadFailed(e);
+            } catch (Exception e) {
+                if (!shouldContinueDownloading) {
+                    // A possible exception is thrown when the user does not terminate the download.
+                    listener.onDownloadFailed(e);
+                }
+            } finally {
+                ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             }
-            ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
         });
     }
 
