@@ -67,11 +67,10 @@ public class MinecraftDownloader {
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         sExecutorService.execute(() -> {
             try {
-                if (shouldContinueDownloading) {
+                if (!shouldContinueDownloading) {
                     // Terminate the download proces
-                    return;
+                    downloadGame(version, realVersion);
                 }
-                downloadGame(version, realVersion);
                 listener.onDownloadDone();
             } catch (Exception e) {
                 if (!shouldContinueDownloading) {
