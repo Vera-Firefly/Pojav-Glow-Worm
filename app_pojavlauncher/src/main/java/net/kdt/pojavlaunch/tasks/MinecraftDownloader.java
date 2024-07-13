@@ -70,7 +70,7 @@ public class MinecraftDownloader {
             try {
                 if (shouldContinueDownloading) {
                     // Terminate the download proces
-                    return
+                    return;
                 }
                 downloadGame(version, realVersion);
                 listener.onDownloadDone();
