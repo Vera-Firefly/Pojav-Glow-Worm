@@ -15,6 +15,7 @@ import androidx.preference.Preference;
 import com.kdt.pickafile.FileListView;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -31,6 +32,7 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
         if(!Tools.checkVulkanSupport(driverPreference.getContext().getPackageManager())) {
             driverPreference.setVisible(false);
         }
+
         findPreference("control_mouse_setting").setOnPreferenceClickListener((preference) -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
@@ -46,6 +48,12 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
             Toast.makeText(getContext(), R.string.notif_mouse1, Toast.LENGTH_SHORT).show();
             return true;
         });
+
+        Preference skipDownloadPre = requirePreference("skipDownloader");
+        if ((SwitchPreference) skipDownloadPre).getChecked(true)) {
+            MinecraftDownloader.stopDownload();
+        }
+
     }
     @Override
     public void onActivityResult(
