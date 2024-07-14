@@ -48,13 +48,18 @@ public class MinecraftDownloader {
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
     private static volatile boolean shouldContinueDownloading = false;
+    private static volatile boolean shouldDownloadOptifine = false;
 
     /**
      * Check if the user needs to terminate the download
      * Check before starting the game
+     * If downloading optifine, do not skip the download
      */
+    public static void onDownloadOptifine() {
+        shouldDownloadOptifine = true;
+    }
     private void onSkipDownloadtask() {
-        if (PREF_SKIP_DOWNLOADER) {
+        if (PREF_SKIP_DOWNLOADER && !shouldDownloadOptifine) {
             shouldContinueDownloading = true;
         } else {
             shouldContinueDownloading = false;
