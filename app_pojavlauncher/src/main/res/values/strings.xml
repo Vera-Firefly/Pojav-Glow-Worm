@@ -414,6 +414,8 @@
     <string name="microsoft_login_fragment">Login started!</string>
     <string name="preference_skip_download_title">Don\'t check resource integrity</string>
     <string name="preference_skip_download">Launch the game without checking the integrity of the game</string>
+    <string name="preference_quit_launcher_title">Quit Launcher</string>
+    <string name="preference_quit_launcher">Exit the launcher when the running the game</string>
     <!-- Other login -->
     <string name="other_login_api">Other Login</string>
     <string name="other_login_authentication_server">Authentication server</string>
