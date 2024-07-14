@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.lifecycle;
 
 import static net.kdt.pojavlaunch.MainActivity.INTENT_MINECRAFT_VERSION;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_QUIT_LAUNCHER;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +19,7 @@ import net.kdt.pojavlaunch.utils.NotificationUtils;
 public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneListener, ContextExecutorTask {
     private final String mErrorString;
     private final String mNormalizedVersionid;
+    private static volatile boolean shouldQuitLauncher = true;
 
     public ContextAwareDoneListener(Context baseContext, String versionId) {
         this.mErrorString = baseContext.getString(R.string.mc_download_failed);
@@ -29,6 +31,14 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
         mainIntent.putExtra(INTENT_MINECRAFT_VERSION, mNormalizedVersionid);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return mainIntent;
+    }
+
+    private void onQuitLauncher() {
+        if (PREF_QUIT_LAUNCHER) {
+            shouldQuitLauncher = true;
+        } else {
+            shouldQuitLauncher = false;
+        }
     }
 
     @Override
@@ -44,10 +54,15 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
     @Override
     public void executeWithActivity(Activity activity) {
         try {
+            onQuitLauncher();
             Intent gameStartIntent = createGameStartIntent(activity);
             activity.startActivity(gameStartIntent);
-            activity.finish();
-            android.os.Process.killProcess(android.os.Process.myPid()); //You should kill yourself, NOW!
+            if (shouldQuitLauncher) {
+                activity.finish();
+                android.os.Process.killProcess(android.os.Process.myPid()); //You should kill yourself, NOW!
+            } else {
+                // Nothing to do here
+            }
         } catch (Throwable e) {
             Tools.showError(activity.getBaseContext(), e);
         }
