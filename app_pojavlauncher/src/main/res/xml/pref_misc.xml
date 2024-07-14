@@ -22,6 +22,11 @@
             android:summary="@string/preference_enable_log_output_desc"
             android:title="@string/preference_enable_log_output_title" />
         <SwitchPreference
+            android:defaultValue="true"
+            android:key="quitLauncher"
+            android:summary="@string/preference_quit_launcher"
+            android:title="@string/preference_quit_launcher_title" />
+        <SwitchPreference
             android:defaultValue="false"
             android:key="skipDownload"
             android:summary="@string/preference_skip_download"

@@ -231,6 +231,8 @@
     <string name="customctrl_absolute_tracking">絕對手指跟蹤</string>
     <string name="preference_skip_download_title">不檢查遊戲完整性</string>
     <string name="preference_skip_download">在啟動遊戲時不檢查遊戲完整性,直接啟動遊戲</string>
+    <string name="preference_quit_launcher_title">退出啟動器</string>
+    <string name="preference_quit_launcher">在應用正式開始執行遊戲時,是否退出啟動器</string>
     <!-- Other login -->
     <string name="other_login_api">外置登錄</string>
     <string name="other_login_authentication_server">身份驗證伺服器</string>
