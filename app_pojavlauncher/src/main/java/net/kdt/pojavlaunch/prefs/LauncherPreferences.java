@@ -160,7 +160,7 @@ public class LauncherPreferences {
         PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("gameLanguage", "-1");
         PREF_ENABLE_LOG_OUTPUT = DEFAULT_PREF.getBoolean("enableLogOutput", false);
 	PREF_SKIP_DOWNLOADER = DEFAULT_PREF.getBoolean("skipDownload", false);
-	PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", false);
+	PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
