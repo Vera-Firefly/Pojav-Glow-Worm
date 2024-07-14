@@ -252,8 +252,8 @@
     <string name="other_login_external">外置登陸</string>
     <string name="other_login_server_error">无認證伺服器</string>
     <!-- Renderer Experimental Setup -->
-    <string name="preference_rendererexp_title">渲染器實驗性設置</string>
-    <string name="preference_rendererexp_description">非專業人員請勿使用</string>
+    <string name="preference_exp_title">實驗性設置</string>
+    <string name="preference_exp_description">非專業人員請勿使用</string>
     <string name="preference_category_renderer_experimental_settings">渲染器實驗性設置</string>
     <string name="preference_renderer_setup_title">使用渲染器實驗性設置</string>
     <string name="preference_renderer_setup">更多的渲染器特定設置</string>
