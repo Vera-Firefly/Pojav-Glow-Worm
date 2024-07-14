@@ -19,7 +19,7 @@ import net.kdt.pojavlaunch.utils.NotificationUtils;
 public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneListener, ContextExecutorTask {
     private final String mErrorString;
     private final String mNormalizedVersionid;
-    private static volatile boolean shouldQuitLauncher = true;
+    private static volatile boolean shouldQuitLauncher = false;
 
     public ContextAwareDoneListener(Context baseContext, String versionId) {
         this.mErrorString = baseContext.getString(R.string.mc_download_failed);
@@ -35,9 +35,9 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
 
     private void onQuitLauncher() {
         if (PREF_QUIT_LAUNCHER) {
-            shouldQuitLauncher = true;
-        } else {
             shouldQuitLauncher = false;
+        } else {
+            shouldQuitLauncher = true;
         }
     }
 
@@ -57,7 +57,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
             onQuitLauncher();
             Intent gameStartIntent = createGameStartIntent(activity);
             activity.startActivity(gameStartIntent);
-            if (shouldQuitLauncher) {
+            if (!shouldQuitLauncher) {
                 activity.finish();
                 android.os.Process.killProcess(android.os.Process.myPid()); //You should kill yourself, NOW!
             } else {
