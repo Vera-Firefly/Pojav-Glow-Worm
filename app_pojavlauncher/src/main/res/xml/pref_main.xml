@@ -47,17 +47,11 @@
 
         <Preference
             android:key="experimental_screen_setting"
-            android:title="@string/preference_experimental_title"
-            android:summary="@string/preference_experimental_description"
+            android:title="@string/preference_exp_title"
+            android:summary="@string/preference_exp_description"
             android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceExperimentalFragment"
             />
 
-        <Preference
-            android:key="rendererexp_screen_setting"
-            android:title="@string/preference_rendererexp_title"
-            android:summary="@string/preference_rendererexp_description"
-            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceRendererConfigFragment"
-            />
     </PreferenceCategory>
 
     <SwitchPreference
@@ -71,9 +65,5 @@
         android:summary="@string/preference_ask_for_notification_description"
         android:key="notification_permission_request"
         />
-
-
-
-
 
 </PreferenceScreen>
