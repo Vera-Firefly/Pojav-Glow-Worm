@@ -3,47 +3,56 @@
     xmlns:app2="http://schemas.android.com/apk/res-auto">
     <net.kdt.pojavlaunch.prefs.BackButtonPreference/>
     <PreferenceCategory
-    android:title="@string/preference_category_experimental_settings">
+    android:title="@string/preference_category_experimental_settings"
+    app2:iconSpaceReserved="false">
 
         <SwitchPreferenceCompat
             android:key="dump_shaders"
             android:title="@string/preference_shader_dump_title"
             android:summary="@string/preference_shader_dump_description"
+            app2:iconSpaceReserved="false"
             />
         <SwitchPreference
             android:defaultValue="false"
             android:key="bigCoreAffinity"
             android:title="@string/preference_force_big_core_title"
-            android:summary="@string/preference_force_big_core_desc" />
+            android:summary="@string/preference_force_big_core_desc"
+            app2:iconSpaceReserved="false"
+            />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-    android:title="@string/preference_category_renderer_experimental_settings">
+    android:title="@string/preference_category_renderer_experimental_settings"
+    app2:iconSpaceReserved="false">
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="ExperimentalSetup"
             android:title="@string/preference_renderer_setup_title"
-            android:summary="@string/preference_renderer_setup"/>
+            android:summary="@string/preference_renderer_setup"
+            app2:iconSpaceReserved="false"/>
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="spareBridge"
             android:title="@string/preference_spare_bridge_title"
-            android:summary="@string/preference_spare_bridge"/>
+            android:summary="@string/preference_spare_bridge"
+            app2:iconSpaceReserved="false"/>
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="ExpFrameBuffer"
             android:title="@string/preference_exp_framebuffer_title"
-            android:summary="@string/preference_exp_framebuffer"/>
+            android:summary="@string/preference_exp_framebuffer"
+            app2:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="MesaRendererChoose"
-        android:title="@string/preference_renderer_setup_extra">
+        android:title="@string/preference_renderer_setup_extra"
+        app2:iconSpaceReserved="false">
 
         <androidx.preference.ListPreference
             android:defaultValue="default"
@@ -51,31 +60,37 @@
             android:entries="@array/osmesa_library"
             android:entryValues="@array/osmesa_values"
             android:title="@string/preference_extra_mesa_version"
-            app2:useSimpleSummaryProvider="true"/>
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"/>
         <androidx.preference.ListPreference
             android:defaultValue="driver_zink"
             android:key="CDriverModels"
             android:entries="@array/driver_model"
             android:entryValues="@array/driver_model_values"
             android:title="@string/preference_extra_driver_model"
-            app2:useSimpleSummaryProvider="true"/>
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="customMesaVersionPref"
-        android:title="@string/preference_exp_custommv">
+        android:title="@string/preference_exp_custommv"
+        app2:iconSpaceReserved="false">
 
         <SwitchPreference
             android:key="ebSystem"
-            android:title="@string/preference_exp_ebsystem"/>
+            android:title="@string/preference_exp_ebsystem"
+            app2:iconSpaceReserved="false"/>
         <SwitchPreference
             android:key="ebSpecific"
-            android:title="@string/preference_exp_ebspecific"/>
+            android:title="@string/preference_exp_ebspecific"
+            app2:iconSpaceReserved="false"/>
         <SwitchPreference
             android:key="SetGLVersion"
             android:title="@string/preference_rendererexp_custom_glversion_title"
-            android:summary="@string/preference_rendererexp_custom_glversion"/>
+            android:summary="@string/preference_rendererexp_custom_glversion"
+            app2:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
