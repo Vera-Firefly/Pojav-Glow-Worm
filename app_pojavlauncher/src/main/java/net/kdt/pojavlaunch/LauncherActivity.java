@@ -135,9 +135,32 @@ public class LauncherActivity extends BaseActivity {
             ExtraCore.setValue(ExtraConstants.SELECT_AUTH_METHOD, true);
             return false;
         }
+        return true;
+    };
+
+    private final ExtraListener<Boolean> mStartDownloadMinecraft = (key, value) -> {
+        if (!mLaunchGameListener) {
+            return false;
+        }
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
         new MinecraftDownloader().start(
+                true,
+                mcVersion,
+                normalizedVersionId,
+                new ContextAwareDoneListener(this, normalizedVersionId)
+        );
+        return false;
+    };
+
+    private final ExtraListener<Boolean> mSkipDownloadMinecraft = (key, value) -> {
+        if (!mLaunchGameListener) {
+            return false;
+        }
+        String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
+        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
+        new MinecraftDownloader().start(
+                false,
                 mcVersion,
                 normalizedVersionId,
                 new ContextAwareDoneListener(this, normalizedVersionId)
@@ -204,6 +227,8 @@ public class LauncherActivity extends BaseActivity {
         ExtraCore.addExtraListener(ExtraConstants.SELECT_AUTH_METHOD, mSelectAuthMethod);
 
         ExtraCore.addExtraListener(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
+        ExtraCore.addExtraListener(ExtraConstants.START_DOWNLOADER, mStartDownloadMinecraft);
+        ExtraCore.addExtraListener(ExtraConstants.SKIP_DOWNLOADER, mSkipDownloadMinecraft);
 
         new AsyncVersionList().getVersionList(versions -> ExtraCore.setValue(ExtraConstants.RELEASE_TABLE, versions), false);
 
@@ -250,6 +275,8 @@ public class LauncherActivity extends BaseActivity {
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.BACK_PREFERENCE, mBackPreferenceListener);
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.SELECT_AUTH_METHOD, mSelectAuthMethod);
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
+        ExtraCore.removeExtraListenerFromValue(ExtraConstants.START_DOWNLOADER, mStartDownloadMinecraft);
+        ExtraCore.removeExtraListenerFromValue(ExtraConstants.SKIP_DOWNLOADER, mSkipDownloadMinecraft);
 
         getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(mFragmentCallbackListener);
     }
