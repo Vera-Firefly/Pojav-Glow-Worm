@@ -142,6 +142,7 @@ public class LauncherActivity extends BaseActivity {
         if (!onStartLaunchGame) {
             return false;
         }
+        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
         new MinecraftDownloader().start(
@@ -157,6 +158,7 @@ public class LauncherActivity extends BaseActivity {
         if (!onStartLaunchGame) {
             return false;
         }
+        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
         new MinecraftDownloader().start(
@@ -376,17 +378,4 @@ public class LauncherActivity extends BaseActivity {
         mProgressLayout = findViewById(R.id.progress_layout);
     }
 
-    private boolean isTimeBetween(String currentTime, String startTime, String endTime) {
-        try {
-            Date currentDate = sdf.parse(currentTime);
-            Date startDate = sdf.parse(startTime);
-            Date endDate = sdf.parse(endTime);
-            if (currentDate.after(startDate) && currentDate.before(endDate)) {
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }
