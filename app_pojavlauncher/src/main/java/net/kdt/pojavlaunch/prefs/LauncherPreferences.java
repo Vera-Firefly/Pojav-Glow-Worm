@@ -96,7 +96,6 @@ public class LauncherPreferences {
     public static String PREF_MESA_GLSL_VERSION;
     public static String PREF_GAME_LANGUAGE = "-1";
     public static boolean PREF_ENABLE_LOG_OUTPUT = false;
-    public static boolean PREF_SKIP_DOWNLOADER = false;
     public static boolean PREF_QUIT_LAUNCHER = true;
 
     public static void loadPreferences(Context ctx) {
@@ -106,15 +105,15 @@ public class LauncherPreferences {
         PREF_RENDERER = DEFAULT_PREF.getString("renderer", "opengles2");
         PREF_BUTTONSIZE = DEFAULT_PREF.getInt("buttonscale", 100);
         PREF_MOUSESCALE = DEFAULT_PREF.getInt("mousescale", 100);
-	PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
-	PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
-	PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
-	PREF_VERTYPE_RELEASE = DEFAULT_PREF.getBoolean("vertype_release", true);
-	PREF_VERTYPE_SNAPSHOT = DEFAULT_PREF.getBoolean("vertype_snapshot", false);
-	PREF_VERTYPE_OLDALPHA = DEFAULT_PREF.getBoolean("vertype_oldalpha", false);
-	PREF_VERTYPE_OLDBETA = DEFAULT_PREF.getBoolean("vertype_oldbeta", false);
-	PREF_LONGPRESS_TRIGGER = DEFAULT_PREF.getInt("timeLongPressTrigger", 300);
-	PREF_DEFAULTCTRL_PATH = DEFAULT_PREF.getString("defaultCtrl", Tools.CTRLDEF_FILE);
+	    PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
+	    PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
+        PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
+        PREF_VERTYPE_RELEASE = DEFAULT_PREF.getBoolean("vertype_release", true);
+        PREF_VERTYPE_SNAPSHOT = DEFAULT_PREF.getBoolean("vertype_snapshot", false);
+        PREF_VERTYPE_OLDALPHA = DEFAULT_PREF.getBoolean("vertype_oldalpha", false);
+        PREF_VERTYPE_OLDBETA = DEFAULT_PREF.getBoolean("vertype_oldbeta", false);
+        PREF_LONGPRESS_TRIGGER = DEFAULT_PREF.getInt("timeLongPressTrigger", 300);
+        PREF_DEFAULTCTRL_PATH = DEFAULT_PREF.getString("defaultCtrl", Tools.CTRLDEF_FILE);
         PREF_FORCE_ENGLISH = DEFAULT_PREF.getBoolean("force_english", false);
         PREF_CHECK_LIBRARY_SHA = DEFAULT_PREF.getBoolean("checkLibraries",true);
         PREF_DISABLE_GESTURES = DEFAULT_PREF.getBoolean("disableGestures",false);
@@ -159,8 +158,7 @@ public class LauncherPreferences {
 
         PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("gameLanguage", "-1");
         PREF_ENABLE_LOG_OUTPUT = DEFAULT_PREF.getBoolean("enableLogOutput", false);
-	PREF_SKIP_DOWNLOADER = DEFAULT_PREF.getBoolean("skipDownload", false);
-	PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
+	    PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
