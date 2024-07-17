@@ -59,7 +59,6 @@ public class MinecraftDownloader {
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         sExecutorService.execute(() -> {
             try {
-                onSkipDownloadtask();
                 if (downloader) {
                     // Terminate the download proces
                     downloadGame(version, realVersion);
