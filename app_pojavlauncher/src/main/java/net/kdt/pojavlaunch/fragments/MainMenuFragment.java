@@ -79,11 +79,11 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
 
         mPlayButton.setOnClickListener(v -> {
             ExtraCore.setValue(ExtraConstants.MINECRAFT_DOWNLOADER, true)
-                     .setValue(ExtraConstants.LAUNCH_GAME, true)
+                     .setValue(ExtraConstants.LAUNCH_GAME, true);
         });
         mPlayButton.setOnLongClickListener(v -> {
             ExtraCore.setValue(ExtraConstants.SKIP_DOWNLOADER, true)
-                     .setValue(ExtraConstants.LAUNCH_GAME, true)
+                     .setValue(ExtraConstants.LAUNCH_GAME, true);
         });
 
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
