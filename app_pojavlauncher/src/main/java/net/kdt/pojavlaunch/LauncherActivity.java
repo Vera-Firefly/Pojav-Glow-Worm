@@ -50,12 +50,10 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LauncherActivity extends BaseActivity {
     public static final String SETTING_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
     public final ActivityResultLauncher<Object> modInstallerLauncher =
             registerForActivityResult(new OpenDocumentWithExtension("jar"), (data)->{
@@ -69,6 +67,7 @@ public class LauncherActivity extends BaseActivity {
     private ProgressServiceKeeper mProgressServiceKeeper;
     private ModloaderInstallTracker mInstallTracker;
     private NotificationManager mNotificationManager;
+    private static volatile boolean onStartLaunchGame = false;
 
     /* Allows to switch from one button "type" to another */
     private final FragmentManager.FragmentLifecycleCallbacks mFragmentCallbackListener = new FragmentManager.FragmentLifecycleCallbacks() {
@@ -135,9 +134,37 @@ public class LauncherActivity extends BaseActivity {
             ExtraCore.setValue(ExtraConstants.SELECT_AUTH_METHOD, true);
             return false;
         }
+        onStartLaunchGame = true;
+        return true;
+    };
+
+    private final ExtraListener<Boolean> mStartDownloadMinecraft = (key, value) -> {
+        if (!onStartLaunchGame) {
+            return false;
+        }
+        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
+        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
         new MinecraftDownloader().start(
+                true,
+                mcVersion,
+                normalizedVersionId,
+                new ContextAwareDoneListener(this, normalizedVersionId)
+        );
+        return false;
+    };
+
+    private final ExtraListener<Boolean> mSkipDownloadMinecraft = (key, value) -> {
+        if (!onStartLaunchGame) {
+            return false;
+        }
+        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
+        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
+        String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
+        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
+        new MinecraftDownloader().start(
+                false,
                 mcVersion,
                 normalizedVersionId,
                 new ContextAwareDoneListener(this, normalizedVersionId)
@@ -204,6 +231,8 @@ public class LauncherActivity extends BaseActivity {
         ExtraCore.addExtraListener(ExtraConstants.SELECT_AUTH_METHOD, mSelectAuthMethod);
 
         ExtraCore.addExtraListener(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
+        ExtraCore.addExtraListener(ExtraConstants.START_DOWNLOADER, mStartDownloadMinecraft);
+        ExtraCore.addExtraListener(ExtraConstants.SKIP_DOWNLOADER, mSkipDownloadMinecraft);
 
         new AsyncVersionList().getVersionList(versions -> ExtraCore.setValue(ExtraConstants.RELEASE_TABLE, versions), false);
 
@@ -250,6 +279,8 @@ public class LauncherActivity extends BaseActivity {
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.BACK_PREFERENCE, mBackPreferenceListener);
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.SELECT_AUTH_METHOD, mSelectAuthMethod);
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
+        ExtraCore.removeExtraListenerFromValue(ExtraConstants.START_DOWNLOADER, mStartDownloadMinecraft);
+        ExtraCore.removeExtraListenerFromValue(ExtraConstants.SKIP_DOWNLOADER, mSkipDownloadMinecraft);
 
         getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(mFragmentCallbackListener);
     }
@@ -349,17 +380,4 @@ public class LauncherActivity extends BaseActivity {
         mProgressLayout = findViewById(R.id.progress_layout);
     }
 
-    private boolean isTimeBetween(String currentTime, String startTime, String endTime) {
-        try {
-            Date currentDate = sdf.parse(currentTime);
-            Date startDate = sdf.parse(startTime);
-            Date endDate = sdf.parse(endTime);
-            if (currentDate.after(startDate) && currentDate.before(endDate)) {
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }
