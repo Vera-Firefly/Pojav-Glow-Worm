@@ -142,6 +142,7 @@ public class LauncherActivity extends BaseActivity {
         if (!onStartLaunchGame) {
             return false;
         }
+        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
         MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
@@ -158,6 +159,7 @@ public class LauncherActivity extends BaseActivity {
         if (!onStartLaunchGame) {
             return false;
         }
+        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
         MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
