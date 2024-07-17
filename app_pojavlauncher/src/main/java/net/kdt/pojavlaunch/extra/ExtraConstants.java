@@ -19,6 +19,8 @@ public class ExtraConstants {
     public static final String REFRESH_VERSION_SPINNER = "refresh_version";
     /* ExtraCore Constant: When we want to launch the game */
     public static final String LAUNCH_GAME = "launch_game";
+    public static final String SKIP_DOWNLOADER = "skip_downloader";
+    public static final String START_DOWNLOADER = "start_downloader";
     /* ExtraCore Constant:Other login methods */
     public static final String OTHER_LOGIN_TODO = "other_login_todo";
 
