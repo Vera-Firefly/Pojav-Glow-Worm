@@ -139,6 +139,10 @@ public class LauncherActivity extends BaseActivity {
     };
 
     private final ExtraListener<Boolean> mStartDownloadMinecraft = (key, value) -> {
+        if(mProgressLayout.hasProcesses()){
+            // Stops repeating operations if a process is running
+            return false;
+        }
         if (!onStartLaunchGame) {
             return false;
         }
@@ -156,6 +160,10 @@ public class LauncherActivity extends BaseActivity {
     };
 
     private final ExtraListener<Boolean> mSkipDownloadMinecraft = (key, value) -> {
+        if(mProgressLayout.hasProcesses()){
+            // Stops repeating operations if a process is running
+            return false;
+        }
         if (!onStartLaunchGame) {
             return false;
         }
