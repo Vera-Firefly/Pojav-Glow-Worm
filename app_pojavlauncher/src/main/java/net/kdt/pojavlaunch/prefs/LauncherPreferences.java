@@ -12,6 +12,8 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.util.Log;
 
+import com.movtery.utils.UnpackJRE;
+
 import androidx.core.view.DisplayCutoutCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -105,8 +107,8 @@ public class LauncherPreferences {
         PREF_RENDERER = DEFAULT_PREF.getString("renderer", "opengles2");
         PREF_BUTTONSIZE = DEFAULT_PREF.getInt("buttonscale", 100);
         PREF_MOUSESCALE = DEFAULT_PREF.getInt("mousescale", 100);
-	    PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
-	    PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
+	PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
+	PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
         PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
         PREF_VERTYPE_RELEASE = DEFAULT_PREF.getBoolean("vertype_release", true);
         PREF_VERTYPE_SNAPSHOT = DEFAULT_PREF.getBoolean("vertype_snapshot", false);
@@ -158,7 +160,7 @@ public class LauncherPreferences {
 
         PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("gameLanguage", "-1");
         PREF_ENABLE_LOG_OUTPUT = DEFAULT_PREF.getBoolean("enableLogOutput", false);
-	    PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
+	PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
@@ -168,16 +170,21 @@ public class LauncherPreferences {
                     PREF_CUSTOM_JAVA_ARGS.replace(arg, "")).apply();
             }
         }
-        if(DEFAULT_PREF.contains("defaultRuntime")) {
-            PREF_DEFAULT_RUNTIME = DEFAULT_PREF.getString("defaultRuntime","");
-        }else{
-            if(MultiRTUtils.getRuntimes().size() < 1) {
-                PREF_DEFAULT_RUNTIME = "";
-                return;
-            }
-            PREF_DEFAULT_RUNTIME = MultiRTUtils.getRuntimes().get(0).name;
-            LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime",LauncherPreferences.PREF_DEFAULT_RUNTIME).apply();
+        reloadRuntime();
+    }
+
+    public static void reloadRuntime() {
+        if (DEFAULT_PREF.contains("defaultRuntime")) {
+            PREF_DEFAULT_RUNTIME = DEFAULT_PREF.getString("defaultRuntime", "");
+            return;
+        } else if (MultiRTUtils.getRuntimes().isEmpty()) {
+            PREF_DEFAULT_RUNTIME = "";
+            LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime", PREF_DEFAULT_RUNTIME).apply();
+            return;
         }
+
+        PREF_DEFAULT_RUNTIME = UnpackJRE.InternalRuntime.JRE_8.name;
+        LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime", PREF_DEFAULT_RUNTIME).apply();
     }
 
     /**
