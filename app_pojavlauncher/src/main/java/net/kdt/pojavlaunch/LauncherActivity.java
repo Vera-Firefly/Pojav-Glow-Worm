@@ -135,7 +135,7 @@ public class LauncherActivity extends BaseActivity {
             return false;
         }
         onStartLaunchGame = true;
-        return true;
+        return false;
     };
 
     private final ExtraListener<Boolean> mStartDownloadMinecraft = (key, value) -> {
