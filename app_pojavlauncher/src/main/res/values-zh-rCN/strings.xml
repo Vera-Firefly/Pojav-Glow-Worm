@@ -307,7 +307,6 @@
     <string name="preference_verify_manifest_description">启用后，启动器会把游戏版本清单连同库一并检查。</string>
     <string name="notif_download_finished">游戏已就绪</string>
     <string name="notif_download_finished_desc">点此开始！</string>
-    <string name="preference_category_gestures">手势操作</string>
     <string name="preference_category_buttons">按钮操作</string>
     <string name="preference_category_experimental_settings">实验性补丁</string>
     <string name="preference_category_java_tweaks">Java 调整</string>
