@@ -24,7 +24,6 @@
     <string name="toast_3">Exit</string>
     -->
     <!-- MCLauncherActivity: Tabs -->
-    <string name="mcl_tab_wiki">Wiki</string>
     <!-- MCLauncherActivity: Account status -->
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">Membersihkan fail cache</string>
@@ -68,7 +67,12 @@
     <string name="control_debug">Nyahpepijat</string>
     <string name="control_primary">Pri</string>
     <string name="control_secondary">Sec</string>
+    <string name="control_shift">◇</string>
     <string name="control_inventory">Inv</string>
+    <string name="control_up">▲</string>
+    <string name="control_left">◀</string>
+    <string name="control_right">▶</string>
+    <string name="control_down">▼</string>
     <string name="control_thirdperson">3rd</string>
     <string name="control_listplayers">Tab</string>
     <string name="control_mouse">Tetikus</string>
@@ -113,7 +117,7 @@
     <string name="multirt_runtime_incompatiblearch">Seni bina tidak serasi: %s</string>
     <string name="multirt_config_setdefault">Tetapkan lalai</string>
     <string name="multirt_config_setdefault_already">Lalai</string>
-    <string name="multirt_nocompartiblert">Tidak menemui sebarang Java Runtime yang serasi. Versi ini memerlukan Java %d atau lebih baru.</string>
+    <string name="multirt_nocompatiblert">Tidak menemui sebarang Java Runtime yang serasi. Versi ini memerlukan Java %d atau lebih baru.</string>
     <string name="multirt_nojava8rt">Tidak menemui Java 8. Untuk menggunakan pilihan ini, anda perlu memasang Java 8.</string>
     <string name="pvc_gameDirectory">Direktori permainan</string>
     <string name="pvc_jvmArgs">Argumen JVM</string>
@@ -134,4 +138,5 @@
     <string name="progresslayout_tasks_in_progress">%d tugas sedang dijalankan</string>
     <string name="notification_terminate">Tamatkan</string>
     <string name="of_dl_progress">Memuat turun %s</string>
+    <string name="preference_category_miscellaneous">Tetapan lain-lain</string>
 </resources>

@@ -48,6 +48,7 @@
     <string name="mcl_options">Options</string>
     <string name="mcl_option_customcontrol">Custom controls</string>
 
+
     <string name="mcl_setting_title_use_surface_view">Use alternate surface rendering</string>
     <string name="mcl_setting_subtitle_use_surface_view">May help performance in GPU bound scenarios.</string>
     <string name="mcl_setting_title_ignore_notch">Ignore notch</string>
@@ -89,9 +90,6 @@
     <string name="global_select">Select</string>
     <string name="global_retry">Retry</string>
     <string name="global_default">Default</string>
-    <string name="global_rename">Rename</string>
-    <string name="global_return">Return</string>
-    <string name="global_refresh">Refresh</string>
 
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">Application/Game exited with code %d, check latestlog.txt for more details.</string>
@@ -154,10 +152,6 @@
     <string name="customctrl_selectdefault">Select default controlmap</string>
     <string name="customctrl_export">Export controlmap</string>
 
-    <string name="main_terminal">Terminal</string>
-    <string name="main_termianl_init">Initialization</string>
-    <string name="main_terminal_loading">Loading...</string>
-    
     <string name="main_share_logs">Share log file</string>
     <string name="main_install_jar_file">Execute a .jar</string>
     <string name="main_play">Play</string>
@@ -190,7 +184,7 @@
     <string name="multirt_config_setdefault">Set default</string>
     <string name="multirt_config_setdefault_already">Default</string>
     <string name="multirt_config_removeerror_last">You must have at least one Java Runtime installed.</string>
-    <string name="multirt_nocompartiblert">Can\'t find any compartible Java Runtime. This version requires Java %d or newer.</string>
+    <string name="multirt_nocompatiblert">Can\'t find any compartible Java Runtime. This version requires Java %d or newer.</string>
     <string name="multirt_nojava8rt">Can\'t find Java 8. In order to use this option, you need to install Java 8.</string>
     <string name="multirt_delete_runtime">Delete runtime</string>
     <string name="pvc_gameDirectory">Game directory</string>
@@ -373,6 +367,7 @@
     <string name="preference_ask_for_notification_description">Click to re-request the notification permission, required for game/modpack background downloads to work properly.</string>
     <string name="preference_vsync_in_zink_title">Allow V-Sync with Zink</string>
     <string name="preference_vsync_in_zink_description">Allows the launcher to use internal system APIs to enable V-Sync for Zink. Turn this off if your launcher suddenly crashes with Zink after a system update.</string>
+    <string name="exception_failed_to_unpack_jre17">Failed to install JRE 17</string>
     <string name="newdl_starting">Reading game metadata…</string>
     <string name="newdl_downloading_metadata">Downloading game metadata (%s)</string>
     <string name="newdl_downloading_game_files">Downloading game files… (%d/%d, %.2f MB)</string>
@@ -480,5 +475,4 @@
     <string name="profiles_path_delete_title">Delete This Path</string>
     <string name="profiles_path_delete_message">The launcher will delete this path, but it will not delete the files saved in the corresponding path. You can re-add this path after deletion.</string>
     <string name="profiles_path_task_in_progress">Task in progress, path management features are temporarily unavailable</string>
-
 </resources>

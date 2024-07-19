@@ -24,7 +24,6 @@
     <string name="toast_3">Exit</string>
     -->
     <!-- MCLauncherActivity: Tabs -->
-    <string name="mcl_tab_wiki">Wiki</string>
     <!-- MCLauncherActivity: Account status -->
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">Se șterg fișierele cache</string>
@@ -131,7 +130,7 @@
     <string name="multirt_progress_caching">Caching...</string>
     <string name="multirt_config_setdefault">Setaţi ca prestabilit</string>
     <string name="multirt_config_setdefault_already">Prestabilit</string>
-    <string name="multirt_nocompartiblert">Nu s-a putut găsi niciun Java Runtime compatibil. Această versiune necesită Java %d sau o versiune mai nouă.</string>
+    <string name="multirt_nocompatiblert">Nu s-a putut găsi niciun Java Runtime compatibil. Această versiune necesită Java %d sau o versiune mai nouă.</string>
     <string name="multirt_nojava8rt">Nu s-a putut găsi Java 8. Pentru a folosi această opțiune, trebuie să instalezi Java 8.</string>
     <string name="pvc_gameDirectory">Dosarul jocului</string>
     <string name="pvc_jvmArgs">Argumente JVM</string>
@@ -190,4 +189,6 @@
     <string name="global_yes">Da</string>
     <string name="global_no">Nu</string>
     <string name="of_dl_progress">Se descarcă %s</string>
+    <string name="preference_category_java_tweaks">Ajustări Java</string>
+    <string name="preference_category_miscellaneous">Setări diverse</string>
 </resources>

@@ -24,7 +24,6 @@
     <string name="toast_3">Exit</string>
     -->
     <!-- MCLauncherActivity: Tabs -->
-    <string name="mcl_tab_wiki">Wiki</string>
     <!-- MCLauncherActivity: Account status -->
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">Nililinis ang mga file ng cache</string>
@@ -125,7 +124,7 @@
     <string name="multirt_progress_caching">Pag-cache...</string>
     <string name="multirt_config_setdefault">Itakda ang default</string>
     <string name="multirt_config_setdefault_already">Default</string>
-    <string name="multirt_nocompartiblert">Walang mahanap na anumang katugmang Java Runtime. Ang bersyon na ito ay nangangailangan ng Java %d o mas bago.</string>
+    <string name="multirt_nocompatiblert">Walang mahanap na anumang katugmang Java Runtime. Ang bersyon na ito ay nangangailangan ng Java %d o mas bago.</string>
     <string name="multirt_nojava8rt">Hindi mahanap ang Java 8. Upang magamit ang opsyong ito, kailangan mong i-install ang Java 8.</string>
     <string name="pvc_gameDirectory">Direktoryo ng laro</string>
     <string name="pvc_jvmArgs">Argumento ng JVM</string>
@@ -155,4 +154,6 @@
     <string name="lazy_service_default_title">Serbisyong Harapan ng Pojav</string>
     <string name="mcl_setting_veroption_installed">Naka-Install</string>
     <string name="of_dl_progress">Nagda-download %s</string>
+    <string name="preference_category_java_tweaks">Mga tweaks sa Java</string>
+    <string name="preference_category_miscellaneous">Karagdagang setting</string>
 </resources>

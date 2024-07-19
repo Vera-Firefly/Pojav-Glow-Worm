@@ -24,7 +24,6 @@
     <string name="toast_3">Exit</string>
     -->
     <!-- MCLauncherActivity: Tabs -->
-    <string name="mcl_tab_wiki">Wiki</string>
     <!-- MCLauncherActivity: Account status -->
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">Valomi nereikalingi failai</string>
@@ -34,8 +33,11 @@
     <string name="mcl_options">Pasirinkimai</string>
     <string name="mcl_option_customcontrol">Kontrolės</string>
     <string name="mcl_setting_title_use_surface_view">Naudoti alternatyvų atvaizdų vaizdavimą</string>
+    <string name="mcl_setting_subtitle_use_surface_view">Gali pagerinti našumą GPU surištuose scenarijuose.</string>
     <string name="mcl_setting_title_ignore_notch">Ignoruoti kamerą</string>
+    <string name="mcl_setting_subtitle_ignore_notch">Ignoruojant kamerą ištempia vaizdą po ja.\nDuodą geresnį vaizdą.</string>
     <string name="mcl_setting_title_resolution_scaler">Rezoliucijos redagavimas</string>
+    <string name="mcl_setting_subtitle_resolution_scaler">Leidžia keisti ekrano rezoliuciją. 100% yra pilna rezoliucija.</string>
     <string name="mcl_setting_title_buttonscale">Kontroliuoti mygtukų dydį</string>
     <string name="mcl_setting_title_mousescale">Pelės dydis</string>
     <string name="mcl_setting_title_javaargs">JVM Paleidimo argumentai</string>
@@ -134,7 +136,7 @@
     <string name="multirt_progress_caching">Talpinama...</string>
     <string name="multirt_config_setdefault">Nustatyti numatytą</string>
     <string name="multirt_config_setdefault_already">Numatytasis</string>
-    <string name="multirt_nocompartiblert">Nerasta tinkamos Java Runtine. Šiai versijai reikalinga Java %d arba naujesnė.</string>
+    <string name="multirt_nocompatiblert">Nerasta tinkamos Java Runtine. Šiai versijai reikalinga Java %d arba naujesnė.</string>
     <string name="multirt_nojava8rt">Nerasta Java 8. Kad naudotumėte šią funkciją, naudokite Java 8.</string>
     <string name="multirt_delete_runtime">Ištrinti runtime</string>
     <string name="pvc_gameDirectory">Žaidimo failų vieta</string>
@@ -171,4 +173,6 @@
     <string name="xerr_no_account">Atrodo kad tu neturi Xbox Live accounta. Prašau prisijungti kartą į https://minecraft.net/ ir pabandyt dar kartą.</string>
     <string name="xerr_not_available">Xbox Live nėra jūsų šalyje</string>
     <string name="of_dl_progress">Atsisiunčiama %s</string>
+    <string name="preference_category_java_tweaks">Java redagavimas</string>
+    <string name="preference_category_miscellaneous">Kiti nustatymai</string>
 </resources>
