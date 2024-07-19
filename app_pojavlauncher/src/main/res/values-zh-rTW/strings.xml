@@ -358,6 +358,9 @@
     <string name="microsoft_login_fragment">開始登陸!</string>
     <string name="preference_quit_launcher_title">退出啟動器</string>
     <string name="preference_quit_launcher">在應用正式開始執行遊戲時,是否退出啟動器</string>
+    <string name="global_rename">重新命名</string>
+    <string name="global_return">返回</string>
+    <string name="global_refresh">重新整理</string>
     <!-- Other login -->
     <string name="other_login_api">外置登錄</string>
     <string name="other_login_authentication_server">身份驗證伺服器</string>

@@ -411,6 +411,9 @@
     <string name="main_terminal">Terminal</string>
     <string name="main_termianl_init">Initialization</string>
     <string name="main_terminal_loading">Loading...</string>
+    <string name="global_rename">Rename</string>
+    <string name="global_return">Return</string>
+    <string name="global_refresh">Refresh</string>
     <!-- Other login -->
     <string name="other_login_api">Other Login</string>
     <string name="other_login_authentication_server">Authentication server</string>
