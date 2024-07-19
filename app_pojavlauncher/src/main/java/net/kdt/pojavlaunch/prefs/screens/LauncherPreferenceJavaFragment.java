@@ -25,6 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
+    private EditText mSetJavaMemory;
     private final Timer timer = new Timer();
     private MultiRTConfigDialog mDialogScreen;
     private final ActivityResultLauncher<Object> mVmInstallLauncher =
@@ -45,20 +46,44 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         int deviceRam = getTotalDeviceMemory(seek7.getContext());
 
         if(is32BitsDevice() || deviceRam < 2048) maxRAM = Math.min(1024, deviceRam);
-        else maxRAM = deviceRam - (deviceRam < 3064 ? 800 : 1024); //To have a minimum for the device to breathe
+        else maxRAM = deviceRam - (deviceRam < 3064 ? 800 : 1024);
 
-        seek7.setMin(256);
-        seek7.setMax(maxRAM);
+        seek7.setRange(256, maxRAM);
         seek7.setValue(ramAllocation);
         seek7.setSuffix(" MB");
 
-        updateMemoryInfo(requireContext(), seek7);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(() -> updateMemoryInfo(requireContext(), seek7));
             }
         }, 0, 1000);
+
+        seek7.setOnPreferenceClickListener(preference -> {
+            LayoutInflater inflater = requireActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.dialog_java_memory, null);
+            mSetJavaMemory = view.findViewById(R.id.set_java_memory);
+            mSetJavaMemory.setText(LauncherPreferences.PREF_RAM_ALLOCATION);
+            AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.mcl_memory_allocation)
+                .setView(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
+                .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
+                    String Memory = mSetJavaMemory.getText().toString();
+                    if (Memory < 256) {
+                        Toast.makeText(requireContext(), getString(R.string.zh_setting_java_memory_too_small, 256), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (Memory > maxRAM) {
+                        Toast.makeText(requireContext(), getString(R.string.zh_setting_java_memory_too_big, maxRAM), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    seek7.setValue(Memory);
+                })
+                .setNegativeButton(R.string.alertdialog_cancel, null)
+                .create();
+            dialog.show();
+        });
+        updateMemoryInfo(requireContext(), seek7);
 
         EditTextPreference editJVMArgs = findPreference("javaArgs");
         if (editJVMArgs != null) {
@@ -78,12 +103,30 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
     }
 
     private void updateMemoryInfo(Context context, CustomSeekBarPreference seek) {
-        String summary = getString(
+        long seekValue = (long) seek.getValue() * 1024 * 1024;
+        long freeDeviceMemory = MemoryUtils.getFreeDeviceMemory(context);
+
+        boolean isMemorySizeExceeded = seekValue > freeDeviceMemory;
+
+        String summary = getString(R.string.zh_setting_java_memory_desc);
+        summary += "\r\n" + getMemoryInfoText(context, freeDeviceMemory);
+        if (isMemorySizeExceeded) summary += "\r\n" + getString(R.string.zh_setting_java_memory_exceeded);
+
+        String finalSummary = summary;
+        runOnUiThread(() -> seek.setSummary(finalSummary));
+    }
+
+    private String getMemoryInfoText(Context context) {
+        return getMemoryInfoText(context, MemoryUtils.getFreeDeviceMemory(context));
+    }
+
+    private String getMemoryInfoText(Context context, long freeDeviceMemory) {
+        return getString(
                 R.string.zh_setting_java_memory_info,
                 Tools.formatFileSize(MemoryUtils.getUsedDeviceMemory(context)),
                 Tools.formatFileSize(MemoryUtils.getTotalDeviceMemory(context)),
-                Tools.formatFileSize(MemoryUtils.getFreeDeviceMemory(context)));
-        runOnUiThread(() -> seek.setSummary(summary));
+                Tools.formatFileSize(freeDeviceMemory)
+                );
     }
 
     private void openMultiRTDialog() {
@@ -93,4 +136,5 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         }
         mDialogScreen.show();
     }
+
 }
