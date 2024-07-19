@@ -483,9 +483,6 @@ public final class Tools {
     }
 
 
-
-
-
     public static DisplayMetrics getDisplayMetrics(Activity activity) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
 
@@ -1331,5 +1328,19 @@ public final class Tools {
                 CDriverModleNames.toArray(new String[0]));
 
         return sCompatibleCDriverModle;
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static String formatFileSize(long bytes) {
+        if (bytes <= 0) return "0 B";
+
+        final String[] units = {"B", "KB", "MB", "GB"};
+        int unitIndex = 0;
+        double value = bytes;
+        while (value >= 1024 && unitIndex < units.length - 1) {
+            value /= 1024;
+            unitIndex++;
+        }
+        return String.format("%.2f %s", value, units[unitIndex]);
     }
 }

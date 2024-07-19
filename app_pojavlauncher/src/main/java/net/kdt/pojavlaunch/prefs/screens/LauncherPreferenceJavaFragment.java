@@ -2,6 +2,9 @@ package net.kdt.pojavlaunch.prefs.screens;
 
 import static net.kdt.pojavlaunch.Architecture.is32BitsDevice;
 import static net.kdt.pojavlaunch.Tools.getTotalDeviceMemory;
+import static net.kdt.pojavlaunch.Tools.runOnUiThread;
+
+import android.content.Context;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -16,7 +19,13 @@ import net.kdt.pojavlaunch.multirt.MultiRTConfigDialog;
 import net.kdt.pojavlaunch.prefs.CustomSeekBarPreference;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
+import com.movtery.utils.MemoryUtils;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
+    private final Timer timer = new Timer();
     private MultiRTConfigDialog mDialogScreen;
     private final ActivityResultLauncher<Object> mVmInstallLauncher =
             registerForActivityResult(new OpenDocumentWithExtension("xz"), (data)->{
@@ -43,6 +52,14 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         seek7.setValue(ramAllocation);
         seek7.setSuffix(" MB");
 
+        updateMemoryInfo(requireContext(), seek7);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> updateMemoryInfo(requireContext(), seek7));
+            }
+        }, 0, 1000);
+
         EditTextPreference editJVMArgs = findPreference("javaArgs");
         if (editJVMArgs != null) {
             editJVMArgs.setOnBindEditTextListener(TextView::setSingleLine);
@@ -52,6 +69,21 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
             openMultiRTDialog();
             return true;
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        timer.cancel();
+        super.onDestroy();
+    }
+
+    private void updateMemoryInfo(Context context, CustomSeekBarPreference seek) {
+        String summary = getString(
+                R.string.zh_setting_java_memory_info,
+                Tools.formatFileSize(MemoryUtils.getUsedDeviceMemory(context)),
+                Tools.formatFileSize(MemoryUtils.getTotalDeviceMemory(context)),
+                Tools.formatFileSize(MemoryUtils.getFreeDeviceMemory(context)));
+        runOnUiThread(() -> seek.setSummary(summary));
     }
 
     private void openMultiRTDialog() {
