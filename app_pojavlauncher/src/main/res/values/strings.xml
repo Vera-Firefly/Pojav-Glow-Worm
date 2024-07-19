@@ -408,6 +408,9 @@
     <string name="microsoft_login_fragment">Login started!</string>
     <string name="preference_quit_launcher_title">Quit Launcher</string>
     <string name="preference_quit_launcher">Exit the launcher when the running the game</string>
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Initialization</string>
+    <string name="main_terminal_loading">Loading...</string>
     <!-- Other login -->
     <string name="other_login_api">Other Login</string>
     <string name="other_login_authentication_server">Authentication server</string>
