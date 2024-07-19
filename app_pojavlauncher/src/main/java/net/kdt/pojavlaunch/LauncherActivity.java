@@ -146,16 +146,7 @@ public class LauncherActivity extends BaseActivity {
         if (!onStartLaunchGame) {
             return false;
         }
-        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
-        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
-        String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
-        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
-        new MinecraftDownloader().start(
-                true,
-                mcVersion,
-                normalizedVersionId,
-                new ContextAwareDoneListener(this, normalizedVersionId)
-        );
+        onTryDownloadGame(true);
         return false;
     };
 
@@ -167,16 +158,7 @@ public class LauncherActivity extends BaseActivity {
         if (!onStartLaunchGame) {
             return false;
         }
-        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
-        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
-        String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
-        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
-        new MinecraftDownloader().start(
-                false,
-                mcVersion,
-                normalizedVersionId,
-                new ContextAwareDoneListener(this, normalizedVersionId)
-        );
+        onTryDownloadGame(false);
         return false;
     };
 
@@ -331,6 +313,19 @@ public class LauncherActivity extends BaseActivity {
             return fragment;
         }
         return null;
+    }
+
+    private void onTryDownloadGame(boolean downloader) {
+        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
+        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
+        String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
+        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
+        new MinecraftDownloader().start(
+                downloader,
+                mcVersion,
+                normalizedVersionId,
+                new ContextAwareDoneListener(this, normalizedVersionId)
+        );
     }
 
     private void checkNotificationPermission() {
