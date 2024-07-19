@@ -307,12 +307,6 @@
     <string name="preference_verify_manifest_description">啟用後，啟動器將會檢查遊戲版本清單以及庫。</string>
     <string name="notif_download_finished">遊戲已準備好啟動</string>
     <string name="notif_download_finished_desc">點此開始!</string>
-    <string name="preference_category_buttons">按鈕</string>
-    <string name="preference_category_experimental_settings">實驗性補丁</string>
-    <string name="preference_category_java_tweaks">Java 選項</string>
-    <string name="preference_category_main_categories">類別</string>
-    <string name="preference_category_miscellaneous">其他設定</string>
-    <string name="preference_category_video">影片設定</string>
     <string name="notification_permission_dialog_title">權限要求</string>
     <string name="notification_permission_dialog_text">PojavLauncher 需要獲得發送通知的權限，以防止遊戲/模組包下載在您離開應用程式時停止。 如果沒有此權限，當您將 PojavLauncher 置於背景模式時，Android 可能會關閉您的下載。</string>
     <string name="notification_permission_toast">您以後隨時可以透過進入「設定」來改變意願</string>
@@ -348,6 +342,7 @@
     <string name="preference_category_in_menu_title">遊戲外顯示</string>
     <string name="preference_category_microsoft_account_title">微軟賬號</string>
     <string name="preference_category_local_account_title">離線賬號</string>
+    <!-- Pojav Glow·Worm -->
     <string name="preference_category_follow_game_language">跟隨遊戲語言變化</string>
     <string name="preference_category_language">語言選擇</string>
     <string name="preference_enable_log_output_desc">在應用正式開始運行遊戲時，開啟日誌輸出界面</string>
@@ -361,9 +356,6 @@
     <string name="preference_mouse_title1">刪除設置的鼠標圖標</string>
     <string name="notif_mouse1">刪除成功</string>
     <string name="microsoft_login_fragment">開始登陸!</string>
-    <string name="customctrl_absolute_tracking">絕對手指跟蹤</string>
-    <string name="preference_skip_download_title">不檢查遊戲完整性</string>
-    <string name="preference_skip_download">在啟動遊戲時不檢查遊戲完整性,直接啟動遊戲</string>
     <string name="preference_quit_launcher_title">退出啟動器</string>
     <string name="preference_quit_launcher">在應用正式開始執行遊戲時,是否退出啟動器</string>
     <!-- Other login -->
