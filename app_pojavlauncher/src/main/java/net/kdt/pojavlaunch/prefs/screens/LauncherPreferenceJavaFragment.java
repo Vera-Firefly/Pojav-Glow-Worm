@@ -138,12 +138,12 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
                 int Memory = Integer.parseInt(mSetJavaMemory.getText().toString());
                 if (Memory < 256) {
                     setMemoryAllocationDialog(seek, ramAllocation, maxRAM);
-                    mSetJavaMemory.setError(requireContext(), getString(R.string.zh_setting_java_memory_too_small, 256));
+                    mSetJavaMemory.setError(requireContext().getString(R.string.zh_setting_java_memory_too_small, 256));
                     return;
                 }
                 if (Memory > maxRAM) {
                     setMemoryAllocationDialog(seek, ramAllocation, maxRAM);
-                    mSetJavaMemory.setError(requireContext(), getString(R.string.zh_setting_java_memory_too_big, maxRAM));
+                    mSetJavaMemory.setError(requireContext().getString(R.string.zh_setting_java_memory_too_big, maxRAM));
                     return;
                 }
                 seek.setValue(Memory);
