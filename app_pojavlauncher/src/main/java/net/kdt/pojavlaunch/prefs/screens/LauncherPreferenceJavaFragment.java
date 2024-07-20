@@ -128,7 +128,7 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_java_memory, null);
         mSetJavaMemory = view.findViewById(R.id.set_java_memory);
-        mSetJavaMemory.setText(String.valueOf(seek.getValue));
+        mSetJavaMemory.setText(String.valueOf(seek.getValue()));
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
             .setTitle(R.string.mcl_memory_allocation)
             .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
