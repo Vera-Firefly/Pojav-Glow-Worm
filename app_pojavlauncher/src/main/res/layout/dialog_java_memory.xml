@@ -5,11 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/zh_setting_java_memory_desc"/>
-
     <EditText
         android:id="@+id/set_java_memory"
         android:layout_width="match_parent"

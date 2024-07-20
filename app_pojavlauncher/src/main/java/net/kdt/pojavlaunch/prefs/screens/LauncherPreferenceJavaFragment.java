@@ -5,12 +5,20 @@ import static net.kdt.pojavlaunch.Tools.getTotalDeviceMemory;
 import static net.kdt.pojavlaunch.Tools.runOnUiThread;
 
 import android.content.Context;
-
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.preference.EditTextPreference;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
@@ -66,7 +74,8 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
             mSetJavaMemory.setText(LauncherPreferences.PREF_RAM_ALLOCATION);
             AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.mcl_memory_allocation)
-                .setView(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
+                .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
+                .setView(view)
                 .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
                     String Memory = mSetJavaMemory.getText().toString();
                     if (Memory < 256) {
