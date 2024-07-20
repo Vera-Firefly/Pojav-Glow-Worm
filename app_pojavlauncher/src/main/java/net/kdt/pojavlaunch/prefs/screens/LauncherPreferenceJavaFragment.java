@@ -67,7 +67,7 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         }, 0, 1000);
 
         seek7.setOnPreferenceClickListener(preference -> {
-            setMemoryAllocationDialog(seek7, ramAllocation, maxRAM);
+            setMemoryAllocationDialog(seek7, maxRAM);
             return true;
         });
         updateMemoryInfo(requireContext(), seek7);
@@ -124,11 +124,11 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         mDialogScreen.show();
     }
 
-    private void setMemoryAllocationDialog(CustomSeekBarPreference seek, int ramAllocation, int maxRAM) {
+    private void setMemoryAllocationDialog(CustomSeekBarPreference seek, int maxRAM) {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_java_memory, null);
         mSetJavaMemory = view.findViewById(R.id.set_java_memory);
-        mSetJavaMemory.setText(String.valueOf(ramAllocation));
+        mSetJavaMemory.setText(String.valueOf(seek.getValue));
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
             .setTitle(R.string.mcl_memory_allocation)
             .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
@@ -136,12 +136,12 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
             .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
                 int Memory = Integer.parseInt(mSetJavaMemory.getText().toString());
                 if (Memory < 256) {
-                    setMemoryAllocationDialog(seek, ramAllocation, maxRAM);
+                    setMemoryAllocationDialog(seek, maxRAM);
                     mSetJavaMemory.setError(requireContext().getString(R.string.zh_setting_java_memory_too_small, 256));
                     return;
                 }
                 if (Memory > maxRAM) {
-                    setMemoryAllocationDialog(seek, ramAllocation, maxRAM);
+                    setMemoryAllocationDialog(seek, maxRAM);
                     mSetJavaMemory.setError(requireContext().getString(R.string.zh_setting_java_memory_too_big, maxRAM));
                     return;
                 }
