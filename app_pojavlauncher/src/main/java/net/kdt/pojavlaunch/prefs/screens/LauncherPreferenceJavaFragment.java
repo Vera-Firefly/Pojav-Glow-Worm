@@ -83,8 +83,6 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
                         // Toast.makeText(requireContext(), R.string.error_invalid_memory_value, Toast.LENGTH_SHORT).show();
                         return;
                     }
-
-                    int Memory = mSetJavaMemory.getText().toString();
                     if (Memory < 256) {
                         Toast.makeText(requireContext(), getString(R.string.zh_setting_java_memory_too_small, 256), Toast.LENGTH_SHORT).show();
                         return;
