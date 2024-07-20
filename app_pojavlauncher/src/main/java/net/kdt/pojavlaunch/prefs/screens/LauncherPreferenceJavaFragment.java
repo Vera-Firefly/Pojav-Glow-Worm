@@ -43,9 +43,8 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
 
     @Override
     public void onCreatePreferences(Bundle b, String str) {
-        int ramAllocation = LauncherPreferences.PREF_RAM_ALLOCATION;
-        // Triggers a write for some reason
         addPreferencesFromResource(R.xml.pref_java);
+        int ramAllocation = LauncherPreferences.PREF_RAM_ALLOCATION;
 
         CustomSeekBarPreference seek7 = requirePreference("allocation",
                 CustomSeekBarPreference.class);
@@ -147,6 +146,7 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
                     return;
                 }
                 seek.setValue(Memory);
+                mSetJavaMemory.setText(String.valueOf(Memory));
             })
             .setNegativeButton(R.string.alertdialog_cancel, null)
             .create();
