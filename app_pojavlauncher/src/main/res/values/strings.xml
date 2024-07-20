@@ -478,4 +478,11 @@
     <string name="profiles_path_delete_title">Delete This Path</string>
     <string name="profiles_path_delete_message">The launcher will delete this path, but it will not delete the files saved in the corresponding path. You can re-add this path after deletion.</string>
     <string name="profiles_path_task_in_progress">Task in progress, path management features are temporarily unavailable</string>
+    <!-- Pojav Zenith·Horizon -->
+    <string name="zh_setting_java_memory_desc">Control how much memory is allocated to Minecraft</string>
+    <string name="zh_setting_java_memory_info">Current memory usage: %s / %s, Free memory size: %s</string>
+    <string name="zh_setting_java_memory_max">Maximum allowable memory size: %s</string>
+    <string name="zh_setting_java_memory_exceeded">The current memory allocation exceeds available memory size</string>
+    <string name="zh_setting_java_memory_too_big">The current memory allocation is too large, maximum allowable size is %d MB</string>
+    <string name="zh_setting_java_memory_too_small">The current memory allocation is too small, at least %d MB is required</string>
 </resources>

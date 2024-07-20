@@ -7,6 +7,7 @@ import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_EXP_SETUP;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.NotificationChannel;
@@ -481,9 +482,6 @@ public final class Tools {
 
         return finalClasspath.toString();
     }
-
-
-
 
 
     public static DisplayMetrics getDisplayMetrics(Activity activity) {
@@ -1331,5 +1329,19 @@ public final class Tools {
                 CDriverModleNames.toArray(new String[0]));
 
         return sCompatibleCDriverModle;
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static String formatFileSize(long bytes) {
+        if (bytes <= 0) return "0 B";
+
+        final String[] units = {"B", "KB", "MB", "GB"};
+        int unitIndex = 0;
+        double value = bytes;
+        while (value >= 1024 && unitIndex < units.length - 1) {
+            value /= 1024;
+            unitIndex++;
+        }
+        return String.format("%.2f %s", value, units[unitIndex]);
     }
 }
