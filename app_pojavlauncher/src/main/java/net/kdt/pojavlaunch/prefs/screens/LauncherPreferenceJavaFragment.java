@@ -68,29 +68,7 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         }, 0, 1000);
 
         seek7.setOnPreferenceClickListener(preference -> {
-            LayoutInflater inflater = requireActivity().getLayoutInflater();
-            View view = inflater.inflate(R.layout.dialog_java_memory, null);
-            mSetJavaMemory = view.findViewById(R.id.set_java_memory);
-            mSetJavaMemory.setText(String.valueOf(ramAllocation));
-            AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                .setTitle(R.string.mcl_memory_allocation)
-                .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
-                .setView(view)
-                .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
-                    int Memory = Integer.parseInt(mSetJavaMemory.getText().toString());
-                    if (Memory < 256) {
-                        Toast.makeText(requireContext(), getString(R.string.zh_setting_java_memory_too_small, 256), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (Memory > maxRAM) {
-                        Toast.makeText(requireContext(), getString(R.string.zh_setting_java_memory_too_big, maxRAM), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    seek7.setValue(Memory);
-                })
-                .setNegativeButton(R.string.alertdialog_cancel, null)
-                .create();
-            dialog.show();
+            setMemoryAllocationDialog(seek7, ramAllocation, maxRAM);
             return true;
         });
         updateMemoryInfo(requireContext(), seek7);
@@ -145,6 +123,34 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
             mDialogScreen.prepare(getContext(), mVmInstallLauncher);
         }
         mDialogScreen.show();
+    }
+
+    private void setMemoryAllocationDialog(CustomSeekBarPreference seek, int ramAllocation, int maxRAM) {
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_java_memory, null);
+        mSetJavaMemory = view.findViewById(R.id.set_java_memory);
+        mSetJavaMemory.setText(String.valueOf(ramAllocation));
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+            .setTitle(R.string.mcl_memory_allocation)
+            .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
+            .setView(view)
+            .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
+                int Memory = Integer.parseInt(mSetJavaMemory.getText().toString());
+                if (Memory < 256) {
+                    setMemoryAllocationDialog(seek, ramAllocation, maxRAM);
+                    mSetJavaMemory.setError(requireContext(), getString(R.string.zh_setting_java_memory_too_small, 256));
+                    return;
+                }
+                if (Memory > maxRAM) {
+                    setMemoryAllocationDialog(seek, ramAllocation, maxRAM);
+                    mSetJavaMemory.setError(requireContext(), getString(R.string.zh_setting_java_memory_too_big, maxRAM));
+                    return;
+                }
+                seek.setValue(Memory);
+            })
+            .setNegativeButton(R.string.alertdialog_cancel, null)
+            .create();
+        dialog.show();
     }
 
 }
