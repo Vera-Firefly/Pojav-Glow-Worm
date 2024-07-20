@@ -74,7 +74,6 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
             mSetJavaMemory.setText(LauncherPreferences.PREF_RAM_ALLOCATION);
             AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.mcl_memory_allocation)
-                .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
                 .setView(view)
                 .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
                     int Memory = Integer.parseInt(mSetJavaMemory.getText().toString());

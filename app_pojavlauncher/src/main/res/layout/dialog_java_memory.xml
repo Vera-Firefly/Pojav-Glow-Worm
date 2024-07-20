@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" "/>
+        android:text="zh_setting_java_memory_desc"/>
 
     <EditText
         android:id="@+id/set_java_memory"
