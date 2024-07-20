@@ -91,6 +91,7 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
                 .setNegativeButton(R.string.alertdialog_cancel, null)
                 .create();
             dialog.show();
+            return true;
         });
         updateMemoryInfo(requireContext(), seek7);
 
