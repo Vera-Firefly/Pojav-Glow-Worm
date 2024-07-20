@@ -77,7 +77,7 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
                 .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
                 .setView(view)
                 .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
-                    String Memory = mSetJavaMemory.getText().toString();
+                    int Memory = mSetJavaMemory.getText().toString();
                     if (Memory < 256) {
                         Toast.makeText(requireContext(), getString(R.string.zh_setting_java_memory_too_small, 256), Toast.LENGTH_SHORT).show();
                         return;
