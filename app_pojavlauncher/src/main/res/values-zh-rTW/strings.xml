@@ -4,7 +4,7 @@
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
-    <string name="login_online_username_hint">ydkq200941@qq.com</string>
+    <string name="login_online_username_hint">用戶名</string>
     <string name="login_online_login_label">登入</string>
     <!-- Hint -->
     <string name="hint_control_mapping">"點擊上方齒輪符號開啟選單⚙\n點擊以編輯控制鍵大小、按鍵定義、名稱、顏色，或者刪除。"</string>
@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">選擇 Mod 安裝器</string>
     <!-- Error messages -->
-    <string name="error_fatal">PojavLauncher 意外崩潰</string>
+    <string name="error_fatal">Pojav Glow·Worm 意外崩潰</string>
     <string name="error_no_version">無版本！</string>
     <string name="error_show_more">顯示細節</string>
     <string name="error_show_less">隱藏細節</string>
@@ -230,7 +230,7 @@
     <string name="preference_gyro_sample_rate_title">陀螺儀採樣率</string>
     <string name="preference_gyro_sample_rate_description">如果您在陀螺儀控制上遇到效能問題，請新增此值。</string>
     <string name="microsoft_login_retry_later">您的操作過於頻繁，請稍後再試！</string>
-    <string name="storage_required">PojavLauncher需要連接外部存儲，請重新連接並重啓應用。</string>
+    <string name="storage_required">Pojav Glow·Worm需要連接外部存儲，請重新連接並重啓應用。</string>
     <string name="mcl_setting_title_buttonallcaps">在按鈕標籤中僅使用大寫字母</string>
     <string name="mcl_setting_subtitle_buttonallcaps">如果您想在控制鍵中使用並顯示小寫字母，請關閉此設定。</string>
     <string name="create_profile">新增設定檔</string>
@@ -308,7 +308,7 @@
     <string name="notif_download_finished">遊戲已準備好啟動</string>
     <string name="notif_download_finished_desc">點此開始!</string>
     <string name="notification_permission_dialog_title">權限要求</string>
-    <string name="notification_permission_dialog_text">PojavLauncher 需要獲得發送通知的權限，以防止遊戲/模組包下載在您離開應用程式時停止。 如果沒有此權限，當您將 PojavLauncher 置於背景模式時，Android 可能會關閉您的下載。</string>
+    <string name="notification_permission_dialog_text">Pojav Glow·Worm 需要獲得發送通知的權限，以防止遊戲/模組包下載在您離開應用程式時停止。 如果沒有此權限，當您將 Pojav Glow·Worm 置於背景模式時，Android 可能會關閉您的下載。</string>
     <string name="notification_permission_toast">您以後隨時可以透過進入「設定」來改變意願</string>
     <string name="preference_ask_for_notification_title">允許通知</string>
     <string name="preference_ask_for_notification_description">點擊重新要求通知權限，以確保遊戲/模組包後台下載正常工作。</string>
@@ -404,18 +404,16 @@
     <string name="alertdialog_tipc">在使用這些功能之前,請記得檢查你的設備是否支持這些功能!</string>
     <string name="alertdialog_done">確定</string>
     <string name="alertdialog_cancel">取消</string>
-    <string name="customglglsl_alertdialog_error_gl">GL版本必須在2.8和4.6之間</string>
-    <string name="customglglsl_alertdialog_error_glsl">GLSL版本必須在280和460之間</string>
     <!-- Custom GL/GLSL Version -->
-    <string name="preference_exp_alertdialog_glmessage">在你執行此操作之前你必須知道你在做什麼\n你真的確定你要開啟它嗎?</string>
     <string name="preference_exp_custommv">GL/GLSL版本</string>
     <string name="preference_exp_ebsystem">跟隨系統</string>
     <string name="preference_exp_ebspecific">使用固定版本</string>
-    <string name="preference_exp_ebcustom">自定義</string>
     <string name="preference_rendererexp_custom_glversion_title">自定義GL/GLSL</string>
     <string name="preference_rendererexp_custom_glversion">允許您自定義Mesa GL/GLSL版本</string>
     <string name="custom_gl_version">Mesa GL版本:</string>
     <string name="custom_glsl_version">Mesa GLSL版本:</string>
+    <string name="customglglsl_alertdialog_error_gl">GL版本必須在2.8和4.6之間</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL版本必須在280和460之間</string>
     <!-- Customize Game Path -->
     <string name="permissions_manage_external_storage">Pojav Glow·Worm 需要管理設備所有檔案的權限，以便自訂儲存遊戲檔案位置，請為 Pojav Glow·Worm 開啟權限！</string>
     <string name="profiles_path_title">遊戲路徑管理</string>

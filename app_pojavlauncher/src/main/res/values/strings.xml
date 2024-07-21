@@ -22,7 +22,7 @@
     <string name="alerttitle_installmod">Select a mod installer</string>
 
     <!-- Error messages -->
-    <string name="error_fatal">PojavLauncher has unexpectedly crashed</string>
+    <string name="error_fatal">Pojav Glow·Worm has unexpectedly crashed</string>
     <string name="error_no_version">No version!</string>
     <string name="error_show_more">Show more</string>
     <string name="error_show_less">Show less</string>
@@ -264,7 +264,7 @@
     <string name="preference_gyro_sample_rate_title">Gyroscope sampling rate</string>
     <string name="preference_gyro_sample_rate_description">If you have performance issues with gyroscope controls, increase this.</string>
     <string name="microsoft_login_retry_later">Too many requests, please try again later.</string>
-    <string name="storage_required">PojavLauncher requires external storage to be attached. Please reconnect it and restart the app.</string>
+    <string name="storage_required">Pojav Glow·Worm requires external storage to be attached. Please reconnect it and restart the app.</string>
     <string name="mcl_setting_title_buttonallcaps">Only use capital letters in button labels</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Disable this if you want to use lowercase letters in your controls.</string>
     <string name="create_profile">Create new profile</string>
@@ -360,7 +360,7 @@
     <string name="preference_category_miscellaneous">Miscellaneous settings</string>
     <string name="preference_category_video">Video settings</string>
     <string name="notification_permission_dialog_title">Permission request</string>
-    <string name="notification_permission_dialog_text">PojavLauncher requires a permission to post notifications to prevent game/modpack downloads from stopping when you leave the app. Without this permission, Android may shut down your downloads when you put PojavLauncher in background mode.</string>
+    <string name="notification_permission_dialog_text">Pojav Glow·Worm requires a permission to post notifications to prevent game/modpack downloads from stopping when you leave the app. Without this permission, Android may shut down your downloads when you put Pojav Glow·Worm in background mode.</string>
     <string name="notification_permission_toast">You can always change your mind later by going into Settings</string>
     <string name="preference_ask_for_notification_title">Allow notifications</string>
     <string name="preference_ask_for_notification_description">Click to re-request the notification permission, required for game/modpack background downloads to work properly.</string>
@@ -457,18 +457,16 @@
     <string name="alertdialog_tipc">Remember to check if your device supports these features before using them</string>
     <string name="alertdialog_done">Done</string>
     <string name="alertdialog_cancel">Cancel</string>
-    <string name="customglglsl_alertdialog_error_gl">GL version must be between 2.8 and 4.6</string>
-    <string name="customglglsl_alertdialog_error_glsl">GLSL version must be between 280 and 460</string>
     <!-- Custom GL/GLSL Version -->
-    <string name="preference_exp_alertdialog_glmessage">Before you do this, you must know what you are doing\nAre you sure you want to open it?</string>
     <string name="preference_exp_custommv">GL/GLSL Version</string>
     <string name="preference_exp_ebsystem">Select according to system</string>
     <string name="preference_exp_ebspecific">Use specific version</string>
-    <string name="preference_exp_ebcustom">Custom</string>
     <string name="preference_rendererexp_custom_glversion_title">Custom GL/GLSL</string>
     <string name="preference_rendererexp_custom_glversion">Allow custom Mesa GL/GLSL version</string>
     <string name="custom_gl_version">Mesa GL version:</string>
     <string name="custom_glsl_version">Mesa GLSL version:</string>
+    <string name="customglglsl_alertdialog_error_gl">GL version must be between 2.8 and 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL version must be between 280 and 460</string>
     <!-- Customize Game Path -->
     <string name="permissions_manage_external_storage">Pojav Glow·Worm requires permission to manage all files on the device in order to customize the location where game files are saved. Please grant permission to Pojav Glow·Worm!</string>
     <string name="profiles_path_title">Game Path Management</string>
