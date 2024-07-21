@@ -137,6 +137,7 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
             .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
                 String checkValue = mSetJavaMemory.getText().toString();
                 if (checkValue.isEmpty()) {
+                    setMemoryAllocationDialog(seek, maxRAM);
                     mSetJavaMemory.setError(getString(R.string.global_error_field_empty));
                     return;
                 }
@@ -146,6 +147,7 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
                 } catch (NumberFormatException e) {
                     Log.e("allocationSeek", e.toString());
                     // mSetJavaMemory.setError(e.toString());
+                    setMemoryAllocationDialog(seek, maxRAM);
                     mSetJavaMemory.setError(requireContext().getString(R.string.setting_java_memory_outofrange, checkValue));
                     return;
                 }
