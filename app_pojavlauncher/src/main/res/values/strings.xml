@@ -387,6 +387,7 @@
     <string name="preference_category_in_menu_title">In Menu</string>
     <string name="preference_category_microsoft_account_title">Microsoft Account</string>
     <string name="preference_category_local_account_title">Local account</string>
+    <!-- Pojav Glow·Worm -->
     <string name="preference_category_follow_game_language">Follow the game language</string>
     <string name="preference_category_language_default">Default (Follow the game language)</string>
     <string name="preference_category_language">Language Selection</string>
@@ -446,7 +447,7 @@
     <string name="preference_renderer_extra_default">Mesa24.1.4 (Default)</string>
     <string name="preference_extra_mesa_version">Mesa Version</string>
     <string name="preference_extra_driver_model">Driver Modle</string>
-    <!-- Dialog box prompt -->
+    <!-- Dialog -->
     <string name="preference_rendererexp_alertdialog_warning">Warning</string>
     <string name="preference_rendererexp_alertdialog_message">You have turned on experimental settings.This feature may generate unexpected bugs.Continue to use?</string>
     <string name="preference_rendererexp_alertdialog_done">Fuck</string>

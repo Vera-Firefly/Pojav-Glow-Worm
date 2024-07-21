@@ -68,7 +68,7 @@
     <string name="global_restart">重启</string>
     <string name="global_save">保存</string>
     <string name="global_unpacking">正在解压 %s</string>
-    <string name="global_error_field_empty">此处表单不能为空</string>
+    <string name="global_error_field_empty">此处段不能为空</string>
     <string name="global_waiting">请稍等</string>
     <string name="global_select">选择</string>
     <string name="global_retry">重试</string>
@@ -332,6 +332,7 @@
     <string name="log_view_button_output_off">输出\n关闭</string>
     <string name="log_view_button_output_on">输出\n开启</string>
     <string name="log_view_label_log_output">日志输出:</string>
+
 
 
     <!-- App New Annotation -->

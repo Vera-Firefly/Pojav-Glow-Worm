@@ -329,6 +329,7 @@
     <string name="log_view_label_log_output">日誌輸出:</string>
 
 
+
     <!-- App New Annotation -->
     <string name="preference_category_gestures">手勢</string>
     <string name="preference_category_buttons">按鍵</string>
