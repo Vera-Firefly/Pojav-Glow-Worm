@@ -63,7 +63,13 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(() -> updateMemoryInfo(requireContext(), seek7));
+                try {
+                    if (!seek7.isUserSeeking()) {
+                        updateMemoryInfo(requireContext(), seek7);
+                    }
+                } catch (Exception e) {
+                    Log.e("updateMemoryInfo", e.toString());
+                }
             }
         }, 0, 1000);
 

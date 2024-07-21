@@ -23,6 +23,7 @@ public class CustomSeekBarPreference extends SeekBarPreference {
     private int mMin;
     /** The textview associated by default to the preference */
     private TextView mTextView;
+    private boolean isUserSeeking = false;
 
 
     @SuppressLint("PrivateResource")
@@ -78,10 +79,13 @@ public class CustomSeekBarPreference extends SeekBarPreference {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isUserSeeking = true;
+            }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                isUserSeeking = false;
 
                 int progress = seekBar.getProgress() + mMin;
                 progress /= getSeekBarIncrement();
@@ -114,6 +118,9 @@ public class CustomSeekBarPreference extends SeekBarPreference {
         setMax(max);
     }
 
+    public boolean isUserSeeking() {
+        return isUserSeeking;
+    }
 
     private void updateTextViewWithSuffix(){
         if(!mTextView.getText().toString().endsWith(mSuffix)){
