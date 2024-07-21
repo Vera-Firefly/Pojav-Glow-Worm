@@ -426,5 +426,11 @@
     <string name="profiles_path_delete_message">啟動器將刪除此路徑，但不會刪除對應路徑內儲存的檔案，刪除之後仍然可以重新新增此路徑</string>
     <string name="profiles_path_task_in_progress">任務執行中，暫時無法使用路徑管理功能</string>
     <!-- Pojav Zenith·Horizon -->
-    
+    <string name="zh_setting_java_memory_desc">控制分配給 Minecraft 的記憶體大小</string>
+    <string name="zh_setting_java_memory_info">目前記憶體使用：%s / %s ，空閒記憶體大小：%s</string>
+    <string name="zh_setting_java_memory_max">可設定的最大記憶體大小：%s</string>
+    <string name="zh_setting_java_memory_exceeded">目前設定的記憶體大小超過了可用的記憶體大小</string>
+    <string name="zh_setting_java_memory_too_big">目前設定的記憶體空間過大，最多只能設定為 %d MB</string>
+    <string name="zh_setting_java_memory_too_small">目前設定的記憶體空間過小，至少需要設定為 %d MB</string>
+    <string name="setting_java_memory_outofrange">輸入值 %s MB超出可接受範圍</string>
 </resources>

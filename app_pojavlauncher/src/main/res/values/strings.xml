@@ -485,4 +485,5 @@
     <string name="zh_setting_java_memory_exceeded">The current memory allocation exceeds available memory size</string>
     <string name="zh_setting_java_memory_too_big">The current memory allocation is too large, maximum allowable size is %d MB</string>
     <string name="zh_setting_java_memory_too_small">The current memory allocation is too small, at least %d MB is required</string>
+    <string name="setting_java_memory_outofrange">The input value %s MB is out of the acceptable range</string>
 </resources>

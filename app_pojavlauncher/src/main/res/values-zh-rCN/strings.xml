@@ -434,9 +434,10 @@
     <string name="profiles_path_task_in_progress">任务执行中，暂时无法使用路径管理功能</string>
     <!-- Pojav Zenith·Horizon -->
     <string name="zh_setting_java_memory_desc">控制给 Minecraft 分配多少内存</string>
-    <string name="zh_setting_java_memory_info">当前内存使用信息：%s / %s ，空闲内存大小：%s</string>
+    <string name="zh_setting_java_memory_info">当前内存使用信息：%s / %s ,空闲内存大小：%s</string>
     <string name="zh_setting_java_memory_max">最大可设置的内存大小：%s</string>
     <string name="zh_setting_java_memory_exceeded">当前设置的内存空间超出了可用内存大小</string>
-    <string name="zh_setting_java_memory_too_big">当前设置的内存空间过大，最多只能设置为 %d MB</string>
-    <string name="zh_setting_java_memory_too_small">当前设置的内存空间过小，至少需要设置为 %d MB</string>
+    <string name="zh_setting_java_memory_too_big">当前设置的内存空间过大,最多只能设置为 %d MB</string>
+    <string name="zh_setting_java_memory_too_small">当前设置的内存空间过小,至少需要设置为 %d MB</string>
+    <string name="setting_java_memory_outofrange">输入值 %s MB超出可接受范围</string>
 </resources>

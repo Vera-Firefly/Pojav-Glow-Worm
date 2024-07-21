@@ -134,7 +134,20 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
             .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
             .setView(view)
             .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
-                int Memory = Integer.parseInt(mSetJavaMemory.getText().toString());
+                String checkValue = mSetJavaMemory.getText().toString();
+                if (checkValue.isEmpty()) {
+                    mSetJavaMemory.setError(getString(R.string.global_error_field_empty));
+                    return;
+                }
+                int Memory;
+                try {
+                    Memory = Integer.parseInt(checkValue);
+                } catch (NumberFormatException e) {
+                    Log.e("allocationSeek", e.toString());
+                    // mSetJavaMemory.setError(e.toString());
+                    mSetJavaMemory.setError(requireContext().getString(R.string.setting_java_memory_outofrange, checkValue));
+                    return;
+                }
                 if (Memory < 256) {
                     setMemoryAllocationDialog(seek, maxRAM);
                     mSetJavaMemory.setError(requireContext().getString(R.string.zh_setting_java_memory_too_small, 256));
