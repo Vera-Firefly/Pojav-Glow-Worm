@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ public class FatalErrorActivity extends AppCompatActivity {
 			finish();
 			return;
 		}
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 		boolean storageAllow = extras.getBoolean("storageAllow", false);
 		Throwable throwable = (Throwable) extras.getSerializable("throwable");
 		final String stackTrace = throwable != null ? Tools.printToString(throwable) : "<null>";
