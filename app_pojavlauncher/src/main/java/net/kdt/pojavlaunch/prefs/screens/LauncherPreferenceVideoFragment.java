@@ -114,7 +114,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 try {
                     Value = Integer.parseInt(checkValue);
                 } catch (NumberFormatException e) {
-                    Log.e("allocationSeek", e.toString());
+                    Log.e("VideoResolution", e.toString());
                     // mSetVideoResolution.setError(e.toString());
                     setVideoResolutionDialog(seek);
                     mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_outofrange, checkValue));
