@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.WindowManager;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
@@ -26,8 +25,6 @@ public class ExitActivity extends AppCompatActivity {
         if(extras != null) {
             code = extras.getInt("code",-1);
         }
-
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         new AlertDialog.Builder(this)
                 .setMessage(getString(R.string.mcn_exit_title,code))

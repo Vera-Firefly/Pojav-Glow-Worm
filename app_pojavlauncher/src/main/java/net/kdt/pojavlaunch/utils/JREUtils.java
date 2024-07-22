@@ -15,7 +15,6 @@ import android.content.*;
 import android.os.Build;
 import android.system.*;
 import android.util.*;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
@@ -392,7 +391,6 @@ public class JREUtils {
         Logger.appendToLog("Java Exit code: " + exitCode);
         if (exitCode != 0) {
             activity.runOnUiThread(() -> {
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
                 dialog.setMessage(activity.getString(R.string.mcn_exit_title, exitCode));
 
