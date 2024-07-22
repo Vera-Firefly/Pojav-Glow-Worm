@@ -24,7 +24,6 @@
     <string name="toast_3">Exit</string>
     -->
     <!-- MCLauncherActivity: Tabs -->
-    <string name="mcl_tab_wiki">Github</string>
     <!-- MCLauncherActivity: Account status -->
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">正在清理缓存</string>
@@ -430,6 +429,10 @@
     <string name="profiles_path_delete_title">删除此路径</string>
     <string name="profiles_path_delete_message">启动器将删除此路径，但不会删除对应路径内保存的文件，删除之后仍然可以重新添加此路径</string>
     <string name="profiles_path_task_in_progress">任务执行中，暂时无法使用路径管理功能</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">当前设置的分辨率过大,最多只能设置为 %d</string>
+    <string name="setting_set_resolution_too_small">当前设置的分辨率过小,至少需要设置为 %d</string>
+    <string name="setting_set_resolution_outofrange">输入值 %s 超出可接受范围</string>
     <!-- Pojav Zenith·Horizon -->
     <string name="zh_setting_java_memory_desc">控制给 Minecraft 分配多少内存</string>
     <string name="zh_setting_java_memory_info">当前内存使用信息：%s / %s ,空闲内存大小：%s</string>
