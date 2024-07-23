@@ -44,7 +44,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
 
         CustomSeekBarPreference seek5 = requirePreference("resolutionRatio",
                 CustomSeekBarPreference.class);
-        if (seek5.isUserSeeking) {
+        if (seek5.isUserSeeking()) {
             seek5.setRange(25, 300);
         }
         seek5.setValue(scaleFactor);
@@ -132,7 +132,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                     mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_big, 1000));
                     return;
                     }
-                if (!seek.isUserSeeking) {
+                if (!seek.isUserSeeking()) {
                     seek.setRange(25, Value);
                 }
                 seek.setValue(Value);
