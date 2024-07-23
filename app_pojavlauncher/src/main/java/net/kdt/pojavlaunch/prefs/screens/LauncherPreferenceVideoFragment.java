@@ -32,7 +32,6 @@ import net.kdt.pojavlaunch.prefs.LauncherPreferences;
  */
 public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment {
     private EditText mSetVideoResolution;
-    int resolutionValue = 100;
 
     @Override
     public void onCreatePreferences(Bundle b, String str) {
@@ -45,11 +44,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
 
         CustomSeekBarPreference seek5 = requirePreference("resolutionRatio",
                 CustomSeekBarPreference.class);
-        if (seek5.getValue() <= 100) {
-            seek5.setRange(25, 100);
-        } else {
-            seek5.setRange(25, resolutionValue);
-        }
+        seek5.setRange(25, 300);
         seek5.setValue(scaleFactor);
         seek5.setSuffix(" %");
 
@@ -135,10 +130,10 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                     mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_big, 1000));
                     return;
                     }
-                if (Value > 100) {
-                    resolutionValue = Value;
-                    seek.setRange(25, Value);
-                }
+                /** if (Value > 100) {
+                  *    seek.setRange(25, Value);
+                } *
+                  */
                 seek.setValue(Value);
                 })
             .setNegativeButton(R.string.alertdialog_cancel, null)
