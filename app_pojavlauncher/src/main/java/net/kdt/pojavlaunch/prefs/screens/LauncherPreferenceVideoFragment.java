@@ -48,7 +48,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         if (scaleFactor > 100) {
             seek5.setRange(25, scaleFactor);
         } else {
-            seek5.setRange(25, 100);
+            seek5.setMin(25);
         }
         seek5.setValue(scaleFactor);
         seek5.setSuffix(" %");
@@ -137,6 +137,8 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                     }
                 if (Value > 100) {
                     seek.setRange(25, Value);
+                } else {
+                    seek.setRange(25, 100);
                 }
                 seek.setValue(Value);
                 })
