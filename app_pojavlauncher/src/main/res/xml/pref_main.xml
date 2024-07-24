@@ -50,6 +50,7 @@
             android:title="@string/preference_exp_title"
             android:summary="@string/preference_exp_description"
             android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceExperimentalFragment"
+            android:icon="@drawable/ic_setting_experimental"
             />
 
     </PreferenceCategory>
