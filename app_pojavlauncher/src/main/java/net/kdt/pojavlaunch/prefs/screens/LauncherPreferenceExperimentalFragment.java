@@ -1,7 +1,5 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_RENDERER;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -30,7 +28,6 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
     private EditText mMesaGLVersion;
     private EditText mMesaGLSLVersion;
-    private String expRenderer;
 
     @Override
     public void onCreatePreferences(Bundle b, String str) {
@@ -102,19 +99,8 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         if (s.equals("ExperimentalSetup")) {
             Preference experimentalSetUpPreference = requirePreference("ExperimentalSetup");
             boolean isExperimentalSetUpEnabled = p.getBoolean("ExperimentalSetup", false);
-            String rendererValue = PREF_RENDERER;
-            if ("mesa_3d".equals(PREF_RENDERER)) {
-                PREF_RENDERER = expRenderer;
-            }
 
             if (isExperimentalSetUpEnabled) {
-                if ("vulkan_zink".equals(rendererValue)
-                || "opengles3_virgl".equals(rendererValue)
-                || "freedreno".equals(rendererValue)
-                || "panfrost".equals(rendererValue)) {
-                    expRenderer = rendererValue;
-                    PREF_RENDERER = "mesa_3d";
-                }
                 AlertDialog dialog = new AlertDialog.Builder(getContext())
                     .setTitle(R.string.preference_rendererexp_alertdialog_warning)
                     .setMessage(R.string.preference_rendererexp_alertdialog_message)
@@ -129,8 +115,6 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                     })
                     .create();
                 dialog.show();
-            } else {
-
             }
         }
     }
