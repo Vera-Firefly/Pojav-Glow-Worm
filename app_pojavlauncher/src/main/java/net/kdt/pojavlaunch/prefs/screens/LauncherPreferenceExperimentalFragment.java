@@ -156,7 +156,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         }
     }
 
-    private void onExpRendererDialog(SwitchPreference pre) {
+    private void onExpRendererDialog(Preference pre) {
         AlertDialog dialog = new AlertDialog.Builder(getContext())
             .setTitle(R.string.preference_rendererexp_alertdialog_warning)
             .setMessage(R.string.preference_rendererexp_alertdialog_message)
@@ -164,7 +164,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                 expTip();
             })
             .setNegativeButton(R.string.preference_rendererexp_alertdialog_cancel, (dia, which) -> {
-                pre.setChecked(false);
+                ((SwitchPreference) pre).setChecked(false);
             })
             .create();
         dialog.show();
