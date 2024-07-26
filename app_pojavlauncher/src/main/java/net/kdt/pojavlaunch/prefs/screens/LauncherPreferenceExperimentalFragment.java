@@ -165,6 +165,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                 expTip();
             })
             .setNegativeButton(R.string.preference_rendererexp_alertdialog_cancel, (dia, which) -> {
+                onChangeRenderer();
                 ((SwitchPreference) pre).setChecked(false);
             })
             .create();
