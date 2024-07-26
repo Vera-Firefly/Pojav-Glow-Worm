@@ -247,13 +247,13 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
     private void onChangeRenderer() {
         String rendererValue = LauncherPreferences.DEFAULT_PREF.getString("renderer", null);
         if ("mesa_3d".equals(rendererValue)) {
-            LauncherPreferences.DEFAULT_PREF.edit().putBoolean("renderer", expRenderer).apply();
+            LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", expRenderer).apply();
         } else if ("vulkan_zink".equals(rendererValue)
         || "opengles3_virgl".equals(rendererValue)
         || "freedreno".equals(rendererValue)
         || "panfrost".equals(rendererValue)) {
             expRenderer = rendererValue;
-            LauncherPreferences.DEFAULT_PREF.edit().putBoolean("renderer", "mesa_3d").apply();
+            LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", "mesa_3d").apply();
         }
     }
 }
