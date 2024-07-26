@@ -529,7 +529,7 @@ public class JREUtils {
      */
     public static String loadGraphicsLibrary(){
         if(LOCAL_RENDERER == null) return null;
-        String renderLibrary = null;
+        String renderLibrary;
         if (LOCAL_RENDERER.equals("mesa_3d")) {
             switch (MESA_LIBS) {
                 case "default":
@@ -543,6 +543,9 @@ public class JREUtils {
                     break;
                 case "mesa2205":
                     renderLibrary = "libOSMesa_2205.so";
+                    break;
+                default:
+                    renderLibrary = MesaUtils.INSTANCE.getMesaLib(MESA_LIBS);
                     break;
             }
         } else {
