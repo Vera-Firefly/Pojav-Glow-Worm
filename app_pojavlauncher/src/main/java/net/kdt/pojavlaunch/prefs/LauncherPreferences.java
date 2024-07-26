@@ -107,8 +107,8 @@ public class LauncherPreferences {
         PREF_RENDERER = DEFAULT_PREF.getString("renderer", "opengles2");
         PREF_BUTTONSIZE = DEFAULT_PREF.getInt("buttonscale", 100);
         PREF_MOUSESCALE = DEFAULT_PREF.getInt("mousescale", 100);
-	PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
-	PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
+        PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
+        PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
         PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
         PREF_VERTYPE_RELEASE = DEFAULT_PREF.getBoolean("vertype_release", true);
         PREF_VERTYPE_SNAPSHOT = DEFAULT_PREF.getBoolean("vertype_snapshot", false);
@@ -160,7 +160,7 @@ public class LauncherPreferences {
 
         PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("gameLanguage", "-1");
         PREF_ENABLE_LOG_OUTPUT = DEFAULT_PREF.getBoolean("enableLogOutput", false);
-	PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
+        PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
