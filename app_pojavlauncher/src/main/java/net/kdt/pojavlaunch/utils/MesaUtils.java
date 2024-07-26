@@ -82,6 +82,7 @@ public class MesaUtils {
             try (FileOutputStream writer = new FileOutputStream(zip)) {
                 DownloadUtils.download(baseUrl + version + "/libOSMesa_" + getArch() + ".zip", writer);
             }
+            //TODO SHA1校验
             try (ZipFile zipFile = new ZipFile(zip)) {
                 Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
                 while (zipEntries.hasMoreElements()) {
@@ -107,8 +108,7 @@ public class MesaUtils {
         return false;
     }
 
-    private static String getArch()
-    {
+    private static String getArch() {
         String abi = Build.SUPPORTED_ABIS[0];
         if (abi.equals("arm64-v8a")) {
             return "aarch64";
