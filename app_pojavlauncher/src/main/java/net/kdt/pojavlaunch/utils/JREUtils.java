@@ -299,7 +299,19 @@ public class JREUtils {
                     envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
                 if (DRIVER_MODLE.equals("driver_panfrost")) {
                     envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
-                    envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
+                    if (MESA_LIBS.equals("default")) {
+                        envMap.put("PAN_MESA_DEBUG", "gofaster");
+                        envMap.put("PAN_MESA_DEBUG", "gl3");
+                        envMap.put("PAN_MESA_DEBUG", "indirect");
+                        envMap.put("PAN_MESA_DEBUG", "nocache");
+                        envMap.put("PAN_MESA_DEBUG", "nogpuc");
+                        envMap.put("PAN_MESA_DEBUG", "nocpuc");
+                        envMap.put("PAN_MESA_DEBUG", "dirty");
+                        envMap.put("PAN_MESA_DEBUG", "noafbc");
+                        envMap.put("PAN_MESA_DEBUG", "nocrc");
+                        envMap.put("PAN_MESA_DEBUG", "nofp16");
+                        envMap.put("PAN_MESA_DEBUG", "deqp");
+                    }
                 }
             }
             if (LOCAL_RENDERER.equals("opengles3_desktopgl_angle_vulkan")) {
