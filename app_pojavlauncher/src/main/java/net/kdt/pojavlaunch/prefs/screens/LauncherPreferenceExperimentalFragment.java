@@ -253,7 +253,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         || "opengles3_virgl".equals(rendererValue)
         || "freedreno".equals(rendererValue)
         || "panfrost".equals(rendererValue)) {
-            expRenderer = rendererValue;
+            expRenderer = LauncherPreferences.DEFAULT_PREF.getString("renderer", null);;
             LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", "mesa_3d").apply();
         }
     }
