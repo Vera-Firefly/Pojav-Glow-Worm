@@ -250,7 +250,6 @@ int pojavInitOpenGL() {
         if(strcmp(ldrivermodel, "driver_panfrost") == 0) {
             printf("Bridge: Use Panfrost Renderer\n");
             setenv("GALLIUM_DRIVER", "panfrost", 1);
-            setenv("PAN_DEBUG","gofaster", 0);
             renderer_load_config();
         }
         if(strcmp(ldrivermodel, "driver_freedreno") == 0) {
