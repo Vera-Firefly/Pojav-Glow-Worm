@@ -32,6 +32,7 @@
 #include "ctxbridges/bridge_tbl.h"
 #include "ctxbridges/osm_bridge.h"
 #include "ctxbridges/renderer_config.h"
+#include "driver_helper/nsbypass.h"
 
 #define GLFW_CLIENT_API 0x22001
 /* Consider GLFW_NO_API as Vulkan API */
@@ -43,14 +44,6 @@
 #define EXTERNAL_API __attribute__((used))
 // This means that you are forced to have this function/variable for ABI compatibility
 #define ABI_COMPAT __attribute__((unused))
-
-//POJAVLAUNCHER_NSBYPASS_H
-#ifndef POJAVLAUNCHER_NSBYPASS_H
-#define POJAVLAUNCHER_NSBYPASS_H
-
-void* load_turnip_vulkan();
-
-#endif
 
 // If you do not want to use a framebuffer
 // delete the following definition
@@ -99,14 +92,9 @@ EXTERNAL_API void pojavTerminate() {
             potatoBridge.eglDisplay = EGL_NO_DISPLAY;
             potatoBridge.eglSurface = EGL_NO_SURFACE;
         } break;
-
-            //case RENDERER_VIRGL:
-        case RENDERER_VK_ZINK: {
-            // Nothing to do here
-        } break;
-        case RENDERER_VK_ZINK_PREF: {
-            // Nothing to do here
-        } break;
+        case RENDERER_VK_ZINK:
+        case RENDERER_VK_ZINK_PREF:
+            break;
     }
 }
 
@@ -150,14 +138,11 @@ EXTERNAL_API void* pojavGetCurrentContext() {
 
 //Switches specifically provided for other renderers
 void loadSymbols() {
-    switch (pojav_environ->config_renderer) {
-        case RENDERER_VIRGL:
-            dlsym_OSMesa();
-            dlsym_EGL();
-            break;
-        case RENDERER_VK_ZINK_PREF:
-            dlsym_OSMesa();
-            break;
+    if (pojav_environ->config_renderer == RENDERER_VIRGL) {
+        dlsym_OSMesa();
+        dlsym_EGL();
+    } if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
+        dlsym_OSMesa();
     }
 }
 
@@ -233,12 +218,10 @@ int pojavInitOpenGL() {
     } else if (strcmp(renderer, "mesa_3d") == 0) {
         if(strcmp(ldrivermodel, "driver_zink") == 0) {
             setenv("GALLIUM_DRIVER","zink",1);
-            printf("Bridge: Use Zink Renderer\n");
             renderer_load_config();
             load_vulkan();
         }
         if(strcmp(ldrivermodel, "driver_virgl") == 0) {
-            printf("Bridge: Use VirglRenderer\n");
             pojav_environ->config_renderer = RENDERER_VIRGL;
             setenv("GALLIUM_DRIVER","virpipe",1);
             setenv("OSMESA_NO_FLUSH_FRONTBUFFER","1",false);
@@ -248,26 +231,22 @@ int pojavInitOpenGL() {
             loadSymbolsVirGL();
         }
         if(strcmp(ldrivermodel, "driver_panfrost") == 0) {
-            printf("Bridge: Use Panfrost Renderer\n");
             setenv("GALLIUM_DRIVER", "panfrost", 1);
             renderer_load_config();
         }
         if(strcmp(ldrivermodel, "driver_freedreno") == 0) {
             setenv("GALLIUM_DRIVER", "freedreno", 1);
             setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
-            printf("Bridge: Use Freedreno renderer\n");
             renderer_load_config();
         }
         if(strcmp(ldrivermodel, "driver_softpipe") == 0) {
             setenv("GALLIUM_DRIVER", "softpipe", 1);
             setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
-            printf("Bridge: Use Softpipe renderer\n");
             renderer_load_config();
         }
         if(strcmp(ldrivermodel, "driver_llvmpipe") == 0) {
             setenv("GALLIUM_DRIVER", "llvmpipe", 1);
             setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
-            printf("Bridge: Use LLVMpipe renderer\n");
             renderer_load_config();
         }
     }
@@ -279,9 +258,7 @@ int pojavInitOpenGL() {
         if(getenv("POJAV_SPARE_BRIDGE") != NULL) {
             if(gl_init()) {
                 gl_setup_window();
-                return 1;
             }
-            return 0;
         } else {
             if(br_init()) {
                 br_setup_window();
