@@ -123,10 +123,10 @@ public final class Tools {
     public static String CTRLMAP_PATH;
     public static String CTRLDEF_FILE;
 
-    public static String DRIVER_MODLE = null;
+    public static String DRIVER_MODEL = null;
     public static String MESA_LIBS = null;
 
-    private static CDriverModleList sCompatibleCDriverModle;
+    private static CDriverModelList sCompatibleCDriverModel;
     private static CMesaLibList sCompatibleCMesaLibs;
     private static LanguagesList sCompatibleLanguages;
     private static RenderersList sCompatibleRenderers;
@@ -1268,18 +1268,18 @@ public final class Tools {
         return sCompatibleCMesaLibs;
     }
 
-    public static class CDriverModleList implements IListAndArry {
-        public final List<String> CDriverModleIds;
+    public static class CDriverModelList implements IListAndArry {
+        public final List<String> CDriverModelIds;
         public final String[] CDriverModels;
 
-        public CDriverModleList(List<String> CDriverModleIds, String[] CDriverModels) {
-            this.CDriverModleIds = CDriverModleIds;
+        public CDriverModelList(List<String> CDriverModelIds, String[] CDriverModels) {
+            this.CDriverModelIds = CDriverModelIds;
             this.CDriverModels = CDriverModels;
         }
 
         @Override
         public List<String> getList() {
-            return CDriverModleIds;
+            return CDriverModelIds;
         }
 
         @Override
@@ -1288,45 +1288,45 @@ public final class Tools {
         }
     }
 
-    public static CDriverModleList getCompatibleCDriverModle(Context context) {
+    public static CDriverModelList getCompatibleCDriverModel(Context context) {
         Resources resources = context.getResources();
-        String[] defaultCDriverModle = resources.getStringArray(R.array.driver_model_values);
-        String[] defaultCDriverModleNames = resources.getStringArray(R.array.driver_model);
-        List<String> CDriverModleIds = new ArrayList<>(defaultCDriverModle.length);
-        List<String> CDriverModleNames = new ArrayList<>(defaultCDriverModleNames.length);
-        for(int i = 0; i < defaultCDriverModle.length; i++) {
-            String driverModle = defaultCDriverModle[i];
+        String[] defaultCDriverModel = resources.getStringArray(R.array.driver_model_values);
+        String[] defaultCDriverModelNames = resources.getStringArray(R.array.driver_model);
+        List<String> CDriverModelIds = new ArrayList<>(defaultCDriverModel.length);
+        List<String> CDriverModelNames = new ArrayList<>(defaultCDriverModelNames.length);
+        for(int i = 0; i < defaultCDriverModel.length; i++) {
+            String driverModel = defaultCDriverModel[i];
             switch (MESA_LIBS) {
                 case "default":{
-                    if(driverModle.contains("virgl")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
+                    if(driverModel.contains("virgl")) continue;
+                    if(driverModel.contains("softpipe")) continue;
+                    if(driverModel.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2304":{
-                    if(driverModle.contains("virgl")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
+                    if(driverModel.contains("virgl")) continue;
+                    if(driverModel.contains("softpipe")) continue;
+                    if(driverModel.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2300d":{
-                    if(driverModle.contains("virgl")) continue;
-                    if(driverModle.contains("freedreno")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
+                    if(driverModel.contains("virgl")) continue;
+                    if(driverModel.contains("freedreno")) continue;
+                    if(driverModel.contains("softpipe")) continue;
+                    if(driverModel.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2205":{
-                    if(driverModle.contains("panfrost")) continue;
-                    if(driverModle.contains("freedreno")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
+                    if(driverModel.contains("panfrost")) continue;
+                    if(driverModel.contains("freedreno")) continue;
+                    if(driverModel.contains("softpipe")) continue;
+                    if(driverModel.contains("llvmpipe")) continue;
                 } break;
             }
-            CDriverModleIds.add(driverModle);
-            CDriverModleNames.add(defaultCDriverModleNames[i]);
+            CDriverModelIds.add(driverModel);
+            CDriverModelNames.add(defaultCDriverModelNames[i]);
         }
-        sCompatibleCDriverModle = new CDriverModleList(CDriverModleIds,
-                CDriverModleNames.toArray(new String[0]));
+        sCompatibleCDriverModel = new CDriverModelList(CDriverModelIds,
+                CDriverModelNames.toArray(new String[0]));
 
-        return sCompatibleCDriverModle;
+        return sCompatibleCDriverModel;
     }
 
     @SuppressLint("DefaultLocale")

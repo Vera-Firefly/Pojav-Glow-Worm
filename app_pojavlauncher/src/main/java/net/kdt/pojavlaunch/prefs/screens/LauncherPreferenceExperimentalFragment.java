@@ -41,20 +41,20 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         });
 
         final ListPreference CMesaLibP = requirePreference("CMesaLibrary", ListPreference.class);
-        final ListPreference CDriverModleP = requirePreference("CDriverModels", ListPreference.class);
+        final ListPreference CDriverModelP = requirePreference("CDriverModels", ListPreference.class);
         
         setListPreference(CMesaLibP, "CMesaLibrary");
-        setListPreference(CDriverModleP, "CDriverModels");
+        setListPreference(CDriverModelP, "CDriverModels");
         
         CMesaLibP.setOnPreferenceChangeListener((pre, obj) -> {
                 Tools.MESA_LIBS = (String)obj;
-                setListPreference(CDriverModleP, "CDriverModels");
-                CDriverModleP.setValueIndex(0);
+                setListPreference(CDriverModelP, "CDriverModels");
+                CDriverModelP.setValueIndex(0);
                 return true;
         });
         
-        CDriverModleP.setOnPreferenceChangeListener((pre, obj) -> {
-                Tools.DRIVER_MODLE = (String)obj;
+        CDriverModelP.setOnPreferenceChangeListener((pre, obj) -> {
+                Tools.DRIVER_MODEL = (String)obj;
                 return true;
         });
 
@@ -120,8 +120,8 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
             array = Tools.getCompatibleCMesaLib(getContext());
             Tools.MESA_LIBS = value;
         } else if (preferenceKey.equals("CDriverModels")) {
-            array = Tools.getCompatibleCDriverModle(getContext());
-            Tools.DRIVER_MODLE = value;
+            array = Tools.getCompatibleCDriverModel(getContext());
+            Tools.DRIVER_MODEL = value;
         }
         listPreference.setEntries(array.getArray());
         listPreference.setEntryValues(array.getList().toArray(new String[0]));
