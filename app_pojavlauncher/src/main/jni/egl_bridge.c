@@ -438,7 +438,11 @@ EXTERNAL_API void pojavSetWindowHint(int hint, int value) {
     }
 }
 
+ANativeWindow_Buffer buf;
+int32_t stride;
+bool stopSwapBuffers;
 EXTERNAL_API void pojavSwapBuffers() {
+    if (stopSwapBuffers) return;
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK
      || pojav_environ->config_renderer == RENDERER_GL4ES)
     {
@@ -446,19 +450,13 @@ EXTERNAL_API void pojavSwapBuffers() {
             gl_swap_buffers();
         else br_swap_buffers();
     }
-}
-
-ANativeWindow_Buffer buf;
-int32_t stride;
-bool stopSwapBuffers;
-EXTERNAL_API void config_pojavSwapBuffers() {
-    if (stopSwapBuffers) {
-        return;
-    }
-    if (pojav_environ->config_renderer == RENDERER_VIRGL) {
+    if (pojav_environ->config_renderer == RENDERER_VIRGL)
+    {
         glFinish_p();
         vtest_swap_buffers_p();
-    } else if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF) {
+    }
+    if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
+    {
         OSMesaContext ctx = OSMesaGetCurrentContext_p();
         if(ctx == NULL) {
             printf("Zink: attempted to swap buffers without context!");
@@ -543,7 +541,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
         int pixelsArr[4];
         glReadPixels_p(0, 0, 1, 1, GL_RGB, GL_INT, &pixelsArr);
 
-        config_pojavSwapBuffers();
+        pojavSwapBuffers();
         return;
     }
 
