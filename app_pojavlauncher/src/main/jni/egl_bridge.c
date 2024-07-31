@@ -104,7 +104,7 @@ int SpareBridge() {
 }
 
 int SpareBuffer() {
-    if (getenv("POJAV_EXP_FRAME_BUFFER") != NULL) return 1;
+    if (getenv("POJAV_SPARE_FRAME_BUFFER") != NULL) return 1;
     return 0;
 }
 

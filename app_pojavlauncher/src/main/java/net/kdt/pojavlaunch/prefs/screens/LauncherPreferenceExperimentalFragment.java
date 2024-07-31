@@ -108,7 +108,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
     }
 
     private void computeVisibility(){
-        requirePreference("ExpFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("SpareFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("MesaRendererChoose").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("customMesaVersionPref").setVisible(LauncherPreferences.PREF_EXP_SETUP);
     }
