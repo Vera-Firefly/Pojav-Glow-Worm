@@ -128,9 +128,7 @@ public final class Tools {
 
     private static CDriverModelList sCompatibleCDriverModel;
     private static CMesaLibList sCompatibleCMesaLibs;
-    private static LanguagesList sCompatibleLanguages;
     private static RenderersList sCompatibleRenderers;
-
 
     private static File getPojavStorageRoot(Context ctx) {
         if(SDK_INT >= 29) {
@@ -1130,34 +1128,6 @@ public final class Tools {
         // Since the affected function in LWJGL is rarely used (and when used, it's mainly for debug prints)
         // we can make the search scope a bit more broad and check if we are running on a Huawei device.
         return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("huawei");
-    }
-
-    // LanguagesList
-    public static class LanguagesList {
-        public final List<String> LanguageIds;
-        public final String[] Language;
-
-        public LanguagesList(List<String> LanguageIds, String[] Language) {
-            this.LanguageIds = LanguageIds;
-            this.Language = Language;
-        }
-    }
-
-    public static LanguagesList getCompatibleLanguages(Context context) {
-        if(sCompatibleLanguages != null) return sCompatibleLanguages;
-        Resources resources = context.getResources();
-        String[] defaultLanguages = resources.getStringArray(R.array.language_values);
-        String[] defaultLanguageNames = resources.getStringArray(R.array.language);
-        List<String> LanguageIds = new ArrayList<>(defaultLanguages.length);
-        List<String> LanguageNames = new ArrayList<>(defaultLanguageNames.length);
-        for(int i = 0; i < defaultLanguages.length; i++) {
-            LanguageIds.add(defaultLanguages[i]);
-            LanguageNames.add(defaultLanguageNames[i]);
-        }
-        sCompatibleLanguages = new LanguagesList(LanguageIds,
-                LanguageNames.toArray(new String[0]));
-
-        return sCompatibleLanguages;
     }
 
     public static interface IListAndArry {

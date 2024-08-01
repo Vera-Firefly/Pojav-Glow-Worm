@@ -13,11 +13,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.movtery.utils.UnpackJRE;
-
-import androidx.core.view.DisplayCutoutCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
+import com.movtery.utils.ZHTools;
 
 import net.kdt.pojavlaunch.*;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
@@ -75,13 +71,6 @@ public class LauncherPreferences {
     public static boolean PREF_ZINK_PREFER_SYSTEM_DRIVER = false;
 
     public static boolean PREF_EXP_SETUP = false;
-    public static boolean PREF_EXP_SETUP_DEFAULT = false;
-    public static boolean PREF_EXP_SETUP_S = false;
-    public static boolean PREF_EXP_SETUP_T = false;
-    public static boolean PREF_EXP_SETUP_LW = false;
-    public static boolean PREF_EXP_SETUP_VIRGL = false;
-    public static boolean PREF_EXP_SETUP_PAN = false;
-    public static boolean PREF_EXP_SETUP_FD = false;
 
     public static boolean PREF_SPARE_BRIDGE = false;
     public static boolean PREF_SPARE_FRAME_BUFFER = false;
@@ -96,9 +85,11 @@ public class LauncherPreferences {
 
     public static String PREF_MESA_GL_VERSION;
     public static String PREF_MESA_GLSL_VERSION;
-    public static String PREF_GAME_LANGUAGE = "-1";
     public static boolean PREF_ENABLE_LOG_OUTPUT = false;
     public static boolean PREF_QUIT_LAUNCHER = true;
+    public static boolean PREF_AUTOMATICALLY_SET_GAME_LANGUAGE = true;
+    public static boolean PREF_GAME_LANGUAGE_OVERRIDDEN = false;
+    public static String PREF_GAME_LANGUAGE = ZHTools.getSystemLanguage();
 
     public static void loadPreferences(Context ctx) {
         //Required for the data folder.
@@ -158,9 +149,11 @@ public class LauncherPreferences {
         PREF_MESA_GL_VERSION = DEFAULT_PREF.getString("mesaGLVersion", "4.6");
         PREF_MESA_GLSL_VERSION = DEFAULT_PREF.getString("mesaGLSLVersion", "460");
 
-        PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("gameLanguage", "-1");
         PREF_ENABLE_LOG_OUTPUT = DEFAULT_PREF.getBoolean("enableLogOutput", false);
         PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
+        PREF_AUTOMATICALLY_SET_GAME_LANGUAGE = DEFAULT_PREF.getBoolean("autoSetGameLanguage", true);
+        PREF_GAME_LANGUAGE_OVERRIDDEN = DEFAULT_PREF.getBoolean("gameLanguageOverridden", false);
+        PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("setGameLanguage", ZHTools.getSystemLanguage());
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {

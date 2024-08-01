@@ -83,6 +83,10 @@ public class MCOptionUtils {
         sParameterMap.put(key, values.toString());
     }
 
+    public static boolean containsKey(String key) {
+        return sParameterMap.containsKey(key);
+    }
+
     public static String get(String key){
         return sParameterMap.get(key);
     }
