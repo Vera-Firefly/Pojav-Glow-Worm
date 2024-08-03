@@ -48,12 +48,6 @@
 // This means that you are forced to have this function/variable for ABI compatibility
 #define ABI_COMPAT __attribute__((unused))
 
-#ifdef FRAME_BUFFER_SUPPOST
-
-void* gbuffer;
-
-#endif
-
 
 EGLConfig config;
 struct PotatoBridge potatoBridge;
