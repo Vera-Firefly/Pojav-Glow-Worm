@@ -105,8 +105,10 @@ Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPA
         }
     }
 
-    // pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
-    if (spare_setup_window != NULL) spare_setup_window();
+    if (spare_setup_window != NULL && pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
+    {
+        spare_setup_window();
+    }
 
 }
 
@@ -130,10 +132,14 @@ EXTERNAL_API void* pojavGetCurrentContext() {
     }
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
+    {
         return spare_get_current();
+    }
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
+    {
         return (void *)OSMesaGetCurrentContext_p();
+    }
 
 }
 
@@ -261,10 +267,13 @@ int pojavInitOpenGL() {
         }
     }
 
-    // pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
-    if (spare_init()) spare_setup_window();
+    if (spare_init() && pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
+    {
+        spare_setup_window();
+    }
 
-    if (pojav_environ->config_renderer == RENDERER_VIRGL) {
+    if (pojav_environ->config_renderer == RENDERER_VIRGL)
+    {
         pojav_virgl_init();
     }
 
@@ -312,7 +321,9 @@ EXTERNAL_API void pojavSwapBuffers() {
         vtest_swap_buffers_p();
     }
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
+    {
         spare_swap_buffers();
+    }
 }
 
 void* egl_make_current(void* window) {
@@ -348,7 +359,9 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
     }
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
+    {
         spare_make_current((basic_render_window_t*)window);
+    }
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
     {
@@ -400,7 +413,9 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
     }
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
+    {
         return spare_init_context((basic_render_window_t*)contextSrc);
+    }
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
     {
