@@ -8,8 +8,9 @@
 int SpareBuffer();
 
 #define FRAME_BUFFER_SUPPOST
-void* gbuffer;
-void* mbuffer;
+extern void* gbuffer;
+extern void* mbuffer;
+
 
 #endif
 
