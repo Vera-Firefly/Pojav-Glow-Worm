@@ -49,8 +49,16 @@
 #define ABI_COMPAT __attribute__((unused))
 
 
-EGLConfig config;
+struct PotatoBridge {
+    void* eglContext;    // EGLContext
+    void* eglDisplay;    // EGLDisplay
+    void* eglSurface;    // EGLSurface
+    // void* eglSurfaceRead;
+    // void* eglSurfaceDraw;
+};
 struct PotatoBridge potatoBridge;
+EGLConfig config;
+
 
 int (*vtest_main_p) (int argc, char** argv);
 void (*vtest_swap_buffers_p) (void);
