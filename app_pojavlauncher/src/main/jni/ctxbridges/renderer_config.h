@@ -15,9 +15,20 @@
 
 #ifndef RENDERER_CONFIG_H
 #define RENDERER_CONFIG_H
+#include <EGL/egl.h>
 
 int pojav_virgl_init();
 
+struct PotatoBridge {
+    void* eglContext;    // EGLContext
+    void* eglDisplay;    // EGLDisplay
+    void* eglSurface;    // EGLSurface
+    // void* eglSurfaceRead;
+    // void* eglSurfaceDraw;
+};
+
+extern struct PotatoBridge potatoBridge;
+extern EGLConfig config;
 
 #endif // POTATOBRIDGE_H
 

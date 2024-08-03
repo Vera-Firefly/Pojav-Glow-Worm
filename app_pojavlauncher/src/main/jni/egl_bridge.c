@@ -49,13 +49,6 @@
 #define ABI_COMPAT __attribute__((unused))
 
 
-struct PotatoBridge {
-    void* eglContext;    // EGLContext
-    void* eglDisplay;    // EGLDisplay
-    void* eglSurface;    // EGLSurface
-    // void* eglSurfaceRead;
-    // void* eglSurfaceDraw;
-};
 struct PotatoBridge potatoBridge;
 EGLConfig config;
 
@@ -113,10 +106,8 @@ Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPA
         }
     }
 
-    if (spare_setup_window != NULL && pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
-    {
-        spare_setup_window();
-    }
+    // pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
+    if (spare_setup_window != NULL) spare_setup_window();
 
 }
 
@@ -140,14 +131,10 @@ EXTERNAL_API void* pojavGetCurrentContext() {
     }
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
-    {
         return spare_get_current();
-    }
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
-    {
         return (void *)OSMesaGetCurrentContext_p();
-    }
 
 }
 
@@ -275,10 +262,8 @@ int pojavInitOpenGL() {
         }
     }
 
-    if (spare_init() && pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
-    {
-        spare_setup_window();
-    }
+    // pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
+    if (spare_init()) spare_setup_window();
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
     {
@@ -367,9 +352,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
     }
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
-    {
         spare_make_current((basic_render_window_t*)window);
-    }
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
     {
