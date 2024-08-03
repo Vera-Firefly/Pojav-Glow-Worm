@@ -48,6 +48,12 @@
 // This means that you are forced to have this function/variable for ABI compatibility
 #define ABI_COMPAT __attribute__((unused))
 
+#ifdef FRAME_BUFFER_SUPPOST
+
+void* gbuffer;
+
+#endif
+
 
 EGLConfig config;
 struct PotatoBridge potatoBridge;
@@ -261,8 +267,8 @@ int pojavInitOpenGL() {
         }
     }
 
-    // pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
-    if (spare_init()) spare_setup_window();
+    if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF && spare_init())
+        spare_setup_window();
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL) {
         pojav_virgl_init();
@@ -298,6 +304,8 @@ EXTERNAL_API void pojavSetWindowHint(int hint, int value) {
     }
 }
 
+ANativeWindow_Buffer buf;
+int32_t stride;
 EXTERNAL_API void pojavSwapBuffers() {
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK
      || pojav_environ->config_renderer == RENDERER_GL4ES)
@@ -363,7 +371,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
                                     pojav_environ->savedWidth,
                                     pojav_environ->savedHeight);
 #else
-            printf("ERROR: FRAME_BUFFER_SUPPOST is undefined\n");
+            printf("[ERROR]: Macro FRAME_BUFFER_SUPPOST is undefined\n");
 #endif
         } else OSMesaMakeCurrent_p((OSMesaContext)window,
                                        setbuffer,
@@ -438,13 +446,7 @@ Java_org_lwjgl_opengl_GL_nativeRegalMakeCurrent(JNIEnv *env, jclass clazz) {
 
 EXTERNAL_API JNIEXPORT jlong JNICALL
 Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
-    if (SpareBuffer())
-    {
-        if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
-            return &mbuffer;
-        else if (pojav_environ->config_renderer == RENDERER_VIRGL)
-            return &gbuffer;
-    }
+    if (SpareBuffer() && pojav_environ->config_renderer != RENDERER_VK_ZINK) return &gbuffer;
 }
 
 EXTERNAL_API JNIEXPORT jintArray JNICALL
