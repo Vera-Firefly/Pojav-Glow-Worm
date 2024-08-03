@@ -48,6 +48,11 @@
 // This means that you are forced to have this function/variable for ABI compatibility
 #define ABI_COMPAT __attribute__((unused))
 
+#ifdef FRAME_BUFFER_SUPPOST
+
+void* gbuffer;
+
+#endif
 
 struct PotatoBridge potatoBridge;
 EGLConfig config;
@@ -444,13 +449,7 @@ Java_org_lwjgl_opengl_GL_nativeRegalMakeCurrent(JNIEnv *env, jclass clazz) {
 
 EXTERNAL_API JNIEXPORT jlong JNICALL
 Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
-    if (SpareBuffer())
-    {
-        if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
-            return &mbuffer;
-        else if (pojav_environ->config_renderer == RENDERER_VIRGL)
-            return &gbuffer;
-    }
+    if (SpareBuffer() && pojav_environ->config_renderer != RENDERER_VK_ZINK) return &gbuffer;
 }
 
 EXTERNAL_API JNIEXPORT jintArray JNICALL
