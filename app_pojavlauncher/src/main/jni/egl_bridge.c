@@ -54,9 +54,9 @@ void* gbuffer;
 
 #endif
 
-struct PotatoBridge potatoBridge;
-EGLConfig config;
 
+EGLConfig config;
+struct PotatoBridge potatoBridge;
 
 int (*vtest_main_p) (int argc, char** argv);
 void (*vtest_swap_buffers_p) (void);
@@ -111,7 +111,6 @@ Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPA
         }
     }
 
-    // pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
     if (spare_setup_window != NULL) spare_setup_window();
 
 }
@@ -267,11 +266,10 @@ int pojavInitOpenGL() {
         }
     }
 
-    // pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
-    if (spare_init()) spare_setup_window();
+    if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF && spare_init())
+        spare_setup_window();
 
-    if (pojav_environ->config_renderer == RENDERER_VIRGL)
-    {
+    if (pojav_environ->config_renderer == RENDERER_VIRGL) {
         pojav_virgl_init();
     }
 
@@ -305,6 +303,8 @@ EXTERNAL_API void pojavSetWindowHint(int hint, int value) {
     }
 }
 
+ANativeWindow_Buffer buf;
+int32_t stride;
 EXTERNAL_API void pojavSwapBuffers() {
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK
      || pojav_environ->config_renderer == RENDERER_GL4ES)
@@ -319,9 +319,7 @@ EXTERNAL_API void pojavSwapBuffers() {
         vtest_swap_buffers_p();
     }
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
-    {
         spare_swap_buffers();
-    }
 }
 
 void* egl_make_current(void* window) {
@@ -372,7 +370,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
                                     pojav_environ->savedWidth,
                                     pojav_environ->savedHeight);
 #else
-            printf("ERROR: FRAME_BUFFER_SUPPOST is undefined\n");
+            printf("[ERROR]: Macro FRAME_BUFFER_SUPPOST is undefined\n");
 #endif
         } else OSMesaMakeCurrent_p((OSMesaContext)window,
                                        setbuffer,
@@ -409,9 +407,7 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
     }
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
-    {
         return spare_init_context((basic_render_window_t*)contextSrc);
-    }
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
     {

@@ -13,8 +13,8 @@
 
 
 
-#ifndef RENDERER_CONFIG_H
-#define RENDERER_CONFIG_H
+#ifndef POTATOBRIDGE_H
+#define POTATOBRIDGE_H
 #include <EGL/egl.h>
 
 int pojav_virgl_init();

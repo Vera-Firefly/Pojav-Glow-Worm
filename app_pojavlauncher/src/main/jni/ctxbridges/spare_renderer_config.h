@@ -9,7 +9,6 @@ int SpareBuffer();
 
 #define FRAME_BUFFER_SUPPOST
 
-
 #endif
 
 
