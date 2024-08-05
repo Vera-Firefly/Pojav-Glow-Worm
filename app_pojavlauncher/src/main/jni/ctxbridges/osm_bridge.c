@@ -86,6 +86,7 @@ void osm_apply_current_ll() {
 }
 
 void osm_make_current(osm_render_window_t* bundle) {
+    static bool hasSetNoRendererBuffer = false;
     if(bundle == NULL) {
         //technically this does nothing as its not possible to unbind a context in OSMesa
         OSMesaMakeCurrent_p(NULL, NULL, 0, 0, 0);
@@ -105,7 +106,11 @@ void osm_make_current(osm_render_window_t* bundle) {
         osm_swap_surfaces(bundle);
         if(hasSetMainWindow) pojav_environ->mainWindowBundle->state = STATE_RENDERER_ALIVE;
     }
-    osm_set_no_render_buffer(&bundle->buffer);
+    if (!hasSetNoRendererBuffer)
+    {
+        osm_set_no_render_buffer(&bundle->buffer);
+        hasSetNoRendererBuffer = true;
+    }
     osm_apply_current_ll();
     OSMesaPixelStore_p(OSMESA_Y_UP,0);
 }
