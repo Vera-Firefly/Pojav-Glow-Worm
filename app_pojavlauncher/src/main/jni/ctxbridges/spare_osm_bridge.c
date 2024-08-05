@@ -149,6 +149,7 @@ void spare_osm_apply_current_ll(ANativeWindow_Buffer* buffer) {
 }
 
 void spare_osm_make_current(spare_osm_render_window_t* bundle) {
+    static bool hasSetNoRendererBuffer = false;
 
     if (bundle == NULL)
     {
@@ -174,8 +175,14 @@ void spare_osm_make_current(spare_osm_render_window_t* bundle) {
         if(hasSetMainWindow) pojav_environ->mainWindowBundle->state = STATE_RENDERER_ALIVE;
     }
 
+    if (!hasSetNoRendererBuffer)
+    {
+        spare_osm_set_no_render_buffer(&bundle->buffer);
+        printf("%s: Has set no renderer buffer!", osm_LogTag);
+        hasSetNoRendererBuffer = true;
+    }
+
     printf("%s: making current\n", osm_LogTag);
-    spare_osm_set_no_render_buffer(&bundle->buffer);
     printf("%s: bundle buffer = %d\n", osm_LogTag, bundle->buffer);
     spare_osm_apply_current_ll(&currentBundle->buffer);
     OSMesaPixelStore_p(OSMESA_Y_UP, 0);
