@@ -1299,6 +1299,7 @@ public final class Tools {
                 case "default":
                 case "mesa2409":
                 case "mesa2320d":
+                case "mesa2319":
                 case "mesa2304":{
                     if(driverModel.contains("virgl")) continue;
                     if(driverModel.contains("softpipe")) continue;

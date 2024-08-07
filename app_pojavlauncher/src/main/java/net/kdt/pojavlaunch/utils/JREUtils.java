@@ -544,6 +544,9 @@ public class JREUtils {
                 case "mesa2320d":
                     renderLibrary = "libOSMesa_2320d.so";
                     break;
+                case "mesa2319":
+                    renderLibrary = "libOSMesa_2319.so";
+                    break;
                 case "mesa2304":
                     renderLibrary = "libOSMesa_2304.so";
                     break;
