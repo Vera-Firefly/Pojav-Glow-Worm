@@ -538,6 +538,9 @@ public class JREUtils {
                 case "default":
                     renderLibrary = "libOSMesa_8.so";
                     break;
+                case "mesa2409":
+                    renderLibrary = "libOSMesa_2409.so";
+                    break;
                 case "mesa2320d":
                     renderLibrary = "libOSMesa_2320d.so";
                     break;
@@ -554,12 +557,16 @@ public class JREUtils {
         } else {
             switch (LOCAL_RENDERER) {
                 case "opengles2":
-                case "opengles2_5":
-                case "opengles3":
                     renderLibrary = "libgl4es_114.so";
+                    break;
+                case "opengles2_ptitseb":
+                    renderLibrary = "libgl4es_ptitseb.so";
                     break;
                 case "opengles2_vgpu":
                     renderLibrary = "libvgpu.so";
+                    break;
+                case "opengles2_vgpu_1":
+                    renderLibrary = "libvgpu_1368.so";
                     break;
                 case "vulkan_zink":
                 case "freedreno":
