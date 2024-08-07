@@ -1296,11 +1296,8 @@ public final class Tools {
         for(int i = 0; i < defaultCDriverModel.length; i++) {
             String driverModel = defaultCDriverModel[i];
             switch (MESA_LIBS) {
-                case "default":{
-                    if(driverModel.contains("virgl")) continue;
-                    if(driverModel.contains("softpipe")) continue;
-                    if(driverModel.contains("llvmpipe")) continue;
-                } break;
+                case "default":
+                case "mesa2320d":
                 case "mesa2304":{
                     if(driverModel.contains("virgl")) continue;
                     if(driverModel.contains("softpipe")) continue;
