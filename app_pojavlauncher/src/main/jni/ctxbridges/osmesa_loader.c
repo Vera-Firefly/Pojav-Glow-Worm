@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dlfcn.h>
+#include <string.h>
 #include "environ/environ.h"
 #include "osmesa_loader.h"
 #include "renderer_config.h"
@@ -27,10 +28,15 @@ void dlsym_OSMesa() {
     char* mesa_library = getenv("MESA_LIBRARY");
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK
     || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
-    || pojav_environ->config_renderer == RENDERER_VIRGL)
-    {
-        if(asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), mesa_library) == -1)
+    || pojav_environ->config_renderer == RENDERER_VIRGL) {
+        if (mesa_library == NULL) {
             abort();
+        } else if (strncmp(mesa_library, "/data", 5) == 0) {
+            main_path = mesa_library;
+        } else {
+            if (asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), mesa_library) == -1)
+                abort();
+        }
     }
     void* dl_handle = NULL;
     dl_handle = dlopen(main_path, RTLD_GLOBAL);
