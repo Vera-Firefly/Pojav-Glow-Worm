@@ -26,13 +26,14 @@ void (*glReadBuffer_p) (GLenum mode);
 void dlsym_OSMesa() {
     char* main_path = NULL;
     char* mesa_library = getenv("MESA_LIBRARY");
-    if(pojav_environ->config_renderer == RENDERER_VK_ZINK
-    || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
-    || pojav_environ->config_renderer == RENDERER_VIRGL) {
-        if (mesa_library == NULL) {
-            abort();
-        } else if (strncmp(mesa_library, "/data", 5) == 0) {
-            main_path = mesa_library;
+    if (pojav_environ->config_renderer == RENDERER_VK_ZINK
+     || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
+     || pojav_environ->config_renderer == RENDERER_VIRGL)
+    {
+        if (strncmp(mesa_library, "/data", 5) == 0)
+        {
+            main_path = strdup(mesa_library);
+            if (!main_path) abort();
         } else {
             if (asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), mesa_library) == -1)
                 abort();
