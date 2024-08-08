@@ -86,13 +86,13 @@ void osm_apply_current_ll() {
 }
 
 void osm_make_current(osm_render_window_t* bundle) {
-    static bool hasSetNoRendererBuffer = false;
     if(bundle == NULL) {
         //technically this does nothing as its not possible to unbind a context in OSMesa
         OSMesaMakeCurrent_p(NULL, NULL, 0, 0, 0);
         currentBundle = NULL;
         return;
     }
+    static bool hasSetNoRendererBuffer = false;
     bool hasSetMainWindow = false;
     currentBundle = bundle;
     if(pojav_environ->mainWindowBundle == NULL) {

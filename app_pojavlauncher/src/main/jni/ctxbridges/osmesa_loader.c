@@ -27,10 +27,10 @@ void dlsym_OSMesa() {
     char* mesa_library = getenv("MESA_LIBRARY");
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK
     || pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
-    || pojav_environ->config_renderer == RENDERER_VIRGL) {
-        if(asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), mesa_library) == -1) {
+    || pojav_environ->config_renderer == RENDERER_VIRGL)
+    {
+        if(asprintf(&main_path, "%s/%s", getenv("POJAV_NATIVEDIR"), mesa_library) == -1)
             abort();
-        }
     }
     void* dl_handle = NULL;
     dl_handle = dlopen(main_path, RTLD_GLOBAL);
