@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -16,12 +17,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.*;
 
+import java.util.Arrays;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
+import net.kdt.pojavlaunch.PojavApplication;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
+import net.kdt.pojavlaunch.utils.MesaUtils;
 
 // Experimental Settings for Mesa renderer
 public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFragment {
@@ -37,6 +43,12 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
         findPreference("SetGLVersion").setOnPreferenceClickListener((preference) -> {
             showSetGLVersionDialog();
+            return true;
+        });
+
+        final Preference downloadMesa = requirePreference("DownloadMesa", Preference.class);
+        downloadMesa.setOnPreferenceClickListener((a)-> {
+            loadMesaList();
             return true;
         });
 
@@ -101,6 +113,60 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
     }
 
+    private void loadMesaList() {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setMessage(R.string.preference_rendererexp_mesa_download_load)
+                .show();
+        PojavApplication.sExecutorService.execute(() -> {
+            Set<String> list = MesaUtils.INSTANCE.getMesaList();
+            requireActivity().runOnUiThread(() -> {
+                dialog.dismiss();
+
+                if (list == null) {
+                    AlertDialog alertDialog1 = new AlertDialog.Builder(requireActivity())
+                            .setMessage(R.string.preference_rendererexp_mesa_get_fail)
+                            .create();
+                    alertDialog1.show();
+                } else {
+                    final String[] items3 = new String[list.size()];
+                    list.toArray(items3);
+                    //添加列表
+                    AlertDialog alertDialog3 = new AlertDialog.Builder(requireActivity())
+                            .setTitle(R.string.preference_rendererexp_mesa_select_download)
+                            .setItems(items3, (dialogInterface, i) -> {
+                                if (i < 0 || i > items3.length)
+                                    return;
+                                dialogInterface.dismiss();
+                                downloadMesa(items3[i]);
+                            })
+                            .create();
+                    alertDialog3.show();
+                }
+            });
+        });
+    }
+
+    private void downloadMesa(String version) {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setMessage(R.string.preference_rendererexp_mesa_downloading)
+                .show();
+        PojavApplication.sExecutorService.execute(() -> {
+            boolean data = MesaUtils.INSTANCE.downloadMesa(version);
+            requireActivity().runOnUiThread(() -> {
+                dialog.dismiss();
+                if (data) {
+                    Toast.makeText(requireContext(), R.string.preference_rendererexp_mesa_downloaded, Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    AlertDialog alertDialog1 = new AlertDialog.Builder(requireActivity())
+                            .setMessage(R.string.preference_rendererexp_mesa_download_fail)
+                            .create();
+                    alertDialog1.show();
+                }
+            });
+        });
+    }
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences p, String s) {
         super.onSharedPreferenceChanged(p, s);
@@ -118,6 +184,17 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         String value = listPreference.getValue();
         if (preferenceKey.equals("CMesaLibrary")) {
             array = Tools.getCompatibleCMesaLib(getContext());
+            boolean have = false;
+            for (int a = 0; a < array.getList().size(); a++) {
+                if (array.getList().get(a).equalsIgnoreCase(value)) {
+                    have = true;
+                    break;
+                }
+            }
+            if (!have) {
+                value = array.getList().get(0);
+                listPreference.setValue(value);
+            }
             Tools.MESA_LIBS = value;
         } else if (preferenceKey.equals("CDriverModels")) {
             array = Tools.getCompatibleCDriverModel(getContext());

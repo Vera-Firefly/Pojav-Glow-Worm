@@ -441,4 +441,11 @@
     <string name="zh_setting_java_memory_too_big">当前设置的内存空间过大,最多只能设置为 %d MB</string>
     <string name="zh_setting_java_memory_too_small">当前设置的内存空间过小,至少需要设置为 %d MB</string>
     <string name="setting_java_memory_outofrange">输入值 %s MB超出可接受范围</string>
+    <string name="preference_extra_mesa_download">下载Mesa运行库</string>
+    <string name="preference_rendererexp_mesa_get_fail">获取Mesa运行库列表失败</string>
+    <string name="preference_rendererexp_mesa_select_download">选择一个Mesa版本下载</string>
+    <string name="preference_rendererexp_mesa_download_load">正在加载Mesa运行库列表</string>
+    <string name="preference_rendererexp_mesa_downloading">正在下载Mesa运行库</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa运行库下载失败</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa运行库下载成功</string>
 </resources>

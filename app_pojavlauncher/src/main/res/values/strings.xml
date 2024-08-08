@@ -499,4 +499,11 @@
     <string name="zh_setting_set_game_language_overridden_title">Override Game Language</string>
     <string name="zh_setting_set_game_language_overridden_desc">Ignore the language set in the game and force it to the game language set in the launcher</string>
     <string name="setting_java_memory_outofrange">The input value %s MB is out of the acceptable range</string>
+    <string name="preference_extra_mesa_download">Download Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Mesa Lib list get fail</string>
+    <string name="preference_rendererexp_mesa_select_download">Select a version to download</string>
+    <string name="preference_rendererexp_mesa_download_load">loading Mesa Lib list</string>
+    <string name="preference_rendererexp_mesa_downloading">Downloading Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa Lib download fail</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa Lib download success</string>
 </resources>

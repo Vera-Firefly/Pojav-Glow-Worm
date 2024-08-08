@@ -65,6 +65,7 @@ import net.kdt.pojavlaunch.utils.DownloadUtils;
 import net.kdt.pojavlaunch.utils.FileUtils;
 import net.kdt.pojavlaunch.utils.JREUtils;
 import net.kdt.pojavlaunch.utils.JSONUtils;
+import net.kdt.pojavlaunch.utils.MesaUtils;
 import net.kdt.pojavlaunch.utils.OldVersionsUtils;
 import net.kdt.pojavlaunch.value.DependentLibrary;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
@@ -107,6 +108,7 @@ public final class Tools {
     public static final String URL_HOME = "https://github.com/Vera-Firefly/Pojav-Glow-Worm";
     public static String NATIVE_LIB_DIR;
     public static String DIR_DATA; //Initialized later to get context
+    public static String MESA_DIR;
     public static File DIR_CACHE;
     public static File FILE_PROFILE_PATH;
     public static String MULTIRT_HOME;
@@ -159,6 +161,7 @@ public final class Tools {
     public static void initContextConstants(Context ctx){
         DIR_CACHE = ctx.getCacheDir();
         DIR_DATA = ctx.getFilesDir().getParent();
+        MESA_DIR = DIR_DATA + "/mesa";
         FILE_PROFILE_PATH = new File(Tools.DIR_DATA, "/profile_path.json");
         MULTIRT_HOME = DIR_DATA+"/runtimes";
         DIR_GAME_HOME = getPojavStorageRoot(ctx).getAbsolutePath();
@@ -1251,15 +1254,20 @@ public final class Tools {
     }
 
     public static CMesaLibList getCompatibleCMesaLib(Context context) {
-        if(sCompatibleCMesaLibs != null) return sCompatibleCMesaLibs;
+        //if(sCompatibleCMesaLibs != null) return sCompatibleCMesaLibs;
         Resources resources = context.getResources();
         String[] defaultCMesaLib = resources.getStringArray(R.array.osmesa_values);
         String[] defaultCMesaLibNames = resources.getStringArray(R.array.osmesa_library);
         List<String> CMesaLibIds = new ArrayList<>(defaultCMesaLib.length);
         List<String> CMesaLibNames = new ArrayList<>(defaultCMesaLibNames.length);
-        for(int i = 0; i < defaultCMesaLib.length; i++) {
+        for (int i = 0; i < defaultCMesaLib.length; i++) {
             CMesaLibIds.add(defaultCMesaLib[i]);
             CMesaLibNames.add(defaultCMesaLibNames[i]);
+        }
+        List<String> downloadList = MesaUtils.INSTANCE.getMesaLibList();
+        for (String item : downloadList) {
+            CMesaLibIds.add(item);
+            CMesaLibNames.add(item);
         }
         sCompatibleCMesaLibs = new CMesaLibList(CMesaLibIds,
                 CMesaLibNames.toArray(new String[0]));

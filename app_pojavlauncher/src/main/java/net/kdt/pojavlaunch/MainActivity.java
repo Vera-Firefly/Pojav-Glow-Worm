@@ -634,10 +634,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        GameService.LocalBinder localBinder = (GameService.LocalBinder) service;
-        mServiceBinder = localBinder;
-        minecraftGLView.start(localBinder.isActive, touchpad);
-        localBinder.isActive = true;
+        if (service instanceof GameService.LocalBinder) {
+            GameService.LocalBinder localBinder = (GameService.LocalBinder) service;
+            mServiceBinder = localBinder;
+            minecraftGLView.start(localBinder.isActive, touchpad);
+            localBinder.isActive = true;
+        }
     }
 
     @Override
