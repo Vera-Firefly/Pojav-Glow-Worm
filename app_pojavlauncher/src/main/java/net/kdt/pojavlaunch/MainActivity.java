@@ -45,6 +45,7 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.kdt.LoggerView;
+import com.movtery.feature.ProfileLanguageSelector;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 
 import net.kdt.pojavlaunch.customcontrols.ControlButtonMenuListener;
@@ -60,7 +61,6 @@ import net.kdt.pojavlaunch.customcontrols.mouse.GyroControl;
 import net.kdt.pojavlaunch.customcontrols.mouse.Touchpad;
 import net.kdt.pojavlaunch.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
-import net.kdt.pojavlaunch.profiles.ProfileLanguageSelector;
 import net.kdt.pojavlaunch.services.GameService;
 import net.kdt.pojavlaunch.utils.JREUtils;
 import net.kdt.pojavlaunch.utils.MCOptionUtils;
@@ -102,6 +102,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         super.onCreate(savedInstanceState);
         minecraftProfile = LauncherProfiles.getCurrentProfile();
         MCOptionUtils.load(Tools.getGameDirPath(minecraftProfile).getAbsolutePath());
+        if (LauncherPreferences.PREF_AUTOMATICALLY_SET_GAME_LANGUAGE)
+            ProfileLanguageSelector.setGameLanguage(minecraftProfile, LauncherPreferences.PREF_GAME_LANGUAGE_OVERRIDDEN);
 
         Intent gameServiceIntent = new Intent(this, GameService.class);
         // Start the service a bit early
@@ -116,8 +118,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         else getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
         // Set the sustained performance mode for available APIs
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            getWindow().setSustainedPerformanceMode(PREF_SUSTAINED_PERFORMANCE);
+        getWindow().setSustainedPerformanceMode(PREF_SUSTAINED_PERFORMANCE);
 
         ingameControlsEditorArrayAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.menu_customcontrol));
@@ -347,8 +348,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         if(Tools.MESA_LIBS == null) {
             Tools.MESA_LIBS = LauncherPreferences.PREF_MESA_LIB;
         }
-        if(Tools.DRIVER_MODLE == null) {
-            Tools.DRIVER_MODLE = LauncherPreferences.PREF_DRIVER_MODLE;
+        if(Tools.DRIVER_MODEL == null) {
+            Tools.DRIVER_MODEL = LauncherPreferences.PREF_DRIVER_MODEL;
         }
         if(!Tools.checkRendererCompatible(this, Tools.LOCAL_RENDERER)) {
             Tools.RenderersList renderersList = Tools.getCompatibleRenderers(this);
@@ -364,7 +365,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         LauncherProfiles.load(ProfilePathManager.getCurrentProfile());
         int requiredJavaVersion = 8;
         if(version.javaVersion != null) requiredJavaVersion = version.javaVersion.majorVersion;
-        if (minecraftProfile.language != -1) ProfileLanguageSelector.languageChangers(minecraftProfile); // Language Selector
         Tools.launchMinecraft(this, minecraftAccount, minecraftProfile, versionId, requiredJavaVersion);
         //Note that we actually stall in the above function, even if the game crashes. But let's be safe.
         Tools.runOnUiThread(()-> mServiceBinder.isActive = false);

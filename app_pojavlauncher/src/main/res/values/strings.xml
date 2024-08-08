@@ -172,6 +172,7 @@
     <string name="customctrl_forward_lock">Forward lock</string>
     <string name="customctrl_absolute_tracking">Absolute finger tracking</string>
     <string name="memory_warning_msg">The current amount of free RAM (%d) is lower than allocated RAM (%d), which may lead to crashes. Change the allocation if the game crashes.</string>
+    <string name="address_memory_warning_msg">The current amount of free addressable RAM space (%d) is lower than the allocated RAM (%d), which will lead to crashes. Change the allocation if the game crashes.</string>
     <string name="mcl_memory_allocation">Memory allocation</string>
     <string name="mcl_memory_allocation_subtitle">Controls how much memory is given to Minecraft.</string>
     <string name="multirt_runtime_corrupt">Corrupted Java Runtime</string>
@@ -184,6 +185,7 @@
     <string name="multirt_config_setdefault">Set default</string>
     <string name="multirt_config_setdefault_already">Default</string>
     <string name="multirt_config_removeerror_last">You must have at least one Java Runtime installed.</string>
+    <string name="multirt_nocompatiblert">Can\'t find any compatible Java Runtime. This version requires Java %d or newer.</string>
     <string name="multirt_nojava8rt">Can\'t find Java 8. In order to use this option, you need to install Java 8.</string>
     <string name="multirt_delete_runtime">Delete runtime</string>
     <string name="pvc_gameDirectory">Game directory</string>
@@ -380,6 +382,8 @@
     <string name="log_view_button_output_off">Output\nOFF</string>
     <string name="log_view_button_output_on">Output\nON</string>
     <string name="log_view_label_log_output">Log output:</string>
+    <string name="execute_jar_failed_to_read_file">Failed to read the .jar file</string>
+    <string name="execute_jar_incompatible_runtime">Execute .jar feature is not compatible with Java %d</string>
 
     <!-- App New Annotation -->
     <string name="preference_category_visibility_title">Visibility</string>
@@ -441,10 +445,10 @@
     <string name="preference_renderer_setup">Use more renderer-specific settings</string>
     <string name="preference_spare_bridge_title">Spare Bridge</string>
     <string name="preference_spare_bridge">Use the second scheme bridge,close if launch failed</string>
-    <string name="preference_exp_framebuffer_title">Spare frame buffer</string>
-    <string name="preference_exp_framebuffer">Use the frame buffer of the second scheme, close it if launch failed</string>
+    <string name="preference_spare_framebuffer_title">Spare frame buffer</string>
+    <string name="preference_spare_framebuffer">Use the frame buffer of the second scheme, close it if launch failed</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.1.4 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa24.1.5 (Default)</string>
     <string name="preference_extra_mesa_version">Mesa Version</string>
     <string name="preference_extra_driver_model">Driver Modle</string>
     <!-- Dialog -->
@@ -481,13 +485,19 @@
     <string name="setting_set_resolution_too_big">The current resolution is too large, maximum allowable size is %d</string>
     <string name="setting_set_resolution_too_small">The current resolution is too small, at least %d is required</string>
     <string name="setting_set_resolution_outofrange">The input value %s is out of the acceptable range</string>
-    <!-- Pojav Zenith·Horizon -->
+    <!-- Pojav Zenith Horizon -->
     <string name="zh_setting_java_memory_desc">Control how much memory is allocated to Minecraft</string>
     <string name="zh_setting_java_memory_info">Current memory usage: %s / %s, Free memory size: %s</string>
     <string name="zh_setting_java_memory_max">Maximum allowable memory size: %s</string>
     <string name="zh_setting_java_memory_exceeded">The current memory allocation exceeds available memory size</string>
     <string name="zh_setting_java_memory_too_big">The current memory allocation is too large, maximum allowable size is %d MB</string>
     <string name="zh_setting_java_memory_too_small">The current memory allocation is too small, at least %d MB is required</string>
+    <string name="zh_setting_set_game_language_desc">Automatically set the game language to the selected language when the game starts</string>
+    <string name="zh_setting_set_game_language_title">Automatically Set Game Language</string>
+    <string name="zh_setting_set_game_language_list">Set Game Language</string>
+    <string name="zh_setting_set_game_language_system">Follow System Language</string>
+    <string name="zh_setting_set_game_language_overridden_title">Override Game Language</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Ignore the language set in the game and force it to the game language set in the launcher</string>
     <string name="setting_java_memory_outofrange">The input value %s MB is out of the acceptable range</string>
     <string name="preference_extra_mesa_download">Download Mesa Lib</string>
     <string name="preference_rendererexp_mesa_get_fail">Mesa Lib list get fail</string>

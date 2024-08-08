@@ -61,12 +61,19 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
         mVersionSpinner = view.findViewById(R.id.mc_version_spinner);
 
         mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
+        mNewsButton.setOnLongClickListener((v)->{
+            Tools.swapFragment(requireActivity(), SearchModFragment.class, SearchModFragment.TAG, null);
+            return true;
+        });
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
         mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
         mInstallJarButton.setOnLongClickListener(v->{
             runInstallerWithConfirmation(true);
             return true;
         });
+        mStartTerminalButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), ConsoleActivity.class)));
+        mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
+
         mPathManagerButton.setOnClickListener(v -> {
             if (!mTasksRunning) {
                 checkPermissions(() -> Tools.swapFragment(requireActivity(), ProfilePathManagerFragment.class, ProfilePathManagerFragment.TAG, null));
@@ -74,7 +81,7 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
                 runOnUiThread(() -> Toast.makeText(requireContext(), R.string.profiles_path_task_in_progress, Toast.LENGTH_SHORT).show());
             }
         });
-        mStartTerminalButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), ConsoleActivity.class)));
+
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
         mPlayButton.setOnClickListener(v -> {
@@ -87,12 +94,6 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
             return true;
         });
 
-        mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
-
-        mNewsButton.setOnLongClickListener((v)->{
-            Tools.swapFragment(requireActivity(), SearchModFragment.class, SearchModFragment.TAG, null);
-            return true;
-        });
     }
 
     @Override

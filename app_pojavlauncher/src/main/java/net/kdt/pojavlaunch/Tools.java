@@ -54,6 +54,8 @@ import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 import net.kdt.pojavlaunch.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.lifecycle.ContextExecutorTask;
 import net.kdt.pojavlaunch.lifecycle.LifecycleAwareAlertDialog;
+import net.kdt.pojavlaunch.memory.MemoryHoleFinder;
+import net.kdt.pojavlaunch.memory.SelfMapsParser;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.multirt.Runtime;
 import net.kdt.pojavlaunch.plugins.FFmpegPlugin;
@@ -125,14 +127,12 @@ public final class Tools {
     public static String CTRLMAP_PATH;
     public static String CTRLDEF_FILE;
 
-    public static String DRIVER_MODLE = null;
+    public static String DRIVER_MODEL = null;
     public static String MESA_LIBS = null;
 
-    private static CDriverModleList sCompatibleCDriverModle;
+    private static CDriverModelList sCompatibleCDriverModel;
     private static CMesaLibList sCompatibleCMesaLibs;
-    private static LanguagesList sCompatibleLanguages;
     private static RenderersList sCompatibleRenderers;
-
 
     private static File getPojavStorageRoot(Context ctx) {
         if(SDK_INT >= 29) {
@@ -173,9 +173,19 @@ public final class Tools {
     public static void launchMinecraft(final AppCompatActivity activity, MinecraftAccount minecraftAccount,
                                        MinecraftProfile minecraftProfile, String versionId, int versionJavaRequirement) throws Throwable {
         int freeDeviceMemory = getFreeDeviceMemory(activity);
+        int localeString;
+        int freeAddressSpace = Architecture.is32BitsDevice() ? getMaxContinuousAddressSpaceSize() : -1;
+        Log.i("MemStat", "Free RAM: " + freeDeviceMemory + " Addressable: " + freeAddressSpace);
+        if(freeDeviceMemory > freeAddressSpace && freeAddressSpace != -1) {
+            freeDeviceMemory = freeAddressSpace;
+            localeString = R.string.address_memory_warning_msg;
+        } else {
+            localeString = R.string.memory_warning_msg;
+        }
         if(LauncherPreferences.PREF_RAM_ALLOCATION > freeDeviceMemory) {
+            int finalDeviceMemory = freeDeviceMemory;
             LifecycleAwareAlertDialog.DialogCreator dialogCreator = (dialog, builder) ->
-                builder.setMessage(activity.getString(R.string.memory_warning_msg, freeDeviceMemory, LauncherPreferences.PREF_RAM_ALLOCATION))
+                builder.setMessage(activity.getString(localeString, finalDeviceMemory, LauncherPreferences.PREF_RAM_ALLOCATION))
                         .setPositiveButton(android.R.string.ok, (d, w)->{});
 
             if(LifecycleAwareAlertDialog.haltOnDialog(activity.getLifecycle(), activity, dialogCreator)) {
@@ -942,6 +952,23 @@ public final class Tools {
         return (int) (memInfo.availMem / 1048576L);
     }
 
+    private static int internalGetMaxContinuousAddressSpaceSize() throws Exception{
+        MemoryHoleFinder memoryHoleFinder = new MemoryHoleFinder();
+        new SelfMapsParser(memoryHoleFinder).run();
+        long largestHole = memoryHoleFinder.getLargestHole();
+        if(largestHole == -1) return -1;
+        else return (int)(largestHole / 1048576L);
+    }
+
+    public static int getMaxContinuousAddressSpaceSize() {
+        try {
+            return internalGetMaxContinuousAddressSpaceSize();
+        }catch (Exception e){
+            Log.w("Tools", "Failed to find the largest uninterrupted address space");
+            return -1;
+        }
+    }
+
     public static int getDisplayFriendlyRes(int displaySideRes, float scaling){
         displaySideRes *= scaling;
         if(displaySideRes % 2 != 0) displaySideRes --;
@@ -1135,34 +1162,6 @@ public final class Tools {
         return Build.MANUFACTURER.toLowerCase(Locale.ROOT).contains("huawei");
     }
 
-    // LanguagesList
-    public static class LanguagesList {
-        public final List<String> LanguageIds;
-        public final String[] Language;
-
-        public LanguagesList(List<String> LanguageIds, String[] Language) {
-            this.LanguageIds = LanguageIds;
-            this.Language = Language;
-        }
-    }
-
-    public static LanguagesList getCompatibleLanguages(Context context) {
-        if(sCompatibleLanguages != null) return sCompatibleLanguages;
-        Resources resources = context.getResources();
-        String[] defaultLanguages = resources.getStringArray(R.array.language_values);
-        String[] defaultLanguageNames = resources.getStringArray(R.array.language);
-        List<String> LanguageIds = new ArrayList<>(defaultLanguages.length);
-        List<String> LanguageNames = new ArrayList<>(defaultLanguageNames.length);
-        for(int i = 0; i < defaultLanguages.length; i++) {
-            LanguageIds.add(defaultLanguages[i]);
-            LanguageNames.add(defaultLanguageNames[i]);
-        }
-        sCompatibleLanguages = new LanguagesList(LanguageIds,
-                LanguageNames.toArray(new String[0]));
-
-        return sCompatibleLanguages;
-    }
-
     public static interface IListAndArry {
         List<String> getList();
         String[] getArray();
@@ -1276,18 +1275,18 @@ public final class Tools {
         return sCompatibleCMesaLibs;
     }
 
-    public static class CDriverModleList implements IListAndArry {
-        public final List<String> CDriverModleIds;
+    public static class CDriverModelList implements IListAndArry {
+        public final List<String> CDriverModelIds;
         public final String[] CDriverModels;
 
-        public CDriverModleList(List<String> CDriverModleIds, String[] CDriverModels) {
-            this.CDriverModleIds = CDriverModleIds;
+        public CDriverModelList(List<String> CDriverModelIds, String[] CDriverModels) {
+            this.CDriverModelIds = CDriverModelIds;
             this.CDriverModels = CDriverModels;
         }
 
         @Override
         public List<String> getList() {
-            return CDriverModleIds;
+            return CDriverModelIds;
         }
 
         @Override
@@ -1296,47 +1295,44 @@ public final class Tools {
         }
     }
 
-    public static CDriverModleList getCompatibleCDriverModle(Context context) {
+    public static CDriverModelList getCompatibleCDriverModel(Context context) {
         Resources resources = context.getResources();
-        String[] defaultCDriverModle = resources.getStringArray(R.array.driver_model_values);
-        String[] defaultCDriverModleNames = resources.getStringArray(R.array.driver_model);
-        List<String> CDriverModleIds = new ArrayList<>(defaultCDriverModle.length);
-        List<String> CDriverModleNames = new ArrayList<>(defaultCDriverModleNames.length);
-        for(int i = 0; i < defaultCDriverModle.length; i++) {
-            String driverModle = defaultCDriverModle[i];
+        String[] defaultCDriverModel = resources.getStringArray(R.array.driver_model_values);
+        String[] defaultCDriverModelNames = resources.getStringArray(R.array.driver_model);
+        List<String> CDriverModelIds = new ArrayList<>(defaultCDriverModel.length);
+        List<String> CDriverModelNames = new ArrayList<>(defaultCDriverModelNames.length);
+        for(int i = 0; i < defaultCDriverModel.length; i++) {
+            String driverModel = defaultCDriverModel[i];
             switch (MESA_LIBS) {
-                case "default":{
-                    if(driverModle.contains("virgl")) continue;
-                    if(driverModle.contains("panfrost")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
-                } break;
+                case "default":
+                case "mesa2409":
+                case "mesa2320d":
+                case "mesa2319":
                 case "mesa2304":{
-                    if(driverModle.contains("panfrost")) continue;
-                    if(driverModle.contains("virgl")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
+                    if(driverModel.contains("virgl")) continue;
+                    if(driverModel.contains("softpipe")) continue;
+                    if(driverModel.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2300d":{
-                    if(driverModle.contains("virgl")) continue;
-                    if(driverModle.contains("freedreno")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
+                    if(driverModel.contains("virgl")) continue;
+                    if(driverModel.contains("freedreno")) continue;
+                    if(driverModel.contains("softpipe")) continue;
+                    if(driverModel.contains("llvmpipe")) continue;
                 } break;
                 case "mesa2205":{
-                    if(driverModle.contains("panfrost")) continue;
-                    if(driverModle.contains("freedreno")) continue;
-                    if(driverModle.contains("softpipe")) continue;
-                    if(driverModle.contains("llvmpipe")) continue;
+                    if(driverModel.contains("panfrost")) continue;
+                    if(driverModel.contains("freedreno")) continue;
+                    if(driverModel.contains("softpipe")) continue;
+                    if(driverModel.contains("llvmpipe")) continue;
                 } break;
             }
-            CDriverModleIds.add(driverModle);
-            CDriverModleNames.add(defaultCDriverModleNames[i]);
+            CDriverModelIds.add(driverModel);
+            CDriverModelNames.add(defaultCDriverModelNames[i]);
         }
-        sCompatibleCDriverModle = new CDriverModleList(CDriverModleIds,
-                CDriverModleNames.toArray(new String[0]));
+        sCompatibleCDriverModel = new CDriverModelList(CDriverModelIds,
+                CDriverModelNames.toArray(new String[0]));
 
-        return sCompatibleCDriverModle;
+        return sCompatibleCDriverModel;
     }
 
     @SuppressLint("DefaultLocale")

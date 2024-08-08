@@ -13,11 +13,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.movtery.utils.UnpackJRE;
-
-import androidx.core.view.DisplayCutoutCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
+import com.movtery.utils.ZHTools;
 
 import net.kdt.pojavlaunch.*;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
@@ -30,7 +26,7 @@ public class LauncherPreferences {
     public static SharedPreferences DEFAULT_PREF;
     public static String PREF_RENDERER = "opengles2";
     public static String PREF_MESA_LIB = "default";
-    public static String PREF_DRIVER_MODLE = "driver_zink";
+    public static String PREF_DRIVER_MODEL = "driver_zink";
 
 	public static boolean PREF_VERTYPE_RELEASE = true;
 	public static boolean PREF_VERTYPE_SNAPSHOT = false;
@@ -51,7 +47,7 @@ public class LauncherPreferences {
     public static boolean PREF_DISABLE_SWAP_HAND = false;
     public static float PREF_MOUSESPEED = 1f;
     public static int PREF_RAM_ALLOCATION;
-    public static String PREF_DEFAULT_RUNTIME;
+    public static String PREF_DEFAULT_RUNTIME = "";
     public static boolean PREF_SUSTAINED_PERFORMANCE = false;
     public static boolean PREF_VIRTUAL_MOUSE_START = false;
     public static boolean PREF_ARC_CAPES = false;
@@ -75,16 +71,9 @@ public class LauncherPreferences {
     public static boolean PREF_ZINK_PREFER_SYSTEM_DRIVER = false;
 
     public static boolean PREF_EXP_SETUP = false;
-    public static boolean PREF_EXP_SETUP_DEFAULT = false;
-    public static boolean PREF_EXP_SETUP_S = false;
-    public static boolean PREF_EXP_SETUP_T = false;
-    public static boolean PREF_EXP_SETUP_LW = false;
-    public static boolean PREF_EXP_SETUP_VIRGL = false;
-    public static boolean PREF_EXP_SETUP_PAN = false;
-    public static boolean PREF_EXP_SETUP_FD = false;
 
     public static boolean PREF_SPARE_BRIDGE = false;
-    public static boolean PREF_EXP_FRAME_BUFFER = false;
+    public static boolean PREF_SPARE_FRAME_BUFFER = false;
     public static boolean PREF_EXP_ENABLE_SYSTEM = false;
     public static boolean PREF_EXP_ENABLE_SPECIFIC = false;
     public static boolean PREF_EXP_ENABLE_CUSTOM = false;
@@ -96,9 +85,11 @@ public class LauncherPreferences {
 
     public static String PREF_MESA_GL_VERSION;
     public static String PREF_MESA_GLSL_VERSION;
-    public static String PREF_GAME_LANGUAGE = "-1";
     public static boolean PREF_ENABLE_LOG_OUTPUT = false;
     public static boolean PREF_QUIT_LAUNCHER = true;
+    public static boolean PREF_AUTOMATICALLY_SET_GAME_LANGUAGE = true;
+    public static boolean PREF_GAME_LANGUAGE_OVERRIDDEN = false;
+    public static String PREF_GAME_LANGUAGE = ZHTools.getSystemLanguage();
 
     public static void loadPreferences(Context ctx) {
         //Required for the data folder.
@@ -107,8 +98,8 @@ public class LauncherPreferences {
         PREF_RENDERER = DEFAULT_PREF.getString("renderer", "opengles2");
         PREF_BUTTONSIZE = DEFAULT_PREF.getInt("buttonscale", 100);
         PREF_MOUSESCALE = DEFAULT_PREF.getInt("mousescale", 100);
-	PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
-	PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
+        PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
+        PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
         PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
         PREF_VERTYPE_RELEASE = DEFAULT_PREF.getBoolean("vertype_release", true);
         PREF_VERTYPE_SNAPSHOT = DEFAULT_PREF.getBoolean("vertype_snapshot", false);
@@ -146,21 +137,23 @@ public class LauncherPreferences {
         PREF_VSYNC_IN_ZINK = DEFAULT_PREF.getBoolean("vsync_in_zink", true);
 
         PREF_SPARE_BRIDGE = DEFAULT_PREF.getBoolean("spareBridge", false);
-        PREF_EXP_FRAME_BUFFER = DEFAULT_PREF.getBoolean("ExpFrameBuffer", false);
+        PREF_SPARE_FRAME_BUFFER = DEFAULT_PREF.getBoolean("SpareFrameBuffer", false);
         PREF_EXP_ENABLE_SYSTEM = DEFAULT_PREF.getBoolean("ebSystem", false);
         PREF_EXP_ENABLE_SPECIFIC = DEFAULT_PREF.getBoolean("ebSpecific", false);
         PREF_EXP_ENABLE_CUSTOM = DEFAULT_PREF.getBoolean("ebCustom", false);
 
         PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
         PREF_MESA_LIB = DEFAULT_PREF.getString("CMesaLibrary", "default");
-        PREF_DRIVER_MODLE = DEFAULT_PREF.getString("CDriverModels", "driver_zink");
+        PREF_DRIVER_MODEL = DEFAULT_PREF.getString("CDriverModels", "driver_zink");
 
         PREF_MESA_GL_VERSION = DEFAULT_PREF.getString("mesaGLVersion", "4.6");
         PREF_MESA_GLSL_VERSION = DEFAULT_PREF.getString("mesaGLSLVersion", "460");
 
-        PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("gameLanguage", "-1");
         PREF_ENABLE_LOG_OUTPUT = DEFAULT_PREF.getBoolean("enableLogOutput", false);
-	PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
+        PREF_QUIT_LAUNCHER = DEFAULT_PREF.getBoolean("quitLauncher", true);
+        PREF_AUTOMATICALLY_SET_GAME_LANGUAGE = DEFAULT_PREF.getBoolean("autoSetGameLanguage", true);
+        PREF_GAME_LANGUAGE_OVERRIDDEN = DEFAULT_PREF.getBoolean("gameLanguageOverridden", false);
+        PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("setGameLanguage", ZHTools.getSystemLanguage());
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
@@ -176,15 +169,10 @@ public class LauncherPreferences {
     public static void reloadRuntime() {
         if (DEFAULT_PREF.contains("defaultRuntime")) {
             PREF_DEFAULT_RUNTIME = DEFAULT_PREF.getString("defaultRuntime", "");
-            return;
-        } else if (MultiRTUtils.getRuntimes().isEmpty()) {
-            PREF_DEFAULT_RUNTIME = "";
+        } else if (!MultiRTUtils.getRuntimes().isEmpty()) {
+            PREF_DEFAULT_RUNTIME = UnpackJRE.InternalRuntime.JRE_8.name;
             LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime", PREF_DEFAULT_RUNTIME).apply();
-            return;
         }
-
-        PREF_DEFAULT_RUNTIME = UnpackJRE.InternalRuntime.JRE_8.name;
-        LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime", PREF_DEFAULT_RUNTIME).apply();
     }
 
     /**

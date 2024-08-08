@@ -34,6 +34,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
     private EditText mMesaGLVersion;
     private EditText mMesaGLSLVersion;
+    private String expRenderer;
 
     @Override
     public void onCreatePreferences(Bundle b, String str) {
@@ -52,21 +53,31 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         });
 
         final ListPreference CMesaLibP = requirePreference("CMesaLibrary", ListPreference.class);
-        final ListPreference CDriverModleP = requirePreference("CDriverModels", ListPreference.class);
+        final ListPreference CDriverModelP = requirePreference("CDriverModels", ListPreference.class);
         
         setListPreference(CMesaLibP, "CMesaLibrary");
-        setListPreference(CDriverModleP, "CDriverModels");
+        setListPreference(CDriverModelP, "CDriverModels");
         
         CMesaLibP.setOnPreferenceChangeListener((pre, obj) -> {
                 Tools.MESA_LIBS = (String)obj;
-                setListPreference(CDriverModleP, "CDriverModels");
-                CDriverModleP.setValueIndex(0);
+                setListPreference(CDriverModelP, "CDriverModels");
+                CDriverModelP.setValueIndex(0);
                 return true;
         });
         
-        CDriverModleP.setOnPreferenceChangeListener((pre, obj) -> {
-                Tools.DRIVER_MODLE = (String)obj;
+        CDriverModelP.setOnPreferenceChangeListener((pre, obj) -> {
+                Tools.DRIVER_MODEL = (String)obj;
                 return true;
+        });
+
+        SwitchPreference expRendererPref = requirePreference("ExperimentalSetup", SwitchPreference.class);
+        expRendererPref.setOnPreferenceChangeListener((p, v) -> {
+            onChangeRenderer();
+            boolean isExpRenderer = (boolean) v;
+            if (isExpRenderer) {
+                onExpRendererDialog(p);
+            }
+            return true;
         });
 
         // Custom GL/GLSL
@@ -160,33 +171,10 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
     public void onSharedPreferenceChanged(SharedPreferences p, String s) {
         super.onSharedPreferenceChanged(p, s);
         computeVisibility();
-
-        // Warning pops up when using experimental settings
-        if (s.equals("ExperimentalSetup")) {
-            Preference experimentalSetUpPreference = requirePreference("ExperimentalSetup");
-            boolean isExperimentalSetUpEnabled = p.getBoolean("ExperimentalSetup", false);
-
-            if (isExperimentalSetUpEnabled) {
-                AlertDialog dialog = new AlertDialog.Builder(getContext())
-                    .setTitle(R.string.preference_rendererexp_alertdialog_warning)
-                    .setMessage(R.string.preference_rendererexp_alertdialog_message)
-                    .setPositiveButton(R.string.preference_rendererexp_alertdialog_done, (dia, which) -> {
-                        expTip();
-                    })
-                    .setNegativeButton(R.string.preference_rendererexp_alertdialog_cancel, (dia, which) -> {
-                        ((SwitchPreference) experimentalSetUpPreference).setChecked(false);
-                        SharedPreferences.Editor editor = p.edit();
-                        editor.putBoolean("ExperimentalSetup", false);
-                        editor.apply();
-                    })
-                    .create();
-                dialog.show();
-            }
-        }
     }
 
     private void computeVisibility(){
-        requirePreference("ExpFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
+        requirePreference("SpareFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("MesaRendererChoose").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("customMesaVersionPref").setVisible(LauncherPreferences.PREF_EXP_SETUP);
     }
@@ -209,8 +197,8 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
             }
             Tools.MESA_LIBS = value;
         } else if (preferenceKey.equals("CDriverModels")) {
-            array = Tools.getCompatibleCDriverModle(getContext());
-            Tools.DRIVER_MODLE = value;
+            array = Tools.getCompatibleCDriverModel(getContext());
+            Tools.DRIVER_MODEL = value;
         }
         listPreference.setEntries(array.getArray());
         listPreference.setEntryValues(array.getList().toArray(new String[0]));
@@ -237,13 +225,28 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         dialog.show();
     }
 
-     private void closeOtherCustomMesaPref(PreferenceCategory customMesaVersionPref) {
+    private void closeOtherCustomMesaPref(PreferenceCategory customMesaVersionPref) {
         for (int i = 0; i < customMesaVersionPref.getPreferenceCount(); i++) {
             Preference closepref = customMesaVersionPref.getPreference(i);
             if (closepref instanceof SwitchPreference) {
                 ((SwitchPreference) closepref).setChecked(false);
             }
         }
+    }
+
+    private void onExpRendererDialog(Preference pre) {
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+            .setTitle(R.string.preference_rendererexp_alertdialog_warning)
+            .setMessage(R.string.preference_rendererexp_alertdialog_message)
+            .setPositiveButton(R.string.preference_rendererexp_alertdialog_done, (dia, which) -> {
+                expTip();
+            })
+            .setNegativeButton(R.string.preference_rendererexp_alertdialog_cancel, (dia, which) -> {
+                onChangeRenderer();
+                ((SwitchPreference) pre).setChecked(false);
+            })
+            .create();
+        dialog.show();
     }
 
     // Custom Mesa GL/GLSL Version
@@ -316,6 +319,19 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         return versionNumber >= minVersionNumber && versionNumber <= maxVersionNumber;
         } catch (NumberFormatException e) {
             return false;
+        }
+    }
+
+    private void onChangeRenderer() {
+        String rendererValue = LauncherPreferences.DEFAULT_PREF.getString("renderer", null);
+        if ("mesa_3d".equals(rendererValue)) {
+            LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", expRenderer).apply();
+        } else if ("vulkan_zink".equals(rendererValue)
+        || "opengles3_virgl".equals(rendererValue)
+        || "freedreno".equals(rendererValue)
+        || "panfrost".equals(rendererValue)) {
+            expRenderer = LauncherPreferences.DEFAULT_PREF.getString("renderer", null);
+            LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", "mesa_3d").apply();
         }
     }
 }
