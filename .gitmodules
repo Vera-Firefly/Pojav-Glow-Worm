@@ -1,0 +1,4 @@
+[submodule "lwjgl3-build"]
+	path = lwjgl3-build
+	url = git@github.com:Vera-Firefly/lwjgl3-build
+	branch = 3.3.3

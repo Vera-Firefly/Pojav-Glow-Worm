@@ -47,7 +47,7 @@ jobs:
           path: app_pojavlauncher/src/main/assets/components/lwjgl3
           workflow_conclusion: success
           repo: Vera-Firefly/lwjgl3-build
-          branch: main
+          branch: 3.3.3
           name: lwjgl
 
       - name: Set up JDK 17
@@ -102,7 +102,7 @@ jobs:
           path: app_pojavlauncher/src/main/assets/components/lwjgl3
           workflow_conclusion: success
           repo: Vera-Firefly/lwjgl3-build
-          branch: main
+          branch: 3.3.3
           name: lwjgl
 
       - name: Set up JDK 17
