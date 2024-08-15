@@ -48,8 +48,9 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         if (scaleFactor > 100) {
             seek5.setRange(25, scaleFactor);
         } else {
-            seek5.setMin(25);
+            seek5.setRange(25, 100);
         }
+
         seek5.setValue(scaleFactor);
         seek5.setSuffix(" %");
 
@@ -134,14 +135,14 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                     setVideoResolutionDialog(seek);
                     mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_big, 1000));
                     return;
-                    }
+                }
                 if (Value > 100) {
                     seek.setRange(25, Value);
                 } else {
                     seek.setRange(25, 100);
                 }
                 seek.setValue(Value);
-                })
+            })
             .setNegativeButton(R.string.alertdialog_cancel, null)
             .create();
         dialog.show();

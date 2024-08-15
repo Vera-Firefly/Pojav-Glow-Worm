@@ -1305,6 +1305,7 @@ public final class Tools {
             String driverModel = defaultCDriverModel[i];
             switch (MESA_LIBS) {
                 case "default":
+                case "mesa2415":
                 case "mesa2409":
                 case "mesa2320d":
                 case "mesa2319":
