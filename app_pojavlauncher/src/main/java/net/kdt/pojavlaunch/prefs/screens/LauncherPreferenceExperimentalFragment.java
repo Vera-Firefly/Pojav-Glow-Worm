@@ -84,87 +84,33 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         final PreferenceCategory customMesaVersionPref = requirePreference("customMesaVersionPref", PreferenceCategory.class);
         SwitchPreference setSystemVersion = requirePreference("ebSystem", SwitchPreference.class);
         setSystemVersion.setOnPreferenceChangeListener((p, v) -> {
+            boolean set = (boolean) v;
+            if (!set) return false;
             closeOtherCustomMesaPref(customMesaVersionPref);
-            LauncherPreferences.PREF_EXP_ENABLE_SYSTEM = (boolean) v;
             return true;
         });
 
         SwitchPreference setSpecificVersion = requirePreference("ebSpecific", SwitchPreference.class);
         setSpecificVersion.setOnPreferenceChangeListener((p, v) -> {
+            boolean set = (boolean) v;
+            if (!set) return false;
             closeOtherCustomMesaPref(customMesaVersionPref);
-            LauncherPreferences.PREF_EXP_ENABLE_SPECIFIC = (boolean) v;
             return true;
         });
 
         SwitchPreference setGLVersion = requirePreference("SetGLVersion", SwitchPreference.class);
-        setGLVersion.setOnPreferenceChangeListener((preference, value) -> {
-            boolean value1 = (boolean) value;
-            if (value1) {
-                closeOtherCustomMesaPref(customMesaVersionPref);
-            }
-            LauncherPreferences.PREF_EXP_ENABLE_CUSTOM = value1;
-            LauncherPreferences.DEFAULT_PREF.edit().putBoolean("ebCustom", value1).apply();
-            return value1;
+        setGLVersion.setOnPreferenceChangeListener((p, v) -> {
+            boolean set = (boolean) v;
+            if (!set) return false;
+            closeOtherCustomMesaPref(customMesaVersionPref);
+            LauncherPreferences.DEFAULT_PREF.edit().putBoolean("ebCustom", true).apply();
+            return true;
         });
         setGLVersion.setOnPreferenceClickListener(preference -> {
             showSetGLVersionDialog();
             return true;
         });
 
-    }
-
-    private void loadMesaList() {
-        AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                .setMessage(R.string.preference_rendererexp_mesa_download_load)
-                .show();
-        PojavApplication.sExecutorService.execute(() -> {
-            Set<String> list = MesaUtils.INSTANCE.getMesaList();
-            requireActivity().runOnUiThread(() -> {
-                dialog.dismiss();
-
-                if (list == null) {
-                    AlertDialog alertDialog1 = new AlertDialog.Builder(requireActivity())
-                            .setMessage(R.string.preference_rendererexp_mesa_get_fail)
-                            .create();
-                    alertDialog1.show();
-                } else {
-                    final String[] items3 = new String[list.size()];
-                    list.toArray(items3);
-                    //添加列表
-                    AlertDialog alertDialog3 = new AlertDialog.Builder(requireActivity())
-                            .setTitle(R.string.preference_rendererexp_mesa_select_download)
-                            .setItems(items3, (dialogInterface, i) -> {
-                                if (i < 0 || i > items3.length)
-                                    return;
-                                dialogInterface.dismiss();
-                                downloadMesa(items3[i]);
-                            })
-                            .create();
-                    alertDialog3.show();
-                }
-            });
-        });
-    }
-
-    private void downloadMesa(String version) {
-        AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                .setMessage(R.string.preference_rendererexp_mesa_downloading)
-                .show();
-        PojavApplication.sExecutorService.execute(() -> {
-            boolean data = MesaUtils.INSTANCE.downloadMesa(version);
-            requireActivity().runOnUiThread(() -> {
-                dialog.dismiss();
-                if (data) {
-                    Toast.makeText(requireContext(), R.string.preference_rendererexp_mesa_downloaded, Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    AlertDialog alertDialog1 = new AlertDialog.Builder(requireActivity())
-                            .setMessage(R.string.preference_rendererexp_mesa_download_fail)
-                            .create();
-                    alertDialog1.show();
-                }
-            });
-        });
     }
 
     @Override
@@ -204,9 +150,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         listPreference.setEntryValues(array.getList().toArray(new String[0]));
     }
 
-    //Try Open Extra Tip
     private void expTip() {
-        //Generate any of there characters
         String[] characters = {
         getString(R.string.alertdialog_tipa),
         getString(R.string.alertdialog_tipb),
@@ -216,7 +160,6 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         int index = random.nextInt(characters.length);
         String randomCharacter = characters[index];
 
-        // Create AlertDialog. Builder and set dialog content
         AlertDialog dialog = new AlertDialog.Builder(getContext())
             .setTitle("Tip:")
             .setMessage(randomCharacter)
@@ -238,9 +181,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         AlertDialog dialog = new AlertDialog.Builder(getContext())
             .setTitle(R.string.preference_rendererexp_alertdialog_warning)
             .setMessage(R.string.preference_rendererexp_alertdialog_message)
-            .setPositiveButton(R.string.preference_rendererexp_alertdialog_done, (dia, which) -> {
-                expTip();
-            })
+            .setPositiveButton(R.string.preference_rendererexp_alertdialog_done, null)
             .setNegativeButton(R.string.preference_rendererexp_alertdialog_cancel, (dia, which) -> {
                 onChangeRenderer();
                 ((SwitchPreference) pre).setChecked(false);
@@ -251,28 +192,22 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
     // Custom Mesa GL/GLSL Version
     private void showSetGLVersionDialog() {
-        // Specify a layout films
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_mesa_version, null);
 
-        // Define symbol content
         mMesaGLVersion = view.findViewById(R.id.mesa_gl_version);
         mMesaGLSLVersion = view.findViewById(R.id.mesa_glsl_version);
 
-        // Set text for GL/GLSL values
         mMesaGLVersion.setText(LauncherPreferences.PREF_MESA_GL_VERSION);
         mMesaGLSLVersion.setText(LauncherPreferences.PREF_MESA_GLSL_VERSION);
 
         AlertDialog dialog = new AlertDialog.Builder(getContext())
-            // Dialog content
             .setTitle(R.string.preference_rendererexp_custom_glversion_title)
             .setView(view)
             .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
-                // Gets the GL and GLSL version of the user input
                 String glVersion = mMesaGLVersion.getText().toString();
                 String glslVersion = mMesaGLSLVersion.getText().toString();
 
-                // Verify that the GL version is within the allowed range
                 if (!isValidVersion(glVersion, "2.8", "4.6") && !isValidVersion(glslVersion, "280", "460")) {
                     showSetGLVersionDialog();
                     mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
@@ -292,16 +227,12 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                     return;
                 }
 
-                // Update preferences
                 LauncherPreferences.PREF_MESA_GL_VERSION = glVersion;
                 LauncherPreferences.PREF_MESA_GLSL_VERSION = glslVersion;
-                LauncherPreferences.PREF_EXP_ENABLE_CUSTOM = true;
 
-                // Modify the value of GL/GLSL according to the text content
                 LauncherPreferences.DEFAULT_PREF.edit()
                     .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
                     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
-                    .putBoolean("ebCustom", true)
                     .apply();
             })
             .setNegativeButton(R.string.alertdialog_cancel, null)
@@ -333,5 +264,59 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
             expRenderer = LauncherPreferences.DEFAULT_PREF.getString("renderer", null);
             LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", "mesa_3d").apply();
         }
+    }
+
+    private void loadMesaList() {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setMessage(R.string.preference_rendererexp_mesa_download_load)
+                .show();
+        PojavApplication.sExecutorService.execute(() -> {
+            Set<String> list = MesaUtils.INSTANCE.getMesaList();
+            requireActivity().runOnUiThread(() -> {
+                dialog.dismiss();
+
+                if (list == null) {
+                    AlertDialog alertDialog1 = new AlertDialog.Builder(requireActivity())
+                            .setMessage(R.string.preference_rendererexp_mesa_get_fail)
+                            .create();
+                    alertDialog1.show();
+                } else {
+                    final String[] items3 = new String[list.size()];
+                    list.toArray(items3);
+                    // Add List
+                    AlertDialog alertDialog3 = new AlertDialog.Builder(requireActivity())
+                            .setTitle(R.string.preference_rendererexp_mesa_select_download)
+                            .setItems(items3, (dialogInterface, i) -> {
+                                if (i < 0 || i > items3.length)
+                                    return;
+                                dialogInterface.dismiss();
+                                downloadMesa(items3[i]);
+                            })
+                            .create();
+                    alertDialog3.show();
+                }
+            });
+        });
+    }
+
+    private void downloadMesa(String version) {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setMessage(R.string.preference_rendererexp_mesa_downloading)
+                .show();
+        PojavApplication.sExecutorService.execute(() -> {
+            boolean data = MesaUtils.INSTANCE.downloadMesa(version);
+            requireActivity().runOnUiThread(() -> {
+                dialog.dismiss();
+                if (data) {
+                    Toast.makeText(requireContext(), R.string.preference_rendererexp_mesa_downloaded, Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    AlertDialog alertDialog1 = new AlertDialog.Builder(requireActivity())
+                            .setMessage(R.string.preference_rendererexp_mesa_download_fail)
+                            .create();
+                    alertDialog1.show();
+                }
+            });
+        });
     }
 }
