@@ -41,11 +41,6 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         addPreferencesFromResource(R.xml.pref_experimental);
         computeVisibility();
 
-        findPreference("SetGLVersion").setOnPreferenceClickListener((preference) -> {
-            showSetGLVersionDialog();
-            return true;
-        });
-
         final Preference downloadMesa = requirePreference("DownloadMesa", Preference.class);
         downloadMesa.setOnPreferenceClickListener((a)-> {
             loadMesaList();
@@ -98,12 +93,11 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
             return true;
         });
 
-        SwitchPreference setGLVersion = requirePreference("SetGLVersion", SwitchPreference.class);
+        SwitchPreference setGLVersion = requirePreference("ebCustom", SwitchPreference.class);
         setGLVersion.setOnPreferenceChangeListener((p, v) -> {
             boolean set = (boolean) v;
             if (!set) return false;
             closeOtherCustomMesaPref(customMesaVersionPref);
-            LauncherPreferences.DEFAULT_PREF.edit().putBoolean("ebCustom", true).apply();
             return true;
         });
         setGLVersion.setOnPreferenceClickListener(preference -> {
@@ -235,7 +229,12 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
                     .apply();
             })
-            .setNegativeButton(R.string.alertdialog_cancel, null)
+            .setNegativeButton(R.string.alertdialog_cancel, (dia, i) -> {
+                LauncherPreferences.DEFAULT_PREF.edit()
+                    .putBoolean("ebCustom", false)
+                    .putBoolean("ebSystem", true)
+                    .apply();
+            })
             .create();
         dialog.show();
     }
