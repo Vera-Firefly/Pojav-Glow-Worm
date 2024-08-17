@@ -229,12 +229,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
                     .apply();
             })
-            .setNegativeButton(R.string.alertdialog_cancel, (dia, i) -> {
-                LauncherPreferences.DEFAULT_PREF.edit()
-                    .putBoolean("ebCustom", false)
-                    .putBoolean("ebSystem", true)
-                    .apply();
-            })
+            .setNegativeButton(R.string.alertdialog_cancel, null)
             .create();
         dialog.show();
     }
