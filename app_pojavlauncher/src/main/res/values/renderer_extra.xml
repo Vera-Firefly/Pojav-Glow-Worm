@@ -2,21 +2,15 @@
 <resources>
     <string-array name="osmesa_library">
         <item name="1">@string/preference_renderer_extra_default</item>
-        <item name="2">Mesa24.1.6</item>
-        <item name="3">Mesa24.0.9</item>
-        <item name="4">Mesa23.2.0-devel</item>
-        <item name="5">Mesa23.1.9</item>
-        <item name="6">Mesa23.0.4</item>
-        <item name="7">Mesa23.0.0-devel</item>
-        <item name="8">Mesa22.0.5</item>
+        <item name="2">Mesa23.2.0-devel</item>
+        <item name="3">Mesa23.0.4</item>
+        <item name="4">Mesa23.0.0-devel</item>
+        <item name="5">Mesa22.0.5</item>
     </string-array>
 
     <string-array name="osmesa_values">
         <item>default</item>
-        <item>mesa2416</item>
-        <item>mesa2409</item>
         <item>mesa2320d</item>
-        <item>mesa2319</item>
         <item>mesa2304</item>
         <item>mesa2300d</item>
         <item>mesa2205</item>
