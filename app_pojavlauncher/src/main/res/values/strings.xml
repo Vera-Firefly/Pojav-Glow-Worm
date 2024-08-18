@@ -90,6 +90,9 @@
     <string name="global_select">Select</string>
     <string name="global_retry">Retry</string>
     <string name="global_default">Default</string>
+    <string name="global_rename">Rename</string>
+    <string name="global_return">Return</string>
+    <string name="global_refresh">Refresh</string>
 
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">Application/Game exited with code %d, check latestlog.txt for more details.</string>
