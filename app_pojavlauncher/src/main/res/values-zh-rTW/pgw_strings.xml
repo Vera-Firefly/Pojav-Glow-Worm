@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App New Annotation -->
+    <string name="microsoft_login_fragment">已開始登入！</string>
+    <string name="preference_category_visibility_title">可見性</string>
+    <string name="preference_category_in_game_title">在游戏中</string>
+    <string name="preference_category_in_menu_title">在選單中</string>
+    <string name="preference_category_microsoft_account_title">Microsoft 帳戶</string>
+    <string name="preference_category_local_account_title">本地帳戶</string>
+    <!-- Pojav GlowWorm -->
+    <string name="preference_enable_log_output_desc">在應用程式正式開始運行遊戲時啟用日誌輸出介面</string>
+    <string name="preference_enable_log_output_title">在遊戲啟動時啟用日誌輸出</string>
+    <string name="preference_category_custom_path">自定義路徑</string>
+    <string name="app_start_toast">#歡迎來到 Pojav GlowWorm!!!!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (最高支援到 1.16.5, 快速)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (所有版本, 中等)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (所有版本, 中等)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">滑鼠自定義</string>
+    <string name="preference_mouse_description">在游戏中設置滑鼠指標圖示</string>
+    <string name="notif_mouse">設置完成。</string>
+    <string name="preference_mouse_title1">移除滑鼠圖示</string>
+    <string name="notif_mouse1">刪除完成</string>
+    <string name="preference_quit_launcher_title">退出啟動器</string>
+    <string name="preference_quit_launcher">在運行遊戲時退出啟動器</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">初始化</string>
+    <string name="main_terminal_loading">加載中...</string>
+    <!-- Other login -->
+    <string name="other_login_api">其他登入</string>
+    <string name="other_login_authentication_server">驗證服務器</string>
+    <string name="other_login_register">註冊</string>
+    <string name="other_login_email">電子郵件或用戶名</string>
+    <string name="other_login_password">密碼</string>
+    <string name="other_login">登入</string>
+    <string name="other_login_aut">請選擇驗證服務器類型</string>
+    <string name="other_login_tip">提示</string>
+    <string name="other_login_confirm">確認</string>
+    <string name="other_login_cancel">取消</string>
+    <string name="other_login_role">請選擇一個角色</string>
+    <string name="other_login_warning">警告</string>
+    <string name="other_login_address">請輸入 Yggdrasil API 驗證服務器地址</string>
+    <string name="other_login_setid">請輸入一個 32 位服務器 ID</string>
+    <string name="other_login_pass">統一通行證</string>
+    <string name="other_login_external">外部登陸</string>
+    <string name="other_login_server_error">無驗證服務器</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_exp_title">實驗性設置</string>
+    <string name="preference_exp_description">非專業人士不建議使用</string>
+    <string name="preference_category_renderer_experimental_settings">渲染器實驗性設置</string>
+    <string name="preference_renderer_setup_title">啟用渲染器實驗性設置</string>
+    <string name="preference_renderer_setup">使用更多渲染器特定設置</string>
+    <string name="preference_spare_bridge_title">備用橋接</string>
+    <string name="preference_spare_bridge">使用第二方案橋接，啟動失敗時關閉</string>
+    <string name="preference_spare_framebuffer_title">備用幀緩衝區</string>
+    <string name="preference_spare_framebuffer">使用第二方案的幀緩衝區，啟動失敗時關閉</string>
+    <string name="preference_renderer_setup_extra">渲染器 (額外)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (預設)</string>
+    <string name="preference_extra_mesa_version">Mesa 版本</string>
+    <string name="preference_extra_driver_model">驅動模型</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">警告</string>
+    <string name="preference_rendererexp_alertdialog_message">您已開啟實驗性設置。此功能可能會產生意外的錯誤。繼續使用？</string>
+    <string name="preference_rendererexp_alertdialog_done">勇敢去做</string>
+    <string name="preference_rendererexp_alertdialog_cancel">退縮</string>
+    <string name="preference_alertdialog_know">已知悉</string>
+    <string name="alertdialog_done">完成</string>
+    <string name="alertdialog_cancel">取消</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">GL/GLSL 版本</string>
+    <string name="preference_exp_ebsystem">根據系統選擇</string>
+    <string name="preference_exp_ebspecific">使用特定版本</string>
+    <string name="preference_rendererexp_custom_glversion_title">自定義 GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">允許自定義 Mesa GL/GLSL 版本</string>
+    <string name="custom_gl_version">Mesa GL 版本：</string>
+    <string name="custom_glsl_version">Mesa GLSL 版本：</string>
+    <string name="customglglsl_alertdialog_error_gl">GL 版本必須在 2.8 到 4.6 之間</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL 版本必須在 280 到 460 之間</string>
+    <!-- Customize Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm需要管理設備上所有文件的權限，以便自定義遊戲文件保存的位置。請授予 Pojav Glow·Worm 權限！</string>
+    <string name="profiles_path_title">遊戲路徑管理</string>
+    <string name="profiles_path_default">默認路徑</string>
+    <string name="profiles_path_create_new">添加新路徑</string>
+    <string name="profiles_path_create_new_title">命名此路徑</string>
+    <string name="profiles_path_delete_title">刪除此路徑</string>
+    <string name="profiles_path_delete_message">啟動器將刪除此路徑，但不會刪除相應路徑中保存的文件。刪除後可以重新添加此路徑。</string>
+    <string name="profiles_path_task_in_progress">任務進行中，路徑管理功能暫時不可用</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">當前解析度過大，最大允許大小為 %d</string>
+    <string name="setting_set_resolution_too_small">當前解析度過小，至少需要 %d</string>
+    <string name="setting_set_resolution_outofrange">輸入值 %s 超出可接受範圍</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">控制分配給 Minecraft 的記憶體大小</string>
+    <string name="zh_setting_java_memory_info">當前記憶體使用量：%s / %s, 可用記憶體大小：%s</string>
+    <string name="zh_setting_java_memory_max">允許的最大記憶體大小：%s</string>
+    <string name="zh_setting_java_memory_exceeded">當前記憶體分配超過可用記憶體大小</string>
+    <string name="zh_setting_java_memory_too_big">當前記憶體分配過大，最大允許大小為 %d MB</string>
+    <string name="zh_setting_java_memory_too_small">當前記憶體分配過小，至少需要 %d MB</string>
+    <string name="zh_setting_set_game_language_desc">當遊戲啟動時，自動將遊戲語言設置為選定的語言</string>
+    <string name="zh_setting_set_game_language_title">自動設置遊戲語言</string>
+    <string name="zh_setting_set_game_language_list">設置遊戲語言</string>
+    <string name="zh_setting_set_game_language_system">跟隨系統語言</string>
+    <string name="zh_setting_set_game_language_overridden_title">覆蓋遊戲語言</string>
+    <string name="zh_setting_set_game_language_overridden_desc">忽略遊戲中設置的語言，強制使用啟動器中設置的遊戲語言</string>
+    <string name="setting_java_memory_outofrange">輸入值 %s MB 超出可接受範圍</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">下載 Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">無法獲取 Mesa Lib 清單</string>
+    <string name="preference_rendererexp_mesa_select_download">選擇版本下載</string>
+    <string name="preference_rendererexp_mesa_download_load">加載 Mesa Lib 清單中...</string>
+    <string name="preference_rendererexp_mesa_downloading">正在下載 Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa Lib 下載失敗</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa Lib 下載成功</string>
+
+</resources>

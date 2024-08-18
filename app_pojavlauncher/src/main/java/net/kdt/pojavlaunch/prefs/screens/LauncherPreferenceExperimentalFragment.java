@@ -144,24 +144,6 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         listPreference.setEntryValues(array.getList().toArray(new String[0]));
     }
 
-    private void expTip() {
-        String[] characters = {
-        getString(R.string.alertdialog_tipa),
-        getString(R.string.alertdialog_tipb),
-        getString(R.string.alertdialog_tipc)
-        };
-        Random random = new Random();
-        int index = random.nextInt(characters.length);
-        String randomCharacter = characters[index];
-
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
-            .setTitle("Tip:")
-            .setMessage(randomCharacter)
-            .setPositiveButton(R.string.preference_alertdialog_know, null)
-            .create();
-        dialog.show();
-    }
-
     private void closeOtherCustomMesaPref(PreferenceCategory customMesaVersionPref) {
         for (int i = 0; i < customMesaVersionPref.getPreferenceCount(); i++) {
             Preference closepref = customMesaVersionPref.getPreference(i);
