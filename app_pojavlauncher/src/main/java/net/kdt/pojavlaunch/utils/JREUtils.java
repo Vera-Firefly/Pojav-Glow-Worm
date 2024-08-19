@@ -262,7 +262,6 @@ public class JREUtils {
                         envMap.put("MESA_LIBRARY", localMesaLibrary);
                     } break;
                     default:{
-                        envMap.put("LOCAL_LOADER_OVERRIDE", "zink");
                         envMap.put("POJAV_BETA_RENDERER", LOCAL_RENDERER);
                     } break;
                 }
@@ -295,7 +294,8 @@ public class JREUtils {
                     envMap.put("MESA_GLSL_VERSION_OVERRIDE", glslVersion);
                 }
 
-                if (PREF_LOADER_OVERRIDE) {
+                if (PREF_LOADER_OVERRIDE && DRIVER_MODEL.equals("driver_freedreno"))
+                {
                     switch (LOADER_OVERRIDE) {
                         case "kgsl":
                             envMap.put("LOCAL_LOADER_OVERRIDE", "kgsl");

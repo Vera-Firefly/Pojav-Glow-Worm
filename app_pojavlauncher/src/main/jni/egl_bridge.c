@@ -206,7 +206,7 @@ int pojavInitOpenGL() {
     const char *ldrivermodel = getenv("LOCAL_DRIVER_MODEL");
     const char *mldo = getenv("LOCAL_LOADER_OVERRIDE");
 
-    if (mldo) printf("MESA_LOADER_DRIVER_OVERRIDE = %s\n", mldo);
+    if (mldo) printf("OSMDroid: MESA_LOADER_DRIVER_OVERRIDE = %s\n", mldo);
 
     if (!strncmp("opengles", renderer, 8))
     {
@@ -242,7 +242,8 @@ int pojavInitOpenGL() {
         if (!strcmp(ldrivermodel, "driver_freedreno"))
         {
             setenv("GALLIUM_DRIVER", "freedreno", 1);
-            setenv("MESA_LOADER_DRIVER_OVERRIDE", mldo, 1);
+            if (mldo) setenv("MESA_LOADER_DRIVER_OVERRIDE", mldo, 1);
+            else setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
             renderer_load_config();
         }
 
