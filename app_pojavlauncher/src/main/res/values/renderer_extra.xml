@@ -33,4 +33,17 @@
         <item>driver_softpipe</item>
         <item>driver_llvmpipe</item>
     </string-array>
+
+    <string-array name="osmesa_mldo">
+        <item name="1">KGSL</item>
+        <item name="2">MSM</item>
+        <item name="3">VIRTIO</item>
+    </string-array>
+
+    <string-array name="osmesa_mldo_values">
+        <item>kgsl</item>
+        <item>msm</item>
+        <item>virtio</item>
+    </string-array>
+
 </resources>

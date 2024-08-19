@@ -198,57 +198,62 @@ void renderer_load_config() {
 int pojavInitOpenGL() {
     // Only affects GL4ES as of now
     const char *forceVsync = getenv("FORCE_VSYNC");
-    if (strcmp(forceVsync, "true") == 0)
+    if (!strcmp(forceVsync, "true"))
         pojav_environ->force_vsync = true;
 
     // NOTE: Override for now.
     const char *renderer = getenv("POJAV_BETA_RENDERER");
     const char *ldrivermodel = getenv("LOCAL_DRIVER_MODEL");
+    const char *mldo = getenv("LOCAL_LOADER_OVERRIDE");
 
-    if (strncmp("opengles", renderer, 8) == 0) {
+    if (mldo) printf("MESA_LOADER_DRIVER_OVERRIDE = %s\n", mldo);
+
+    if (!strncmp("opengles", renderer, 8))
+    {
         pojav_environ->config_renderer = RENDERER_GL4ES;
+        setenv("MESA_LOADER_DRIVER_OVERRIDE", "zink", 1);
         if (!SpareBridge()) set_gl_bridge_tbl();
-    } else if (strcmp(renderer, "mesa_3d") == 0) {
+    } else if (!strcmp(renderer, "mesa_3d")) {
 
-        if (strcmp(ldrivermodel, "driver_zink") == 0)
+        if (!strcmp(ldrivermodel, "driver_zink"))
         {
-            setenv("GALLIUM_DRIVER","zink",1);
+            setenv("GALLIUM_DRIVER", "zink", 1);
             renderer_load_config();
             load_vulkan();
         }
 
-        if (strcmp(ldrivermodel, "driver_virgl") == 0)
+        if (!strcmp(ldrivermodel, "driver_virgl"))
         {
             pojav_environ->config_renderer = RENDERER_VIRGL;
-            setenv("GALLIUM_DRIVER","virpipe",1);
-            setenv("OSMESA_NO_FLUSH_FRONTBUFFER","1",false);
-            if(strcmp(getenv("OSMESA_NO_FLUSH_FRONTBUFFER"),"1") == 0) {
+            setenv("MESA_LOADER_DRIVER_OVERRIDE", "zink", 1);
+            setenv("GALLIUM_DRIVER", "virpipe", 1);
+            setenv("OSMESA_NO_FLUSH_FRONTBUFFER", "1", false);
+            if (!strcmp(getenv("OSMESA_NO_FLUSH_FRONTBUFFER"), "1"))
                 printf("VirGL: OSMesa buffer flush is DISABLED!\n");
-            }
             loadSymbolsVirGL();
         }
 
-        if (strcmp(ldrivermodel, "driver_panfrost") == 0)
+        if (!strcmp(ldrivermodel, "driver_panfrost"))
         {
             setenv("GALLIUM_DRIVER", "panfrost", 1);
             renderer_load_config();
         }
 
-        if (strcmp(ldrivermodel, "driver_freedreno") == 0)
+        if (!strcmp(ldrivermodel, "driver_freedreno"))
         {
             setenv("GALLIUM_DRIVER", "freedreno", 1);
-            setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
+            setenv("MESA_LOADER_DRIVER_OVERRIDE", mldo, 1);
             renderer_load_config();
         }
 
-        if (strcmp(ldrivermodel, "driver_softpipe") == 0)
+        if (!strcmp(ldrivermodel, "driver_softpipe"))
         {
             setenv("GALLIUM_DRIVER", "softpipe", 1);
             setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
             renderer_load_config();
         }
 
-        if (strcmp(ldrivermodel, "driver_llvmpipe") == 0)
+        if (!strcmp(ldrivermodel, "driver_llvmpipe"))
         {
             setenv("GALLIUM_DRIVER", "llvmpipe", 1);
             setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
@@ -260,19 +265,15 @@ int pojavInitOpenGL() {
      || pojav_environ->config_renderer == RENDERER_GL4ES)
     {
         if (gl_init() && SpareBridge() && pojav_environ->config_renderer == RENDERER_GL4ES)
-        {
             gl_setup_window();
-        } else {
-            if (br_init()) br_setup_window();
-        }
+        else if (br_init()) br_setup_window();
     }
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF && spare_init())
         spare_setup_window();
 
-    if (pojav_environ->config_renderer == RENDERER_VIRGL) {
+    if (pojav_environ->config_renderer == RENDERER_VIRGL)
         pojav_virgl_init();
-    }
 
     return 0;
 }
