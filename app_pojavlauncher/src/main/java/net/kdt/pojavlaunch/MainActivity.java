@@ -351,7 +351,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         if(Tools.DRIVER_MODEL == null) {
             Tools.DRIVER_MODEL = LauncherPreferences.PREF_DRIVER_MODEL;
         }
-        if(Tools.LOADER_OVERRIDE) {
+        if(Tools.LOADER_OVERRIDE == null) {
             Tools.LOADER_OVERRIDE = LauncherPreferences.PREF_LOCAL_LOADER_OVERRIDE;
         }
         if(!Tools.checkRendererCompatible(this, Tools.LOCAL_RENDERER)) {

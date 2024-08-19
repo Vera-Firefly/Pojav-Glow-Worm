@@ -1363,8 +1363,8 @@ public final class Tools {
         List<String> CMesaLDOIds = new ArrayList<>(defaultCMesaLDO.length);
         List<String> CMesaLDONames = new ArrayList<>(defaultCMesaLDONames.length);
         for (int i = 0; i < defaultCMesaLDO.length; i++) {
-            CMesaLibIds.add(defaultCMesaLib[i]);
-            CMesaLibNames.add(defaultCMesaLibNames[i]);
+            CMesaLDOIds.add(defaultCMesaLDO[i]);
+            CMesaLDONames.add(defaultCMesaLDONames[i]);
         }
         sCompatibleCMesaLDO = new CMesaLDOList(CMesaLDOIds,
                 CMesaLDONames.toArray(new String[0]));
