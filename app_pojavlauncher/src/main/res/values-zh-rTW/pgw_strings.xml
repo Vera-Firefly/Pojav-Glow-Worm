@@ -59,7 +59,7 @@
     <string name="preference_renderer_setup_extra">渲染器 (額外)</string>
     <string name="preference_renderer_extra_default">Mesa24.2.0 (預設)</string>
     <string name="preference_extra_mesa_version">Mesa 版本</string>
-    <string name="preference_extra_driver_model">驅動模型</string>
+    <string name="preference_extra_driver_model">Gallium驅動程序</string>
     <!-- Dialog -->
     <string name="preference_rendererexp_alertdialog_warning">警告</string>
     <string name="preference_rendererexp_alertdialog_message">您已開啟實驗性設置。此功能可能會產生意外的錯誤。繼續使用？</string>
@@ -113,5 +113,10 @@
     <string name="preference_rendererexp_mesa_downloading">正在下載 Mesa Lib</string>
     <string name="preference_rendererexp_mesa_download_fail">Mesa Lib 下載失敗</string>
     <string name="preference_rendererexp_mesa_downloaded">Mesa Lib 下載成功</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">自訂Mesa圖形驅動程序</string>
+    <string name="osm_enable_cmldo">允許自訂Mesa圖形驅動程序（目前僅Freedreno）</string>
+    <string name="osm_enable_cmldo_desc">如果需要，您可以自由選擇處理方法</string>
+    <string name="osm_choose_cmldo">選擇Mesa圖形驅動程序</string>
 
 </resources>

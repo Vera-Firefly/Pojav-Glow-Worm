@@ -27,6 +27,7 @@ public class LauncherPreferences {
     public static String PREF_RENDERER = "opengles2";
     public static String PREF_MESA_LIB = "default";
     public static String PREF_DRIVER_MODEL = "driver_zink";
+    public static String PREF_LOCAL_LOADER_OVERRIDE = "kgsl";
 
 	public static boolean PREF_VERTYPE_RELEASE = true;
 	public static boolean PREF_VERTYPE_SNAPSHOT = false;
@@ -74,9 +75,10 @@ public class LauncherPreferences {
 
     public static boolean PREF_SPARE_BRIDGE = false;
     public static boolean PREF_SPARE_FRAME_BUFFER = false;
-    public static boolean PREF_EXP_ENABLE_SYSTEM = false;
+    public static boolean PREF_EXP_ENABLE_SYSTEM = true;
     public static boolean PREF_EXP_ENABLE_SPECIFIC = false;
     public static boolean PREF_EXP_ENABLE_CUSTOM = false;
+    public static boolean PREF_LOADER_OVERRIDE = false;
 
     public static boolean PREF_VERIFY_MANIFEST = true;
     public static String PREF_DOWNLOAD_SOURCE = "default";
@@ -138,13 +140,15 @@ public class LauncherPreferences {
 
         PREF_SPARE_BRIDGE = DEFAULT_PREF.getBoolean("spareBridge", false);
         PREF_SPARE_FRAME_BUFFER = DEFAULT_PREF.getBoolean("SpareFrameBuffer", false);
-        PREF_EXP_ENABLE_SYSTEM = DEFAULT_PREF.getBoolean("ebSystem", false);
+        PREF_EXP_ENABLE_SYSTEM = DEFAULT_PREF.getBoolean("ebSystem", true);
         PREF_EXP_ENABLE_SPECIFIC = DEFAULT_PREF.getBoolean("ebSpecific", false);
         PREF_EXP_ENABLE_CUSTOM = DEFAULT_PREF.getBoolean("ebCustom", false);
+        PREF_LOADER_OVERRIDE = DEFAULT_PREF.getBoolean("ebChooseMldo", false);
 
         PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
         PREF_MESA_LIB = DEFAULT_PREF.getString("CMesaLibrary", "default");
         PREF_DRIVER_MODEL = DEFAULT_PREF.getString("CDriverModels", "driver_zink");
+        PREF_LOCAL_LOADER_OVERRIDE = DEFAULT_PREF.getString("ChooseMldo", "kgsl");
 
         PREF_MESA_GL_VERSION = DEFAULT_PREF.getString("mesaGLVersion", "4.6");
         PREF_MESA_GLSL_VERSION = DEFAULT_PREF.getString("mesaGLSLVersion", "460");

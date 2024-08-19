@@ -59,7 +59,7 @@
     <string name="preference_renderer_setup_extra">渲染器 (拓展)</string>
     <string name="preference_renderer_extra_default">Mesa24.2.0 (默认)</string>
     <string name="preference_extra_mesa_version">Mesa版本</string>
-    <string name="preference_extra_driver_model">驱动模型</string>
+    <string name="preference_extra_driver_model">Gallium驱动程序</string>
     <!-- Dialog -->
     <string name="preference_rendererexp_alertdialog_warning">警告</string>
     <string name="preference_rendererexp_alertdialog_message">您已打开实验性设置,此功能可能会产生意想不到的bug,是否继续使用?</string>
@@ -113,5 +113,10 @@
     <string name="preference_rendererexp_mesa_downloading">正在下载Mesa运行库</string>
     <string name="preference_rendererexp_mesa_download_fail">Mesa运行库下载失败</string>
     <string name="preference_rendererexp_mesa_downloaded">Mesa运行库下载成功</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">自定义Mesa图形驱动程序</string>
+    <string name="osm_enable_cmldo">允许自定义Mesa图形驱动程序(目前仅Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">如果需要,您可以自由选择处理方法</string>
+    <string name="osm_choose_cmldo">选择Mesa图形驱动程序</string>
 
 </resources>

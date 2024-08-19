@@ -59,7 +59,7 @@
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
     <string name="preference_renderer_extra_default">Mesa24.2.0 (Default)</string>
     <string name="preference_extra_mesa_version">Mesa Version</string>
-    <string name="preference_extra_driver_model">Driver Modle</string>
+    <string name="preference_extra_driver_model">Gallium Driver Override</string>
     <!-- Dialog -->
     <string name="preference_rendererexp_alertdialog_warning">Warning</string>
     <string name="preference_rendererexp_alertdialog_message">You have turned on experimental settings.This feature may generate unexpected bugs.Continue to use?</string>
@@ -113,5 +113,10 @@
     <string name="preference_rendererexp_mesa_downloading">Downloading Mesa Lib</string>
     <string name="preference_rendererexp_mesa_download_fail">Mesa Lib download fail</string>
     <string name="preference_rendererexp_mesa_downloaded">Mesa Lib download success</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Custom Mesa Loader Driver Override</string>
+    <string name="osm_enable_cmldo">Enable Custom Mesa Load Driver Override(Only for Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">If need, you can freely choose processing method</string>
+    <string name="osm_choose_cmldo">Choose Mesa Loader Driver Override</string>
 
 </resources>

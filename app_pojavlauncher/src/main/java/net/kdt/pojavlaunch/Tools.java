@@ -129,9 +129,11 @@ public final class Tools {
 
     public static String DRIVER_MODEL = null;
     public static String MESA_LIBS = null;
+    public static String LOADER_OVERRIDE = null;
 
     private static CDriverModelList sCompatibleCDriverModel;
     private static CMesaLibList sCompatibleCMesaLibs;
+    private static CMesaLDOList sCompatibleCMesaLDO;
     private static RenderersList sCompatibleRenderers;
 
     private static File getPojavStorageRoot(Context ctx) {
@@ -1331,6 +1333,42 @@ public final class Tools {
                 CDriverModelNames.toArray(new String[0]));
 
         return sCompatibleCDriverModel;
+    }
+
+    public static class CMesaLDOList implements IListAndArry {
+        public final List<String> CMesaLDOIds;
+        public final String[] CMesaLDO;
+
+        public CMesaLDOList(List<String> CMesaLDOIds, String[] CMesaLDO) {
+            this.CMesaLDOIds = CMesaLDOIds;
+            this.CMesaLDO = CMesaLDO;
+        }
+
+        @Override
+        public List<String> getList() {
+            return CMesaLDOIds;
+        }
+
+        @Override
+        public String[] getArray() {
+            return CMesaLDO;
+        }
+    }
+
+    public static CMesaLDOList getCompatibleCMesaLDO(Context context) {
+        if (sCompatibleCMesaLDO != null) return sCompatibleCMesaLDO;
+        Resources resources = context.getResources();
+        String[] defaultCMesaLDO = resources.getStringArray(R.array.osmesa_mldo_values);
+        String[] defaultCMesaLDONames = resources.getStringArray(R.array.osmesa_mldo);
+        List<String> CMesaLDOIds = new ArrayList<>(defaultCMesaLDO.length);
+        List<String> CMesaLDONames = new ArrayList<>(defaultCMesaLDONames.length);
+        for (int i = 0; i < defaultCMesaLDO.length; i++) {
+            CMesaLDOIds.add(defaultCMesaLDO[i]);
+            CMesaLDONames.add(defaultCMesaLDONames[i]);
+        }
+        sCompatibleCMesaLDO = new CMesaLDOList(CMesaLDOIds,
+                CMesaLDONames.toArray(new String[0]));
+        return sCompatibleCMesaLDO;
     }
 
     @SuppressLint("DefaultLocale")
