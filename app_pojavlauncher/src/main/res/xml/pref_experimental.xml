@@ -109,7 +109,7 @@
         <SwitchPreference
             android:key="ebChooseMldo"
             android:title="@string/osm_enable_cmldo"
-            android:summary=""
+            android:summary="@string/osm_enable_cmldo_desc"
             android:defaultValue="false"
             app2:iconSpaceReserved="false"/>
 
@@ -118,7 +118,7 @@
             android:key="ChooseMldo"
             android:entries="@array/osmesa_mldo"
             android:entryValues="@array/osmesa_mldo_values"
-            android:title="Choose Mesa Loader Driver Override"
+            android:title="@string/osm_choose_cmldo"
             app2:useSimpleSummaryProvider="true"
             app2:iconSpaceReserved="false"/>
 
