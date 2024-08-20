@@ -9,11 +9,8 @@
 #include "spare_osm_bridge.h"
 #include "spare_renderer_config.h"
 
-#ifdef FRAME_BUFFER_SUPPOST
-
 void* mbuffer;
 
-#endif
 
 static const char* osm_LogTag = "OSMBridge";
 static __thread spare_osm_render_window_t* currentBundle;

@@ -17,8 +17,6 @@
 #define POTATOBRIDGE_H
 #include <EGL/egl.h>
 
-int pojav_virgl_init();
-
 struct PotatoBridge {
     void* eglContext;    // EGLContext
     void* eglDisplay;    // EGLDisplay
