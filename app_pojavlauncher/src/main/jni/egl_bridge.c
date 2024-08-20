@@ -356,7 +356,8 @@ Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
 
 EXTERNAL_API JNIEXPORT jintArray JNICALL
 Java_org_lwjgl_opengl_GL_getNativeWidthHeight(JNIEnv *env, jobject thiz) {
-    if (SpareBuffer() && pojav_environ->config_renderer != RENDERER_VK_ZINK)
+    if (SpareBuffer() && (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
+     || pojav_environ->config_renderer == RENDERER_VIRGL))
     {
         jintArray ret = (*env)->NewIntArray(env,2);
         jint arr[] = {pojav_environ->savedWidth, pojav_environ->savedHeight};
