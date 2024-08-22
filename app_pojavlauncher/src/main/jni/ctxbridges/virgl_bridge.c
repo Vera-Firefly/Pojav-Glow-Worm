@@ -2,6 +2,7 @@
 // Created by Vera-Firefly on 20.08.2024.
 //
 
+#include <android/native_window.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
