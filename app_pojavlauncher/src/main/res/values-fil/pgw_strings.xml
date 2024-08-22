@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Microsoft Login -->
+    <string name="microsoft_login_fragment">Nagsimula ang pag-login!</string>
+    <string name="preference_category_visibility_title">Pagkakakita</string>
+    <string name="preference_category_in_game_title">Sa laro</string>
+    <string name="preference_category_in_menu_title">Sa Menu</string>
+    <string name="preference_category_microsoft_account_title">Microsoft Account</string>
+    <string name="preference_category_local_account_title">Local Account</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">I-enable ang log output interface kapag pormal na nagsimula ang aplikasyon sa pagtakbo ng laro</string>
+    <string name="preference_enable_log_output_title">I-enable ang log output sa pagsisimula ng laro</string>
+    <string name="preference_category_custom_path">Custom na landas</string>
+    <string name="app_start_toast">#Maligayang pagdating sa Pojav Glow·Worm!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (hanggang sa 1.16.5, mabilis)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (lahat ng bersyon, katamtaman)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (lahat ng bersyon, katamtaman)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Pag-customize ng mouse</string>
+    <string name="preference_mouse_description">Itakda ang icon ng pointer ng mouse sa laro</string>
+    <string name="notif_mouse">Naitakda na.</string>
+    <string name="preference_mouse_title1">Tanggalin ang icon ng mouse</string>
+    <string name="notif_mouse1">Matagumpay na natanggal</string>
+    <string name="preference_quit_launcher_title">Tumigil sa Launcher</string>
+    <string name="preference_quit_launcher">Isara ang launcher kapag pinapatakbo ang laro</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Pag-inisyalisa</string>
+    <string name="main_terminal_loading">Naglo-load...</string>
+    <!-- Other Login -->
+    <string name="other_login_api">Iba pang Pag-login</string>
+    <string name="other_login_authentication_server">Server ng Pagpapatunay</string>
+    <string name="other_login_register">Magrehistro</string>
+    <string name="other_login_email">Email o username</string>
+    <string name="other_login_password">Password</string>
+    <string name="other_login">Pag-login</string>
+    <string name="other_login_aut">Pumili ng uri ng server ng pagpapatunay</string>
+    <string name="other_login_tip">Tip</string>
+    <string name="other_login_confirm">Kumpirmahin</string>
+    <string name="other_login_cancel">Kanselahin</string>
+    <string name="other_login_role">Pumili ng papel</string>
+    <string name="other_login_warning">Babala</string>
+    <string name="other_login_address">Ipasok ang address ng Yggdrasil API authentication server</string>
+    <string name="other_login_setid">Ipasok ang 32-bit server ID</string>
+    <string name="other_login_pass">Uniform Pass</string>
+    <string name="other_login_external">Panlabas na Pag-login</string>
+    <string name="other_login_server_error">Walang authentication server</string>
+    <!-- Experimental Renderer Settings -->
+    <string name="preference_exp_title">Eksperimentong Mga Setting</string>
+    <string name="preference_exp_description">Huwag gamitin ng mga hindi propesyonal</string>
+    <string name="preference_category_renderer_experimental_settings">Eksperimentong Pag-setup ng Rendra</string>
+    <string name="preference_renderer_setup_title">I-enable ang Eksperimentong Pag-setup ng Rendra</string>
+    <string name="preference_renderer_setup">Gamitin ang higit pang partikular na mga setting ng renderer</string>
+    <string name="preference_spare_bridge_title">Spare Bridge</string>
+    <string name="preference_spare_bridge">Gamitin ang pangalawang scheme ng bridge, isara kung nabigo ang paglunsad</string>
+    <string name="preference_spare_framebuffer_title">Spare Frame Buffer</string>
+    <string name="preference_spare_framebuffer">Gamitin ang frame buffer ng pangalawang scheme, isara kung nabigo ang paglunsad</string>
+    <string name="preference_renderer_setup_extra">Renderer (Karagdagang)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Default)</string>
+    <string name="preference_extra_mesa_version">Bersyon ng Mesa</string>
+    <string name="preference_extra_driver_model">Gallium Driver Override</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Babala</string>
+    <string name="preference_rendererexp_alertdialog_message">Na-enable mo ang mga eksperimento na setting. Maaaring magdulot ito ng mga hindi inaasahang bug. Magpapatuloy ka ba?</string>
+    <string name="preference_rendererexp_alertdialog_done">Oo</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Hindi</string>
+    <string name="preference_alertdialog_know">alam ko na</string>
+    <string name="alertdialog_done">Tapos na</string>
+    <string name="alertdialog_cancel">Kanselahin</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">Bersyon ng GL/GLSL</string>
+    <string name="preference_exp_ebsystem">Pumili ayon sa sistema</string>
+    <string name="preference_exp_ebspecific">Gamitin ang tiyak na bersyon</string>
+    <string name="preference_rendererexp_custom_glversion_title">Custom na GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">Pahintulutan ang custom na bersyon ng Mesa GL/GLSL</string>
+    <string name="custom_gl_version">Bersyon ng Mesa GL:</string>
+    <string name="custom_glsl_version">Bersyon ng Mesa GLSL:</string>
+    <string name="customglglsl_alertdialog_error_gl">Ang bersyon ng GL ay dapat na nasa pagitan ng 2.8 at 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">Ang bersyon ng GLSL ay dapat na nasa pagitan ng 280 at 460</string>
+    <!-- Custom Game Path -->
+    <string name="permissions_manage_external_storage">Kinakailangan ng Pojav Glow·Worm ang pahintulot upang pamahalaan ang lahat ng mga file sa aparato upang i-customize ang lokasyon kung saan iniimbak ang mga file ng laro. Mangyaring bigyan ng pahintulot ang Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Pamamahala ng Landas ng Laro</string>
+    <string name="profiles_path_default">Default na Landas</string>
+    <string name="profiles_path_create_new">Magdagdag ng Bagong Landas</string>
+    <string name="profiles_path_create_new_title">Pangalanan ang Landas na Ito</string>
+    <string name="profiles_path_delete_title">Tanggalin ang Landas na Ito</string>
+    <string name="profiles_path_delete_message">Tatanggalin ng launcher ang landas na ito, ngunit hindi nito tatanggalin ang mga file na nai-save sa kaukulang landas. Maaari mong muling idagdag ang landas na ito pagkatapos ng pagtanggal.</string>
+    <string name="profiles_path_task_in_progress">Gawain sa proseso, pansamantalang hindi magagamit ang mga tampok sa pamamahala ng landas</string>
+    <!-- Video Resolution -->
+    <string name="setting_set_resolution_too_big">Ang kasalukuyang resolusyon ay masyadong malaki, ang maximum na pinapayagang laki ay %d</string>
+    <string name="setting_set_resolution_too_small">Ang kasalukuyang resolusyon ay masyadong maliit, kinakailangan ng hindi bababa sa %d</string>
+    <string name="setting_set_resolution_outofrange">Ang ipinasok na halaga %s ay nasa labas ng tinatanggap na saklaw</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Kontrolin kung gaano karaming memorya ang itinalaga sa Minecraft</string>
+    <string name="zh_setting_java_memory_info">Kasalukuyang paggamit ng memorya: %s / %s, Libre ang laki ng memorya: %s</string>
+    <string name="zh_setting_java_memory_max">Pinakamataas na pinapayagang laki ng memorya: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Ang kasalukuyang alok ng memorya ay lumalampas sa magagamit na laki ng memorya</string>
+    <string name="zh_setting_java_memory_too_big">Ang kasalukuyang alok ng memorya ay masyadong mataas, ang maximum na pinapayagang laki ay %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Ang kasalukuyang alok ng memorya ay masyadong maliit, kinakailangan ang hindi bababa sa %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Awtomatikong itakda ang wika ng laro sa piniling wika kapag nagsimula ang laro</string>
+    <string name="zh_setting_set_game_language_title">Awtomatikong Itakda ang Wika ng Laro</string>
+    <string name="zh_setting_set_game_language_list">Itakda ang Wika ng Laro</string>
+    <string name="zh_setting_set_game_language_system">Sundin ang Wika ng Sistema</string>
+    <string name="zh_setting_set_game_language_overridden_title">Palitan ang Wika ng Laro</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Pagsawalang-bahala ang wika na nakatakda sa laro at pilitin ito sa wika ng laro na nakatakda sa launcher</string>
+    <string name="setting_java_memory_outofrange">Ang ipinasok na halaga %s MB ay nasa labas ng tinatanggap na saklaw</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">I-download ang Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Nabigong kunin ang listahan ng Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_select_download">Pumili ng isang bersyon upang i-download</string>
+    <string name="preference_rendererexp_mesa_download_load">Naglo-load ng listahan ng Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloading">Nagda-download ng Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Nabigong i-download ang Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloaded">Matagumpay na na-download ang Mesa Lib</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Custom na Mesa Loader Driver Override</string>
+    <string name="osm_enable_cmldo">I-enable ang Custom na Mesa Loader Driver Override (Para lamang sa Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">Kung kinakailangan, maaari mong malayang piliin ang paraan ng pagproseso</string>
+    <string name="osm_choose_cmldo">Pumili ng Mesa Loader Driver Override</string>
+
+</resources>

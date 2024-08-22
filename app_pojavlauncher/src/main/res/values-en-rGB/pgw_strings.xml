@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Microsoft Login -->
+    <string name="microsoft_login_fragment">Login started!</string>
+    <string name="preference_category_visibility_title">Visibility</string>
+    <string name="preference_category_in_game_title">In game</string>
+    <string name="preference_category_in_menu_title">In Menu</string>
+    <string name="preference_category_microsoft_account_title">Microsoft Account</string>
+    <string name="preference_category_local_account_title">Local account</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Enable the log output interface when the application officially starts running the game</string>
+    <string name="preference_enable_log_output_title">Enable log output on game startup</string>
+    <string name="preference_category_custom_path">Custom path</string>
+    <string name="app_start_toast">#Welcome to Pojav Glow·Worm!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (up to 1.16.5, fast)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (all versions, mid)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (all versions, mid)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Mouse customisation</string>
+    <string name="preference_mouse_description">Set mouse pointer icon in game</string>
+    <string name="notif_mouse">Setting complete.</string>
+    <string name="preference_mouse_title1">Remove mouse icon</string>
+    <string name="notif_mouse1">Deletion complete</string>
+    <string name="preference_quit_launcher_title">Quit Launcher</string>
+    <string name="preference_quit_launcher">Exit the launcher when running the game</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Initialisation</string>
+    <string name="main_terminal_loading">Loading...</string>
+    <!-- Other Login -->
+    <string name="other_login_api">Other Login</string>
+    <string name="other_login_authentication_server">Authentication server</string>
+    <string name="other_login_register">Register</string>
+    <string name="other_login_email">Email or username</string>
+    <string name="other_login_password">Password</string>
+    <string name="other_login">Login</string>
+    <string name="other_login_aut">Please select the authentication server type</string>
+    <string name="other_login_tip">Tip</string>
+    <string name="other_login_confirm">Confirm</string>
+    <string name="other_login_cancel">Cancel</string>
+    <string name="other_login_role">Please select a role</string>
+    <string name="other_login_warning">Warning</string>
+    <string name="other_login_address">Please enter the Yggdrasil API authentication server address</string>
+    <string name="other_login_setid">Please enter a 32-bit server ID</string>
+    <string name="other_login_pass">Uniform Pass</string>
+    <string name="other_login_external">External Login</string>
+    <string name="other_login_server_error">No authentication server</string>
+    <!-- Experimental Renderer Settings -->
+    <string name="preference_exp_title">Experimental Settings</string>
+    <string name="preference_exp_description">Not recommended for non-experts</string>
+    <string name="preference_category_renderer_experimental_settings">Renderer experimental setup</string>
+    <string name="preference_renderer_setup_title">Enable Renderer Experimental Setup</string>
+    <string name="preference_renderer_setup">Use additional renderer-specific settings</string>
+    <string name="preference_spare_bridge_title">Spare Bridge</string>
+    <string name="preference_spare_bridge">Use the secondary bridge scheme, close if launch fails</string>
+    <string name="preference_spare_framebuffer_title">Spare Frame Buffer</string>
+    <string name="preference_spare_framebuffer">Use the frame buffer from the secondary scheme, close if launch fails</string>
+    <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Default)</string>
+    <string name="preference_extra_mesa_version">Mesa Version</string>
+    <string name="preference_extra_driver_model">Gallium Driver Override</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Warning</string>
+    <string name="preference_rendererexp_alertdialog_message">You have enabled experimental settings. This feature may cause unexpected bugs. Continue?</string>
+    <string name="preference_rendererexp_alertdialog_done">Yes</string>
+    <string name="preference_rendererexp_alertdialog_cancel">No</string>
+    <string name="preference_alertdialog_know">I understand</string>
+    <string name="alertdialog_done">Done</string>
+    <string name="alertdialog_cancel">Cancel</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">GL/GLSL Version</string>
+    <string name="preference_exp_ebsystem">Select according to system</string>
+    <string name="preference_exp_ebspecific">Use specific version</string>
+    <string name="preference_rendererexp_custom_glversion_title">Custom GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">Allow custom Mesa GL/GLSL version</string>
+    <string name="custom_gl_version">Mesa GL version:</string>
+    <string name="custom_glsl_version">Mesa GLSL version:</string>
+    <string name="customglglsl_alertdialog_error_gl">GL version must be between 2.8 and 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL version must be between 280 and 460</string>
+    <!-- Custom Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm requires permission to manage all files on the device to customise the location where game files are saved. Please grant permission to Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Game Path Management</string>
+    <string name="profiles_path_default">Default Path</string>
+    <string name="profiles_path_create_new">Add New Path</string>
+    <string name="profiles_path_create_new_title">Name This Path</string>
+    <string name="profiles_path_delete_title">Delete This Path</string>
+    <string name="profiles_path_delete_message">The launcher will delete this path, but it will not delete the files saved in the corresponding path. You can re-add this path after deletion.</string>
+    <string name="profiles_path_task_in_progress">Task in progress, path management features are temporarily unavailable</string>
+    <!-- Video Resolution -->
+    <string name="setting_set_resolution_too_big">The current resolution is too large, maximum allowable size is %d</string>
+    <string name="setting_set_resolution_too_small">The current resolution is too small, at least %d is required</string>
+    <string name="setting_set_resolution_outofrange">The input value %s is out of the acceptable range</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Control how much memory is allocated to Minecraft</string>
+    <string name="zh_setting_java_memory_info">Current memory usage: %s / %s, Free memory size: %s</string>
+    <string name="zh_setting_java_memory_max">Maximum allowable memory size: %s</string>
+    <string name="zh_setting_java_memory_exceeded">The current memory allocation exceeds available memory size</string>
+    <string name="zh_setting_java_memory_too_big">The current memory allocation is too large, maximum allowable size is %d MB</string>
+    <string name="zh_setting_java_memory_too_small">The current memory allocation is too small, at least %d MB is required</string>
+    <string name="zh_setting_set_game_language_desc">Automatically set the game language to the selected language when the game starts</string>
+    <string name="zh_setting_set_game_language_title">Automatically Set Game Language</string>
+    <string name="zh_setting_set_game_language_list">Set Game Language</string>
+    <string name="zh_setting_set_game_language_system">Follow System Language</string>
+    <string name="zh_setting_set_game_language_overridden_title">Override Game Language</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Ignore the language set in the game and force it to the game language set in the launcher</string>
+    <string name="setting_java_memory_outofrange">The input value %s MB is out of the acceptable range</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Download Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Mesa Lib list retrieval failed</string>
+    <string name="preference_rendererexp_mesa_select_download">Select a version to download</string>
+    <string name="preference_rendererexp_mesa_download_load">Loading Mesa Lib list</string>
+    <string name="preference_rendererexp_mesa_downloading">Downloading Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa Lib download failed</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa Lib download successful</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Custom Mesa Loader Driver Override</string>
+    <string name="osm_enable_cmldo">Enable Custom Mesa Loader Driver Override (Only for Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">If needed, you can freely choose the processing method</string>
+    <string name="osm_choose_cmldo">Choose Mesa Loader Driver Override</string>
+
+</resources>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Microsoft Login -->
+    <string name="microsoft_login_fragment">Login started!</string>
+    <string name="preference_category_visibility_title">Vizibilitate</string>
+    <string name="preference_category_in_game_title">În joc</string>
+    <string name="preference_category_in_menu_title">În Meniu</string>
+    <string name="preference_category_microsoft_account_title">Cont Microsoft</string>
+    <string name="preference_category_local_account_title">Cont local</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Activează interfața de ieșire a jurnalului când aplicația începe oficial să ruleze jocul</string>
+    <string name="preference_enable_log_output_title">Activează ieșirea jurnalului la pornirea jocului</string>
+    <string name="preference_category_custom_path">Cale personalizată</string>
+    <string name="app_start_toast">#Bine ai venit la Pojav Glow·Worm!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (până la 1.16.5, rapid)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (toate versiunile, mediu)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (toate versiunile, mediu)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Personalizare mouse</string>
+    <string name="preference_mouse_description">Setează pictograma pointerului mouse-ului în joc</string>
+    <string name="notif_mouse">Setare completă.</string>
+    <string name="preference_mouse_title1">Elimină pictograma mouse-ului</string>
+    <string name="notif_mouse1">Ștergere completă</string>
+    <string name="preference_quit_launcher_title">Închide Launcher</string>
+    <string name="preference_quit_launcher">Ieși din launcher când rulezi jocul</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Inițializare</string>
+    <string name="main_terminal_loading">Încărcare...</string>
+    <!-- Other Login -->
+    <string name="other_login_api">Autentificare altă</string>
+    <string name="other_login_authentication_server">Server de autentificare</string>
+    <string name="other_login_register">Înregistrare</string>
+    <string name="other_login_email">Email sau nume de utilizator</string>
+    <string name="other_login_password">Parolă</string>
+    <string name="other_login">Autentificare</string>
+    <string name="other_login_aut">Vă rugăm să selectați tipul de server de autentificare</string>
+    <string name="other_login_tip">Sfat</string>
+    <string name="other_login_confirm">Confirmă</string>
+    <string name="other_login_cancel">Anulează</string>
+    <string name="other_login_role">Vă rugăm să selectați un rol</string>
+    <string name="other_login_warning">Avertisment</string>
+    <string name="other_login_address">Vă rugăm să introduceți adresa serverului API Yggdrasil pentru autentificare</string>
+    <string name="other_login_setid">Vă rugăm să introduceți un ID de server de 32 de biți</string>
+    <string name="other_login_pass">Uniform Pass</string>
+    <string name="other_login_external">Autentificare externă</string>
+    <string name="other_login_server_error">Nu există server de autentificare</string>
+    <!-- Experimental Renderer Settings -->
+    <string name="preference_exp_title">Setări experimentale</string>
+    <string name="preference_exp_description">Nu este recomandat pentru neexperți</string>
+    <string name="preference_category_renderer_experimental_settings">Setări experimentale pentru Renderer</string>
+    <string name="preference_renderer_setup_title">Activează Setări Experimentale pentru Renderer</string>
+    <string name="preference_renderer_setup">Utilizează setări suplimentare specifice renderer-ului</string>
+    <string name="preference_spare_bridge_title">Pod de rezervă</string>
+    <string name="preference_spare_bridge">Folosește schema secundară a podului, închide dacă lansarea eșuează</string>
+    <string name="preference_spare_framebuffer_title">Buffer de cadru de rezervă</string>
+    <string name="preference_spare_framebuffer">Folosește bufferul de cadru din schema secundară, închide dacă lansarea eșuează</string>
+    <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Implicit)</string>
+    <string name="preference_extra_mesa_version">Versiunea Mesa</string>
+    <string name="preference_extra_driver_model">Override driver Gallium</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Avertisment</string>
+    <string name="preference_rendererexp_alertdialog_message">Ați activat setările experimentale. Această funcție poate cauza erori neașteptate. Continuați?</string>
+    <string name="preference_rendererexp_alertdialog_done">Da</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Nu</string>
+    <string name="preference_alertdialog_know">Înțeleg</string>
+    <string name="alertdialog_done">Finalizat</string>
+    <string name="alertdialog_cancel">Anulează</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">Versiunea GL/GLSL</string>
+    <string name="preference_exp_ebsystem">Selectați conform sistemului</string>
+    <string name="preference_exp_ebspecific">Utilizați versiunea specifică</string>
+    <string name="preference_rendererexp_custom_glversion_title">GL/GLSL Personalizat</string>
+    <string name="preference_rendererexp_custom_glversion">Permite versiunea personalizată Mesa GL/GLSL</string>
+    <string name="custom_gl_version">Versiunea Mesa GL:</string>
+    <string name="custom_glsl_version">Versiunea Mesa GLSL:</string>
+    <string name="customglglsl_alertdialog_error_gl">Versiunea GL trebuie să fie între 2.8 și 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">Versiunea GLSL trebuie să fie între 280 și 460</string>
+    <!-- Custom Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm necesită permisiunea de a gestiona toate fișierele de pe dispozitiv pentru a personaliza locația unde sunt salvate fișierele jocului. Vă rugăm să acordați permisiunea pentru Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Gestionare cale joc</string>
+    <string name="profiles_path_default">Cale implicită</string>
+    <string name="profiles_path_create_new">Adaugă cale nouă</string>
+    <string name="profiles_path_create_new_title">Numește această cale</string>
+    <string name="profiles_path_delete_title">Șterge această cale</string>
+    <string name="profiles_path_delete_message">Launcher-ul va șterge această cale, dar nu va șterge fișierele salvate în calea respectivă. Puteți adăuga din nou această cale după ștergere.</string>
+    <string name="profiles_path_task_in_progress">Sarcina este în desfășurare, funcțiile de gestionare a căilor sunt temporar indisponibile</string>
+    <!-- Video Resolution -->
+    <string name="setting_set_resolution_too_big">Rezoluția curentă este prea mare, dimensiunea maximă permisă este %d</string>
+    <string name="setting_set_resolution_too_small">Rezoluția curentă este prea mică, este necesar să fie cel puțin %d</string>
+    <string name="setting_set_resolution_outofrange">Valoarea de intrare %s este în afara intervalului acceptabil</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Controlează câtă memorie este alocată pentru Minecraft</string>
+    <string name="zh_setting_java_memory_info">Utilizare curentă a memoriei: %s / %s, Dimensiune memorie liberă: %s</string>
+    <string name="zh_setting_java_memory_max">Dimensiunea maximă permisă a memoriei: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Alocarea curentă a memoriei depășește dimensiunea disponibilă a memoriei</string>
+    <string name="zh_setting_java_memory_too_big">Alocarea curentă a memoriei este prea mare, dimensiunea maximă permisă este %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Alocarea curentă a memoriei este prea mică, este necesar să fie cel puțin %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Setați automat limba jocului la limba selectată atunci când începe jocul</string>
+    <string name="zh_setting_set_game_language_title">Setare automată a limbii jocului</string>
+    <string name="zh_setting_set_game_language_list">Setați limba jocului</string>
+    <string name="zh_setting_set_game_language_system">Urmați limba sistemului</string>
+    <string name="zh_setting_set_game_language_overridden_title">Suprascriere limbă joc</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Ignorați limba setată în joc și forțați limba jocului setată în launcher</string>
+    <string name="setting_java_memory_outofrange">Valoarea introdusă %s MB este în afara intervalului acceptabil</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Descarcă Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Eșec la obținerea listei Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_select_download">Selectați o versiune pentru descărcare</string>
+    <string name="preference_rendererexp_mesa_download_load">Încărcare listă Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloading">Se descarcă Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Descarcarea Mesa Lib a eșuat</string>
+    <string name="preference_rendererexp_mesa_downloaded">Descărcarea Mesa Lib a reușit</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Override driver personalizat Mesa Loader</string>
+    <string name="osm_enable_cmldo">Activează override driver personalizat Mesa Loader (Doar pentru Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">Dacă este necesar, puteți alege liber metoda de procesare</string>
+    <string name="osm_choose_cmldo">Alegeți override driver Mesa Loader</string>
+
+</resources>

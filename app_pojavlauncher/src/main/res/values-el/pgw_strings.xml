@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Microsoft Σύνδεση -->
+    <string name="microsoft_login_fragment">Η σύνδεση ξεκίνησε!</string>
+    <string name="preference_category_visibility_title">Ορατότητα</string>
+    <string name="preference_category_in_game_title">Στο παιχνίδι</string>
+    <string name="preference_category_in_menu_title">Στο μενού</string>
+    <string name="preference_category_microsoft_account_title">Λογαριασμός Microsoft</string>
+    <string name="preference_category_local_account_title">Τοπικός λογαριασμός</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Ενεργοποιήστε τη διεπαφή εξόδου καταγραφής όταν η εφαρμογή ξεκινήσει επίσημα το παιχνίδι</string>
+    <string name="preference_enable_log_output_title">Ενεργοποίηση εξόδου καταγραφής κατά την εκκίνηση του παιχνιδιού</string>
+    <string name="preference_category_custom_path">Προσαρμοσμένη διαδρομή</string>
+    <string name="app_start_toast">#Καλώς ήρθατε στο Pojav Glow·Worm!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (έως 1.16.5, γρήγορα)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (όλες οι εκδόσεις, μεσαία)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (όλες οι εκδόσεις, μεσαία)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Προσαρμογή ποντικιού</string>
+    <string name="preference_mouse_description">Ρυθμίστε το εικονίδιο του δείκτη στο παιχνίδι</string>
+    <string name="notif_mouse">Η ρύθμιση ολοκληρώθηκε.</string>
+    <string name="preference_mouse_title1">Αφαίρεση εικονιδίου ποντικιού</string>
+    <string name="notif_mouse1">Η διαγραφή ολοκληρώθηκε</string>
+    <string name="preference_quit_launcher_title">Τερματισμός εκκίνησης</string>
+    <string name="preference_quit_launcher">Κλείσιμο της εκκίνησης κατά την εκκίνηση του παιχνιδιού</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Τερματικό</string>
+    <string name="main_termianl_init">Αρχικοποίηση</string>
+    <string name="main_terminal_loading">Φόρτωση...</string>
+    <!-- Άλλη σύνδεση -->
+    <string name="other_login_api">Άλλη σύνδεση</string>
+    <string name="other_login_authentication_server">Διακομιστής ταυτοποίησης</string>
+    <string name="other_login_register">Εγγραφή</string>
+    <string name="other_login_email">Ηλεκτρονική διεύθυνση ή όνομα χρήστη</string>
+    <string name="other_login_password">Κωδικός πρόσβασης</string>
+    <string name="other_login">Σύνδεση</string>
+    <string name="other_login_aut">Επιλέξτε τον τύπο διακομιστή ταυτοποίησης</string>
+    <string name="other_login_tip">Συμβουλή</string>
+    <string name="other_login_confirm">Επιβεβαίωση</string>
+    <string name="other_login_cancel">Ακύρωση</string>
+    <string name="other_login_role">Επιλέξτε ρόλο</string>
+    <string name="other_login_warning">Προειδοποίηση</string>
+    <string name="other_login_address">Εισάγετε τη διεύθυνση διακομιστή ταυτοποίησης Yggdrasil API</string>
+    <string name="other_login_setid">Εισάγετε μια ταυτότητα διακομιστή 32-bit</string>
+    <string name="other_login_pass">Ενιαίο κωδικό</string>
+    <string name="other_login_external">Εξωτερική σύνδεση</string>
+    <string name="other_login_server_error">Χωρίς διακομιστή ταυτοποίησης</string>
+    <!-- Πειραματικές ρυθμίσεις renderer -->
+    <string name="preference_exp_title">Πειραματικές ρυθμίσεις</string>
+    <string name="preference_exp_description">Μην χρησιμοποιείτε από μη επαγγελματίες</string>
+    <string name="preference_category_renderer_experimental_settings">Πειραματικές ρυθμίσεις renderer</string>
+    <string name="preference_renderer_setup_title">Ενεργοποίηση πειραματικών ρυθμίσεων renderer</string>
+    <string name="preference_renderer_setup">Χρήση επιπλέον ρυθμίσεων συγκεκριμένων για τον renderer</string>
+    <string name="preference_spare_bridge_title">Εφεδρική γέφυρα</string>
+    <string name="preference_spare_bridge">Χρησιμοποιήστε το δεύτερο σχήμα γέφυρας, κλείστε αν η εκκίνηση αποτύχει</string>
+    <string name="preference_spare_framebuffer_title">Εφεδρικό framebuffer</string>
+    <string name="preference_spare_framebuffer">Χρησιμοποιήστε το framebuffer του δεύτερου σχήματος, κλείστε αν η εκκίνηση αποτύχει</string>
+    <string name="preference_renderer_setup_extra">Renderer (Επιπλέον)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Προεπιλογή)</string>
+    <string name="preference_extra_mesa_version">Έκδοση Mesa</string>
+    <string name="preference_extra_driver_model">Override οδηγού Gallium</string>
+    <!-- Διάλογος -->
+    <string name="preference_rendererexp_alertdialog_warning">Προειδοποίηση</string>
+    <string name="preference_rendererexp_alertdialog_message">Έχετε ενεργοποιήσει πειραματικές ρυθμίσεις. Αυτή η λειτουργία μπορεί να προκαλέσει απροσδόκητα σφάλματα. Θέλετε να συνεχίσετε;</string>
+    <string name="preference_rendererexp_alertdialog_done">Ναι</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Όχι</string>
+    <string name="preference_alertdialog_know">Γνωρίζω</string>
+    <string name="alertdialog_done">Τέλος</string>
+    <string name="alertdialog_cancel">Ακύρωση</string>
+    <!-- Προσαρμοσμένη έκδοση GL/GLSL -->
+    <string name="preference_exp_custommv">Έκδοση GL/GLSL</string>
+    <string name="preference_exp_ebsystem">Επιλέξτε σύμφωνα με το σύστημα</string>
+    <string name="preference_exp_ebspecific">Χρήση συγκεκριμένης έκδοσης</string>
+    <string name="preference_rendererexp_custom_glversion_title">Προσαρμοσμένο GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">Επιτρέψτε προσαρμοσμένη έκδοση Mesa GL/GLSL</string>
+    <string name="custom_gl_version">Έκδοση Mesa GL:</string>
+    <string name="custom_glsl_version">Έκδοση Mesa GLSL:</string>
+    <string name="customglglsl_alertdialog_error_gl">Η έκδοση GL πρέπει να είναι μεταξύ 2.8 και 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">Η έκδοση GLSL πρέπει να είναι μεταξύ 280 και 460</string>
+    <!-- Προσαρμογή διαδρομής παιχνιδιού -->
+    <string name="permissions_manage_external_storage">Το Pojav Glow·Worm απαιτεί άδεια για τη διαχείριση όλων των αρχείων στη συσκευή προκειμένου να προσαρμόσει την τοποθεσία όπου αποθηκεύονται τα αρχεία του παιχνιδιού. Παρακαλώ δώστε άδεια στο Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Διαχείριση διαδρομής παιχνιδιού</string>
+    <string name="profiles_path_default">Προεπιλεγμένος δρόμος</string>
+    <string name="profiles_path_create_new">Προσθήκη νέας διαδρομής</string>
+    <string name="profiles_path_create_new_title">Ονομάστε αυτήν τη διαδρομή</string>
+    <string name="profiles_path_delete_title">Διαγραφή αυτής της διαδρομής</string>
+    <string name="profiles_path_delete_message">Ο εκκινητής θα διαγράψει αυτήν τη διαδρομή, αλλά δεν θα διαγράψει τα αρχεία που αποθηκεύονται στην αντίστοιχη διαδρομή. Μπορείτε να επαναφέρετε αυτήν τη διαδρομή μετά τη διαγραφή.</string>
+    <string name="profiles_path_task_in_progress">Η εργασία βρίσκεται σε εξέλιξη, οι δυνατότητες διαχείρισης διαδρομής είναι προσωρινά μη διαθέσιμες</string>
+    <!-- Ανάλυση βίντεο -->
+    <string name="setting_set_resolution_too_big">Η τρέχουσα ανάλυση είναι πολύ μεγάλη, το μέγιστο επιτρεπόμενο μέγεθος είναι %d</string>
+    <string name="setting_set_resolution_too_small">Η τρέχουσα ανάλυση είναι πολύ μικρή, απαιτείται τουλάχιστον %d</string>
+    <string name="setting_set_resolution_outofrange">Η είσοδος %s είναι εκτός του αποδεκτού εύρους</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Ελέγξτε πόση μνήμη εκχωρείται στο Minecraft</string>
+    <string name="zh_setting_java_memory_info">Τρέχουσα χρήση μνήμης: %s / %s, Ελεύθερο μέγεθος μνήμης: %s</string>
+    <string name="zh_setting_java_memory_max">Μέγιστο επιτρεπόμενο μέγεθος μνήμης: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Η τρέχουσα εκχώρηση μνήμης υπερβαίνει το διαθέσιμο μέγεθος μνήμης</string>
+    <string name="zh_setting_java_memory_too_big">Η τρέχουσα εκχώρηση μνήμης είναι πολύ μεγάλη, το μέγιστο επιτρεπόμενο μέγεθος είναι %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Η τρέχουσα εκχώρηση μνήμης είναι πολύ μικρή, απαιτείται τουλάχιστον %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Αυτόματη ρύθμιση της γλώσσας του παιχνιδιού στη γλώσσα που έχει επιλεγεί κατά την εκκίνηση του παιχνιδιού</string>
+    <string name="zh_setting_set_game_language_title">Αυτόματη Ρύθμιση Γλώσσας Παιχνιδιού</string>
+    <string name="zh_setting_set_game_language_list">Ρύθμιση Γλώσσας Παιχνιδιού</string>
+    <string name="zh_setting_set_game_language_system">Ακολουθήστε τη γλώσσα του συστήματος</string>
+    <string name="zh_setting_set_game_language_overridden_title">Αναγκαία Γλώσσα Παιχνιδιού</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Αγνοήστε τη γλώσσα που έχει ρυθμιστεί στο παιχνίδι και επιβάλλετε τη γλώσσα του παιχνιδιού που έχει ρυθμιστεί στον εκκινητή</string>
+    <string name="setting_java_memory_outofrange">Η είσοδος %s MB είναι εκτός του αποδεκτού εύρους</string>
+    <!-- Λήψη βιβλιοθήκης Mesa -->
+    <string name="preference_extra_mesa_download">Λήψη βιβλιοθήκης Mesa</string>
+    <string name="preference_rendererexp_mesa_get_fail">Αποτυχία λήψης λίστας βιβλιοθηκών Mesa</string>
+    <string name="preference_rendererexp_mesa_select_download">Επιλέξτε μια έκδοση για λήψη</string>
+    <string name="preference_rendererexp_mesa_download_load">Φόρτωση λίστας βιβλιοθηκών Mesa</string>
+    <string name="preference_rendererexp_mesa_downloading">Λήψη βιβλιοθήκης Mesa</string>
+    <string name="preference_rendererexp_mesa_download_fail">Αποτυχία λήψης βιβλιοθήκης Mesa</string>
+    <string name="preference_rendererexp_mesa_downloaded">Η λήψη βιβλιοθήκης Mesa ήταν επιτυχής</string>
+    <!-- Εξατομικευμένος Overrider οδηγού Mesa Loader -->
+    <string name="preference_extra_osm_cmldo_categ">Εξατομικευμένος Overrider οδηγού Mesa Loader</string>
+    <string name="osm_enable_cmldo">Ενεργοποίηση Εξατομικευμένου Overrider οδηγού Mesa (Μόνο για Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">Εάν χρειάζεται, μπορείτε να επιλέξετε ελεύθερα τη μέθοδο επεξεργασίας</string>
+    <string name="osm_choose_cmldo">Επιλέξτε Εξατομικευμένο Overrider οδηγού Mesa</string>
+
+</resources>

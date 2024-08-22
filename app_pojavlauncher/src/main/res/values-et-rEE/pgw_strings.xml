@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Microsoft Login -->
+    <string name="microsoft_login_fragment">Sisselogimine algas!</string>
+    <string name="preference_category_visibility_title">Kuvamine</string>
+    <string name="preference_category_in_game_title">Mängus</string>
+    <string name="preference_category_in_menu_title">Menüüs</string>
+    <string name="preference_category_microsoft_account_title">Microsofti konto</string>
+    <string name="preference_category_local_account_title">Kohalik konto</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Luba logi väljundliidese kasutamine, kui rakendus alustab mängu käivitamist</string>
+    <string name="preference_enable_log_output_title">Luba logi väljund mängu käivitamisel</string>
+    <string name="preference_category_custom_path">Kohandatud tee</string>
+    <string name="app_start_toast">#Tere tulemast Pojav Glow·Worm!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (kuni 1.16.5, kiire)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (kõik versioonid, keskmine)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (kõik versioonid, keskmine)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Hiire kohandamine</string>
+    <string name="preference_mouse_description">Määra hiirekursor mängus</string>
+    <string name="notif_mouse">Seadistus lõpetatud.</string>
+    <string name="preference_mouse_title1">Eemalda hiireikoon</string>
+    <string name="notif_mouse1">Kustutamine lõpetatud</string>
+    <string name="preference_quit_launcher_title">Looja sulgemine</string>
+    <string name="preference_quit_launcher">Sulge looja mängu käivitamisel</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Initsialiseerimine</string>
+    <string name="main_terminal_loading">Laadimine...</string>
+    <!-- Other Login -->
+    <string name="other_login_api">Muu sisselogimine</string>
+    <string name="other_login_authentication_server">Autentimisserver</string>
+    <string name="other_login_register">registreerima</string>
+    <string name="other_login_email">E-post või kasutajanimi</string>
+    <string name="other_login_password">Parool</string>
+    <string name="other_login">Logi sisse</string>
+    <string name="other_login_aut">Palun vali autentimisserveri tüüp</string>
+    <string name="other_login_tip">Näpunäide</string>
+    <string name="other_login_confirm">Kinnita</string>
+    <string name="other_login_cancel">Loobu</string>
+    <string name="other_login_role">Palun vali roll</string>
+    <string name="other_login_warning">Hoiatus</string>
+    <string name="other_login_address">Palun sisestage Yggdrasili API autentimisserveri aadress</string>
+    <string name="other_login_setid">Palun sisestage 32-bitine serveri ID</string>
+    <string name="other_login_pass">Üksne pass</string>
+    <string name="other_login_external">Väline sisselogimine</string>
+    <string name="other_login_server_error">Autentimisserver puudub</string>
+    <!-- Experimental Renderer Settings -->
+    <string name="preference_exp_title">Eksperimentaalsed seaded</string>
+    <string name="preference_exp_description">Kasutajatele, kellel pole professionaalseid teadmisi, ei soovitata</string>
+    <string name="preference_category_renderer_experimental_settings">Rendereri eksperimentaalsed seaded</string>
+    <string name="preference_renderer_setup_title">Luba Renderer'i eksperimentaalsed seaded</string>
+    <string name="preference_renderer_setup">Kasutage täiendavaid renderer-spetsiifilisi seadeid</string>
+    <string name="preference_spare_bridge_title">Varu sild</string>
+    <string name="preference_spare_bridge">Kasutage teise skeemi silda, sulgege, kui käivitamine ebaõnnestub</string>
+    <string name="preference_spare_framebuffer_title">Varu raami puhverserver</string>
+    <string name="preference_spare_framebuffer">Kasutage teise skeemi raamipuhverserverit, sulgege, kui käivitamine ebaõnnestub</string>
+    <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Vaikimisi)</string>
+    <string name="preference_extra_mesa_version">Mesa versioon</string>
+    <string name="preference_extra_driver_model">Galliumi draiveri asendamine</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Hoiatus</string>
+    <string name="preference_rendererexp_alertdialog_message">Olete lubanud eksperimentaalsed seaded. See funktsioon võib põhjustada ootamatuid vigu. Kas jätkata?</string>
+    <string name="preference_rendererexp_alertdialog_done">Jah</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Ei</string>
+    <string name="preference_alertdialog_know">Juba tean</string>
+    <string name="alertdialog_done">Valmis</string>
+    <string name="alertdialog_cancel">Loobu</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">GL/GLSL versioon</string>
+    <string name="preference_exp_ebsystem">Valige vastavalt süsteemile</string>
+    <string name="preference_exp_ebspecific">Kasutage spetsiifilist versiooni</string>
+    <string name="preference_rendererexp_custom_glversion_title">Kohandatud GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">Luba kohandatud Mesa GL/GLSL versioon</string>
+    <string name="custom_gl_version">Mesa GL versioon:</string>
+    <string name="custom_glsl_version">Mesa GLSL versioon:</string>
+    <string name="customglglsl_alertdialog_error_gl">GL versioon peab olema vahemikus 2.8 kuni 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL versioon peab olema vahemikus 280 kuni 460</string>
+    <!-- Custom Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm vajab loa saamiseks kõigi seadme failide haldamiseks, et kohandada, kuhu mängufailid salvestatakse. Palun andke Pojav Glow·Wormile luba!</string>
+    <string name="profiles_path_title">Mängu tee haldamine</string>
+    <string name="profiles_path_default">Vaikimisi tee</string>
+    <string name="profiles_path_create_new">Lisa uus tee</string>
+    <string name="profiles_path_create_new_title">Nimeta see tee</string>
+    <string name="profiles_path_delete_title">Kustuta see tee</string>
+    <string name="profiles_path_delete_message">Käivitaja kustutab selle tee, kuid ei kustuta vastava tee salvestatud faile. Saate pärast kustutamist selle tee uuesti lisada.</string>
+    <string name="profiles_path_task_in_progress">Ülesanne käib, tee haldamise funktsioonid on ajutiselt saadaval</string>
+    <!-- Video Resolution -->
+    <string name="setting_set_resolution_too_big">Praegune eraldusvõime on liiga suur, maksimaalne lubatud suurus on %d</string>
+    <string name="setting_set_resolution_too_small">Praegune eraldusvõime on liiga väike, minimaalne nõutav on %d</string>
+    <string name="setting_set_resolution_outofrange">Sisestatud väärtus %s on vastuvõetavast vahemikust väljas</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Kontrollige, kui palju mälu eraldatakse Minecraftile</string>
+    <string name="zh_setting_java_memory_info">Praegune mälu kasutamine: %s / %s, Vaba mälu suurus: %s</string>
+    <string name="zh_setting_java_memory_max">Maksimaalne lubatud mälu suurus: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Praegune mälu eraldamine ületab saadaval oleva mälu suuruse</string>
+    <string name="zh_setting_java_memory_too_big">Praegune mälu eraldamine on liiga suur, maksimaalne lubatud suurus on %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Praegune mälu eraldamine on liiga väike, minimaalne nõutav suurus on %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Automaatne mängu keele seadmine valitud keele järgi mängu käivitamisel</string>
+    <string name="zh_setting_set_game_language_title">Automaatne mängu keele seadmine</string>
+    <string name="zh_setting_set_game_language_list">Seadke mängu keel</string>
+    <string name="zh_setting_set_game_language_system">Järgige süsteemi keelt</string>
+    <string name="zh_setting_set_game_language_overridden_title">Keela mängu keele ülekatte</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Ignoreerige mängus seadistatud keelt ja sundige mängu keelt, mis on seadistatud käivitajas</string>
+    <string name="setting_java_memory_outofrange">Sisestatud väärtus %s MB on vastuvõetavast vahemikust väljas</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Laadi alla Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Mesa Lib'i nimekirja hankimine ebaõnnestus</string>
+    <string name="preference_rendererexp_mesa_select_download">Valige allalaadimise versioon</string>
+    <string name="preference_rendererexp_mesa_download_load">Mesa Lib'i nimekirja laadimine</string>
+    <string name="preference_rendererexp_mesa_downloading">Mesa Lib'i allalaadimine</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa Lib'i allalaadimine ebaõnnestus</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa Lib'i allalaadimine õnnestus</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Kohandatud Mesa Loaderi draiveri asendamine</string>
+    <string name="osm_enable_cmldo">Kohanda Mesa Loaderi draiveri asendamist (ainult Freedreno jaoks)</string>
+    <string name="osm_enable_cmldo_desc">Kui vajalik, saate vabalt valida töötlemise meetodi</string>
+    <string name="osm_choose_cmldo">Valige Mesa Loaderi draiveri asendamine</string>
+
+</resources>

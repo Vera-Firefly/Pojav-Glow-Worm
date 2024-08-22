@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Microsoft Login -->
+    <string name="microsoft_login_fragment">¡Inicio de sesión iniciado!</string>
+    <string name="preference_category_visibility_title">Visibilidad</string>
+    <string name="preference_category_in_game_title">En juego</string>
+    <string name="preference_category_in_menu_title">En Menú</string>
+    <string name="preference_category_microsoft_account_title">Cuenta de Microsoft</string>
+    <string name="preference_category_local_account_title">Cuenta local</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Habilita la interfaz de salida de registro cuando la aplicación comience oficialmente a ejecutar el juego</string>
+    <string name="preference_enable_log_output_title">Habilitar salida de registro al inicio del juego</string>
+    <string name="preference_category_custom_path">Ruta personalizada</string>
+    <string name="app_start_toast">#¡Bienvenido a Pojav Glow·Worm!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (hasta 1.16.5, rápido)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (todas las versiones, medio)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (todas las versiones, medio)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Personalización del mouse</string>
+    <string name="preference_mouse_description">Configurar el icono del puntero del mouse en el juego</string>
+    <string name="notif_mouse">Configuración completada.</string>
+    <string name="preference_mouse_title1">Eliminar icono del mouse</string>
+    <string name="notif_mouse1">Eliminación completada</string>
+    <string name="preference_quit_launcher_title">Cerrar Launcher</string>
+    <string name="preference_quit_launcher">Salir del launcher al ejecutar el juego</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Inicialización</string>
+    <string name="main_terminal_loading">Cargando...</string>
+    <!-- Other Login -->
+    <string name="other_login_api">Otro inicio de sesión</string>
+    <string name="other_login_authentication_server">Servidor de autenticación</string>
+    <string name="other_login_register">registrar</string>
+    <string name="other_login_email">Correo electrónico o nombre de usuario</string>
+    <string name="other_login_password">Contraseña</string>
+    <string name="other_login">Iniciar sesión</string>
+    <string name="other_login_aut">Por favor, seleccione el tipo de servidor de autenticación</string>
+    <string name="other_login_tip">Consejo</string>
+    <string name="other_login_confirm">Confirmar</string>
+    <string name="other_login_cancel">Cancelar</string>
+    <string name="other_login_role">Por favor, seleccione un rol</string>
+    <string name="other_login_warning">Advertencia</string>
+    <string name="other_login_address">Por favor, introduzca la dirección del servidor API de Yggdrasil para autenticación</string>
+    <string name="other_login_setid">Por favor, introduzca un ID de servidor de 32 bits</string>
+    <string name="other_login_pass">Pass uniforme</string>
+    <string name="other_login_external">Inicio de sesión externo</string>
+    <string name="other_login_server_error">No hay servidor de autenticación</string>
+    <!-- Experimental Renderer Settings -->
+    <string name="preference_exp_title">Configuraciones experimentales</string>
+    <string name="preference_exp_description">No se recomienda para no profesionales</string>
+    <string name="preference_category_renderer_experimental_settings">Configuración experimental de Renderer</string>
+    <string name="preference_renderer_setup_title">Habilitar configuración experimental de Renderer</string>
+    <string name="preference_renderer_setup">Usar configuraciones adicionales específicas del renderer</string>
+    <string name="preference_spare_bridge_title">Puente de reserva</string>
+    <string name="preference_spare_bridge">Usar el esquema de puente secundario, cerrar si el lanzamiento falla</string>
+    <string name="preference_spare_framebuffer_title">Buffer de cuadros de reserva</string>
+    <string name="preference_spare_framebuffer">Usar el buffer de cuadros del esquema secundario, cerrarlo si el lanzamiento falla</string>
+    <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Predeterminado)</string>
+    <string name="preference_extra_mesa_version">Versión de Mesa</string>
+    <string name="preference_extra_driver_model">Anulación del controlador Gallium</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Advertencia</string>
+    <string name="preference_rendererexp_alertdialog_message">Ha activado configuraciones experimentales. Esta función puede generar errores inesperados. ¿Continuar?</string>
+    <string name="preference_rendererexp_alertdialog_done">Sí</string>
+    <string name="preference_rendererexp_alertdialog_cancel">No</string>
+    <string name="preference_alertdialog_know">Ya lo sé</string>
+    <string name="alertdialog_done">Hecho</string>
+    <string name="alertdialog_cancel">Cancelar</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">Versión GL/GLSL</string>
+    <string name="preference_exp_ebsystem">Seleccionar según el sistema</string>
+    <string name="preference_exp_ebspecific">Usar versión específica</string>
+    <string name="preference_rendererexp_custom_glversion_title">GL/GLSL Personalizado</string>
+    <string name="preference_rendererexp_custom_glversion">Permitir versión personalizada de Mesa GL/GLSL</string>
+    <string name="custom_gl_version">Versión Mesa GL:</string>
+    <string name="custom_glsl_version">Versión Mesa GLSL:</string>
+    <string name="customglglsl_alertdialog_error_gl">La versión de GL debe estar entre 2.8 y 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">La versión de GLSL debe estar entre 280 y 460</string>
+    <!-- Custom Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm requiere permiso para gestionar todos los archivos en el dispositivo para personalizar la ubicación donde se guardan los archivos del juego. ¡Por favor, conceda permiso a Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Gestión de ruta del juego</string>
+    <string name="profiles_path_default">Ruta predeterminada</string>
+    <string name="profiles_path_create_new">Agregar nueva ruta</string>
+    <string name="profiles_path_create_new_title">Nombrar esta ruta</string>
+    <string name="profiles_path_delete_title">Eliminar esta ruta</string>
+    <string name="profiles_path_delete_message">El lanzador eliminará esta ruta, pero no eliminará los archivos guardados en la ruta correspondiente. Puede volver a agregar esta ruta después de la eliminación.</string>
+    <string name="profiles_path_task_in_progress">Tarea en progreso, las funciones de gestión de rutas están temporalmente no disponibles</string>
+    <!-- Video Resolution -->
+    <string name="setting_set_resolution_too_big">La resolución actual es demasiado grande, el tamaño máximo permitido es %d</string>
+    <string name="setting_set_resolution_too_small">La resolución actual es demasiado pequeña, se requiere al menos %d</string>
+    <string name="setting_set_resolution_outofrange">El valor ingresado %s está fuera del rango aceptable</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Controla cuánta memoria se asigna a Minecraft</string>
+    <string name="zh_setting_java_memory_info">Uso actual de memoria: %s / %s, Tamaño de memoria libre: %s</string>
+    <string name="zh_setting_java_memory_max">Tamaño máximo permitido de memoria: %s</string>
+    <string name="zh_setting_java_memory_exceeded">La asignación de memoria actual excede el tamaño de memoria disponible</string>
+    <string name="zh_setting_java_memory_too_big">La asignación de memoria actual es demasiado grande, el tamaño máximo permitido es %d MB</string>
+    <string name="zh_setting_java_memory_too_small">La asignación de memoria actual es demasiado pequeña, se requiere al menos %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Configurar automáticamente el idioma del juego al idioma seleccionado cuando se inicie el juego</string>
+    <string name="zh_setting_set_game_language_title">Configurar idioma del juego automáticamente</string>
+    <string name="zh_setting_set_game_language_list">Configurar idioma del juego</string>
+    <string name="zh_setting_set_game_language_system">Seguir idioma del sistema</string>
+    <string name="zh_setting_set_game_language_overridden_title">Sobrescribir idioma del juego</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Ignorar el idioma configurado en el juego y forzar el idioma del juego configurado en el lanzador</string>
+    <string name="setting_java_memory_outofrange">El valor ingresado %s MB está fuera del rango aceptable</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Descargar Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Error al obtener la lista de Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_select_download">Seleccione una versión para descargar</string>
+    <string name="preference_rendererexp_mesa_download_load">Cargando lista de Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloading">Descargando Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Error al descargar Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloaded">Descarga de Mesa Lib exitosa</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Anulación de controlador personalizado Mesa Loader</string>
+    <string name="osm_enable_cmldo">Habilitar anulación de controlador personalizado Mesa Loader (Solo para Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">Si es necesario, puede elegir libremente el método de procesamiento</string>
+    <string name="osm_choose_cmldo">Elegir anulación de controlador Mesa Loader</string>
+
+</resources>
