@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App New Annotation -->
+    <string name="microsoft_login_fragment">Вхід розпочато!</string>
+    <string name="preference_category_visibility_title">Видимість</string>
+    <string name="preference_category_in_game_title">У грі</string>
+    <string name="preference_category_in_menu_title">У меню</string>
+    <string name="preference_category_microsoft_account_title">Обліковий запис Microsoft</string>
+    <string name="preference_category_local_account_title">Локальний обліковий запис</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Увімкнути інтерфейс виводу журналу, коли додаток офіційно почне запускати гру</string>
+    <string name="preference_enable_log_output_title">Увімкнути вивід журналу при запуску гри</string>
+    <string name="preference_category_custom_path">Користувацький шлях</string>
+    <string name="app_start_toast">#Ласкаво просимо до Pojav Glow·Worm!!!!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (до 1.16.5, швидко)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (всі версії, середньо)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (всі версії, середньо)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Налаштування миші</string>
+    <string name="preference_mouse_description">Встановіть іконку вказівника миші в грі</string>
+    <string name="notif_mouse">Налаштування завершено.</string>
+    <string name="preference_mouse_title1">Видалити іконку миші</string>
+    <string name="notif_mouse1">Видалення завершено</string>
+    <string name="preference_quit_launcher_title">Вийти з Launcher</string>
+    <string name="preference_quit_launcher">Вийти з лаунчера при запуску гри</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Термінал</string>
+    <string name="main_termianl_init">Ініціалізація</string>
+    <string name="main_terminal_loading">Завантаження...</string>
+    <!-- Other login -->
+    <string name="other_login_api">Інший вхід</string>
+    <string name="other_login_authentication_server">Сервер аутентифікації</string>
+    <string name="other_login_register">зареєструватися</string>
+    <string name="other_login_email">Email або ім\'я користувача</string>
+    <string name="other_login_password">Пароль</string>
+    <string name="other_login">Увійти</string>
+    <string name="other_login_aut">Будь ласка, виберіть тип сервера аутентифікації</string>
+    <string name="other_login_tip">Порада</string>
+    <string name="other_login_confirm">Підтвердити</string>
+    <string name="other_login_cancel">Скасувати</string>
+    <string name="other_login_role">Будь ласка, виберіть роль</string>
+    <string name="other_login_warning">Попередження</string>
+    <string name="other_login_address">Будь ласка, введіть адресу сервера аутентифікації Yggdrasil API</string>
+    <string name="other_login_setid">Будь ласка, введіть ID сервера 32 біти</string>
+    <string name="other_login_pass">Універсальний пароль</string>
+    <string name="other_login_external">Зовнішній вхід</string>
+    <string name="other_login_server_error">Сервер аутентифікації не знайдено</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_exp_title">Експериментальні налаштування</string>
+    <string name="preference_exp_description">Непрофесіонали не повинні використовувати</string>
+    <string name="preference_category_renderer_experimental_settings">Експериментальні налаштування рендерера</string>
+    <string name="preference_renderer_setup_title">Увімкнути експериментальні налаштування рендерера</string>
+    <string name="preference_renderer_setup">Використовувати додаткові налаштування рендерера</string>
+    <string name="preference_spare_bridge_title">Резервний міст</string>
+    <string name="preference_spare_bridge">Використовувати другий мостовий план, закрити, якщо запуск не вдався</string>
+    <string name="preference_spare_framebuffer_title">Резервний буфер кадру</string>
+    <string name="preference_spare_framebuffer">Використовувати буфер кадру другого плану, закрити, якщо запуск не вдався</string>
+    <string name="preference_renderer_setup_extra">Рендерер (Додатково)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (За замовчуванням)</string>
+    <string name="preference_extra_mesa_version">Версія Mesa</string>
+    <string name="preference_extra_driver_model">Перезапис драйвера Gallium</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Попередження</string>
+    <string name="preference_rendererexp_alertdialog_message">Ви увімкнули експериментальні налаштування. Ця функція може спричинити непередбачувані помилки. Продовжити використання?</string>
+    <string name="preference_rendererexp_alertdialog_done">Продовжити</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Скасувати</string>
+    <string name="preference_alertdialog_know">Вже відомо</string>
+    <string name="alertdialog_done">Готово</string>
+    <string name="alertdialog_cancel">Скасувати</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">Версія GL/GLSL</string>
+    <string name="preference_exp_ebsystem">Вибрати відповідно до системи</string>
+    <string name="preference_exp_ebspecific">Використовувати конкретну версію</string>
+    <string name="preference_rendererexp_custom_glversion_title">Користувацька версія GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">Дозволити користувацьку версію Mesa GL/GLSL</string>
+    <string name="custom_gl_version">Версія GL Mesa:</string>
+    <string name="custom_glsl_version">Версія GLSL Mesa:</string>
+    <string name="customglglsl_alertdialog_error_gl">Версія GL повинна бути в межах від 2.8 до 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">Версія GLSL повинна бути в межах від 280 до 460</string>
+    <!-- Customize Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm потребує дозволу на управління всіма файлами на пристрої для налаштування місця збереження файлів гри. Будь ласка, надайте дозвіл для Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Управління шляхами гри</string>
+    <string name="profiles_path_default">Шлях за замовчуванням</string>
+    <string name="profiles_path_create_new">Додати новий шлях</string>
+    <string name="profiles_path_create_new_title">Назвіть цей шлях</string>
+    <string name="profiles_path_delete_title">Видалити цей шлях</string>
+    <string name="profiles_path_delete_message">Launcher видалить цей шлях, але не видалить файли, збережені за цим шляхом. Ви можете знову додати цей шлях після видалення.</string>
+    <string name="profiles_path_task_in_progress">Завдання в процесі, функції управління шляхами тимчасово недоступні</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">Поточне роздільна здатність занадто велика, максимальний дозволений розмір - %d</string>
+    <string name="setting_set_resolution_too_small">Поточне роздільна здатність занадто мала, потрібно щонайменше %d</string>
+    <string name="setting_set_resolution_outofrange">Введене значення %s виходить за межі допустимого діапазону</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Керуйте тим, скільки пам\'яті виділяється для Minecraft</string>
+    <string name="zh_setting_java_memory_info">Поточне використання пам\'яті: %s / %s, Доступний обсяг пам\'яті: %s</string>
+    <string name="zh_setting_java_memory_max">Максимально допустимий обсяг пам\'яті: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Поточне виділення пам\'яті перевищує доступний обсяг пам\'яті</string>
+    <string name="zh_setting_java_memory_too_big">Поточне виділення пам\'яті занадто велике, максимальний дозволений обсяг - %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Поточне виділення пам\'яті занадто мале, потрібно щонайменше %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Автоматично встановлювати мову гри відповідно до вибраної мови при запуску гри</string>
+    <string name="zh_setting_set_game_language_title">Автоматичне встановлення мови гри</string>
+    <string name="zh_setting_set_game_language_list">Встановити мову гри</string>
+    <string name="zh_setting_set_game_language_system">Відповідно до мови системи</string>
+    <string name="zh_setting_set_game_language_overridden_title">Перезаписати мову гри</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Ігнорувати мову, встановлену в грі, і примусово використовувати мову гри, встановлену в лаунчері</string>
+    <string name="setting_java_memory_outofrange">Введене значення %s MB виходить за межі допустимого діапазону</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Завантажити Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Не вдалося отримати список Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_select_download">Виберіть версію для завантаження</string>
+    <string name="preference_rendererexp_mesa_download_load">Завантаження списку Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloading">Завантаження Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Не вдалося завантажити Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloaded">Завантаження Mesa Lib успішне</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Перезапис драйвера Mesa Loader</string>
+    <string name="osm_enable_cmldo">Увімкнути перезапис драйвера Mesa Loader (тільки для Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">У разі потреби ви можете вільно вибрати метод обробки</string>
+    <string name="osm_choose_cmldo">Вибрати перезапис драйвера Mesa Loader</string>
+
+</resources>

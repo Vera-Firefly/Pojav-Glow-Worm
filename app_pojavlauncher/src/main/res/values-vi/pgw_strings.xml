@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App New Annotation -->
+    <string name="microsoft_login_fragment">Đăng nhập đã bắt đầu!</string>
+    <string name="preference_category_visibility_title">Hiển thị</string>
+    <string name="preference_category_in_game_title">Trong trò chơi</string>
+    <string name="preference_category_in_menu_title">Trong menu</string>
+    <string name="preference_category_microsoft_account_title">Tài khoản Microsoft</string>
+    <string name="preference_category_local_account_title">Tài khoản cục bộ</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Kích hoạt giao diện đầu ra log khi ứng dụng bắt đầu chạy trò chơi chính thức</string>
+    <string name="preference_enable_log_output_title">Kích hoạt đầu ra log khi khởi động trò chơi</string>
+    <string name="preference_category_custom_path">Đường dẫn tùy chỉnh</string>
+    <string name="app_start_toast">#Chào mừng đến với Pojav Glow·Worm!!!!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (lên đến 1.16.5, nhanh)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (tất cả các phiên bản, trung bình)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (tất cả các phiên bản, trung bình)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Tùy chỉnh chuột</string>
+    <string name="preference_mouse_description">Cài đặt biểu tượng con trỏ chuột trong trò chơi</string>
+    <string name="notif_mouse">Cài đặt đã hoàn tất.</string>
+    <string name="preference_mouse_title1">Xóa biểu tượng chuột</string>
+    <string name="notif_mouse1">Xóa hoàn tất</string>
+    <string name="preference_quit_launcher_title">Thoát Launcher</string>
+    <string name="preference_quit_launcher">Thoát launcher khi đang chạy trò chơi</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Khởi tạo</string>
+    <string name="main_terminal_loading">Đang tải...</string>
+    <!-- Other login -->
+    <string name="other_login_api">Đăng nhập khác</string>
+    <string name="other_login_authentication_server">Máy chủ xác thực</string>
+    <string name="other_login_register">đăng ký</string>
+    <string name="other_login_email">Email hoặc tên người dùng</string>
+    <string name="other_login_password">Mật khẩu</string>
+    <string name="other_login">Đăng nhập</string>
+    <string name="other_login_aut">Vui lòng chọn loại máy chủ xác thực</string>
+    <string name="other_login_tip">Mẹo</string>
+    <string name="other_login_confirm">Xác nhận</string>
+    <string name="other_login_cancel">Hủy</string>
+    <string name="other_login_role">Vui lòng chọn một vai trò</string>
+    <string name="other_login_warning">Cảnh báo</string>
+    <string name="other_login_address">Vui lòng nhập địa chỉ máy chủ xác thực Yggdrasil API</string>
+    <string name="other_login_setid">Vui lòng nhập ID máy chủ 32-bit</string>
+    <string name="other_login_pass">Mật khẩu đồng nhất</string>
+    <string name="other_login_external">Đăng nhập bên ngoài</string>
+    <string name="other_login_server_error">Không có máy chủ xác thực</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_exp_title">Cài đặt thử nghiệm</string>
+    <string name="preference_exp_description">Người không chuyên không nên sử dụng</string>
+    <string name="preference_category_renderer_experimental_settings">Cài đặt thử nghiệm của trình kết xuất</string>
+    <string name="preference_renderer_setup_title">Kích hoạt cài đặt thử nghiệm của trình kết xuất</string>
+    <string name="preference_renderer_setup">Sử dụng các cài đặt đặc thù cho trình kết xuất</string>
+    <string name="preference_spare_bridge_title">Cầu dự phòng</string>
+    <string name="preference_spare_bridge">Sử dụng cầu của sơ đồ thứ hai, đóng lại nếu khởi động thất bại</string>
+    <string name="preference_spare_framebuffer_title">Bộ đệm khung dự phòng</string>
+    <string name="preference_spare_framebuffer">Sử dụng bộ đệm khung của sơ đồ thứ hai, đóng lại nếu khởi động thất bại</string>
+    <string name="preference_renderer_setup_extra">Trình kết xuất (Thêm)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Mặc định)</string>
+    <string name="preference_extra_mesa_version">Phiên bản Mesa</string>
+    <string name="preference_extra_driver_model">Ghi đè trình điều khiển Gallium</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Cảnh báo</string>
+    <string name="preference_rendererexp_alertdialog_message">Bạn đã bật cài đặt thử nghiệm. Tính năng này có thể gây ra lỗi không mong muốn. Bạn có muốn tiếp tục không?</string>
+    <string name="preference_rendererexp_alertdialog_done">Tiếp tục</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Hủy</string>
+    <string name="preference_alertdialog_know">Đã biết</string>
+    <string name="alertdialog_done">Hoàn tất</string>
+    <string name="alertdialog_cancel">Hủy</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">Phiên bản GL/GLSL</string>
+    <string name="preference_exp_ebsystem">Chọn theo hệ thống</string>
+    <string name="preference_exp_ebspecific">Sử dụng phiên bản cụ thể</string>
+    <string name="preference_rendererexp_custom_glversion_title">GL/GLSL Tùy chỉnh</string>
+    <string name="preference_rendererexp_custom_glversion">Cho phép phiên bản Mesa GL/GLSL tùy chỉnh</string>
+    <string name="custom_gl_version">Phiên bản GL Mesa:</string>
+    <string name="custom_glsl_version">Phiên bản GLSL Mesa:</string>
+    <string name="customglglsl_alertdialog_error_gl">Phiên bản GL phải nằm trong khoảng từ 2.8 đến 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">Phiên bản GLSL phải nằm trong khoảng từ 280 đến 460</string>
+    <!-- Customize Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm yêu cầu quyền để quản lý tất cả các tệp trên thiết bị để tùy chỉnh vị trí lưu trữ các tệp trò chơi. Vui lòng cấp quyền cho Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Quản lý đường dẫn trò chơi</string>
+    <string name="profiles_path_default">Đường dẫn mặc định</string>
+    <string name="profiles_path_create_new">Thêm đường dẫn mới</string>
+    <string name="profiles_path_create_new_title">Đặt tên cho đường dẫn này</string>
+    <string name="profiles_path_delete_title">Xóa đường dẫn này</string>
+    <string name="profiles_path_delete_message">Launcher sẽ xóa đường dẫn này, nhưng sẽ không xóa các tệp lưu trữ trong đường dẫn tương ứng. Bạn có thể thêm lại đường dẫn này sau khi xóa.</string>
+    <string name="profiles_path_task_in_progress">Tác vụ đang tiến hành, các tính năng quản lý đường dẫn tạm thời không khả dụng</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">Độ phân giải hiện tại quá lớn, kích thước tối đa cho phép là %d</string>
+    <string name="setting_set_resolution_too_small">Độ phân giải hiện tại quá nhỏ, tối thiểu cần là %d</string>
+    <string name="setting_set_resolution_outofrange">Giá trị đầu vào %s nằm ngoài phạm vi chấp nhận</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Kiểm soát lượng bộ nhớ được phân bổ cho Minecraft</string>
+    <string name="zh_setting_java_memory_info">Sử dụng bộ nhớ hiện tại: %s / %s, Kích thước bộ nhớ còn trống: %s</string>
+    <string name="zh_setting_java_memory_max">Kích thước bộ nhớ tối đa cho phép: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Lượng bộ nhớ hiện tại vượt quá kích thước bộ nhớ khả dụng</string>
+    <string name="zh_setting_java_memory_too_big">Lượng bộ nhớ hiện tại quá lớn, kích thước tối đa cho phép là %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Lượng bộ nhớ hiện tại quá nhỏ, ít nhất cần %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Tự động đặt ngôn ngữ trò chơi theo ngôn ngữ đã chọn khi trò chơi bắt đầu</string>
+    <string name="zh_setting_set_game_language_title">Tự động đặt ngôn ngữ trò chơi</string>
+    <string name="zh_setting_set_game_language_list">Đặt ngôn ngữ trò chơi</string>
+    <string name="zh_setting_set_game_language_system">Theo ngôn ngữ hệ thống</string>
+    <string name="zh_setting_set_game_language_overridden_title">Ghi đè ngôn ngữ trò chơi</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Bỏ qua ngôn ngữ được đặt trong trò chơi và buộc phải sử dụng ngôn ngữ trò chơi được đặt trong launcher</string>
+    <string name="setting_java_memory_outofrange">Giá trị đầu vào %s MB nằm ngoài phạm vi chấp nhận</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Tải Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Lấy danh sách Mesa Lib thất bại</string>
+    <string name="preference_rendererexp_mesa_select_download">Chọn phiên bản để tải xuống</string>
+    <string name="preference_rendererexp_mesa_download_load">Đang tải danh sách Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloading">Đang tải Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Tải Mesa Lib thất bại</string>
+    <string name="preference_rendererexp_mesa_downloaded">Tải Mesa Lib thành công</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Ghi đè Trình điều khiển Mesa Loader tùy chỉnh</string>
+    <string name="osm_enable_cmldo">Kích hoạt Ghi đè Trình điều khiển Mesa Loader (Chỉ dành cho Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">Nếu cần, bạn có thể tự do chọn phương pháp xử lý</string>
+    <string name="osm_choose_cmldo">Chọn Ghi đè Trình điều khiển Mesa Loader</string>
+
+</resources>

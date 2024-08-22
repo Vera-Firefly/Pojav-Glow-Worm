@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App New Annotation -->
+    <string name="microsoft_login_fragment">התחלת כניסה!</string>
+    <string name="preference_category_visibility_title">נראות</string>
+    <string name="preference_category_in_game_title">במשחק</string>
+    <string name="preference_category_in_menu_title">בתפריט</string>
+    <string name="preference_category_microsoft_account_title">חשבון Microsoft</string>
+    <string name="preference_category_local_account_title">חשבון מקומי</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">הפעלת ממשק פלט יומן כאשר היישום מתחיל רשמית להפעיל את המשחק</string>
+    <string name="preference_enable_log_output_title">הפעל פלט יומן בהפעלת המשחק</string>
+    <string name="preference_category_custom_path">נתיב מותאם אישית</string>
+    <string name="app_start_toast">#ברוכים הבאים ל-Pojav Glow·Worm!!!!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (עד 1.16.5, מהיר)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (כל הגרסאות, בינוני)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (כל הגרסאות, בינוני)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">התאמת עכבר</string>
+    <string name="preference_mouse_description">הגדר סמל מצביע עכבר במשחק</string>
+    <string name="notif_mouse">ההגדרה בוצעה.</string>
+    <string name="preference_mouse_title1">הסר סמל עכבר</string>
+    <string name="notif_mouse1">המחיקה בוצעה</string>
+    <string name="preference_quit_launcher_title">יציאה מהמשגר</string>
+    <string name="preference_quit_launcher">צא מהמשגר כאשר המשחק פועל</string>
+    <!-- Terminal -->
+    <string name="main_terminal">מסוף</string>
+    <string name="main_termianl_init">אתחול</string>
+    <string name="main_terminal_loading">טוען...</string>
+    <!-- Other login -->
+    <string name="other_login_api">כניסה אחרת</string>
+    <string name="other_login_authentication_server">שרת אימות</string>
+    <string name="other_login_register">הרשמה</string>
+    <string name="other_login_email">אימייל או שם משתמש</string>
+    <string name="other_login_password">סיסמה</string>
+    <string name="other_login">כניסה</string>
+    <string name="other_login_aut">אנא בחר סוג שרת אימות</string>
+    <string name="other_login_tip">עצה</string>
+    <string name="other_login_confirm">אישור</string>
+    <string name="other_login_cancel">ביטול</string>
+    <string name="other_login_role">אנא בחר תפקיד</string>
+    <string name="other_login_warning">אזהרה</string>
+    <string name="other_login_address">אנא הזן את כתובת שרת האימות Yggdrasil API</string>
+    <string name="other_login_setid">אנא הזן מזהה שרת 32 סיביות</string>
+    <string name="other_login_pass">מעבר אחיד</string>
+    <string name="other_login_external">נחיתה חיצונית</string>
+    <string name="other_login_server_error">אין שרת אימות</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_exp_title">הגדרות ניסיוניות</string>
+    <string name="preference_exp_description">לא מקצוענים לא צריכים להשתמש בזה</string>
+    <string name="preference_category_renderer_experimental_settings">הגדרות ניסיוניות של רנדר</string>
+    <string name="preference_renderer_setup_title">הפעל הגדרות ניסיוניות של רנדר</string>
+    <string name="preference_renderer_setup">השתמש ביותר הגדרות רנדר ייחודיות</string>
+    <string name="preference_spare_bridge_title">גשר נוסף</string>
+    <string name="preference_spare_bridge">השתמש בגשר תוכנית שניה, סגור אם ההפעלה נכשלה</string>
+    <string name="preference_spare_framebuffer_title">מסגרת רזרבית</string>
+    <string name="preference_spare_framebuffer">השתמש במסגרת רזרבית של תוכנית שניה, סגור אם ההפעלה נכשלה</string>
+    <string name="preference_renderer_setup_extra">רנדר (תוספת)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (ברירת מחדל)</string>
+    <string name="preference_extra_mesa_version">גרסת Mesa</string>
+    <string name="preference_extra_driver_model">החלפת דרייבר Gallium</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">אזהרה</string>
+    <string name="preference_rendererexp_alertdialog_message">הפעלת הגדרות ניסיוניות. תכונה זו עשויה לגרום לבעיות לא צפויות. להמשיך להשתמש?</string>
+    <string name="preference_rendererexp_alertdialog_done">לעזאזל</string>
+    <string name="preference_rendererexp_alertdialog_cancel">פחד</string>
+    <string name="preference_alertdialog_know">כבר יודע</string>
+    <string name="alertdialog_done">בוצע</string>
+    <string name="alertdialog_cancel">ביטול</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">גרסת GL/GLSL</string>
+    <string name="preference_exp_ebsystem">בחר לפי מערכת</string>
+    <string name="preference_exp_ebspecific">השתמש בגרסה ספציפית</string>
+    <string name="preference_rendererexp_custom_glversion_title">GL/GLSL מותאם אישית</string>
+    <string name="preference_rendererexp_custom_glversion">אפשר גרסת Mesa GL/GLSL מותאמת אישית</string>
+    <string name="custom_gl_version">גרסת Mesa GL:</string>
+    <string name="custom_glsl_version">גרסת Mesa GLSL:</string>
+    <string name="customglglsl_alertdialog_error_gl">גרסת GL חייבת להיות בין 2.8 ל-4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">גרסת GLSL חייבת להיות בין 280 ל-460</string>
+    <!-- Customize Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm דורש הרשאה לנהל את כל הקבצים במכשיר כדי להתאים אישית את המיקום בו נשמרים קבצי המשחק. אנא הענק הרשאה ל-Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">ניהול נתיב משחק</string>
+    <string name="profiles_path_default">נתיב ברירת מחדל</string>
+    <string name="profiles_path_create_new">הוסף נתיב חדש</string>
+    <string name="profiles_path_create_new_title">תן שם לנתיב זה</string>
+    <string name="profiles_path_delete_title">מחק נתיב זה</string>
+    <string name="profiles_path_delete_message">המשגר ימחק את הנתיב הזה, אך לא ימחק את הקבצים השמורים בנתיב המתאים. תוכל להוסיף מחדש את הנתיב לאחר המחיקה.</string>
+    <string name="profiles_path_task_in_progress">המשימה בעיצומה, תכונות ניהול נתיבים אינן זמינות זמנית</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">הרזולוציה הנוכחית גדולה מדי, גודל מקסימלי מותר הוא %d</string>
+    <string name="setting_set_resolution_too_small">הרזולוציה הנוכחית קטנה מדי, נדרש לפחות %d</string>
+    <string name="setting_set_resolution_outofrange">הערך שהוזן %s הוא מחוץ לטווח המותר</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">שליטה בכמות הזיכרון המוקצה ל-Minecraft</string>
+    <string name="zh_setting_java_memory_info">שימוש בזיכרון נוכחי: %s / %s, גודל זיכרון פנוי: %s</string>
+    <string name="zh_setting_java_memory_max">גודל זיכרון מקסימלי מותר: %s</string>
+    <string name="zh_setting_java_memory_exceeded">ההקצאה הנוכחית של הזיכרון חורגת מגודל הזיכרון הזמין</string>
+    <string name="zh_setting_java_memory_too_big">ההקצאה הנוכחית של הזיכרון גדולה מדי, גודל מקסימלי מותר הוא %d MB</string>
+    <string name="zh_setting_java_memory_too_small">ההקצאה הנוכחית של הזיכרון קטנה מדי, נדרש לפחות %d MB</string>
+    <string name="zh_setting_set_game_language_desc">הגדרת שפת המשחק באופן אוטומטי לשפה שנבחרה כאשר המשחק מתחיל</string>
+    <string name="zh_setting_set_game_language_title">הגדרת שפת המשחק באופן אוטומטי</string>
+    <string name="zh_setting_set_game_language_list">הגדר שפת משחק</string>
+    <string name="zh_setting_set_game_language_system">עקוב אחרי שפת המערכת</string>
+    <string name="zh_setting_set_game_language_overridden_title">עקיפת שפת המשחק</string>
+    <string name="zh_setting_set_game_language_overridden_desc">התעלם מהשפה שהוגדרה במשחק וכפה אותה על השפה שנקבעה במשגר</string>
+    <string name="setting_java_memory_outofrange">הערך שהוזן %s MB הוא מחוץ לטווח המותר</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">הורד Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">רשימת Mesa Lib נכשלה</string>
+    <string name="preference_rendererexp_mesa_select_download">בחר גרסה להורדה</string>
+    <string name="preference_rendererexp_mesa_download_load">טוען רשימת Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloading">מוריד Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">הורדת Mesa Lib נכשלה</string>
+    <string name="preference_rendererexp_mesa_downloaded">הורדת Mesa Lib הצליחה</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">החלפת דרייבר של Custom Mesa Loader</string>
+    <string name="osm_enable_cmldo">הפעל את החלפת דרייבר של Custom Mesa Loader (רק עבור Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">אם יש צורך, ניתן לבחור באופן חופשי את שיטת העיבוד</string>
+    <string name="osm_choose_cmldo">בחר החלפת דרייבר של Mesa Loader</string>
+
+</resources>

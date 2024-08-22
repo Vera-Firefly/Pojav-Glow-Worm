@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App New Annotation -->
+    <string name="microsoft_login_fragment">Login dimulai!</string>
+    <string name="preference_category_visibility_title">Visibilitas</string>
+    <string name="preference_category_in_game_title">Dalam permainan</string>
+    <string name="preference_category_in_menu_title">Di Menu</string>
+    <string name="preference_category_microsoft_account_title">Akun Microsoft</string>
+    <string name="preference_category_local_account_title">Akun lokal</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Aktifkan antarmuka keluaran log saat aplikasi secara resmi mulai menjalankan game</string>
+    <string name="preference_enable_log_output_title">Aktifkan keluaran log saat startup game</string>
+    <string name="preference_category_custom_path">Jalur khusus</string>
+    <string name="app_start_toast">#Selamat datang di Pojav Glow·Worm!!!!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (hingga 1.16.5, cepat)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (semua versi, menengah)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (semua versi, menengah)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Kustomisasi mouse</string>
+    <string name="preference_mouse_description">Setel ikon penunjuk mouse dalam game</string>
+    <string name="notif_mouse">Set selesai.</string>
+    <string name="preference_mouse_title1">Hapus ikon mouse</string>
+    <string name="notif_mouse1">Penghapusan selesai</string>
+    <string name="preference_quit_launcher_title">Keluar dari Launcher</string>
+    <string name="preference_quit_launcher">Keluar dari launcher saat menjalankan game</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Inisialisasi</string>
+    <string name="main_terminal_loading">Memuat...</string>
+    <!-- Other login -->
+    <string name="other_login_api">Login Lainnya</string>
+    <string name="other_login_authentication_server">Server otentikasi</string>
+    <string name="other_login_register">Daftar</string>
+    <string name="other_login_email">Email atau nama pengguna</string>
+    <string name="other_login_password">Kata sandi</string>
+    <string name="other_login">Login</string>
+    <string name="other_login_aut">Silakan pilih jenis server otentikasi</string>
+    <string name="other_login_tip">Tip</string>
+    <string name="other_login_confirm">Konfirmasi</string>
+    <string name="other_login_cancel">Batal</string>
+    <string name="other_login_role">Silakan pilih peran</string>
+    <string name="other_login_warning">Peringatan</string>
+    <string name="other_login_address">Masukkan alamat server otentikasi API Yggdrasil</string>
+    <string name="other_login_setid">Masukkan ID server 32-bit</string>
+    <string name="other_login_pass">Pass Seragam</string>
+    <string name="other_login_external">Pendaratan Eksternal</string>
+    <string name="other_login_server_error">Tidak ada server otentikasi</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_exp_title">Pengaturan Eksperimental</string>
+    <string name="preference_exp_description">Non-profesional tidak boleh menggunakannya</string>
+    <string name="preference_category_renderer_experimental_settings">Pengaturan eksperimen renderer</string>
+    <string name="preference_renderer_setup_title">Aktifkan Pengaturan Eksperimen Renderer</string>
+    <string name="preference_renderer_setup">Gunakan lebih banyak pengaturan khusus renderer</string>
+    <string name="preference_spare_bridge_title">Cadangan Jembatan</string>
+    <string name="preference_spare_bridge">Gunakan skema jembatan kedua, tutup jika peluncuran gagal</string>
+    <string name="preference_spare_framebuffer_title">Cadangan framebuffer</string>
+    <string name="preference_spare_framebuffer">Gunakan framebuffer skema kedua, tutup jika peluncuran gagal</string>
+    <string name="preference_renderer_setup_extra">Renderer (Tambahan)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Default)</string>
+    <string name="preference_extra_mesa_version">Versi Mesa</string>
+    <string name="preference_extra_driver_model">Penggantian Pengemudi Gallium</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Peringatan</string>
+    <string name="preference_rendererexp_alertdialog_message">Anda telah mengaktifkan pengaturan eksperimental. Fitur ini dapat menghasilkan bug yang tidak terduga. Lanjutkan penggunaan?</string>
+    <string name="preference_rendererexp_alertdialog_done">Ya</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Tidak</string>
+    <string name="preference_alertdialog_know">sudah tahu</string>
+    <string name="alertdialog_done">Selesai</string>
+    <string name="alertdialog_cancel">Batal</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">Versi GL/GLSL</string>
+    <string name="preference_exp_ebsystem">Pilih sesuai sistem</string>
+    <string name="preference_exp_ebspecific">Gunakan versi khusus</string>
+    <string name="preference_rendererexp_custom_glversion_title">GL/GLSL Khusus</string>
+    <string name="preference_rendererexp_custom_glversion">Izinkan versi Mesa GL/GLSL khusus</string>
+    <string name="custom_gl_version">Versi Mesa GL:</string>
+    <string name="custom_glsl_version">Versi Mesa GLSL:</string>
+    <string name="customglglsl_alertdialog_error_gl">Versi GL harus antara 2.8 dan 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">Versi GLSL harus antara 280 dan 460</string>
+    <!-- Customize Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm memerlukan izin untuk mengelola semua file di perangkat untuk menyesuaikan lokasi tempat file game disimpan. Harap beri izin ke Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Manajemen Jalur Game</string>
+    <string name="profiles_path_default">Jalur Default</string>
+    <string name="profiles_path_create_new">Tambahkan Jalur Baru</string>
+    <string name="profiles_path_create_new_title">Beri Nama Jalur Ini</string>
+    <string name="profiles_path_delete_title">Hapus Jalur Ini</string>
+    <string name="profiles_path_delete_message">Launcher akan menghapus jalur ini, tetapi tidak akan menghapus file yang disimpan di jalur yang sesuai. Anda dapat menambahkan jalur ini lagi setelah dihapus.</string>
+    <string name="profiles_path_task_in_progress">Tugas sedang berlangsung, fitur manajemen jalur sementara tidak tersedia</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">Resolusi saat ini terlalu besar, ukuran maksimum yang diizinkan adalah %d</string>
+    <string name="setting_set_resolution_too_small">Resolusi saat ini terlalu kecil, minimal %d diperlukan</string>
+    <string name="setting_set_resolution_outofrange">Nilai yang dimasukkan %s berada di luar jangkauan yang dapat diterima</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Mengontrol berapa banyak memori yang dialokasikan ke Minecraft</string>
+    <string name="zh_setting_java_memory_info">Penggunaan memori saat ini: %s / %s, Ukuran memori bebas: %s</string>
+    <string name="zh_setting_java_memory_max">Ukuran memori maksimum yang diizinkan: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Alokasi memori saat ini melebihi ukuran memori yang tersedia</string>
+    <string name="zh_setting_java_memory_too_big">Alokasi memori saat ini terlalu besar, ukuran maksimum yang diizinkan adalah %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Alokasi memori saat ini terlalu kecil, minimal %d MB diperlukan</string>
+    <string name="zh_setting_set_game_language_desc">Otomatis mengatur bahasa permainan ke bahasa yang dipilih saat permainan dimulai</string>
+    <string name="zh_setting_set_game_language_title">Otomatis Atur Bahasa Game</string>
+    <string name="zh_setting_set_game_language_list">Atur Bahasa Game</string>
+    <string name="zh_setting_set_game_language_system">Ikuti Bahasa Sistem</string>
+    <string name="setting_set_game_language_overridden_title">Timpa Bahasa Game</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Abaikan bahasa yang diatur dalam game dan paksa ke bahasa game yang diatur di peluncur</string>
+    <string name="setting_java_memory_outofrange">Nilai yang dimasukkan %s MB berada di luar jangkauan yang dapat diterima</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Unduh Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Gagal mendapatkan daftar Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_select_download">Pilih versi untuk diunduh</string>
+    <string name="preference_rendererexp_mesa_download_load">memuat daftar Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloading">Mengunduh Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Gagal mengunduh Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloaded">Berhasil mengunduh Mesa Lib</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Penggantian Driver Loader Mesa Kustom</string>
+    <string name="osm_enable_cmldo">Aktifkan Penggantian Driver Loader Mesa Kustom (Hanya untuk Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">Jika diperlukan, Anda dapat dengan bebas memilih metode pemrosesan</string>
+    <string name="osm_choose_cmldo">Pilih Penggantian Driver Loader Mesa</string>
+
+</resources>
