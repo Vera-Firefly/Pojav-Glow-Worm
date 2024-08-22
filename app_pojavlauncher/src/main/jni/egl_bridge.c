@@ -225,12 +225,17 @@ int pojavInitOpenGL() {
         }
     }
 
-    if (pojav_environ->config_renderer == RENDERER_VK_ZINK
-     || pojav_environ->config_renderer == RENDERER_GL4ES)
+    if (pojav_environ->config_renderer == RENDERER_VK_ZINK)
+        if (br_init()) br_setup_window();
+
+    if (pojav_environ->config_renderer == RENDERER_GL4ES)
     {
-        if (SpareBridge() && pojav_environ->config_renderer == RENDERER_GL4ES)
+        if (SpareBridge())
+        {
             if (gl_init()) gl_setup_window();
-        else if (br_init()) br_setup_window();
+        } else {
+            if (br_init()) br_setup_window();
+        }
     }
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF)
