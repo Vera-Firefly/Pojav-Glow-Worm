@@ -173,7 +173,7 @@ public class OtherLoginFragment extends Fragment {
         loginButton.setOnClickListener(v -> PojavApplication.sExecutorService.execute(() -> {
             String user = userEditText.getText().toString();
             String pass = passEditText.getText().toString();
-            Srting baseUrl = currentBaseUrl;
+            String baseUrl = currentBaseUrl;
 
             if (!checkAccountInformation(user, pass)) return;
 
