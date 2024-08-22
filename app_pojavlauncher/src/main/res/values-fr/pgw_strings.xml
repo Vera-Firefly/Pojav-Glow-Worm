@@ -9,43 +9,43 @@
     <string name="preference_category_microsoft_account_title">Compte Microsoft</string>
     <string name="preference_category_local_account_title">Compte local</string>
     <!-- Pojav Glow·Worm -->
-    <string name="preference_enable_log_output_desc">Activer l'interface de sortie de log lorsque l'application commence à exécuter le jeu</string>
+    <string name="preference_enable_log_output_desc">Activer l\'interface de sortie de log lorsque l\'application commence à exécuter le jeu</string>
     <string name="preference_enable_log_output_title">Activer la sortie de log au démarrage du jeu</string>
     <string name="preference_category_custom_path">Chemin personnalisé</string>
     <string name="app_start_toast">#Bienvenue dans Pojav Glow·Worm !</string>
-    <string name="mcl_setting_renderer_vgpu">vgpu - (jusqu'à 1.16.5, rapide)</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (jusqu\'à 1.16.5, rapide)</string>
     <string name="mcl_setting_renderer_virgl">virglrenderer - (toutes les versions, moyen)</string>
     <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (toutes les versions, moyen)</string>
     <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
     <string name="preference_mouse_title">Personnalisation de la souris</string>
-    <string name="preference_mouse_description">Définir l'icône du pointeur de la souris dans le jeu</string>
+    <string name="preference_mouse_description">Définir l\'icône du pointeur de la souris dans le jeu</string>
     <string name="notif_mouse">Défini.</string>
-    <string name="preference_mouse_title1">Supprimer l'icône de la souris</string>
+    <string name="preference_mouse_title1">Supprimer l\'icône de la souris</string>
     <string name="notif_mouse1">Supprimé</string>
     <string name="preference_quit_launcher_title">Quitter le Launcher</string>
-    <string name="preference_quit_launcher">Quitter le launcher lors de l'exécution du jeu</string>
+    <string name="preference_quit_launcher">Quitter le launcher lors de l\'exécution du jeu</string>
     <!-- Terminal -->
     <string name="main_terminal">Terminal</string>
     <string name="main_termianl_init">Initialisation</string>
     <string name="main_terminal_loading">Chargement...</string>
     <!-- Other Login -->
     <string name="other_login_api">Autre connexion</string>
-    <string name="other_login_authentication_server">Serveur d'authentification</string>
-    <string name="other_login_register">s'inscrire</string>
-    <string name="other_login_email">Email ou nom d'utilisateur</string>
+    <string name="other_login_authentication_server">Serveur d\'authentification</string>
+    <string name="other_login_register">s\'inscrire</string>
+    <string name="other_login_email">Email ou nom d\'utilisateur</string>
     <string name="other_login_password">Mot de passe</string>
     <string name="other_login">Connexion</string>
-    <string name="other_login_aut">Veuillez sélectionner le type de serveur d'authentification</string>
+    <string name="other_login_aut">Veuillez sélectionner le type de serveur d\'authentification</string>
     <string name="other_login_tip">Conseil</string>
     <string name="other_login_confirm">Confirmer</string>
     <string name="other_login_cancel">Annuler</string>
     <string name="other_login_role">Veuillez sélectionner un rôle</string>
     <string name="other_login_warning">Avertissement</string>
-    <string name="other_login_address">Veuillez entrer l'adresse du serveur d'authentification Yggdrasil API</string>
+    <string name="other_login_address">Veuillez entrer l\'adresse du serveur d\'authentification Yggdrasil API</string>
     <string name="other_login_setid">Veuillez entrer un ID serveur de 32 bits</string>
     <string name="other_login_pass">Pass uniforme</string>
     <string name="other_login_external">Connexion externe</string>
-    <string name="other_login_server_error">Pas de serveur d'authentification</string>
+    <string name="other_login_server_error">Pas de serveur d\'authentification</string>
     <!-- Experimental Renderer Settings -->
     <string name="preference_exp_title">Paramètres expérimentaux</string>
     <string name="preference_exp_description">Ne pas utiliser pour les non-professionnels</string>
@@ -53,9 +53,9 @@
     <string name="preference_renderer_setup_title">Activer la configuration expérimentale du renderer</string>
     <string name="preference_renderer_setup">Utiliser plus de paramètres spécifiques au renderer</string>
     <string name="preference_spare_bridge_title">Pont de secours</string>
-    <string name="preference_spare_bridge">Utiliser le deuxième schéma de pont, fermer en cas d'échec de lancement</string>
+    <string name="preference_spare_bridge">Utiliser le deuxième schéma de pont, fermer en cas d\'échec de lancement</string>
     <string name="preference_spare_framebuffer_title">Tampon de trame de secours</string>
-    <string name="preference_spare_framebuffer">Utiliser le tampon de trame du deuxième schéma, fermer en cas d'échec de lancement</string>
+    <string name="preference_spare_framebuffer">Utiliser le tampon de trame du deuxième schéma, fermer en cas d\'échec de lancement</string>
     <string name="preference_renderer_setup_extra">Renderer (Supplémentaire)</string>
     <string name="preference_renderer_extra_default">Mesa24.2.0 (Par défaut)</string>
     <string name="preference_extra_mesa_version">Version de Mesa</string>
@@ -79,7 +79,7 @@
     <string name="customglglsl_alertdialog_error_gl">La version GL doit être comprise entre 2.8 et 4.6</string>
     <string name="customglglsl_alertdialog_error_glsl">La version GLSL doit être comprise entre 280 et 460</string>
     <!-- Custom Game Path -->
-    <string name="permissions_manage_external_storage">Pojav Glow·Worm nécessite l'autorisation de gérer tous les fichiers sur l'appareil pour personnaliser l'emplacement où les fichiers de jeu sont enregistrés. Veuillez accorder l'autorisation à Pojav Glow·Worm !</string>
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm nécessite l\'autorisation de gérer tous les fichiers sur l\'appareil pour personnaliser l\'emplacement où les fichiers de jeu sont enregistrés. Veuillez accorder l\'autorisation à Pojav Glow·Worm !</string>
     <string name="profiles_path_title">Gestion du chemin du jeu</string>
     <string name="profiles_path_default">Chemin par défaut</string>
     <string name="profiles_path_create_new">Ajouter un nouveau chemin</string>
@@ -95,9 +95,9 @@
     <string name="zh_setting_java_memory_desc">Contrôler combien de mémoire est allouée à Minecraft</string>
     <string name="zh_setting_java_memory_info">Utilisation actuelle de la mémoire : %s / %s, Taille de la mémoire libre : %s</string>
     <string name="zh_setting_java_memory_max">Taille maximale de mémoire autorisée : %s</string>
-    <string name="zh_setting_java_memory_exceeded">L'allocation de mémoire actuelle dépasse la taille de mémoire disponible</string>
-    <string name="zh_setting_java_memory_too_big">L'allocation de mémoire actuelle est trop grande, la taille maximale autorisée est %d Mo</string>
-    <string name="zh_setting_java_memory_too_small">L'allocation de mémoire actuelle est trop petite, au moins %d Mo est requise</string>
+    <string name="zh_setting_java_memory_exceeded">L\'allocation de mémoire actuelle dépasse la taille de mémoire disponible</string>
+    <string name="zh_setting_java_memory_too_big">L\'allocation de mémoire actuelle est trop grande, la taille maximale autorisée est %d Mo</string>
+    <string name="zh_setting_java_memory_too_small">L\'allocation de mémoire actuelle est trop petite, au moins %d Mo est requise</string>
     <string name="zh_setting_set_game_language_desc">Définir automatiquement la langue du jeu sur la langue sélectionnée au démarrage du jeu</string>
     <string name="zh_setting_set_game_language_title">Définir automatiquement la langue du jeu</string>
     <string name="zh_setting_set_game_language_list">Définir la langue du jeu</string>

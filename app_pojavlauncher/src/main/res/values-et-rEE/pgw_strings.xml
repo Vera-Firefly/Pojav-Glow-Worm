@@ -50,7 +50,7 @@
     <string name="preference_exp_title">Eksperimentaalsed seaded</string>
     <string name="preference_exp_description">Kasutajatele, kellel pole professionaalseid teadmisi, ei soovitata</string>
     <string name="preference_category_renderer_experimental_settings">Rendereri eksperimentaalsed seaded</string>
-    <string name="preference_renderer_setup_title">Luba Renderer'i eksperimentaalsed seaded</string>
+    <string name="preference_renderer_setup_title">Luba Renderer\'i eksperimentaalsed seaded</string>
     <string name="preference_renderer_setup">Kasutage täiendavaid renderer-spetsiifilisi seadeid</string>
     <string name="preference_spare_bridge_title">Varu sild</string>
     <string name="preference_spare_bridge">Kasutage teise skeemi silda, sulgege, kui käivitamine ebaõnnestub</string>
@@ -107,12 +107,12 @@
     <string name="setting_java_memory_outofrange">Sisestatud väärtus %s MB on vastuvõetavast vahemikust väljas</string>
     <!-- Mesa Lib Download -->
     <string name="preference_extra_mesa_download">Laadi alla Mesa Lib</string>
-    <string name="preference_rendererexp_mesa_get_fail">Mesa Lib'i nimekirja hankimine ebaõnnestus</string>
+    <string name="preference_rendererexp_mesa_get_fail">Mesa Lib\'i nimekirja hankimine ebaõnnestus</string>
     <string name="preference_rendererexp_mesa_select_download">Valige allalaadimise versioon</string>
-    <string name="preference_rendererexp_mesa_download_load">Mesa Lib'i nimekirja laadimine</string>
-    <string name="preference_rendererexp_mesa_downloading">Mesa Lib'i allalaadimine</string>
-    <string name="preference_rendererexp_mesa_download_fail">Mesa Lib'i allalaadimine ebaõnnestus</string>
-    <string name="preference_rendererexp_mesa_downloaded">Mesa Lib'i allalaadimine õnnestus</string>
+    <string name="preference_rendererexp_mesa_download_load">Mesa Lib\'i nimekirja laadimine</string>
+    <string name="preference_rendererexp_mesa_downloading">Mesa Lib\'i allalaadimine</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa Lib\'i allalaadimine ebaõnnestus</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa Lib\'i allalaadimine õnnestus</string>
     <!-- Custom Mesa Loader Driver Override -->
     <string name="preference_extra_osm_cmldo_categ">Kohandatud Mesa Loaderi draiveri asendamine</string>
     <string name="osm_enable_cmldo">Kohanda Mesa Loaderi draiveri asendamist (ainult Freedreno jaoks)</string>
