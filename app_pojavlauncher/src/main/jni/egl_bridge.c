@@ -89,16 +89,13 @@ JNIEXPORT void JNICALL
 Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, ABI_COMPAT jclass clazz, jobject surface) {
     pojav_environ->pojavWindow = ANativeWindow_fromSurface(env, surface);
 
-    if (pojav_environ->config_renderer == RENDERER_VK_ZINK
-     || pojav_environ->config_renderer == RENDERER_GL4ES)
-    {
-        if (SpareBridge() && pojav_environ->config_renderer == RENDERER_GL4ES)
-            gl_setup_window();
-        else if (br_setup_window != NULL) br_setup_window();
-    }
+    if (SpareBridge() && pojav_environ->config_renderer == RENDERER_GL4ES)
+        gl_setup_window();
+
+    if (br_setup_window) br_setup_window();
 
     // pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF
-    if (spare_setup_window != NULL) spare_setup_window();
+    if (spare_setup_window) spare_setup_window();
 
 }
 
@@ -228,16 +225,12 @@ int pojavInitOpenGL() {
         }
     }
 
-    if (pojav_environ->config_renderer == RENDERER_VK_ZINK
-     || pojav_environ->config_renderer == RENDERER_GL4ES)
-    {
-        if (gl_init() && SpareBridge() && pojav_environ->config_renderer == RENDERER_GL4ES)
-            gl_setup_window();
-        else if (br_init()) br_setup_window();
-    }
+    if (gl_init() && SpareBridge() && pojav_environ->config_renderer == RENDERER_GL4ES)
+        gl_setup_window();
 
-    if (pojav_environ->config_renderer == RENDERER_VK_ZINK_PREF && spare_init())
-        spare_setup_window();
+    if (br_init()) br_setup_window();
+
+    if (spare_init()) spare_setup_window();
 
     return 0;
 }
