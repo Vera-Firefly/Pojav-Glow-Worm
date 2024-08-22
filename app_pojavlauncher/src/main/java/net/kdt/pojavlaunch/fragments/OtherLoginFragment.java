@@ -169,75 +169,80 @@ public class OtherLoginFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        loginButton.setOnClickListener(v->{
-            progressDialog.show();
-            PojavApplication.sExecutorService.execute(()->{
-                String user=userEditText.getText().toString();
-                String pass=passEditText.getText().toString();
-                if (!user.equals("")&&!pass.equals("")){
-                    try {
-                        OtherLoginApi.getINSTANCE().setBaseUrl(currentBaseUrl);
-                        OtherLoginApi.getINSTANCE().login(user, pass, new OtherLoginApi.Listener() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                requireActivity().runOnUiThread(()->{
-                                    progressDialog.dismiss();
-                                    MinecraftAccount account=new MinecraftAccount();
-                                    account.accessToken=authResult.getAccessToken();
-                                    account.baseUrl= currentBaseUrl;
-                                    account.account=userEditText.getText().toString();
-                                    account.password=passEditText.getText().toString();
-                                    account.expiresAt=System.currentTimeMillis()+30*60*1000;
-                                    if (!Objects.isNull(authResult.getSelectedProfile())){
-                                        account.username=authResult.getSelectedProfile().getName();
-                                        account.profileId=authResult.getSelectedProfile().getId();
-                                        ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
-                                        Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
-                                    } else {
-                                        List<String> list=new ArrayList<>();
-                                        for(AuthResult.AvailableProfiles profiles:authResult.getAvailableProfiles()){
-                                            list.add(profiles.getName());
-                                        }
-                                        String[] items=list.toArray(new String[0]);
-                                        AlertDialog dialog=new AlertDialog.Builder(requireContext())
-                                                .setTitle(R.string.other_login_role)
-                                                .setItems(items,(d,i)->{
-                                                    for(AuthResult.AvailableProfiles profiles:authResult.getAvailableProfiles()){
-                                                        if(profiles.getName().equals(items[i])){
-                                                            account.profileId=profiles.getId();
-                                                            account.username=profiles.getName();
-                                                        }
-                                                    }
-                                                    ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
-                                                    Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
-                                                })
-                                                .setNegativeButton(R.string.other_login_cancel,null)
-                                                .create();
-                                        dialog.show();
-                                    }
-                                });
-                            }
 
-                            @Override
-                            public void onFailed(String error) {
-                                requireActivity().runOnUiThread(()->{
-                                    progressDialog.dismiss();
+        loginButton.setOnClickListener(v -> PojavApplication.sExecutorService.execute(() -> {
+            String user = userEditText.getText().toString();
+            String pass = passEditText.getText().toString();
+            Srting baseUrl = currentBaseUrl;
+
+            if (!checkAccountInformation(user, pass)) return;
+
+            if (!(baseUrl == null || baseUrl.isEmpty())) {
+                requireActivity().runOnUiThread(() ->  progressDialog.show());
+                try {
+                    OtherLoginApi.getINSTANCE().setBaseUrl(currentBaseUrl);
+                    OtherLoginApi.getINSTANCE().login(user, pass, new OtherLoginApi.Listener() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            requireActivity().runOnUiThread(()->{
+                                progressDialog.dismiss();
+                                MinecraftAccount account=new MinecraftAccount();
+                                account.accessToken=authResult.getAccessToken();
+                                account.baseUrl= currentBaseUrl;
+                                account.account=userEditText.getText().toString();
+                                account.password=passEditText.getText().toString();
+                                account.expiresAt=System.currentTimeMillis()+30*60*1000;
+                                if (!Objects.isNull(authResult.getSelectedProfile())){
+                                    account.username=authResult.getSelectedProfile().getName();
+                                    account.profileId=authResult.getSelectedProfile().getId();
+                                    ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
+                                    Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
+                                } else {
+                                    List<String> list=new ArrayList<>();
+                                    for(AuthResult.AvailableProfiles profiles:authResult.getAvailableProfiles()){
+                                        list.add(profiles.getName());
+                                    }
+                                    String[] items=list.toArray(new String[0]);
                                     AlertDialog dialog=new AlertDialog.Builder(requireContext())
-                                            .setTitle(R.string.other_login_warning)
-                                            .setTitle("An error occurred while logging in：\n"+error)
-                                            .setPositiveButton(R.string.other_login_confirm,null)
+                                            .setTitle(R.string.other_login_role)
+                                            .setItems(items,(d,i)->{
+                                                for(AuthResult.AvailableProfiles profiles:authResult.getAvailableProfiles()){
+                                                    if(profiles.getName().equals(items[i])){
+                                                        account.profileId=profiles.getId();
+                                                        account.username=profiles.getName();
+                                                    }
+                                                }
+                                                ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
+                                                Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
+                                            })
+                                            .setNegativeButton(R.string.other_login_cancel,null)
                                             .create();
                                     dialog.show();
-                                });
-                            }
-                        });
-                    } catch (IOException e) {
-                        requireActivity().runOnUiThread(()->progressDialog.dismiss());
-                        Log.e("login",e.toString());
-                    }
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailed(String error) {
+                            requireActivity().runOnUiThread(()->{
+                                progressDialog.dismiss();
+                                AlertDialog dialog=new AlertDialog.Builder(requireContext())
+                                        .setTitle(R.string.other_login_warning)
+                                        .setTitle("An error occurred while logging in：\n"+error)
+                                        .setPositiveButton(R.string.other_login_confirm,null)
+                                        .create();
+                                dialog.show();
+                            });
+                        }
+                    });
+                } catch (IOException e) {
+                    requireActivity().runOnUiThread(()->progressDialog.dismiss());
+                    Log.e("login",e.toString());
                 }
-            });
-        });
+            } else {
+                // error
+            }
+        }));
     }
 
     public void refreshServer() {
@@ -267,4 +272,22 @@ public class OtherLoginFragment extends Fragment {
         }
 
     }
+
+    private boolean checkAccountInformation(String user, String pass) {
+        boolean userTextEmpty = user.isEmpty();
+        boolean passTextEmpty = pass.isEmpty();
+
+        if (userTextEmpty || passTextEmpty) {
+            if (userTextEmpty) {
+                // User or Mail cannot be empty
+            }
+            if (passTextEmpty) {
+                // Password cannot be empty
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }
