@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Microsoft daxil olma -->
+    <string name="microsoft_login_fragment">Daxil olma başladı!</string>
+    <string name="preference_category_visibility_title">Görünürlük</string>
+    <string name="preference_category_in_game_title">Oyunda</string>
+    <string name="preference_category_in_menu_title">Menüde</string>
+    <string name="preference_category_microsoft_account_title">Microsoft Hesabı</string>
+    <string name="preference_category_local_account_title">Yerli hesab</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Tətbiq oyun başladıqda log çıxış interfeysini aktivləşdirir</string>
+    <string name="preference_enable_log_output_title">Oyun başladıqda log çıxışını aktivləşdir</string>
+    <string name="preference_category_custom_path">Xüsusi yol</string>
+    <string name="app_start_toast">#Pojav Glow·Worm-ə xoş gəlmisiniz!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5-ə qədər, sürətli)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (bütün versiyalar, orta)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (bütün versiyalar, orta)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Siçan fərdiləşdirmə</string>
+    <string name="preference_mouse_description">Oyunda siçan işarəsi ikonunu təyin edin</string>
+    <string name="notif_mouse">Təyin edildi.</string>
+    <string name="preference_mouse_title1">Siçan ikonunu sil</string>
+    <string name="notif_mouse1">Silindi</string>
+    <string name="preference_quit_launcher_title">Başlatıcıdan çıx</string>
+    <string name="preference_quit_launcher">Oyun başladıqda başlatıcıdan çıx</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">Başlanğıc</string>
+    <string name="main_terminal_loading">Yüklənir...</string>
+    <!-- Digər daxil olma -->
+    <string name="other_login_api">Digər daxil olma</string>
+    <string name="other_login_authentication_server">Doğrulama serveri</string>
+    <string name="other_login_register">Qeydiyyat</string>
+    <string name="other_login_email">E-poçt və ya istifadəçi adı</string>
+    <string name="other_login_password">Şifrə</string>
+    <string name="other_login">Daxil ol</string>
+    <string name="other_login_aut">Doğrulama server növünü seçin</string>
+    <string name="other_login_tip">İpucu</string>
+    <string name="other_login_confirm">Təsdiq et</string>
+    <string name="other_login_cancel">İmtina et</string>
+    <string name="other_login_role">Rol seçin</string>
+    <string name="other_login_warning">Xəbərdarlıq</string>
+    <string name="other_login_address">Yggdrasil API doğrulama serverinin ünvanını daxil edin</string>
+    <string name="other_login_setid">32-bit server ID daxil edin</string>
+    <string name="other_login_pass">Birləşmiş Şifrə</string>
+    <string name="other_login_external">Xarici Daxil Olma</string>
+    <string name="other_login_server_error">Doğrulama serveri yoxdur</string>
+    <!-- Eksperimental Renderer Tənzimləmələri -->
+    <string name="preference_exp_title">Eksperimental Tənzimləmələr</string>
+    <string name="preference_exp_description">Peşəkar olmayanlar istifadə etməməlidir</string>
+    <string name="preference_category_renderer_experimental_settings">Renderer eksperimental tənzimləmələri</string>
+    <string name="preference_renderer_setup_title">Eksperimental Renderer Tənzimləmələrini Aktivləşdir</string>
+    <string name="preference_renderer_setup">Renderer-ə xüsusi tənzimləmələrdən istifadə et</string>
+    <string name="preference_spare_bridge_title">Ehtiyat Körpü</string>
+    <string name="preference_spare_bridge">İkinci sxem körpüsünü istifadə et, əgər başlamaq uğursuz olarsa bağla</string>
+    <string name="preference_spare_framebuffer_title">Ehtiyat çərçivə buferi</string>
+    <string name="preference_spare_framebuffer">İkinci sxemin çərçivə buferini istifadə et, əgər başlamaq uğursuz olarsa bağla</string>
+    <string name="preference_renderer_setup_extra">Renderer (Əlavə)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Varsayılan)</string>
+    <string name="preference_extra_mesa_version">Mesa Versiyası</string>
+    <string name="preference_extra_driver_model">Gallium Sürücü Tətbiqi</string>
+    <!-- Dialoq -->
+    <string name="preference_rendererexp_alertdialog_warning">Xəbərdarlıq</string>
+    <string name="preference_rendererexp_alertdialog_message">Eksperimental tənzimləmələri aktivləşdirdiniz. Bu xüsusiyyət gözlənilməz səhvlərə səbəb ola bilər. Davam etmək istəyirsiniz?</string>
+    <string name="preference_rendererexp_alertdialog_done">Bəli</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Xeyr</string>
+    <string name="preference_alertdialog_know">Bildim</string>
+    <string name="alertdialog_done">Tamam</string>
+    <string name="alertdialog_cancel">İmtina et</string>
+    <!-- Xüsusi GL/GLSL Versiyası -->
+    <string name="preference_exp_custommv">GL/GLSL Versiyası</string>
+    <string name="preference_exp_ebsystem">Sistəmə uyğun seçin</string>
+    <string name="preference_exp_ebspecific">Xüsusi versiya istifadə et</string>
+    <string name="preference_rendererexp_custom_glversion_title">Xüsusi GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">Xüsusi Mesa GL/GLSL versiyasına icazə ver</string>
+    <string name="custom_gl_version">Mesa GL versiyası:</string>
+    <string name="custom_glsl_version">Mesa GLSL versiyası:</string>
+    <string name="customglglsl_alertdialog_error_gl">GL versiyası 2.8 ilə 4.6 arasında olmalıdır</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL versiyası 280 ilə 460 arasında olmalıdır</string>
+    <!-- Oyun Yolunu Fərdiləşdirmə -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm, oyun fayllarının saxlandığı yeri fərdiləşdirmək üçün cihazdakı bütün faylları idarə etmək üçün icazə tələb edir. Xahiş edirəm, Pojav Glow·Worm-a icazə verin!</string>
+    <string name="profiles_path_title">Oyun Yolu İdarəsi</string>
+    <string name="profiles_path_default">Varsayılan Yol</string>
+    <string name="profiles_path_create_new">Yeni Yol əlavə et</string>
+    <string name="profiles_path_create_new_title">Bu Yolu Adlandır</string>
+    <string name="profiles_path_delete_title">Bu Yolu Sil</string>
+    <string name="profiles_path_delete_message">Başlatıcı bu yolu siləcək, lakin müvafiq yerdə saxlanılan faylları silməyəcək. Silindikdən sonra bu yolu yenidən əlavə edə bilərsiniz.</string>
+    <string name="profiles_path_task_in_progress">Tapşırıq davam edir, yol idarəetmə funksiyaları müvəqqəti olaraq əlçatmazdır</string>
+    <!-- Video Həlli -->
+    <string name="setting_set_resolution_too_big">Cari həll çox böyükdür, maksimum icazə verilən ölçü %d-dir</string>
+    <string name="setting_set_resolution_too_small">Cari həll çox kiçikdir, ən azı %d tələb olunur</string>
+    <string name="setting_set_resolution_outofrange">Daxil edilmiş dəyər %s qəbul edilən diapazondan kənardadır</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Minecraft-a ayrılan yaddaş miqdarını idarə et</string>
+    <string name="zh_setting_java_memory_info">Cari yaddaş istifadəsi: %s / %s, Azad yaddaş miqdarı: %s</string>
+    <string name="zh_setting_java_memory_max">Maksimum icazə verilən yaddaş miqdarı: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Cari yaddaş ayrılması mövcud yaddaş miqdarını aşır</string>
+    <string name="zh_setting_java_memory_too_big">Cari yaddaş ayrılması çox böyükdür, maksimum icazə verilən ölçü %d MB-dir</string>
+    <string name="zh_setting_java_memory_too_small">Cari yaddaş ayrılması çox kiçikdir, ən azı %d MB tələb olunur</string>
+    <string name="zh_setting_set_game_language_desc">Oyunun başlanğıcında oyunun dilini seçilmiş dilə avtomatik təyin et</string>
+    <string name="zh_setting_set_game_language_title">Oyunun Dilini Avtomatik Təyin Et</string>
+    <string name="zh_setting_set_game_language_list">Oyunun Dilini Təyin Et</string>
+    <string name="zh_setting_set_game_language_system">Sistem Dilini İzləyin</string>
+    <string name="zh_setting_set_game_language_overridden_title">Oyunun Dilini Üstəgəl</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Oyundakı təyin edilmiş dili yox say və başlatıcıda təyin edilmiş dilə məcbur et</string>
+    <string name="setting_java_memory_outofrange">Daxil edilmiş dəyər %s MB qəbul edilən diapazondan kənardadır</string>
+    <!-- Mesa Kitabxanası Yükləmə -->
+    <string name="preference_extra_mesa_download">Mesa Kitabxanasını Yüklə</string>
+    <string name="preference_rendererexp_mesa_get_fail">Mesa Kitabxanası siyahısı əldə etməkdə uğursuz oldu</string>
+    <string name="preference_rendererexp_mesa_select_download">Yüklənəcək versiyanı seçin</string>
+    <string name="preference_rendererexp_mesa_download_load">Mesa Kitabxanası siyahısını yükləyir</string>
+    <string name="preference_rendererexp_mesa_downloading">Mesa Kitabxanasını yükləyir</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa Kitabxanasını yükləməkdə uğursuz oldu</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa Kitabxanası uğurla yükləndi</string>
+    <!-- Xüsusi Mesa Loader Sürücü Üstünə Yönəltmə -->
+    <string name="preference_extra_osm_cmldo_categ">Xüsusi Mesa Loader Sürücü Üstünə Yönəltmə</string>
+    <string name="osm_enable_cmldo">Xüsusi Mesa Loader Sürücü Üstünə Yönəltməni Aktivləşdir (Yalnız Freedreno üçün)</string>
+    <string name="osm_enable_cmldo_desc">Gərəkli olduqda, işləmə üsulunu sərbəst şəkildə seçə bilərsiniz</string>
+    <string name="osm_choose_cmldo">Mesa Loader Sürücü Üstünə Yönəltməni Seçin</string>
+
+</resources>

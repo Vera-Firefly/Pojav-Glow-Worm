@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- تسجيل الدخول إلى Microsoft -->
+    <string name="microsoft_login_fragment">!تسجيل الدخول بدأ</string>
+    <string name="preference_category_visibility_title">الظهور</string>
+    <string name="preference_category_in_game_title">داخل اللعبة</string>
+    <string name="preference_category_in_menu_title">في القائمة</string>
+    <string name="preference_category_microsoft_account_title">حساب Microsoft</string>
+    <string name="preference_category_local_account_title">حساب محلي</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">تفعيل واجهة سجل الإخراج عند بدء التطبيق بتشغيل اللعبة</string>
+    <string name="preference_enable_log_output_title">تمكين إخراج السجل عند بدء اللعبة</string>
+    <string name="preference_category_custom_path">مسار مخصص</string>
+    <string name="app_start_toast">!#أهلاً بك في Pojav Glow·Worm</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (حتى الإصدار 1.16.5، سريع)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (جميع الإصدارات، متوسط)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (جميع الإصدارات، متوسط)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">تخصيص الفأرة</string>
+    <string name="preference_mouse_description">تعيين رمز مؤشر الفأرة داخل اللعبة</string>
+    <string name="notif_mouse">تم التعيين.</string>
+    <string name="preference_mouse_title1">إزالة رمز الفأرة</string>
+    <string name="notif_mouse1">تم الحذف</string>
+    <string name="preference_quit_launcher_title">الخروج من المشغل</string>
+    <string name="preference_quit_launcher">الخروج من المشغل عند تشغيل اللعبة</string>
+    <!-- المحطة -->
+    <string name="main_terminal">المحطة</string>
+    <string name="main_termianl_init">التهيئة</string>
+    <string name="main_terminal_loading">جاري التحميل...</string>
+    <!-- تسجيل الدخول الآخر -->
+    <string name="other_login_api">تسجيل الدخول الآخر</string>
+    <string name="other_login_authentication_server">خادم المصادقة</string>
+    <string name="other_login_register">التسجيل</string>
+    <string name="other_login_email">البريد الإلكتروني أو اسم المستخدم</string>
+    <string name="other_login_password">كلمة المرور</string>
+    <string name="other_login">تسجيل الدخول</string>
+    <string name="other_login_aut">يرجى اختيار نوع خادم المصادقة</string>
+    <string name="other_login_tip">تلميح</string>
+    <string name="other_login_confirm">تأكيد</string>
+    <string name="other_login_cancel">إلغاء</string>
+    <string name="other_login_role">يرجى اختيار دور</string>
+    <string name="other_login_warning">تحذير</string>
+    <string name="other_login_address">يرجى إدخال عنوان خادم مصادقة Yggdrasil API</string>
+    <string name="other_login_setid">يرجى إدخال معرف الخادم المكون من 32 بت</string>
+    <string name="other_login_pass">المرور الموحد</string>
+    <string name="other_login_external">الهبوط الخارجي</string>
+    <string name="other_login_server_error">لا يوجد خادم مصادقة</string>
+    <!-- إعدادات التجريبية لـ Renderer -->
+    <string name="preference_exp_title">الإعدادات التجريبية</string>
+    <string name="preference_exp_description">يجب على غير المحترفين عدم استخدامها</string>
+    <string name="preference_category_renderer_experimental_settings">إعدادات Renderer التجريبية</string>
+    <string name="preference_renderer_setup_title">تمكين إعدادات Renderer التجريبية</string>
+    <string name="preference_renderer_setup">استخدام إعدادات Renderer المحددة</string>
+    <string name="preference_spare_bridge_title">الجسر الاحتياطي</string>
+    <string name="preference_spare_bridge">استخدام الجسر الثاني في حال فشل الإطلاق</string>
+    <string name="preference_spare_framebuffer_title">إطار مؤقت احتياطي</string>
+    <string name="preference_spare_framebuffer">استخدام الإطار المؤقت الثاني في حال فشل الإطلاق</string>
+    <string name="preference_renderer_setup_extra">Renderer (إضافي)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (افتراضي)</string>
+    <string name="preference_extra_mesa_version">إصدار Mesa</string>
+    <string name="preference_extra_driver_model">تجاوز برنامج تشغيل Gallium</string>
+    <!-- مربع الحوار -->
+    <string name="preference_rendererexp_alertdialog_warning">تحذير</string>
+    <string name="preference_rendererexp_alertdialog_message">لقد قمت بتفعيل الإعدادات التجريبية. قد يؤدي هذا الخيار إلى ظهور أخطاء غير متوقعة. هل ترغب في الاستمرار في الاستخدام؟</string>
+    <string name="preference_rendererexp_alertdialog_done">نعم</string>
+    <string name="preference_rendererexp_alertdialog_cancel">لا</string>
+    <string name="preference_alertdialog_know">علمت</string>
+    <string name="alertdialog_done">تم</string>
+    <string name="alertdialog_cancel">إلغاء</string>
+    <!-- إصدار GL/GLSL مخصص -->
+    <string name="preference_exp_custommv">إصدار GL/GLSL</string>
+    <string name="preference_exp_ebsystem">اختر وفقًا للنظام</string>
+    <string name="preference_exp_ebspecific">استخدام إصدار محدد</string>
+    <string name="preference_rendererexp_custom_glversion_title">GL/GLSL مخصص</string>
+    <string name="preference_rendererexp_custom_glversion">السماح بإصدار Mesa GL/GLSL مخصص</string>
+    <string name="custom_gl_version">إصدار Mesa GL:</string>
+    <string name="custom_glsl_version">إصدار Mesa GLSL:</string>
+    <string name="customglglsl_alertdialog_error_gl">يجب أن يكون إصدار GL بين 2.8 و 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">يجب أن يكون إصدار GLSL بين 280 و 460</string>
+    <!-- تخصيص مسار اللعبة -->
+    <string name="permissions_manage_external_storage">يتطلب Pojav Glow·Worm إذنًا لإدارة جميع الملفات على الجهاز لتخصيص موقع حفظ ملفات اللعبة. يرجى منح الإذن لـ Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">إدارة مسار اللعبة</string>
+    <string name="profiles_path_default">المسار الافتراضي</string>
+    <string name="profiles_path_create_new">إضافة مسار جديد</string>
+    <string name="profiles_path_create_new_title">قم بتسمية هذا المسار</string>
+    <string name="profiles_path_delete_title">حذف هذا المسار</string>
+    <string name="profiles_path_delete_message">سيقوم المشغل بحذف هذا المسار، لكنه لن يحذف الملفات المحفوظة في المسار المقابل. يمكنك إعادة إضافة هذا المسار بعد الحذف.</string>
+    <string name="profiles_path_task_in_progress">المهمة قيد التنفيذ، ميزات إدارة المسار غير متاحة مؤقتًا</string>
+    <!-- دقة الفيديو -->
+    <string name="setting_set_resolution_too_big">الدقة الحالية كبيرة جدًا، الحجم الأقصى المسموح به هو %d</string>
+    <string name="setting_set_resolution_too_small">الدقة الحالية صغيرة جدًا، الحد الأدنى المطلوب هو %d</string>
+    <string name="setting_set_resolution_outofrange">القيمة المدخلة %s خارج النطاق المقبول</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">التحكم في مقدار الذاكرة المخصصة لـ Minecraft</string>
+    <string name="zh_setting_java_memory_info">استخدام الذاكرة الحالي: %s / %s، حجم الذاكرة الحرة: %s</string>
+    <string name="zh_setting_java_memory_max">الحجم الأقصى للذاكرة المسموح به: %s</string>
+    <string name="zh_setting_java_memory_exceeded">تجاوز تخصيص الذاكرة الحالي حجم الذاكرة المتاحة</string>
+    <string name="zh_setting_java_memory_too_big">تخصيص الذاكرة الحالي كبير جدًا، الحجم الأقصى المسموح به هو %d ميغابايت</string>
+    <string name="zh_setting_java_memory_too_small">تخصيصالذاكرة الحالي صغير جدًا، الحد الأدنى المطلوب هو %d ميغابايت</string>
+    <string name="zh_setting_set_game_language_desc">تعيين لغة اللعبة تلقائيًا إلى اللغة المختارة عند بدء اللعبة</string>
+    <string name="zh_setting_set_game_language_title">تعيين لغة اللعبة تلقائيًا</string>
+    <string name="zh_setting_set_game_language_list">تعيين لغة اللعبة</string>
+    <string name="zh_setting_set_game_language_system">اتباع لغة النظام</string>
+    <string name="zh_setting_set_game_language_overridden_title">تجاوز لغة اللعبة</string>
+    <string name="zh_setting_set_game_language_overridden_desc">تجاهل اللغة المحددة في اللعبة وإجبارها على اللغة المحددة في المشغل</string>
+    <string name="setting_java_memory_outofrange">القيمة المدخلة %s ميغابايت خارج النطاق المقبول</string>
+    <!-- تحميل مكتبات Mesa -->
+    <string name="preference_extra_mesa_download">تحميل مكتبات Mesa</string>
+    <string name="preference_rendererexp_mesa_get_fail">فشل في الحصول على قائمة مكتبات Mesa</string>
+    <string name="preference_rendererexp_mesa_select_download">اختر إصدارًا للتنزيل</string>
+    <string name="preference_rendererexp_mesa_download_load">جاري تحميل قائمة مكتبات Mesa</string>
+    <string name="preference_rendererexp_mesa_downloading">جاري تنزيل مكتبات Mesa</string>
+    <string name="preference_rendererexp_mesa_download_fail">فشل في تنزيل مكتبات Mesa</string>
+    <string name="preference_rendererexp_mesa_downloaded">تم تنزيل مكتبات Mesa بنجاح</string>
+    <!-- تجاوز برنامج تشغيل مخصص لـ Mesa Loader -->
+    <string name="preference_extra_osm_cmldo_categ">تجاوز برنامج تشغيل مخصص لـ Mesa Loader</string>
+    <string name="osm_enable_cmldo">تمكين تجاوز برنامج تشغيل مخصص لـ Mesa Loader (فقط لـ Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">إذا لزم الأمر، يمكنك اختيار طريقة المعالجة بحرية</string>
+    <string name="osm_choose_cmldo">اختر تجاوز برنامج تشغيل Mesa Loader</string>
+
+</resources>

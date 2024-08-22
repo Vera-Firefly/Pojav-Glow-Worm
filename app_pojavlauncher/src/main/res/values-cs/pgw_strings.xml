@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Microsoft přihlášení -->
+    <string name="microsoft_login_fragment">Přihlášení začalo!</string>
+    <string name="preference_category_visibility_title">Viditelnost</string>
+    <string name="preference_category_in_game_title">Ve hře</string>
+    <string name="preference_category_in_menu_title">V menu</string>
+    <string name="preference_category_microsoft_account_title">Microsoft účet</string>
+    <string name="preference_category_local_account_title">Místní účet</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Povolit rozhraní pro výstup logu při spuštění hry</string>
+    <string name="preference_enable_log_output_title">Povolit výstup logu při spuštění hry</string>
+    <string name="preference_category_custom_path">Vlastní cesta</string>
+    <string name="app_start_toast">#Vítejte v Pojav Glow·Worm!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (až do 1.16.5, rychlé)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (všechny verze, střední)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (všechny verze, střední)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Přizpůsobení myši</string>
+    <string name="preference_mouse_description">Nastavit ikonu ukazatele myši ve hře</string>
+    <string name="notif_mouse">Nastaveno.</string>
+    <string name="preference_mouse_title1">Odstranit ikonu myši</string>
+    <string name="notif_mouse1">Odstraněno</string>
+    <string name="preference_quit_launcher_title">Ukončit spouštěč</string>
+    <string name="preference_quit_launcher">Ukončit spouštěč při spuštění hry</string>
+    <!-- Terminál -->
+    <string name="main_terminal">Terminál</string>
+    <string name="main_termianl_init">Inicializace</string>
+    <string name="main_terminal_loading">Načítání...</string>
+    <!-- Jiné přihlášení -->
+    <string name="other_login_api">Jiné přihlášení</string>
+    <string name="other_login_authentication_server">Autentizační server</string>
+    <string name="other_login_register">Registrace</string>
+    <string name="other_login_email">E-mail nebo uživatelské jméno</string>
+    <string name="other_login_password">Heslo</string>
+    <string name="other_login">Přihlásit se</string>
+    <string name="other_login_aut">Vyberte typ autentizačního serveru</string>
+    <string name="other_login_tip">Tip</string>
+    <string name="other_login_confirm">Potvrdit</string>
+    <string name="other_login_cancel">Zrušit</string>
+    <string name="other_login_role">Vyberte roli</string>
+    <string name="other_login_warning">Upozornění</string>
+    <string name="other_login_address">Zadejte adresu autentizačního serveru Yggdrasil API</string>
+    <string name="other_login_setid">Zadejte 32-bitové ID serveru</string>
+    <string name="other_login_pass">Univerzální heslo</string>
+    <string name="other_login_external">Externí přihlášení</string>
+    <string name="other_login_server_error">Není dostupný autentizační server</string>
+    <!-- Experimentální nastavení rendereru -->
+    <string name="preference_exp_title">Experimentální nastavení</string>
+    <string name="preference_exp_description">Nepoužívat, pokud nejste odborník</string>
+    <string name="preference_category_renderer_experimental_settings">Experimentální nastavení rendereru</string>
+    <string name="preference_renderer_setup_title">Povolit experimentální nastavení rendereru</string>
+    <string name="preference_renderer_setup">Použít více specifických nastavení rendereru</string>
+    <string name="preference_spare_bridge_title">Náhradní most</string>
+    <string name="preference_spare_bridge">Použít druhý most, pokud se spuštění nezdaří</string>
+    <string name="preference_spare_framebuffer_title">Náhradní framebuffer</string>
+    <string name="preference_spare_framebuffer">Použít framebuffer druhého schématu, pokud se spuštění nezdaří</string>
+    <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (Výchozí)</string>
+    <string name="preference_extra_mesa_version">Verze Mesa</string>
+    <string name="preference_extra_driver_model">Override ovladače Gallium</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Upozornění</string>
+    <string name="preference_rendererexp_alertdialog_message">Aktivovali jste experimentální nastavení. Tato funkce může způsobit neočekávané chyby. Chcete pokračovat?</string>
+    <string name="preference_rendererexp_alertdialog_done">Ano</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Ne</string>
+    <string name="preference_alertdialog_know">Vím</string>
+    <string name="alertdialog_done">Hotovo</string>
+    <string name="alertdialog_cancel">Zrušit</string>
+    <!-- Vlastní GL/GLSL verze -->
+    <string name="preference_exp_custommv">GL/GLSL verze</string>
+    <string name="preference_exp_ebsystem">Vyberte podle systému</string>
+    <string name="preference_exp_ebspecific">Použít konkrétní verzi</string>
+    <string name="preference_rendererexp_custom_glversion_title">Vlastní GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">Povolit vlastní verzi Mesa GL/GLSL</string>
+    <string name="custom_gl_version">Verze Mesa GL:</string>
+    <string name="custom_glsl_version">Verze Mesa GLSL:</string>
+    <string name="customglglsl_alertdialog_error_gl">Verze GL musí být mezi 2.8 a 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">Verze GLSL musí být mezi 280 a 460</string>
+    <!-- Přizpůsobení cesty k hře -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm vyžaduje povolení k správě všech souborů na zařízení, aby bylo možné přizpůsobit umístění, kde jsou uloženy soubory hry. Prosím, udělte Pojav Glow·Worm povolení!</string>
+    <string name="profiles_path_title">Správa cesty k hře</string>
+    <string name="profiles_path_default">Výchozí cesta</string>
+    <string name="profiles_path_create_new">Přidat novou cestu</string>
+    <string name="profiles_path_create_new_title">Pojmenujte tuto cestu</string>
+    <string name="profiles_path_delete_title">Smazat tuto cestu</string>
+    <string name="profiles_path_delete_message">Spouštěč tuto cestu odstraní, ale neodstraní soubory uložené v odpovídající cestě. Po odstranění můžete tuto cestu znovu přidat.</string>
+    <string name="profiles_path_task_in_progress">Probíhá úkol, funkce správy cest jsou dočasně nedostupné</string>
+    <!-- Video rozlišení -->
+    <string name="setting_set_resolution_too_big">Aktuální rozlišení je příliš velké, maximální povolená velikost je %d</string>
+    <string name="setting_set_resolution_too_small">Aktuální rozlišení je příliš malé, minimálně je požadováno %d</string>
+    <string name="setting_set_resolution_outofrange">Zadaná hodnota %s je mimo přijatelný rozsah</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Řídit množství paměti přidělené Minecraftu</string>
+    <string name="zh_setting_java_memory_info">Aktuální využití paměti: %s / %s, Volné množství paměti: %s</string>
+    <string name="zh_setting_java_memory_max">Maximální povolená velikost paměti: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Aktuální alokace paměti překračuje dostupnou velikost paměti</string>
+    <string name="zh_setting_java_memory_too_big">Aktuální alokace paměti je příliš velká, maximální povolená velikost je %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Aktuální alokace paměti je příliš malá, minimálně je požadováno %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Automaticky nastavit jazyk hry na zvolený jazyk při spuštění hry</string>
+    <string name="zh_setting_set_game_language_title">Automatické nastavení jazyka hry</string>
+    <string name="zh_setting_set_game_language_list">Nastavit jazyk hry</string>
+    <string name="zh_setting_set_game_language_system">Podle systému</string>
+    <string name="zh_setting_set_game_language_overridden_title">Přepsat jazyk hry</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Ignorovat jazyk nastavený ve hře a vynutit jazyk hry nastavený v launcheru</string>
+    <string name="setting_java_memory_outofrange">Zadaná hodnota %s MB je mimo přijatelný rozsah</string>
+    <!-- Stahování Mesa knihovny -->
+    <string name="preference_extra_mesa_download">Stáhnout Mesa knihovnu</string>
+    <string name="preference_rendererexp_mesa_get_fail">Selhalo získání seznamu Mesa knihoven</string>
+    <string name="preference_rendererexp_mesa_select_download">Vyberte verzi ke stažení</string>
+    <string name="preference_rendererexp_mesa_download_load">Načítání seznamu Mesa knihoven</string>
+    <string name="preference_rendererexp_mesa_downloading">Stahování Mesa knihovny</string>
+    <string name="preference_rendererexp_mesa_download_fail">Selhalo stahování Mesa knihovny</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa knihovna byla úspěšně stažena</string>
+    <!-- Vlastní Mesa Loader Ovladač -->
+    <string name="preference_extra_osm_cmldo_categ">Vlastní Mesa Loader Ovladač</string>
+    <string name="osm_enable_cmldo">Povolit vlastní Mesa Loader Ovladač (pouze pro Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">Pokud je to potřeba, můžete volně vybrat metodu zpracování</string>
+    <string name="osm_choose_cmldo">Vyberte vlastní Mesa Loader Ovladač</string>
+
+</resources>
