@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App New Annotation -->
+    <string name="microsoft_login_fragment">Prisijungimas pradėtas!</string>
+    <string name="preference_category_visibility_title">Matomumas</string>
+    <string name="preference_category_in_game_title">Žaidime</string>
+    <string name="preference_category_in_menu_title">Meniu</string>
+    <string name="preference_category_microsoft_account_title">Microsoft paskyra</string>
+    <string name="preference_category_local_account_title">Vietinė paskyra</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">Įjungti žurnalo išvesties sąsają, kai programa oficialiai pradeda vykdyti žaidimą</string>
+    <string name="preference_enable_log_output_title">Įjungti žurnalo išvestį žaidimo pradžioje</string>
+    <string name="preference_category_custom_path">Tinkintas kelias</string>
+    <string name="app_start_toast">#Sveiki atvykę į Pojav Glow·Worm!!!!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (iki 1.16.5, greita)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (visos versijos, vidutinė)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (visos versijos, vidutinė)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">Pelės pritaikymas</string>
+    <string name="preference_mouse_description">Nustatyti pelės žymeklio piktogramą žaidime</string>
+    <string name="notif_mouse">Nustatyta.</string>
+    <string name="preference_mouse_title1">Pašalinti pelės piktogramą</string>
+    <string name="notif_mouse1">Ištrinta.</string>
+    <string name="preference_quit_launcher_title">Išeiti iš paleidimo priemonės</string>
+    <string name="preference_quit_launcher">Išeiti iš paleidimo priemonės, kai vykdomas žaidimas</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminalas</string>
+    <string name="main_termianl_init">Inicijavimas</string>
+    <string name="main_terminal_loading">Kraunama...</string>
+    <!-- Other login -->
+    <string name="other_login_api">Kitas prisijungimas</string>
+    <string name="other_login_authentication_server">Autentifikavimo serveris</string>
+    <string name="other_login_register">Registruotis</string>
+    <string name="other_login_email">El. paštas arba vartotojo vardas</string>
+    <string name="other_login_password">Slaptažodis</string>
+    <string name="other_login">Prisijungti</string>
+    <string name="other_login_aut">Prašome pasirinkti autentifikavimo serverio tipą</string>
+    <string name="other_login_tip">Patarimas</string>
+    <string name="other_login_confirm">Patvirtinti</string>
+    <string name="other_login_cancel">Atšaukti</string>
+    <string name="other_login_role">Prašome pasirinkti vaidmenį</string>
+    <string name="other_login_warning">Įspėjimas</string>
+    <string name="other_login_address">Prašome įvesti Yggdrasil API autentifikavimo serverio adresą</string>
+    <string name="other_login_setid">Prašome įvesti 32 bitų serverio ID</string>
+    <string name="other_login_pass">Vieningas praleidimas</string>
+    <string name="other_login_external">Išorinis prisijungimas</string>
+    <string name="other_login_server_error">Nėra autentifikavimo serverio</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_exp_title">Eksperimentiniai nustatymai</string>
+    <string name="preference_exp_description">Neprofesionalams nerekomenduojama naudoti</string>
+    <string name="preference_category_renderer_experimental_settings">Eksperimentiniai vaizdo apdorojimo nustatymai</string>
+    <string name="preference_renderer_setup_title">Įjungti vaizdo apdorojimo eksperimentinius nustatymus</string>
+    <string name="preference_renderer_setup">Naudoti daugiau vaizdo apdorojimo nustatymų</string>
+    <string name="preference_spare_bridge_title">Atsarginis tiltas</string>
+    <string name="preference_spare_bridge">Naudoti antrosios schemos tiltą, uždaryti, jei paleidimas nepavyko</string>
+    <string name="preference_spare_framebuffer_title">Atsarginis rėmelio buferis</string>
+    <string name="preference_spare_framebuffer">Naudoti antrosios schemos rėmelio buferį, uždaryti, jei paleidimas nepavyko</string>
+    <string name="preference_renderer_setup_extra">Papildomas vaizdo apdorojimas</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (numatytasis)</string>
+    <string name="preference_extra_mesa_version">Mesa versija</string>
+    <string name="preference_extra_driver_model">Gallium draiverio perrašymas</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">Įspėjimas</string>
+    <string name="preference_rendererexp_alertdialog_message">Jūs įjungėte eksperimentinius nustatymus. Ši funkcija gali sukelti netikėtų klaidų. Ar norite tęsti naudojimą?</string>
+    <string name="preference_rendererexp_alertdialog_done">Tęsti</string>
+    <string name="preference_rendererexp_alertdialog_cancel">Baimė</string>
+    <string name="preference_alertdialog_know">Jau žinau</string>
+    <string name="alertdialog_done">Atlikta</string>
+    <string name="alertdialog_cancel">Atšaukti</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">GL/GLSL versija</string>
+    <string name="preference_exp_ebsystem">Pasirinkti pagal sistemą</string>
+    <string name="preference_exp_ebspecific">Naudoti specifinę versiją</string>
+    <string name="preference_rendererexp_custom_glversion_title">Tinkinta GL/GLSL versija</string>
+    <string name="preference_rendererexp_custom_glversion">Leisti tinkintą Mesa GL/GLSL versiją</string>
+    <string name="custom_gl_version">Mesa GL versija:</string>
+    <string name="custom_glsl_version">Mesa GLSL versija:</string>
+    <string name="customglglsl_alertdialog_error_gl">GL versija turi būti tarp 2.8 ir 4.6</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL versija turi būti tarp 280 ir 460</string>
+    <!-- Customize Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm reikalingas leidimas tvarkyti visus failus įrenginyje, norint tinkinti žaidimo failų saugojimo vietą. Prašome suteikti leidimą Pojav Glow·Worm!</string>
+    <string name="profiles_path_title">Žaidimo kelio valdymas</string>
+    <string name="profiles_path_default">Numatytasis kelias</string>
+    <string name="profiles_path_create_new">Pridėti naują kelią</string>
+    <string name="profiles_path_create_new_title">Pavadinkite šį kelią</string>
+    <string name="profiles_path_delete_title">Ištrinti šį kelią</string>
+    <string name="profiles_path_delete_message">Paleidimo priemonė ištrins šį kelią, bet ne ištrins faile esančius failus atitinkamame kelyje. Galite iš naujo pridėti šį kelią po ištrynimo.</string>
+    <string name="profiles_path_task_in_progress">Vykdomas užduotis, kelio valdymo funkcijos laikinai nepasiekiamos</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">Dabartinė raiška yra per didelė, didžiausias leistinas dydis yra %d</string>
+    <string name="setting_set_resolution_too_small">Dabartinė raiška yra per maža, reikalinga bent %d</string>
+    <string name="setting_set_resolution_outofrange">Įvesta vertė %s yra už leistino diapazono ribų</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Valdyti, kiek atminties priskiriama Minecraft</string>
+    <string name="zh_setting_java_memory_info">Dabartinis atminties naudojimas: %s / %s, Laisvos atminties dydis: %s</string>
+    <string name="zh_setting_java_memory_max">Maksimalus leistinas atminties dydis: %s</string>
+    <string name="zh_setting_java_memory_exceeded">Dabartinis atminties paskirstymas viršija galimą atminties dydį</string>
+    <string name="zh_setting_java_memory_too_big">Dabartinis atminties paskirstymas yra per didelis, maksimalus leistinas dydis yra %d MB</string>
+    <string name="zh_setting_java_memory_too_small">Dabartinis atminties paskirstymas yra per mažas, reikalingas bent %d MB</string>
+    <string name="zh_setting_set_game_language_desc">Automatiškai nustatyti žaidimo kalbą pagal pasirinktą kalbą, kai žaidimas paleidžiamas</string>
+    <string name="zh_setting_set_game_language_title">Automatiškai nustatyti žaidimo kalbą</string>
+    <string name="zh_setting_set_game_language_list">Nustatyti žaidimo kalbą</string>
+    <string name="zh_setting_set_game_language_system">Sekti sistemos kalbą</string>
+    <string name="zh_setting_set_game_language_overridden_title">Nepaisyti žaidimo kalbos</string>
+    <string name="zh_setting_set_game_language_overridden_desc">Nepaisyti žaidime nustatytos kalbos ir priversti ją laikytis paleidimo priemonėje nustatytos kalbos</string>
+    <string name="setting_java_memory_outofrange">Įvesta vertė %s MB yra už leistino diapazono ribų</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Atsisiųsti Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_get_fail">Nepavyko gauti Mesa Lib sąrašo</string>
+    <string name="preference_rendererexp_mesa_select_download">Pasirinkite versiją, kurią norite atsisiųsti</string>
+    <string name="preference_rendererexp_mesa_download_load">Kraunamas Mesa Lib sąrašas</string>
+    <string name="preference_rendererexp_mesa_downloading">Atsisiunčiamas Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_download_fail">Nepavyko atsisiųsti Mesa Lib</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa Lib sėkmingai atsisiųstas</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">Tinkintas Mesa Loader draiverio perrašymas</string>
+    <string name="osm_enable_cmldo">Įjungti tinkintą Mesa Loader draiverio perrašymą (tik Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">Jei reikia, galite laisvai pasirinkti apdorojimo būdą</string>
+    <string name="osm_choose_cmldo">Pasirinkite Mesa Loader draiverio perrašymą</string>
+
+</resources>

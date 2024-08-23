@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App New Annotation -->
+    <string name="microsoft_login_fragment">로그인 시작됨!</string>
+    <string name="preference_category_visibility_title">가시성</string>
+    <string name="preference_category_in_game_title">게임 내</string>
+    <string name="preference_category_in_menu_title">메뉴 내</string>
+    <string name="preference_category_microsoft_account_title">Microsoft 계정</string>
+    <string name="preference_category_local_account_title">로컬 계정</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">애플리케이션이 게임을 실행할 때 로그 출력 인터페이스를 활성화합니다</string>
+    <string name="preference_enable_log_output_title">게임 시작 시 로그 출력 활성화</string>
+    <string name="preference_category_custom_path">사용자 지정 경로</string>
+    <string name="app_start_toast">#Pojav Glow·Worm에 오신 것을 환영합니다!!!!</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (최대 1.16.5, 빠름)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (모든 버전, 중간)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (모든 버전, 중간)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="preference_mouse_title">마우스 커스터마이징</string>
+    <string name="preference_mouse_description">게임에서 마우스 포인터 아이콘 설정</string>
+    <string name="notif_mouse">설정 완료.</string>
+    <string name="preference_mouse_title1">마우스 아이콘 제거</string>
+    <string name="notif_mouse1">삭제 완료</string>
+    <string name="preference_quit_launcher_title">런처 종료</string>
+    <string name="preference_quit_launcher">게임을 실행할 때 런처 종료</string>
+    <!-- Terminal -->
+    <string name="main_terminal">터미널</string>
+    <string name="main_termianl_init">초기화</string>
+    <string name="main_terminal_loading">로딩 중...</string>
+    <!-- Other login -->
+    <string name="other_login_api">기타 로그인</string>
+    <string name="other_login_authentication_server">인증 서버</string>
+    <string name="other_login_register">등록</string>
+    <string name="other_login_email">이메일 또는 사용자 이름</string>
+    <string name="other_login_password">비밀번호</string>
+    <string name="other_login">로그인</string>
+    <string name="other_login_aut">인증 서버 유형을 선택하세요</string>
+    <string name="other_login_tip">팁</string>
+    <string name="other_login_confirm">확인</string>
+    <string name="other_login_cancel">취소</string>
+    <string name="other_login_role">역할을 선택하세요</string>
+    <string name="other_login_warning">경고</string>
+    <string name="other_login_address">Yggdrasil API 인증 서버 주소를 입력하세요</string>
+    <string name="other_login_setid">32비트 서버 ID를 입력하세요</string>
+    <string name="other_login_pass">유니폼 패스</string>
+    <string name="other_login_external">외부 로그인</string>
+    <string name="other_login_server_error">인증 서버 없음</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_exp_title">실험적 설정</string>
+    <string name="preference_exp_description">전문가가 아니면 사용하지 마세요</string>
+    <string name="preference_category_renderer_experimental_settings">렌더러 실험적 설정</string>
+    <string name="preference_renderer_setup_title">렌더러 실험적 설정 활성화</string>
+    <string name="preference_renderer_setup">더 많은 렌더러 전용 설정 사용</string>
+    <string name="preference_spare_bridge_title">예비 브리지</string>
+    <string name="preference_spare_bridge">두 번째 스킴 브리지를 사용합니다. 실행에 실패하면 닫습니다</string>
+    <string name="preference_spare_framebuffer_title">예비 프레임 버퍼</string>
+    <string name="preference_spare_framebuffer">두 번째 스킴의 프레임 버퍼를 사용합니다. 실행에 실패하면 닫습니다</string>
+    <string name="preference_renderer_setup_extra">렌더러 (추가)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.0 (기본값)</string>
+    <string name="preference_extra_mesa_version">Mesa 버전</string>
+    <string name="preference_extra_driver_model">Gallium 드라이버 오버라이드</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">경고</string>
+    <string name="preference_rendererexp_alertdialog_message">실험적 설정을 켰습니다. 이 기능은 예기치 않은 버그를 발생시킬 수 있습니다. 계속 사용하시겠습니까?</string>
+    <string name="preference_rendererexp_alertdialog_done">계속</string>
+    <string name="preference_rendererexp_alertdialog_cancel">취소</string>
+    <string name="preference_alertdialog_know">알겠습니다</string>
+    <string name="alertdialog_done">완료</string>
+    <string name="alertdialog_cancel">취소</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">GL/GLSL 버전</string>
+    <string name="preference_exp_ebsystem">시스템에 따라 선택</string>
+    <string name="preference_exp_ebspecific">특정 버전 사용</string>
+    <string name="preference_rendererexp_custom_glversion_title">사용자 지정 GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">사용자 지정 Mesa GL/GLSL 버전 허용</string>
+    <string name="custom_gl_version">Mesa GL 버전:</string>
+    <string name="custom_glsl_version">Mesa GLSL 버전:</string>
+    <string name="customglglsl_alertdialog_error_gl">GL 버전은 2.8에서 4.6 사이여야 합니다</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL 버전은 280에서 460 사이여야 합니다</string>
+    <!-- Customize Game Path -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm은 게임 파일을 저장할 위치를 사용자 정의하기 위해 기기의 모든 파일을 관리할 권한이 필요합니다. Pojav Glow·Worm에 권한을 부여하세요!</string>
+    <string name="profiles_path_title">게임 경로 관리</string>
+    <string name="profiles_path_default">기본 경로</string>
+    <string name="profiles_path_create_new">새 경로 추가</string>
+    <string name="profiles_path_create_new_title">이 경로의 이름 지정</string>
+    <string name="profiles_path_delete_title">이 경로 삭제</string>
+    <string name="profiles_path_delete_message">런처가 이 경로를 삭제합니다. 그러나 해당 경로에 저장된 파일은 삭제되지 않습니다. 삭제 후 이 경로를 다시 추가할 수 있습니다.</string>
+    <string name="profiles_path_task_in_progress">작업 진행 중, 경로 관리 기능은 일시적으로 사용할 수 없습니다</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">현재 해상도가 너무 큽니다, 최대 허용 크기는 %d입니다</string>
+    <string name="setting_set_resolution_too_small">현재 해상도가 너무 작습니다, 최소 %d이(가) 필요합니다</string>
+    <string name="setting_set_resolution_outofrange">입력된 값 %s은(는) 허용 범위를 벗어났습니다</string>
+    <!-- Pojav Zenith Horizon -->
+    <string name="zh_setting_java_memory_desc">Minecraft에 할당되는 메모리 크기를 제어합니다</string>
+    <string name="zh_setting_java_memory_info">현재 메모리 사용량: %s / %s, 사용 가능한 메모리 크기: %s</string>
+    <string name="zh_setting_java_memory_max">최대 허용 메모리 크기: %s</string>
+    <string name="zh_setting_java_memory_exceeded">현재 메모리 할당이 사용 가능한 메모리 크기를 초과합니다</string>
+    <string name="zh_setting_java_memory_too_big">현재 메모리 할당이 너무 큽니다, 최대 허용 크기는 %d MB입니다</string>
+    <string name="zh_setting_java_memory_too_small">현재 메모리 할당이 너무 작습니다, 최소 %d MB가 필요합니다</string>
+    <string name="zh_setting_set_game_language_desc">게임 시작 시 선택한 언어로 게임 언어를 자동으로 설정합니다</string>
+    <string name="zh_setting_set_game_language_title">게임 언어 자동 설정</string>
+    <string name="zh_setting_set_game_language_list">게임 언어 설정</string>
+    <string name="zh_setting_set_game_language_system">시스템 언어 따르기</string>
+    <string name="zh_setting_set_game_language_overridden_title">게임 언어 재정의</string>
+    <string name="zh_setting_set_game_language_overridden_desc">게임 내 설정된 언어를 무시하고 런처에서 설정한 게임 언어로 강제합니다</string>
+    <string name="setting_java_memory_outofrange">입력된 값 %s MB은 허용 범위를 벗어났습니다</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">Mesa 라이브러리 다운로드</string>
+    <string name="preference_rendererexp_mesa_get_fail">Mesa 라이브러리 목록 가져오기 실패</string>
+    <string name="preference_rendererexp_mesa_select_download">다운로드할 버전을 선택하세요</string>
+    <string name="preference_rendererexp_mesa_download_load">Mesa 라이브러리 목록 로딩 중</string>
+    <string name="preference_rendererexp_mesa_downloading">Mesa 라이브러리 다운로드 중</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa 라이브러리 다운로드 실패</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa 라이브러리 다운로드 성공</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">사용자 지정 Mesa 로더 드라이버 오버라이드</string>
+    <string name="osm_enable_cmldo">사용자 지정 Mesa 로더 드라이버 오버라이드 활성화(오직 Freedreno용)</string>
+    <string name="osm_enable_cmldo_desc">필요한 경우, 자유롭게 처리 방법을 선택할 수 있습니다</string>
+    <string name="osm_choose_cmldo">Mesa 로더 드라이버 오버라이드 선택</string>
+
+</resources>
