@@ -70,28 +70,30 @@
 
 * 此修改版本的lwjgl使用的最新内容来自[Vera-Firefly](https://github.com/Vera-Firefly) [lwjgl3-build](https://github.com/Vera-Firefly/lwjgl3-build)用于自动构建的存储库
 ### 启动器
-- 由于语言是由Crowdin自动添加的,因此在构建之前需要运行语言列表生成器.在工程目录下,执行： 
-
-* 在Linux, Mac OS上:
+* 构建 GLFW stub(如果需要):
 ```
-chmod +x scripts/languagelist_updater.sh
-bash scripts/languagelist_updater.sh
+git submodule update --init --recursive
 ```
-* 在Windows上:
+或者
 ```
-scripts\languagelist_updater.bat
+chmod +x scripts/UpdateSubmodule.sh
+./scripts/UpdateSubmodule.sh
 ```
-然后,运行这些命令,~~或使用Android Studio构建~~
-
-* 构建 GLFW stub:
 ```
+cd lwjgl3-build
 ./gradlew :jre_lwjgl3glfw:build
-```       
+```
+然后运行:
+```
+mv lwjgl3/* ../app_pojavlauncher/src/main/assets/components/lwjgl3
+cd ../
+```
 * 构建启动器
 ```
 ./gradlew :app_pojavlauncher:assembleDebug
 ```
-(替换 `gradlew` 和 `gradlew.bat` 如果你在Windows上构建).
+(替换 `gradlew` 和 `gradlew.bat` 如果你在Windows上构建)
+(如果运行`mv`时遇到权限问题,请使用`sudo mv`)
 
 ## 当前状态
 - [x] ~~OpenJDK 9 Mobile port: ARM32, ARM64, x86, x86_64.~~ 替换为 JRE8.

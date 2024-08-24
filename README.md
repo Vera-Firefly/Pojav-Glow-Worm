@@ -68,28 +68,30 @@ If you want to build from source code, follow the steps below.
 
 * This modified version of lwjgl uses the latest content from [Vera-Firefly](https://github.com/Vera-Firefly) [lwjgl3-build](https://github.com/Vera-Firefly/lwjgl3-build) repository for automated builds
 ### The Launcher
-- Because languages are auto-added by Crowdin, you need to run the language list generator before building. In the project directory, run:
-
-* On Linux, Mac OS:
+* Build GLFW stub (If need):
 ```
-chmod +x scripts/languagelist_updater.sh
-bash scripts/languagelist_updater.sh
+git submodule update --init --recursive
 ```
-* On Windows:
+or
 ```
-scripts\languagelist_updater.bat
+chmod +x scripts/UpdateSubmodule.sh
+./scripts/UpdateSubmodule.sh
 ```
-Then, run these commands ~~or build using Android Studio~~.
-
-* Build GLFW stub:
 ```
+cd lwjgl3-build
 ./gradlew :jre_lwjgl3glfw:build
-```       
+```
+then run:
+```
+mv lwjgl3/* ../app_pojavlauncher/src/main/assets/components/lwjgl3
+cd ../
+```
 * Build the launcher
 ```
 ./gradlew :app_pojavlauncher:assembleDebug
 ```
-(Replace `gradlew` with `gradlew.bat` if you are building on Windows).
+(Replace `gradlew` with `gradlew.bat` if you are building on Windows)
+(If you are having trouble with `mv` permissions, try using `sudo mv`)
 
 ## Current status
 - [x] ~~OpenJDK 9 Mobile port: ARM32, ARM64, x86, x86_64.~~ Replaced by JRE8.
