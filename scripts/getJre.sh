@@ -1,9 +1,11 @@
 # !/bin/user
 
 echo "Start Get Jre"
+rm android-openjdk-autobuild
+git clone https://github.com/Vera-Firefly/android-openjdk-autobuild
 
 if [ -z "$GET_JRE" ]; then
-  echo "Nvironment USED_JRE is not set, default to get jre8 and jre21"
+  echo "Nvironment GET_JRE is not set, default to get jre8 and jre21"
   rm android-openjdk-autobuild/LatestJre/jre-11
   rm android-openjdk-autobuild/LatestJre/jre-17
   cp -rf android-openjdk-autobuild/LatestJre/* app_pojavlauncher/src/main/assets/components/
