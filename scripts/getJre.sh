@@ -1,7 +1,6 @@
 # !/bin/user
 
 echo "Start Get Jre"
-rm android-openjdk-autobuild
 git clone https://github.com/Vera-Firefly/android-openjdk-autobuild
 
 if [ -z "$GET_JRE" ]; then
