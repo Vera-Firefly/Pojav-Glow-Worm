@@ -79,11 +79,11 @@ git submodule update --init --recursive
 chmod +x scripts/UpdateSubmodule.sh
 ./scripts/UpdateSubmodule.sh
 ```
+然后运行:
 ```
 cd lwjgl3-build
 ./gradlew :jre_lwjgl3glfw:build
 ```
-然后运行:
 ```
 mv lwjgl3/* ../app_pojavlauncher/src/main/assets/components/lwjgl3
 cd ../

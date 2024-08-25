@@ -20,25 +20,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get JRE 8
-        uses: dawidd6/action-download-artifact@v3
-        with:
-          workflow: buildjre8.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-8
-          workflow_conclusion: success
-          repo: Vera-Firefly/android-openjdk-autobuild
-          branch: main
-          name: jre8-pojav
-
-      - name: Get JRE 21
-        uses: dawidd6/action-download-artifact@v3
-        with:
-          workflow: buildjre21.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-21
-          workflow_conclusion: success
-          repo: Vera-Firefly/android-openjdk-autobuild
-          branch: main
-          name: jre21-pojav
+      - name: Get JRE
+        run: |
+          echo "GET_JRE=1" >> $GITHUB_ENV
+          chmod +x scripts/getJre.sh
+          sh scripts/getJre.sh
 
       - name: Get LWJGL3
         uses: dawidd6/action-download-artifact@v3

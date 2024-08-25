@@ -1,3 +1,6 @@
 [submodule "lwjgl3-build"]
 	path = lwjgl3-build
 	url = git@github.com:Vera-Firefly/lwjgl3-build
+[submodule "android-openjdk-autobuild"]
+	path = android-openjdk-autobuild
+	url = git@github.com:Vera-Firefly/android-openjdk-autobuild

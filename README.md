@@ -77,11 +77,11 @@ or
 chmod +x scripts/UpdateSubmodule.sh
 ./scripts/UpdateSubmodule.sh
 ```
+then run:
 ```
 cd lwjgl3-build
 ./gradlew :jre_lwjgl3glfw:build
 ```
-then run:
 ```
 mv lwjgl3/* ../app_pojavlauncher/src/main/assets/components/lwjgl3
 cd ../
