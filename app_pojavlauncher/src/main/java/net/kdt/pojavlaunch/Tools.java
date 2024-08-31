@@ -1256,7 +1256,7 @@ public final class Tools {
     }
 
     public static CMesaLibList getCompatibleCMesaLib(Context context) {
-        //if(sCompatibleCMesaLibs != null) return sCompatibleCMesaLibs;
+        // if (sCompatibleCMesaLibs != null) return sCompatibleCMesaLibs;
         Resources resources = context.getResources();
         String[] defaultCMesaLib = resources.getStringArray(R.array.osmesa_values);
         String[] defaultCMesaLibNames = resources.getStringArray(R.array.osmesa_library);
@@ -1269,11 +1269,9 @@ public final class Tools {
         List<String> downloadList = MesaUtils.INSTANCE.getMesaLibList();
         for (String item : downloadList) {
             CMesaLibIds.add(item);
-            CMesaLibNames.add(item);
-        }
-        sCompatibleCMesaLibs = new CMesaLibList(CMesaLibIds,
-                CMesaLibNames.toArray(new String[0]));
-
+            CMesaLibNames.add("Mesa " + item);
+        }    
+        sCompatibleCMesaLibs = new CMesaLibList(CMesaLibIds, CMesaLibNames.toArray(new String[0]));
         return sCompatibleCMesaLibs;
     }
 
