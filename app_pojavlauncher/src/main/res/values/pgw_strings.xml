@@ -113,6 +113,12 @@
     <string name="preference_rendererexp_mesa_downloading">Downloading Mesa Lib</string>
     <string name="preference_rendererexp_mesa_download_fail">Mesa Lib download fail</string>
     <string name="preference_rendererexp_mesa_downloaded">Mesa Lib download success</string>
+    <string name="preference_rendererexp_mesa_dialogtitle">Choose Mesa Version(Long press to delete)</string>
+    <string name="preference_rendererexp_mesa_delete_defaultlib">Default library cannot be deleted</string>
+    <string name="preference_rendererexp_mesa_delete_title">Delete Mesa Library</string>
+    <string name="preference_rendererexp_mesa_delete_message">Are you sure you want to delete the library: </string>
+    <string name="preference_rendererexp_mesa_deleted">Deleted successfully</string>
+    <string name="preference_rendererexp_mesa_delete_fail">Delete failed</string>
     <!-- Custom Mesa Loader Driver Override -->
     <string name="preference_extra_osm_cmldo_categ">Custom Mesa Loader Driver Override</string>
     <string name="osm_enable_cmldo">Enable Custom Mesa Load Driver Override(Only for Freedreno)</string>

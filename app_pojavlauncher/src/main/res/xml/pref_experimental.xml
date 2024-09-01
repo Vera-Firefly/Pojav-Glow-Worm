@@ -54,14 +54,16 @@
         android:title="@string/preference_renderer_setup_extra"
         app2:iconSpaceReserved="false">
 
-        <androidx.preference.ListPreference
+        <net.kdt.pojavlaunch.prefs.DeletableListPreference
             android:defaultValue="default"
             android:key="CMesaLibrary"
             android:entries="@array/osmesa_library"
             android:entryValues="@array/osmesa_values"
             android:title="@string/preference_extra_mesa_version"
+            android:dialogTitle="@string/preference_rendererexp_mesa_dialogtitle"
             app2:useSimpleSummaryProvider="true"
-            app2:iconSpaceReserved="false"/>
+            app2:iconSpaceReserved="false" />
+
         <androidx.preference.ListPreference
             android:defaultValue="driver_zink"
             android:key="CDriverModels"
@@ -69,13 +71,14 @@
             android:entryValues="@array/driver_model_values"
             android:title="@string/preference_extra_driver_model"
             app2:useSimpleSummaryProvider="true"
-            app2:iconSpaceReserved="false"/>
+            app2:iconSpaceReserved="false" />
+
         <androidx.preference.Preference
             android:defaultValue="driver_zink"
             android:key="DownloadMesa"
             android:title="@string/preference_extra_mesa_download"
             app2:useSimpleSummaryProvider="true"
-            app2:iconSpaceReserved="false"/>
+            app2:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 

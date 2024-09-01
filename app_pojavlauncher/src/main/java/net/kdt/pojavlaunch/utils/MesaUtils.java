@@ -124,4 +124,23 @@ public class MesaUtils {
         public String arm32;
         public String x86_64;
     }
+
+    public boolean deleteMesaLib(String version) {
+        File libDir = new File(mesaDir, version);
+        if (libDir.exists()) {
+            return deleteDirectory(libDir);
+        }
+        return false;
+    }
+
+    private boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        return directoryToBeDeleted.delete();
+    }
+
 }

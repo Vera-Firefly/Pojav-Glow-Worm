@@ -26,6 +26,7 @@ import java.util.regex.Matcher;
 import net.kdt.pojavlaunch.PojavApplication;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.prefs.DeletableListPreference;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.utils.MesaUtils;
 
@@ -47,7 +48,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
             return true;
         });
 
-        final ListPreference CMesaLibP = requirePreference("CMesaLibrary", ListPreference.class);
+        final ListPreference CMesaLibP = requirePreference("CMesaLibrary", DeletableListPreference.class);
         final ListPreference CDriverModelP = requirePreference("CDriverModels", ListPreference.class);
         final ListPreference CMesaLDOP = requirePreference("ChooseMldo", ListPreference.class);
         
@@ -298,6 +299,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                 if (data) {
                     Toast.makeText(requireContext(), R.string.preference_rendererexp_mesa_downloaded, Toast.LENGTH_SHORT)
                             .show();
+                    setListPreference(requirePreference("CMesaLibrary", DeletableListPreference.class), "CMesaLibrary");
                 } else {
                     AlertDialog alertDialog1 = new AlertDialog.Builder(requireActivity())
                             .setMessage(R.string.preference_rendererexp_mesa_download_fail)
@@ -307,4 +309,5 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
             });
         });
     }
+
 }
