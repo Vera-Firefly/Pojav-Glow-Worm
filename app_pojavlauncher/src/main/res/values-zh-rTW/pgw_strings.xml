@@ -113,6 +113,12 @@
     <string name="preference_rendererexp_mesa_downloading">正在下載 Mesa Lib</string>
     <string name="preference_rendererexp_mesa_download_fail">Mesa Lib 下載失敗</string>
     <string name="preference_rendererexp_mesa_downloaded">Mesa Lib 下載成功</string>
+    <string name="preference_rendererexp_mesa_dialogtitle">選擇 Mesa 版本（長按以刪除）</string>
+    <string name="preference_rendererexp_mesa_delete_defaultlib">無法刪除預設庫</string>
+    <string name="preference_rendererexp_mesa_delete_title">刪除 Mesa 庫</string>
+    <string name="preference_rendererexp_mesa_delete_message">您確定要刪除 Mesa %s 庫嗎？</string>
+    <string name="preference_rendererexp_mesa_deleted">刪除成功</string>
+    <string name="preference_rendererexp_mesa_delete_fail">刪除失敗</string>
     <!-- Custom Mesa Loader Driver Override -->
     <string name="preference_extra_osm_cmldo_categ">自訂Mesa圖形驅動程序</string>
     <string name="osm_enable_cmldo">允許自訂Mesa圖形驅動程序（目前僅Freedreno）</string>

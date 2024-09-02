@@ -116,7 +116,7 @@
     <string name="preference_rendererexp_mesa_dialogtitle">Choose Mesa Version(Long press to delete)</string>
     <string name="preference_rendererexp_mesa_delete_defaultlib">Default library cannot be deleted</string>
     <string name="preference_rendererexp_mesa_delete_title">Delete Mesa Library</string>
-    <string name="preference_rendererexp_mesa_delete_message">Are you sure you want to delete the Mesa %s library?</string>
+    <string name="preference_rendererexp_mesa_delete_message">Are you sure you want to delete the Mesa%s library?</string>
     <string name="preference_rendererexp_mesa_deleted">Deleted successfully</string>
     <string name="preference_rendererexp_mesa_delete_fail">Delete failed</string>
     <!-- Custom Mesa Loader Driver Override -->
