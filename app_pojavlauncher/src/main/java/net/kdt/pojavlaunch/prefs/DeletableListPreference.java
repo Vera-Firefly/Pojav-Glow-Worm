@@ -60,10 +60,9 @@ public class DeletableListPreference extends ListPreference {
     }
 
     private void showDeleteConfirmationDialog(String version) {
-        String message = getContext().getString(R.string.preference_rendererexp_mesa_delete_message) + "Mesa " + version + "?";
         new AlertDialog.Builder(getContext())
             .setTitle(R.string.preference_rendererexp_mesa_delete_title)
-            .setMessage(message)
+            .setMessage(getContext().getString(R.string.preference_rendererexp_mesa_delete_message, version))
             .setPositiveButton(R.string.alertdialog_done, (dialog, which) -> {
                 boolean success = MesaUtils.INSTANCE.deleteMesaLib(version);
                 if (success) {
