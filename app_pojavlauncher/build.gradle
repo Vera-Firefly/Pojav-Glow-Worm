@@ -16,7 +16,13 @@ def getBaseVersionCode = {
     } else {
         def baseVersionCodeFile = new File("./base_version_code.txt")
         if (baseVersionCodeFile.canRead() && baseVersionCodeFile.isFile()) {
-            return baseVersionCodeFile.text.trim()
+            def fileContent = baseVersionCodeFile.text.trim()
+            try {
+                return Integer.parseInt(fileContent)
+            } catch (NumberFormatException e) {
+                println("Invalid version code in base_version_code.txt: $fileContent")
+                return baseVersionCode
+            }
         }
     }
     return baseVersionCode
@@ -129,7 +135,7 @@ android {
         versionName getVersionName()
         multiDexEnabled true //important
         resValue 'string', 'curseforge_api_key', getCFApiKey()
-        resValue 'string', 'base_version_code', getBaseVersionCode()
+        resValue 'string', 'base_version_code', getBaseVersionCode().toString()
     }
 
     buildTypes {
