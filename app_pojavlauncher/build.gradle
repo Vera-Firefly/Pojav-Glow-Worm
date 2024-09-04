@@ -4,8 +4,22 @@ plugins {
 
 static def getDate() { return new Date().format('yyyyMMdd') }
 
-static def getDateSeconds() {
+static def getVersionCode() {
     return 9999999
+}
+
+def getBaseVersionCode = {
+    def isofficial = System.getenv('IS_OFFICIAL') == 'true'
+    def baseVersionCode = 1000000
+    if (isofficial) {
+        baseVersionCode += Integer.parseInt(System.getenv("GITHUB_RUN_NUMBER"))
+    } else {
+        def baseVersionCodeFile = new File("./base_version_code.txt")
+        if (baseVersionCodeFile.canRead() && baseVersionCodeFile.isFile()) {
+            return baseVersionCodeFile.text.trim()
+        }
+    }
+    return baseVersionCode
 }
 
 def getVersionName = {
@@ -41,9 +55,14 @@ def getVersionName = {
 
     if(TAG.toString() != ""){
         TAG_STRING = TAG.toString()
-    }else {
-         // Used by github actions
-         TAG_STRING =  'fuchsia-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
+    } else {
+        if (TAG_PART_COMMIT.toString().trim() == ""){
+             //Fallback no repo
+             return ("fuchsia-" + "${getDate()}")
+        } else {
+             // Used by github actions
+             TAG_STRING =  'fuchsia-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
+        }
     }
 
     exec {
@@ -61,9 +80,9 @@ def getVersionName = {
 
 def getCFApiKey = {
     String key = System.getenv("CURSEFORGE_API_KEY");
-    if(key != null) return key;
+    if (key != null) return key;
     File curseforgeKeyFile = new File("./curseforge_key.txt");
-    if(curseforgeKeyFile.canRead() && curseforgeKeyFile.isFile()) {
+    if (curseforgeKeyFile.canRead() && curseforgeKeyFile.isFile()) {
         return curseforgeKeyFile.text;
     }
     logger.warn('BUILD: You have no CurseForge key, the curseforge api will get disabled !');
@@ -106,10 +125,11 @@ android {
         applicationId "net.kdt.pojavlaunch.firefly"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode getDateSeconds()
+        versionCode getVersionCode()
         versionName getVersionName()
         multiDexEnabled true //important
         resValue 'string', 'curseforge_api_key', getCFApiKey()
+        resValue 'string', 'base_version_code', getBaseVersionCode()
     }
 
     buildTypes {
