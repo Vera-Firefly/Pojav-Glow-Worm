@@ -59,9 +59,9 @@ def getVersionName = {
     }
 
 
-    if (TAG.toString() != "") {
+    if(TAG.toString() != ""){
         TAG_STRING = TAG.toString()
-    } else {
+    }else {
          // Used by github actions
          TAG_STRING =  'fuchsia-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
     }
