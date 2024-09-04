@@ -4,7 +4,7 @@ plugins {
 
 static def getDate() { return new Date().format('yyyyMMdd') }
 
-static def getVersionCode() {
+static def getDateSeconds() {
     return 9999999
 }
 
@@ -61,9 +61,9 @@ def getVersionName = {
 
 def getCFApiKey = {
     String key = System.getenv("CURSEFORGE_API_KEY");
-    if (key != null) return key;
+    if(key != null) return key;
     File curseforgeKeyFile = new File("./curseforge_key.txt");
-    if (curseforgeKeyFile.canRead() && curseforgeKeyFile.isFile()) {
+    if(curseforgeKeyFile.canRead() && curseforgeKeyFile.isFile()) {
         return curseforgeKeyFile.text;
     }
     logger.warn('BUILD: You have no CurseForge key, the curseforge api will get disabled !');
@@ -106,7 +106,7 @@ android {
         applicationId "net.kdt.pojavlaunch.firefly"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode getVersionCode()
+        versionCode getDateSeconds()
         versionName getVersionName()
         multiDexEnabled true //important
         resValue 'string', 'curseforge_api_key', getCFApiKey()
