@@ -39,11 +39,16 @@ def getVersionName = {
     }
 
 
-    if(TAG.toString() != ""){
+    if (TAG.toString() != "") {
         TAG_STRING = TAG.toString()
-    }else {
-         // Used by github actions
-         TAG_STRING =  'fuchsia-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
+    } else {
+        if (TAG_PART_COMMIT.toString().trim() == "") {
+            //Fallback no repo
+            return ("fuchsia-" + "${getDate()}")
+        } else {
+            // Used by github actions
+            TAG_STRING =  'fuchsia-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
+        }
     }
 
     exec {
@@ -57,6 +62,26 @@ def getVersionName = {
     }
 
     return TAG_STRING.trim().replace("-g", "-") + "-" + BRANCH.toString().trim()
+}
+
+def getBaseVersionCode = {
+    def isofficial = System.getenv('IS_OFFICIAL') == 'true'
+    def baseVersionCode = 1000000
+    if (isofficial) {
+        baseVersionCode += Integer.parseInt(System.getenv("GITHUB_RUN_NUMBER"))
+    } else {
+        def baseVersionCodeFile = new File("./base_version_code.txt")
+        if (baseVersionCodeFile.canRead() && baseVersionCodeFile.isFile()) {
+            def fileContent = baseVersionCodeFile.text.trim()
+            try {
+                return Integer.parseInt(fileContent).toString()
+            } catch (NumberFormatException e) {
+                println("Invalid version code in base_version_code.txt: $fileContent")
+                return baseVersionCode.toString()
+            }
+        }
+    }
+    return baseVersionCode.toString()
 }
 
 def getCFApiKey = {
@@ -110,6 +135,7 @@ android {
         versionName getVersionName()
         multiDexEnabled true //important
         resValue 'string', 'curseforge_api_key', getCFApiKey()
+        resValue 'string', 'base_version_code', getBaseVersionCode()
     }
 
     buildTypes {
