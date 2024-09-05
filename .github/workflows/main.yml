@@ -88,6 +88,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set IS_OFFICIAL if in the Creator Repository
+        if: github.repository_owner == 'Vera-Firefly'
+        run: echo "IS_OFFICIAL=true" >> $GITHUB_ENV
+
       - name: Get LWJGL3
         uses: dawidd6/action-download-artifact@v3
         with:
