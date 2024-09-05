@@ -20,7 +20,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: SET ENV
+      - name: Set IS_OFFICIAL if in the Creator Repository
+        if: github.repository_owner == 'Vera-Firefly'
+        run: echo "IS_OFFICIAL=true" >> $GITHUB_ENV
+
+      - name: Get Jre
         run: |
           echo "GET_JRE=1" >> $GITHUB_ENV
 
