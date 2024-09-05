@@ -68,7 +68,7 @@ def getBaseVersionCode = {
     def isofficial = System.getenv('IS_OFFICIAL') == 'true'
     def baseVersionCode = 1000000
     if (isofficial) {
-        baseVersionCode += Integer.parseInt(System.getenv("GITHUB_RUN_NUMBER"))
+        return (baseVersionCode + Integer.parseInt(System.getenv("GITHUB_RUN_NUMBER"))).toString()
     } else {
         def baseVersionCodeFile = new File("./base_version_code.txt")
         if (baseVersionCodeFile.canRead() && baseVersionCodeFile.isFile()) {
