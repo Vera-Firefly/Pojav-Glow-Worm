@@ -236,7 +236,7 @@ public class LauncherActivity extends BaseActivity {
         mProgressLayout.observe(ProgressLayout.DOWNLOAD_VERSION_LIST);
         // 初始化并调用 UpdateLauncher 进行更新检查
         UpdateLauncher updateLauncher = new UpdateLauncher(this);
-        updateLauncher.checkForUpdates();
+        updateLauncher.checkCachedApk();
     }
 
     @Override

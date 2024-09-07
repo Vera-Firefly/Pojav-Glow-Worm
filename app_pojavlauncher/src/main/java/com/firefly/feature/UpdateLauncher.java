@@ -28,6 +28,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class UpdateLauncher {
     private static final String GITHUB_API = "https://api.github.com/repos/Vera-Firefly/Pojav-Glow-Worm/releases/latest";
@@ -46,7 +48,35 @@ public class UpdateLauncher {
         }
     }
 
-    public void checkForUpdates() {
+    public void checkCachedApk() {
+        File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        File apkFile = new File(dir, "cache.apk");
+        File apkVersionFile = new File(dir, "apk_version");
+
+        if (apkFile.exists() && apkVersionFile.exists()) {
+            try {
+                String savedTagName = new String(java.nio.file.Files.readAllBytes(apkVersionFile.toPath()));
+                int savedVersionCode = Integer.parseInt(savedTagName.replaceAll("[^\\d]", ""));
+                if (savedVersionCode > localVersionCode) {
+                    installApk(apkFile);
+                } else {
+                    apkFile.delete();
+                    apkVersionFile.delete();
+                    checkForUpdates();
+                }
+            } catch (IOException | NumberFormatException e) {
+                e.printStackTrace();
+            }
+        } else if (apkFile.exists() || apkVersionFile.exists()) {
+            if (apkFile.exists()) apkFile.delete();
+            if (apkVersionFile.exists()) apkVersionFile.delete();
+            checkForUpdates();
+        } else {
+            checkForUpdates();
+        }
+    }
+
+    private void checkForUpdates() {
         new GetLatestReleaseTask().execute(GITHUB_API);
     }
 
@@ -126,19 +156,24 @@ public class UpdateLauncher {
 
                 if (apkUrl != null) {
                     dialog.dismiss();
-                    startDownload(apkUrl);
+                    startDownload(apkUrl, tagName);
                 }
             })
             .setNegativeButton(R.string.alertdialog_cancel, (dialog, id) -> dialog.cancel())
             .show();
     }
 
-    private void startDownload(String apkUrl) {
-        new DownloadApkTask().execute(apkUrl);
+    private void startDownload(String apkUrl, String tagName) {
+        new DownloadApkTask(tagName).execute(apkUrl);
     }
 
     private class DownloadApkTask extends AsyncTask<String, Integer, File> {
+        private String tagName;
         ProgressDialog progressDialog;
+
+        public DownloadApkTask(String tagName) {
+            this.tagName = tagName;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -159,7 +194,10 @@ public class UpdateLauncher {
             try {
                 Response response = client.newCall(request).execute();
                 if (response.isSuccessful()) {
-                    apkFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "cache.apk");
+                    File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+                    apkFile = new File(dir, "cache.apk");
+                    File apkVersionFile = new File(dir, "apk_version");
+
                     InputStream inputStream = response.body().byteStream();
                     FileOutputStream outputStream = new FileOutputStream(apkFile);
                     byte[] buffer = new byte[1024];
@@ -172,6 +210,11 @@ public class UpdateLauncher {
                         outputStream.write(buffer, 0, bytesRead);
                         publishProgress((int) ((totalBytesRead * 100) / totalBytes));
                     }
+
+                    FileOutputStream versionOutputStream = new FileOutputStream(apkVersionFile);
+                    versionOutputStream.write(tagName.getBytes());
+                    versionOutputStream.flush();
+                    versionOutputStream.close();
 
                     outputStream.flush();
                     outputStream.close();
