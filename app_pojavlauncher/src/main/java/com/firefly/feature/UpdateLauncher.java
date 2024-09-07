@@ -7,6 +7,7 @@ import androidx.core.content.FileProvider;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,7 +31,7 @@ import java.io.InputStream;
 
 public class UpdateLauncher {
     private static final String GITHUB_API = "https://api.github.com/repos/Vera-Firefly/Pojav-Glow-Worm/releases/latest";
-    private static final String APK_URL_BASE = "https://github.com/Vera-Firefly/Pojav-Glow-Worm/releases/download/%s/Pojav-Glow-Worm-%s-%s.apk";
+    private static final String GITHUB_RELEASE_URL = "github.com/Vera-Firefly/Pojav-Glow-Worm/releases/download/%s/Pojav-Glow-Worm-%s-%s.apk";
     private Context context;
     private int localVersionCode;
 
@@ -96,7 +97,7 @@ public class UpdateLauncher {
             builder.setTitle("检测到更新" + versionName)
                     .setMessage(releaseNotes)
                     .setCancelable(true)
-                    .setPositiveButton("更新", (dialog, id) -> startDownload(tagName, versionName, archModel))
+                    .setPositiveButton("更新", (dialog, id) -> showDownloadSourceDialog(tagName, versionName, archModel))
                     .setNegativeButton("忽略", (dialog, id) -> dialog.cancel())
                     .show();
         } catch (JSONException e) {
@@ -104,8 +105,37 @@ public class UpdateLauncher {
         }
     }
 
-    private void startDownload(String tagName, String versionName, String archModel) {
-        String apkUrl = String.format(APK_URL_BASE, tagName, versionName, archModel);
+    private void showDownloadSourceDialog(String tagName, String versionName, String archModel) {
+        String[] downloadSources = {"GitHub", "GHPROXY"};
+        String githubUrl = String.format(GITHUB_RELEASE_URL, tagName, versionName, archModel);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("选择下载源")
+            .setCancelable(false)
+            .setSingleChoiceItems(downloadSources, -1, (dialog, which) -> {
+                String selectedSource = downloadSources[which];
+                String apkUrl;
+                switch (selectedSource) {
+                    case "GitHub":
+                        apkUrl = "https://" + githubUrl;
+                        break;
+                    case "GHPROXY":
+                        apkUrl = "https://mirror.ghproxy.com/" + githubUrl;
+                        break;
+                    default:
+                        apkUrl = null;
+                }
+
+                if (apkUrl != null) {
+                    dialog.dismiss();
+                    startDownload(apkUrl);
+                }
+            })
+            .setNegativeButton("取消", (dialog, id) -> dialog.cancel())
+            .show();
+    }
+
+    private void startDownload(String apkUrl) {
         new DownloadApkTask().execute(apkUrl);
     }
 
