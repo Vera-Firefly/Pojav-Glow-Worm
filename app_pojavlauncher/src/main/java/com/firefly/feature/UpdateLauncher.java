@@ -183,7 +183,7 @@ public class UpdateLauncher {
 
     private String getArchModel() {
         int arch = Tools.DEVICE_ARCHITECTURE;
-        if(arch == ARCH_ARM64) return "arm64";
+        if(arch == ARCH_ARM64) return "arm64-v8a";
         if(arch == ARCH_ARM) return "armeabi-v7a";
         if(arch == ARCH_X86_64) return "x86_64";
         if(arch == ARCH_X86) return "x86";

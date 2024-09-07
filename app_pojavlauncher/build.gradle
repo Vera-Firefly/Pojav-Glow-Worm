@@ -66,7 +66,7 @@ def getVersionName = {
 
 def getBaseVersionCode = {
     def isofficial = System.getenv('IS_OFFICIAL') == 'true'
-    def baseVersionCode = 100000000
+    def baseVersionCode = 1000000
     if (isofficial) {
         return (baseVersionCode + Integer.parseInt(System.getenv("GITHUB_RUN_NUMBER"))).toString()
     } else {
