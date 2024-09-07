@@ -124,5 +124,13 @@
     <string name="osm_enable_cmldo">允许自定义Mesa图形驱动程序(目前仅Freedreno)</string>
     <string name="osm_enable_cmldo_desc">如果需要,您可以自由选择处理方法</string>
     <string name="osm_choose_cmldo">选择Mesa图形驱动程序</string>
+    <!-- Update Launcher -->
+    <string name="pgw_settings_updatelauncher_updated">已经是最新版本 %s</string>
+    <string name="pgw_settings_updatelauncher_new_version">新版本 %s 可用,准备更新</string>
+    <string name="pgw_settings_updatelauncher_update">更新</string>
+    <string name="pgw_settings_updatelauncher_cancel">忽略</string>
+    <string name="pgw_settings_updatelauncher_source">选择更新源</string>
+    <string name="pgw_settings_updatelauncher_downloading">正在下载安装包</string>
+    <string name="pgw_settings_updatelauncher_download_fail">下载失败</string>
 
 </resources>

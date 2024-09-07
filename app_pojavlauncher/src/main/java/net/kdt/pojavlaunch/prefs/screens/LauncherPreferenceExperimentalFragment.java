@@ -291,6 +291,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
     private void downloadMesa(String version) {
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setMessage(R.string.preference_rendererexp_mesa_downloading)
+                .setCancelable(false)
                 .show();
         PojavApplication.sExecutorService.execute(() -> {
             boolean data = MesaUtils.INSTANCE.downloadMesa(version);

@@ -124,5 +124,13 @@
     <string name="osm_enable_cmldo">Enable Custom Mesa Load Driver Override(Only for Freedreno)</string>
     <string name="osm_enable_cmldo_desc">If need, you can freely choose processing method</string>
     <string name="osm_choose_cmldo">Choose Mesa Loader Driver Override</string>
+    <!-- Update Launcher -->
+    <string name="pgw_settings_updatelauncher_updated">Is already the latest version %s</string>
+    <string name="pgw_settings_updatelauncher_new_version">A new version %s is available for updating</string>
+    <string name="pgw_settings_updatelauncher_update">Update</string>
+    <string name="pgw_settings_updatelauncher_cancel">Ignore</string>
+    <string name="pgw_settings_updatelauncher_source">Select Update Source</string>
+    <string name="pgw_settings_updatelauncher_downloading">Downloading installation package</string>
+    <string name="pgw_settings_updatelauncher_download_fail">Download failed</string>
 
 </resources>

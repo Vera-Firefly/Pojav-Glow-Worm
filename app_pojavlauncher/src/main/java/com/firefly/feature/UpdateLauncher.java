@@ -35,16 +35,14 @@ public class UpdateLauncher {
     private Context context;
     private int localVersionCode;
 
-    // 构造函数直接获取资源中的 base_version_code
     public UpdateLauncher(Context context) {
         this.context = context;
-        // 从资源中获取 base_version_code（处理为 string 并转换为 int）
         try {
             String versionCodeString = context.getString(R.string.base_version_code);
             this.localVersionCode = Integer.parseInt(versionCodeString);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            this.localVersionCode = 0; // 转换失败
+            this.localVersionCode = 0;
         }
     }
 
@@ -73,11 +71,11 @@ public class UpdateLauncher {
             if (result != null) {
                 try {
                     int remoteVersionCode = Integer.parseInt(result.getString("tag_name").replaceAll("[^\\d]", ""));
-                    // 比较 GitHub 获取的版本号和本地版本号
+                    String version = String.valueOf(localVersionCode);
                     if (remoteVersionCode > localVersionCode) {
                         showUpdateDialog(result);
                     } else {
-                        Toast.makeText(context, "已经是最新版本", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.pgw_settings_updatelauncher_updated, version), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -94,11 +92,11 @@ public class UpdateLauncher {
             String archModel = getArchModel();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("检测到更新" + versionName)
+            builder.setTitle(context.getString(R.string.pgw_settings_updatelauncher_new_version, versionName))
                     .setMessage(releaseNotes)
                     .setCancelable(true)
-                    .setPositiveButton("更新", (dialog, id) -> showDownloadSourceDialog(tagName, versionName, archModel))
-                    .setNegativeButton("忽略", (dialog, id) -> dialog.cancel())
+                    .setPositiveButton(R.string.pgw_settings_updatelauncher_update, (dialog, id) -> showDownloadSourceDialog(tagName, versionName, archModel))
+                    .setNegativeButton(R.string.pgw_settings_updatelauncher_cancel, (dialog, id) -> dialog.cancel())
                     .show();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -110,7 +108,7 @@ public class UpdateLauncher {
         String githubUrl = String.format(GITHUB_RELEASE_URL, tagName, versionName, archModel);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("选择下载源")
+        builder.setTitle(R.string.pgw_settings_updatelauncher_source)
             .setCancelable(false)
             .setSingleChoiceItems(downloadSources, -1, (dialog, which) -> {
                 String selectedSource = downloadSources[which];
@@ -131,7 +129,7 @@ public class UpdateLauncher {
                     startDownload(apkUrl);
                 }
             })
-            .setNegativeButton("取消", (dialog, id) -> dialog.cancel())
+            .setNegativeButton(R.string.alertdialog_cancel, (dialog, id) -> dialog.cancel())
             .show();
     }
 
@@ -146,7 +144,7 @@ public class UpdateLauncher {
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(context);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setTitle("下载更新");
+            progressDialog.setTitle(R.string.pgw_settings_updatelauncher_downloading);
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
@@ -197,7 +195,7 @@ public class UpdateLauncher {
             if (apkFile != null) {
                 installApk(apkFile);
             } else {
-                Toast.makeText(context, "下载失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.pgw_settings_updatelauncher_download_fail), Toast.LENGTH_SHORT).show();
             }
         }
     }
