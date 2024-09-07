@@ -2,6 +2,8 @@ package com.firefly.feature;
 
 import static net.kdt.pojavlaunch.Architecture.*;
 
+import androidx.core.content.FileProvider;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -28,7 +30,7 @@ import java.io.InputStream;
 
 public class UpdateLauncher {
     private static final String GITHUB_API = "https://api.github.com/repos/Vera-Firefly/Pojav-Glow-Worm/releases/latest";
-    private static final String APK_URL_BASE = "github.com/Vera-Firefly/Pojav-Glow-Worm/releases/download/%s/Pojav-Glow-Worm-%s-%s.apk"; // 根据架构修改
+    private static final String APK_URL_BASE = "https://github.com/Vera-Firefly/Pojav-Glow-Worm/releases/download/%s/Pojav-Glow-Worm-%s-%s.apk";
     private Context context;
     private int localVersionCode;
 
@@ -41,7 +43,7 @@ public class UpdateLauncher {
             this.localVersionCode = Integer.parseInt(versionCodeString);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            this.localVersionCode = 0; // 默认值，表示转换失败
+            this.localVersionCode = 0; // 转换失败
         }
     }
 
@@ -172,14 +174,16 @@ public class UpdateLauncher {
 
     private void installApk(File apkFile) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        Uri apkUri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", apkFile);
+        intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         context.startActivity(intent);
     }
 
     private String getArchModel() {
         int arch = Tools.DEVICE_ARCHITECTURE;
-        if(arch == ARCH_ARM64) return "arm64-v8a";
+        if(arch == ARCH_ARM64) return "arm64";
         if(arch == ARCH_ARM) return "armeabi-v7a";
         if(arch == ARCH_X86_64) return "x86_64";
         if(arch == ARCH_X86) return "x86";
