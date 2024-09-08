@@ -183,7 +183,9 @@ android {
                 }
             }
         }
-        outputFileName = "app_pojavlauncher-${variant.buildType.name}-${abi}.apk"
+        def beseVersionName = getDate().toString()
+        def baseName = "Pojav-Glow-Worm-${variant.buildType.name == 'release' ? beseVersionName : "Debug-${beseVersionName}"}"
+        outputFileName = "${baseName}-${abi}.apk"
         }
     }
     splits {
