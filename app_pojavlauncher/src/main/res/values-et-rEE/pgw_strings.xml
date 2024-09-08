@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Varu raami puhverserver</string>
     <string name="preference_spare_framebuffer">Kasutage teise skeemi raamipuhverserverit, sulgege, kui käivitamine ebaõnnestub</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0 (Vaikimisi)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2 (Vaikimisi)</string>
     <string name="preference_extra_mesa_version">Mesa versioon</string>
     <string name="preference_extra_driver_model">Galliumi draiveri asendamine</string>
     <!-- Dialog -->

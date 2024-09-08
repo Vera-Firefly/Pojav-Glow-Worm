@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Εφεδρικό framebuffer</string>
     <string name="preference_spare_framebuffer">Χρησιμοποιήστε το framebuffer του δεύτερου σχήματος, κλείστε αν η εκκίνηση αποτύχει</string>
     <string name="preference_renderer_setup_extra">Renderer (Επιπλέον)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0 (Προεπιλογή)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2 (Προεπιλογή)</string>
     <string name="preference_extra_mesa_version">Έκδοση Mesa</string>
     <string name="preference_extra_driver_model">Override οδηγού Gallium</string>
     <!-- Διάλογος -->

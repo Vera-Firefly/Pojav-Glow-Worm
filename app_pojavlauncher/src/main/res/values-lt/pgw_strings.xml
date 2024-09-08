@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Atsarginis rėmelio buferis</string>
     <string name="preference_spare_framebuffer">Naudoti antrosios schemos rėmelio buferį, uždaryti, jei paleidimas nepavyko</string>
     <string name="preference_renderer_setup_extra">Papildomas vaizdo apdorojimas</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0 (numatytasis)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2 (numatytasis)</string>
     <string name="preference_extra_mesa_version">Mesa versija</string>
     <string name="preference_extra_driver_model">Gallium draiverio perrašymas</string>
     <!-- Dialog -->

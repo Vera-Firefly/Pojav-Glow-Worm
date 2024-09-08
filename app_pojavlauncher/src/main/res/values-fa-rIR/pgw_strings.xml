@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">بافر صفحه اضافی</string>
     <string name="preference_spare_framebuffer">استفاده از بافر صفحه طرح دوم، در صورت شکست راه‌اندازی ببندید</string>
     <string name="preference_renderer_setup_extra">رندرر (اضافی)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0 (پیش‌فرض)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2 (پیش‌فرض)</string>
     <string name="preference_extra_mesa_version">نسخه Mesa</string>
     <string name="preference_extra_driver_model">جایگزینی درایور Gallium</string>
     <!-- Dialog -->

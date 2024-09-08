@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">备用帧缓冲区</string>
     <string name="preference_spare_framebuffer">使用第二方案帧缓冲区,如果启动失败,请关闭</string>
     <string name="preference_renderer_setup_extra">渲染器 (拓展)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0 (默认)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2 (默认)</string>
     <string name="preference_extra_mesa_version">Mesa版本</string>
     <string name="preference_extra_driver_model">Gallium驱动程序</string>
     <!-- Dialog -->

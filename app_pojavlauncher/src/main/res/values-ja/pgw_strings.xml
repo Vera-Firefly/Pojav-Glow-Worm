@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">予備フレームバッファ</string>
     <string name="preference_spare_framebuffer">第2のスキームフレームバッファを使用し、起動に失敗した場合は閉じます</string>
     <string name="preference_renderer_setup_extra">レンダラー（追加）</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0（デフォルト）</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2（デフォルト）</string>
     <string name="preference_extra_mesa_version">Mesaバージョン</string>
     <string name="preference_extra_driver_model">Galliumドライバーのオーバーライド</string>
     <!-- Dialog -->

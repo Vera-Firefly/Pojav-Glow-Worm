@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Ehtiyat çərçivə buferi</string>
     <string name="preference_spare_framebuffer">İkinci sxemin çərçivə buferini istifadə et, əgər başlamaq uğursuz olarsa bağla</string>
     <string name="preference_renderer_setup_extra">Renderer (Əlavə)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0 (Varsayılan)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2 (Varsayılan)</string>
     <string name="preference_extra_mesa_version">Mesa Versiyası</string>
     <string name="preference_extra_driver_model">Gallium Sürücü Tətbiqi</string>
     <!-- Dialoq -->

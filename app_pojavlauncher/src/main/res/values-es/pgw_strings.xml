@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Buffer de cuadros de reserva</string>
     <string name="preference_spare_framebuffer">Usar el buffer de cuadros del esquema secundario, cerrarlo si el lanzamiento falla</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0 (Predeterminado)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2 (Predeterminado)</string>
     <string name="preference_extra_mesa_version">Versión de Mesa</string>
     <string name="preference_extra_driver_model">Anulación del controlador Gallium</string>
     <!-- Dialog -->

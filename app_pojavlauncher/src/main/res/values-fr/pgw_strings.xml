@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Tampon de trame de secours</string>
     <string name="preference_spare_framebuffer">Utiliser le tampon de trame du deuxième schéma, fermer en cas d\'échec de lancement</string>
     <string name="preference_renderer_setup_extra">Renderer (Supplémentaire)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.0 (Par défaut)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.2 (Par défaut)</string>
     <string name="preference_extra_mesa_version">Version de Mesa</string>
     <string name="preference_extra_driver_model">Remplacement du pilote Gallium</string>
     <!-- Dialog -->
