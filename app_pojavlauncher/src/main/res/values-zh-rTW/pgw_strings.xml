@@ -132,5 +132,10 @@
     <string name="pgw_settings_updatelauncher_source">選擇更新來源</string>
     <string name="pgw_settings_updatelauncher_downloading">正在下載安裝包</string>
     <string name="pgw_settings_updatelauncher_download_fail">下載失敗</string>
+    <string name="pgw_settings_updatelauncher_download_complete">下載完成</string>
+    <string name="pgw_settings_updatelauncher_file_location">APK 已儲存到: %s</string>
+    <string name="pgw_settings_updatelauncher_install">安裝</string>
+    <string name="pgw_settings_updatelauncher_install_prompt_title">安裝更新</string>
+    <string name="pgw_settings_updatelauncher_install_prompt_message">新版本已下載到 %s。你要安裝它嗎？</string>
 
 </resources>

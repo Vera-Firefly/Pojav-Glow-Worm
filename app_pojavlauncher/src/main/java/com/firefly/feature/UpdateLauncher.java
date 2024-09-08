@@ -58,7 +58,16 @@ public class UpdateLauncher {
                 String savedTagName = new String(java.nio.file.Files.readAllBytes(apkVersionFile.toPath()));
                 int savedVersionCode = Integer.parseInt(savedTagName.replaceAll("[^\\d]", ""));
                 if (savedVersionCode > localVersionCode) {
-                    installApk(apkFile);
+                    new AlertDialog.Builder(context)
+                        .setTitle(R.string.pgw_settings_updatelauncher_install_prompt_title)
+                        .setMessage(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_message, apkFile.getAbsolutePath()))
+                        .setPositiveButton(R.string.pgw_settings_updatelauncher_install, (dia, i) -> {
+                            installApk(apkFile);
+                            dia.dismiss();
+                        })
+                        .setNegativeButton(R.string.alertdialog_cancel, (dia, i) -> dia.cancel())
+                        .setCancelable(false)
+                        .show();
                 } else {
                     apkFile.delete();
                     apkVersionFile.delete();
@@ -236,7 +245,16 @@ public class UpdateLauncher {
         protected void onPostExecute(File apkFile) {
             progressDialog.dismiss();
             if (apkFile != null) {
-                installApk(apkFile);
+                new AlertDialog.Builder(context)
+                    .setTitle(R.string.pgw_settings_updatelauncher_download_complete)
+                    .setMessage(context.getString(R.string.pgw_settings_updatelauncher_file_location, apkFile.getAbsolutePath()))
+                    .setPositiveButton(R.string.pgw_settings_updatelauncher_install, (dia, i) -> {
+                        installApk(apkFile);
+                        dia.dismiss();
+                    })
+                    .setNegativeButton(R.string.alertdialog_cancel, (dia, i) -> dia.cancel())
+                    .setCancelable(false)
+                    .show();
             } else {
                 Toast.makeText(context, context.getString(R.string.pgw_settings_updatelauncher_download_fail), Toast.LENGTH_SHORT).show();
             }

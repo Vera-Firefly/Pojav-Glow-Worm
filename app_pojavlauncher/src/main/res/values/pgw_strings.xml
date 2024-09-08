@@ -132,5 +132,10 @@
     <string name="pgw_settings_updatelauncher_source">Select Update Source</string>
     <string name="pgw_settings_updatelauncher_downloading">Downloading installation package</string>
     <string name="pgw_settings_updatelauncher_download_fail">Download failed</string>
+    <string name="pgw_settings_updatelauncher_download_complete">Download Complete</string>
+    <string name="pgw_settings_updatelauncher_file_location">The APK has been saved to: %s</string>
+    <string name="pgw_settings_updatelauncher_install">Install</string>
+    <string name="pgw_settings_updatelauncher_install_prompt_title">Install Update</string>
+    <string name="pgw_settings_updatelauncher_install_prompt_message">A new version has been downloaded at %s. Do you want to install it?</string>
 
 </resources>
