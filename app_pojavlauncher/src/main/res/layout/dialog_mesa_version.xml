@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:singleLine="true"
         android:text="@string/preference_rendererexp_custom_glversion_title"
-        android:textSize="16sp"
+        android:textSize="19sp"
         android:textStyle="bold" />
 
     <TextView
