@@ -194,6 +194,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
         new CustomDialog.Builder(getContext())
             .setCustomView(view)
+            .setCancelable(false)
             .setConfirmListener(R.string.alertdialog_done, customView -> {
                 String glVersion = mMesaGLVersion.getText().toString();
                 String glslVersion = mMesaGLSLVersion.getText().toString();
@@ -223,7 +224,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
                 return true;
             })
-            .setCancelListener(R.string.alertdialog_cancel, () -> {
+            .setCancelListener(R.string.alertdialog_cancel, customView -> {
                 return true;
             })
             .build()

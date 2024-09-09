@@ -6,12 +6,13 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/custom_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:singleLine="true"
         android:text="@string/preference_rendererexp_custom_glversion_title"
-        android:textSize="19sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
