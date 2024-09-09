@@ -197,22 +197,16 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                 String glVersion = mMesaGLVersion.getText().toString();
                 String glslVersion = mMesaGLSLVersion.getText().toString();
 
-                if (!isValidVersion(glVersion, "2.8", "4.6") && !isValidVersion(glslVersion, "280", "460")) {
+                if (!isValidVersion(glVersion, "2.8", "4.6") || !isValidVersion(glslVersion, "280", "460")) {
                     showSetGLVersionDialog();
-                    mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
-                    mMesaGLVersion.requestFocus();
-                    mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
-                    mMesaGLSLVersion.requestFocus();
-                    return;
-                } else if (!isValidVersion(glVersion, "2.8", "4.6")) {
-                    showSetGLVersionDialog();
-                    mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
-                    mMesaGLVersion.requestFocus();
-                    return;
-                } else if (!isValidVersion(glslVersion, "280", "460")) {
-                    showSetGLVersionDialog();
-                    mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
-                    mMesaGLSLVersion.requestFocus();
+                    if (!isValidVersion(glVersion, "2.8", "4.6")) {
+                        mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
+                        mMesaGLVersion.requestFocus();
+                    }
+                    if (!isValidVersion(glslVersion, "280", "460")) {
+                        mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
+                        mMesaGLSLVersion.requestFocus();
+                    }
                     return;
                 }
 

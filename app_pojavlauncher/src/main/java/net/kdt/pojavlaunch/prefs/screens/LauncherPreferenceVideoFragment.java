@@ -126,14 +126,14 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                     mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_outofrange, checkValue));
                     return;
                 }
-                if (Value < 25) {
+                if (Value < 25 || Value > 1000) {
                     setVideoResolutionDialog(seek);
-                    mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_small, 25));
-                    return;
-                }
-                if (Value > 1000) {
-                    setVideoResolutionDialog(seek);
-                    mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_big, 1000));
+                    if (Value < 25) {
+                        mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_small, 25));
+                    }
+                    if (Value > 1000) {
+                        mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_big, 1000));
+                    }
                     return;
                 }
                 if (Value > 100) {
