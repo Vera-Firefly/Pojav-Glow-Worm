@@ -23,6 +23,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import com.firefly.ui.dialog.CustomDialog;
+
 import net.kdt.pojavlaunch.PojavApplication;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
@@ -190,24 +192,25 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         mMesaGLVersion.setText(LauncherPreferences.PREF_MESA_GL_VERSION);
         mMesaGLSLVersion.setText(LauncherPreferences.PREF_MESA_GLSL_VERSION);
 
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
-            .setTitle(R.string.preference_rendererexp_custom_glversion_title)
-            .setView(view)
-            .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
+        new CustomDialog.Builder(getContext())
+            .setCustomView(view)
+            .setConfirmListener(R.string.alertdialog_done, customView -> {
                 String glVersion = mMesaGLVersion.getText().toString();
                 String glslVersion = mMesaGLSLVersion.getText().toString();
 
-                if (!isValidVersion(glVersion, "2.8", "4.6") || !isValidVersion(glslVersion, "280", "460")) {
-                    showSetGLVersionDialog();
-                    if (!isValidVersion(glVersion, "2.8", "4.6")) {
+                boolean validGLVersion = isValidVersion(glVersion, "2.8", "4.6");
+                boolean validGLSLVersion = isValidVersion(glslVersion, "280", "460");
+
+                if (!validGLVersion || !validGLSLVersion) {
+                    if (!validGLVersion) {
                         mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
                         mMesaGLVersion.requestFocus();
                     }
-                    if (!isValidVersion(glslVersion, "280", "460")) {
+                    if (!validGLSLVersion) {
                         mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
                         mMesaGLSLVersion.requestFocus();
                     }
-                    return;
+                    return false;
                 }
 
                 LauncherPreferences.PREF_MESA_GL_VERSION = glVersion;
@@ -217,10 +220,14 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
                     .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
                     .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
                     .apply();
+
+                return true;
             })
-            .setNegativeButton(R.string.alertdialog_cancel, null)
-            .create();
-        dialog.show();
+            .setCancelListener(R.string.alertdialog_cancel, () -> {
+                return true;
+            })
+            .build()
+            .show();
     }
 
     // Check whether the GL/GLSL version is within the acceptable range
