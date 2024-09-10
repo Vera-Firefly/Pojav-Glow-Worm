@@ -28,6 +28,7 @@ import net.kdt.pojavlaunch.multirt.MultiRTConfigDialog;
 import net.kdt.pojavlaunch.prefs.CustomSeekBarPreference;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
+import com.firefly.ui.dialog.CustomDialog;
 import com.movtery.utils.MemoryUtils;
 
 import java.util.Timer;
@@ -136,16 +137,15 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         View view = inflater.inflate(R.layout.dialog_java_memory, null);
         mSetJavaMemory = view.findViewById(R.id.set_java_memory);
         mSetJavaMemory.setText(String.valueOf(seek.getValue()));
-        AlertDialog dialog = new AlertDialog.Builder(requireContext())
-            .setTitle(R.string.mcl_memory_allocation)
+        new CustomDialog.Builder(requireContext())
+            .setTitle(getString(R.string.mcl_memory_allocation))
             .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
-            .setView(view)
-            .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
+            .setCustomView(view)
+            .setConfirmListener(R.string.alertdialog_done, customView -> {
                 String checkValue = mSetJavaMemory.getText().toString();
                 if (checkValue.isEmpty()) {
-                    setMemoryAllocationDialog(seek, maxRAM);
                     mSetJavaMemory.setError(getString(R.string.global_error_field_empty));
-                    return;
+                    return false;
                 }
                 int Memory;
                 try {
@@ -153,25 +153,24 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
                 } catch (NumberFormatException e) {
                     Log.e("allocationSeek", e.toString());
                     // mSetJavaMemory.setError(e.toString());
-                    setMemoryAllocationDialog(seek, maxRAM);
                     mSetJavaMemory.setError(requireContext().getString(R.string.setting_java_memory_outofrange, checkValue));
-                    return;
+                    return false;
                 }
                 if (Memory < 256 || Memory > maxRAM) {
-                    setMemoryAllocationDialog(seek, maxRAM);
                     if (Memory < 256) {
                         mSetJavaMemory.setError(requireContext().getString(R.string.zh_setting_java_memory_too_small, 256));
                     }
                     if (Memory > maxRAM) {
                         mSetJavaMemory.setError(requireContext().getString(R.string.zh_setting_java_memory_too_big, maxRAM));
                     }
-                    return;
+                    return false;
                 }
                 seek.setValue(Memory);
+                return true;
             })
-            .setNegativeButton(R.string.alertdialog_cancel, null)
-            .create();
-        dialog.show();
+            .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+            .build()
+            .show();
     }
 
 }

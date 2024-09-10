@@ -169,16 +169,18 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
     }
 
     private void onExpRendererDialog(Preference pre) {
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
-            .setTitle(R.string.preference_rendererexp_alertdialog_warning)
-            .setMessage(R.string.preference_rendererexp_alertdialog_message)
-            .setPositiveButton(R.string.preference_rendererexp_alertdialog_done, null)
-            .setNegativeButton(R.string.preference_rendererexp_alertdialog_cancel, (dia, which) -> {
+        new CustomDialog.Builder(getContext())
+            .setTitle(getString(R.string.preference_rendererexp_alertdialog_warning))
+            .setMessage(getString(R.string.preference_rendererexp_alertdialog_message))
+            .setConfirmListener(R.string.preference_rendererexp_alertdialog_done, customView -> true)
+            .setCancelListener(R.string.preference_rendererexp_alertdialog_cancel, customView -> {
                 onChangeRenderer();
                 ((SwitchPreference) pre).setChecked(false);
+                return true;
             })
-            .create();
-        dialog.show();
+            .setCancelable(false)
+            .build()
+            .show();
     }
 
     // Custom Mesa GL/GLSL Version
@@ -224,9 +226,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
                 return true;
             })
-            .setCancelListener(R.string.alertdialog_cancel, customView -> {
-                return true;
-            })
+            .setCancelListener(R.string.alertdialog_cancel, customView -> true)
             .build()
             .show();
     }

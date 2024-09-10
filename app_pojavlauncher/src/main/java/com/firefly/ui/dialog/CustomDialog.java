@@ -16,8 +16,8 @@ import net.kdt.pojavlaunch.R;
 public class CustomDialog {
     private final AlertDialog dialog;
 
-    private CustomDialog(Context context, String title, String message, View customView,
-                         String confirmButtonText, String cancelButtonText,
+    private CustomDialog(Context context, String title, String message, String scrollmessage,
+                         View customView, String confirmButtonText, String cancelButtonText,
                          OnCancelListener cancelListener, OnConfirmListener confirmListener,
                          String button1Text, String button2Text, String button3Text, String button4Text,
                          OnButtonClickListener button1Listener, OnButtonClickListener button2Listener,
@@ -30,6 +30,7 @@ public class CustomDialog {
 
         TextView titleTextView = view.findViewById(R.id.custom_dialog_title);
         TextView messageTextView = view.findViewById(R.id.custom_dialog_message);
+        TextView scrollmessageTextView = view.findViewById(R.id.custom_dialog_scroll_message);
         ScrollView customScrollView = view.findViewById(R.id.custom_scroll_view);
         Button button1 = view.findViewById(R.id.custom_dialog_button_1);
         Button button2 = view.findViewById(R.id.custom_dialog_button_2);
@@ -47,6 +48,11 @@ public class CustomDialog {
         if (message != null && !message.isEmpty()) {
             messageTextView.setText(message);
             messageTextView.setVisibility(View.VISIBLE);
+        }
+
+        if (scrollmessage != null && !scrollmessage.isEmpty()) {
+            scrollmessageTextView.setText(scrollmessage);
+            scrollmessageTextView.setVisibility(View.VISIBLE);
             customScrollView.setVisibility(View.VISIBLE);
         }
 
@@ -142,6 +148,7 @@ public class CustomDialog {
         private final Context context;
         private String title;
         private String message;
+        private String scrollmessage;
         private View customView;
         private String button1Text;
         private String button2Text;
@@ -168,6 +175,11 @@ public class CustomDialog {
 
         public Builder setMessage(String message) {
             this.message = message;
+            return this;
+        }
+
+        public Builder setScrollMessage(String scrollmessage) {
+            this.scrollmessage = scrollmessage;
             return this;
         }
 
@@ -218,7 +230,7 @@ public class CustomDialog {
         }
 
         public CustomDialog build() {
-            return new CustomDialog(context, title, message, customView,
+            return new CustomDialog(context, title, message, scrollmessage, customView,
                     confirmButtonText, cancelButtonText, cancelListener, confirmListener,
                     button1Text, button2Text, button3Text, button4Text,
                     button1Listener, button2Listener, button3Listener, button4Listener,

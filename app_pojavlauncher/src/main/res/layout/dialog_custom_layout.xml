@@ -19,6 +19,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/custom_dialog_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/custom_dialog_title"
+        app:layout_constraintBottom_toTopOf="@id/custom_scroll_view" />
+
     <ScrollView
         android:id="@+id/custom_scroll_view"
         android:layout_width="match_parent"
@@ -27,11 +37,11 @@
         android:layout_marginBottom="@dimen/_50sdp"
         android:paddingBottom="10dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/custom_dialog_title"
+        app:layout_constraintTop_toBottomOf="@id/custom_dialog_message"
         app:layout_constraintBottom_toTopOf="@id/custom_view_container">
 
         <TextView
-            android:id="@+id/custom_dialog_message"
+            android:id="@+id/custom_dialog_scroll_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"

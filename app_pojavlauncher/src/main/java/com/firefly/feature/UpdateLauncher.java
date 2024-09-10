@@ -135,7 +135,7 @@ public class UpdateLauncher {
 
             CustomDialog.Builder builder = new CustomDialog.Builder(context);
             builder.setTitle(context.getString(R.string.pgw_settings_updatelauncher_new_version, versionName))
-                .setMessage(releaseNotes)
+                .setScrollMessage(releaseNotes)
                 .setConfirmListener(R.string.pgw_settings_updatelauncher_update, customView -> {
                     showDownloadSourceDialog(tagName, versionName, archModel);
                     return true;

@@ -22,6 +22,8 @@ import androidx.preference.ListPreference;
 import androidx.preference.SwitchPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
+import com.firefly.ui.dialog.CustomDialog;
+
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.CustomSeekBarPreference;
@@ -107,14 +109,13 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         View view = inflater.inflate(R.layout.dialog_video_resolution, null);
         mSetVideoResolution = view.findViewById(R.id.set_resolution);
         mSetVideoResolution.setText(String.valueOf(seek.getValue()));
-        AlertDialog dialog = new AlertDialog.Builder(requireContext())
-            .setView(view)
-            .setPositiveButton(R.string.alertdialog_done, (dia, i) -> {
+        new CustomDialog.Builder(requireContext())
+            .setCustomView(view)
+            .setConfirmListener(R.string.alertdialog_done, customView -> {
                 String checkValue = mSetVideoResolution.getText().toString();
                 if (checkValue.isEmpty()) {
-                    setVideoResolutionDialog(seek);
                     mSetVideoResolution.setError(getString(R.string.global_error_field_empty));
-                    return;
+                    return false;
                 }
                 int Value;
                 try {
@@ -122,19 +123,17 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 } catch (NumberFormatException e) {
                     Log.e("VideoResolution", e.toString());
                     // mSetVideoResolution.setError(e.toString());
-                    setVideoResolutionDialog(seek);
                     mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_outofrange, checkValue));
-                    return;
+                    return false;
                 }
                 if (Value < 25 || Value > 1000) {
-                    setVideoResolutionDialog(seek);
                     if (Value < 25) {
                         mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_small, 25));
                     }
                     if (Value > 1000) {
                         mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_big, 1000));
                     }
-                    return;
+                    return false;
                 }
                 if (Value > 100) {
                     seek.setRange(25, Value);
@@ -142,10 +141,11 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                     seek.setRange(25, 100);
                 }
                 seek.setValue(Value);
+                return true;
             })
-            .setNegativeButton(R.string.alertdialog_cancel, null)
-            .create();
-        dialog.show();
+            .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+            .build()
+            .show();
     }
 
 }
