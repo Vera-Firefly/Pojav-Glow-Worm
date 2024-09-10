@@ -14,6 +14,8 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.firefly.ui.dialog.CustomDialog;
+
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 
@@ -58,15 +60,16 @@ public class UpdateLauncher {
                 String savedTagName = new String(java.nio.file.Files.readAllBytes(apkVersionFile.toPath()));
                 int savedVersionCode = Integer.parseInt(savedTagName.replaceAll("[^\\d]", ""));
                 if (savedVersionCode > localVersionCode) {
-                    new AlertDialog.Builder(context)
-                        .setTitle(R.string.pgw_settings_updatelauncher_install_prompt_title)
+                    new CustomDialog.Builder(context)
+                        .setTitle(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_title))
                         .setMessage(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_message, apkFile.getAbsolutePath()))
-                        .setPositiveButton(R.string.pgw_settings_updatelauncher_install, (dia, i) -> {
+                        .setConfirmListener(R.string.pgw_settings_updatelauncher_install, customView -> {
                             installApk(apkFile);
-                            dia.dismiss();
+                            return true;
                         })
-                        .setNegativeButton(R.string.alertdialog_cancel, (dia, i) -> dia.cancel())
+                        .setCancelListener(R.string.alertdialog_cancel, customView -> true)
                         .setCancelable(false)
+                        .build()
                         .show();
                 } else {
                     apkFile.delete();
@@ -130,13 +133,17 @@ public class UpdateLauncher {
             String releaseNotes = releaseInfo.getString("body");
             String archModel = getArchModel();
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            CustomDialog.Builder builder = new CustomDialog.Builder(context);
             builder.setTitle(context.getString(R.string.pgw_settings_updatelauncher_new_version, versionName))
-                    .setMessage(releaseNotes)
-                    .setCancelable(true)
-                    .setPositiveButton(R.string.pgw_settings_updatelauncher_update, (dialog, id) -> showDownloadSourceDialog(tagName, versionName, archModel))
-                    .setNegativeButton(R.string.pgw_settings_updatelauncher_cancel, (dialog, id) -> dialog.cancel())
-                    .show();
+                .setMessage(releaseNotes)
+                .setConfirmListener(R.string.pgw_settings_updatelauncher_update, customView -> {
+                    showDownloadSourceDialog(tagName, versionName, archModel);
+                    return true;
+                })
+                .setButton1Listener(context.getString(R.string.pgw_settings_updatelauncher_cancel), customView -> true)
+                .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+                .build()
+                .show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -245,15 +252,16 @@ public class UpdateLauncher {
         protected void onPostExecute(File apkFile) {
             progressDialog.dismiss();
             if (apkFile != null) {
-                new AlertDialog.Builder(context)
-                    .setTitle(R.string.pgw_settings_updatelauncher_download_complete)
+                new CustomDialog.Builder(context)
+                    .setTitle(context.getString(R.string.pgw_settings_updatelauncher_download_complete))
                     .setMessage(context.getString(R.string.pgw_settings_updatelauncher_file_location, apkFile.getAbsolutePath()))
-                    .setPositiveButton(R.string.pgw_settings_updatelauncher_install, (dia, i) -> {
+                    .setConfirmListener(R.string.pgw_settings_updatelauncher_install, customView -> {
                         installApk(apkFile);
-                        dia.dismiss();
+                        return true;
                     })
-                    .setNegativeButton(R.string.alertdialog_cancel, (dia, i) -> dia.cancel())
+                    .setCancelListener(R.string.alertdialog_cancel, customView -> true)
                     .setCancelable(false)
+                    .build()
                     .show();
             } else {
                 Toast.makeText(context, context.getString(R.string.pgw_settings_updatelauncher_download_fail), Toast.LENGTH_SHORT).show();

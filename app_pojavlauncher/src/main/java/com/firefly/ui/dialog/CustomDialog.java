@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import net.kdt.pojavlaunch.R;
@@ -29,6 +30,7 @@ public class CustomDialog {
 
         TextView titleTextView = view.findViewById(R.id.custom_dialog_title);
         TextView messageTextView = view.findViewById(R.id.custom_dialog_message);
+        ScrollView customScrollView = view.findViewById(R.id.custom_scroll_view);
         Button button1 = view.findViewById(R.id.custom_dialog_button_1);
         Button button2 = view.findViewById(R.id.custom_dialog_button_2);
         Button button3 = view.findViewById(R.id.custom_dialog_button_3);
@@ -45,10 +47,12 @@ public class CustomDialog {
         if (message != null && !message.isEmpty()) {
             messageTextView.setText(message);
             messageTextView.setVisibility(View.VISIBLE);
+            customScrollView.setVisibility(View.VISIBLE);
         }
 
         if (customView != null && customContainer != null) {
             customContainer.addView(customView);
+            customContainer.setVisibility(View.VISIBLE);
         }
 
         if (confirmButtonText != null) confirmButton.setText(confirmButtonText);
