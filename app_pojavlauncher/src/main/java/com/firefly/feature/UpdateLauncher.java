@@ -1,6 +1,7 @@
 package com.firefly.feature;
 
 import static net.kdt.pojavlaunch.Architecture.*;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
 
 import androidx.core.content.FileProvider;
 
@@ -38,9 +39,11 @@ public class UpdateLauncher {
     private static final String GITHUB_RELEASE_URL = "github.com/Vera-Firefly/Pojav-Glow-Worm/releases/download/%s/Pojav-Glow-Worm-%s-%s.apk";
     private Context context;
     private int localVersionCode;
+    File dir;
 
     public UpdateLauncher(Context context) {
         this.context = context;
+        this.dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         try {
             String versionCodeString = context.getString(R.string.base_version_code);
             this.localVersionCode = Integer.parseInt(versionCodeString);
@@ -50,49 +53,17 @@ public class UpdateLauncher {
         }
     }
 
-    public void checkCachedApk() {
-        File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-        File apkFile = new File(dir, "cache.apk");
-        File apkVersionFile = new File(dir, "apk_version");
-
-        if (apkFile.exists() && apkVersionFile.exists()) {
-            try {
-                String savedTagName = new String(java.nio.file.Files.readAllBytes(apkVersionFile.toPath()));
-                int savedVersionCode = Integer.parseInt(savedTagName.replaceAll("[^\\d]", ""));
-                if (savedVersionCode > localVersionCode) {
-                    new CustomDialog.Builder(context)
-                        .setTitle(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_title))
-                        .setMessage(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_message, apkFile.getAbsolutePath()))
-                        .setConfirmListener(R.string.pgw_settings_updatelauncher_install, customView -> {
-                            installApk(apkFile);
-                            return true;
-                        })
-                        .setCancelListener(R.string.alertdialog_cancel, customView -> true)
-                        .setCancelable(false)
-                        .build()
-                        .show();
-                } else {
-                    apkFile.delete();
-                    apkVersionFile.delete();
-                    checkForUpdates();
-                }
-            } catch (IOException | NumberFormatException e) {
-                e.printStackTrace();
-            }
-        } else if (apkFile.exists() || apkVersionFile.exists()) {
-            if (apkFile.exists()) apkFile.delete();
-            if (apkVersionFile.exists()) apkVersionFile.delete();
-            checkForUpdates();
-        } else {
-            checkForUpdates();
-        }
-    }
-
-    private void checkForUpdates() {
-        new GetLatestReleaseTask().execute(GITHUB_API);
+    public void checkForUpdates(boolean ignore) {
+        new GetLatestReleaseTask(ignore).execute(GITHUB_API);
     }
 
     private class GetLatestReleaseTask extends AsyncTask<String, Void, JSONObject> {
+        private boolean ignore;
+
+        public GetLatestReleaseTask(boolean ignore) {
+            this.ignore = ignore;
+        }
+    
         @Override
         protected JSONObject doInBackground(String... urls) {
             OkHttpClient client = new OkHttpClient();
@@ -115,8 +86,8 @@ public class UpdateLauncher {
                     int remoteVersionCode = Integer.parseInt(result.getString("tag_name").replaceAll("[^\\d]", ""));
                     String version = String.valueOf(localVersionCode);
                     if (remoteVersionCode > localVersionCode) {
-                        showUpdateDialog(result);
-                    } else {
+                        checkCachedApk(result, ignore);
+                    } else if (!ignore) {
                         Toast.makeText(context, context.getString(R.string.pgw_settings_updatelauncher_updated, version), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -126,27 +97,100 @@ public class UpdateLauncher {
         }
     }
 
-    private void showUpdateDialog(JSONObject releaseInfo) {
-        try {
-            String tagName = releaseInfo.getString("tag_name");
-            String versionName = releaseInfo.getString("name");
-            String releaseNotes = releaseInfo.getString("body");
-            String archModel = getArchModel();
+    private void checkCachedApk(JSONObject releaseInfo, boolean ignore) {
+        boolean INGORE = false;
+        String tagName;
+        String versionName;
+        String releaseNotes;
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File apkFile = new File(dir, "cache.apk");
+        File apkVersionFile = new File(dir, "apk_version");
+        File ignoreVersionFile = new File(dir, "ignore_version");
 
-            CustomDialog.Builder builder = new CustomDialog.Builder(context);
-            builder.setTitle(context.getString(R.string.pgw_settings_updatelauncher_new_version, versionName))
-                .setScrollMessage(releaseNotes)
-                .setConfirmListener(R.string.pgw_settings_updatelauncher_update, customView -> {
-                    showDownloadSourceDialog(tagName, versionName, archModel);
-                    return true;
-                })
-                .setButton1Listener(context.getString(R.string.pgw_settings_updatelauncher_cancel), customView -> true)
-                .setCancelListener(R.string.alertdialog_cancel, customView -> true)
-                .build()
-                .show();
+        try {
+            tagName = releaseInfo.getString("tag_name");
+            versionName = releaseInfo.getString("name");
+            releaseNotes = releaseInfo.getString("body");
         } catch (JSONException e) {
             e.printStackTrace();
+            return;
         }
+
+        if (ignoreVersionFile.exists()) {
+            try {
+                String savedIgnoreVersion = new String(java.nio.file.Files.readAllBytes(ignoreVersionFile.toPath()));
+                String localIgnoreVersion = DEFAULT_PREF.getString("ignoreVersion", null);
+                if (savedIgnoreVersion.equals(localIgnoreVersion) && savedIgnoreVersion.equals(tagName)) {
+                    if (ignore) INGORE = true;
+                } else {
+                    ignoreVersionFile.delete();
+                }
+            } catch (IOException | NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (apkFile.exists() && apkVersionFile.exists()) {
+            try {
+                String savedTagName = new String(java.nio.file.Files.readAllBytes(apkVersionFile.toPath()));
+                int savedVersionCode = Integer.parseInt(savedTagName.replaceAll("[^\\d]", ""));
+                int releaseVersionCode = Integer.parseInt(tagName.replaceAll("[^\\d]", ""));
+                if (savedVersionCode > localVersionCode && savedVersionCode >= releaseVersionCode) {
+                    new CustomDialog.Builder(context)
+                        .setTitle(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_title))
+                        .setMessage(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_message, apkFile.getAbsolutePath()))
+                        .setConfirmListener(R.string.pgw_settings_updatelauncher_install, customView -> {
+                            installApk(apkFile);
+                            return true;
+                        })
+                        .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+                        .setCancelable(false)
+                        .build()
+                        .show();
+                } else {
+                    apkFile.delete();
+                    apkVersionFile.delete();
+                    if (!INGORE) showUpdateDialog(tagName, versionName, releaseNotes);
+                }
+            } catch (IOException | NumberFormatException e) {
+                e.printStackTrace();
+            }
+        } else if (apkFile.exists() || apkVersionFile.exists()) {
+            if (apkFile.exists()) apkFile.delete();
+            if (apkVersionFile.exists()) apkVersionFile.delete();
+            if (!INGORE) showUpdateDialog(tagName, versionName, releaseNotes);
+        } else {
+            if (!INGORE) showUpdateDialog(tagName, versionName, releaseNotes);
+        }
+    }
+
+    private void showUpdateDialog(String tagName, String versionName, String releaseNotes) {
+        String archModel = getArchModel();
+
+        new CustomDialog.Builder(context)
+            .setTitle(context.getString(R.string.pgw_settings_updatelauncher_new_version, versionName))
+            .setScrollMessage(releaseNotes)
+            .setConfirmListener(R.string.pgw_settings_updatelauncher_update, customView -> {
+                showDownloadSourceDialog(tagName, versionName, archModel);
+                return true;
+            })
+            .setButton1Listener(context.getString(R.string.pgw_settings_updatelauncher_cancel), customView -> {
+                File ignoreVersion = new File(dir, "ignore_version");
+                try (FileOutputStream OutputStream = new FileOutputStream(ignoreVersion)) {
+                    OutputStream.write(tagName.getBytes());
+                    OutputStream.flush();
+                    DEFAULT_PREF.edit().putString("ignoreVersion", tagName).apply();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return true;
+            })
+            .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+            .build()
+            .show();
     }
 
     private void showDownloadSourceDialog(String tagName, String versionName, String archModel) {
@@ -210,7 +254,6 @@ public class UpdateLauncher {
             try {
                 Response response = client.newCall(request).execute();
                 if (response.isSuccessful()) {
-                    File dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
                     apkFile = new File(dir, "cache.apk");
                     File apkVersionFile = new File(dir, "apk_version");
 

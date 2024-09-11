@@ -125,6 +125,10 @@
     <string name="osm_enable_cmldo_desc">If need, you can freely choose processing method</string>
     <string name="osm_choose_cmldo">Choose Mesa Loader Driver Override</string>
     <!-- Update Launcher -->
+    <string name="preference_launcher_title">Launcher settings</string>
+    <string name="preference_launcher_desc">Launcher Personalization</string>
+    <string name="preference_update_launcher_title">Get updated</string>
+    <string name="preference_update_launcher_desc">Get updates for the Launcher</string>
     <string name="pgw_settings_updatelauncher_updated">Is already the latest version %s</string>
     <string name="pgw_settings_updatelauncher_new_version">A new version %s is available for updating</string>
     <string name="pgw_settings_updatelauncher_update">Update</string>

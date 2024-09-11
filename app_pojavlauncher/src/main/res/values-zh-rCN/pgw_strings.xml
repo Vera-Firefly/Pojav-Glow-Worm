@@ -125,6 +125,10 @@
     <string name="osm_enable_cmldo_desc">如果需要,您可以自由选择处理方法</string>
     <string name="osm_choose_cmldo">选择Mesa图形驱动程序</string>
     <!-- Update Launcher -->
+    <string name="preference_launcher_title">启动器设置</string>
+    <string name="preference_launcher_desc">启动器个性化</string>
+    <string name="preference_update_launcher_title">获取更新</string>
+    <string name="preference_update_launcher_desc">获取启动器更新</string>
     <string name="pgw_settings_updatelauncher_updated">已经是最新版本 %s</string>
     <string name="pgw_settings_updatelauncher_new_version">新版本 %s 可用,准备更新</string>
     <string name="pgw_settings_updatelauncher_update">更新</string>
