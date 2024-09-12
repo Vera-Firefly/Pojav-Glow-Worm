@@ -377,20 +377,6 @@ public final class Tools {
             versionName = versionInfo.inheritsFrom;
         }
 
-        String userType = "mojang";
-        try {
-            Date creationDate = DateUtils.getOriginalReleaseDate(versionInfo);
-            // Minecraft 22w43a which adds chat reporting (and signing) was released on
-            // 26th October 2022. So, if the date is not before that (meaning it is equal or higher)
-            // change the userType to MSA to fix the missing signature
-            if(creationDate != null && !DateUtils.dateBefore(creationDate, 2022, 9, 26)) {
-                userType = "msa";
-            }
-        }catch (ParseException e) {
-            Log.e("CheckForProfileKey", "Failed to determine profile creation date, using \"mojang\"", e);
-        }
-
-
         Map<String, String> varArgMap = new ArrayMap<>();
         varArgMap.put("auth_session", profile.accessToken); // For legacy versions of MC
         varArgMap.put("auth_access_token", profile.accessToken);
@@ -402,7 +388,7 @@ public final class Tools {
         varArgMap.put("game_assets", ProfilePathHome.getAssetsHome());
         varArgMap.put("game_directory", gameDir.getAbsolutePath());
         varArgMap.put("user_properties", "{}");
-        varArgMap.put("user_type", userType);
+        varArgMap.put("user_type", "msa");
         varArgMap.put("version_name", versionName);
         varArgMap.put("version_type", versionInfo.type);
 
