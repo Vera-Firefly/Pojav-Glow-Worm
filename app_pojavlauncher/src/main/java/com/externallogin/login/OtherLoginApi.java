@@ -6,7 +6,9 @@ import com.google.gson.Gson;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 public class OtherLoginApi {
     private static OkHttpClient client;
@@ -41,7 +43,7 @@ public class OtherLoginApi {
         agent.setVersion(1.0);
         authRequest.setAgent(agent);
         authRequest.setRequestUser(true);
-        authRequest.setClientToken("fun");
+        authRequest.setClientToken(UUID.randomUUID().toString().toLowerCase(Locale.ROOT));
         System.out.println(new Gson().toJson(authRequest));
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(authRequest));
         Request request = new Request.Builder()
