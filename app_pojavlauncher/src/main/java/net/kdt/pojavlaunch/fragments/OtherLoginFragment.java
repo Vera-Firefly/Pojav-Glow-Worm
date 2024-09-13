@@ -249,13 +249,12 @@ public class OtherLoginFragment extends Fragment {
                 OtherLoginApi.getINSTANCE().refresh(account, true, new OtherLoginApi.Listener() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        progressDialog.dismiss();
                         account.accessToken = authResult.getAccessToken();
                         ((Activity) getContext()).runOnUiThread(() -> {
+                            progressDialog.dismiss();
                             ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
+                            Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
                         });
-                        ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
-                        Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
                     }
 
                     @Override
