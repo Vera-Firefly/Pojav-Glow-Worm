@@ -289,18 +289,18 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
 
     }
 
-    private void performLogin(MinecraftAccount minecraftAccount){
-        if(minecraftAccount.isLocal()) return;
-        if (!Objects.isNull(minecraftAccount.baseUrl)&&!minecraftAccount.baseUrl.equals("0")&&System.currentTimeMillis() > minecraftAccount.expiresAt){
+    private void performLogin(MinecraftAccount minecraftAccount) {
+        if (minecraftAccount.isLocal()) return;
+        //&&System.currentTimeMillis() > minecraftAccount.expiresAt
+        if (!Objects.isNull(minecraftAccount.baseUrl) && !minecraftAccount.baseUrl.equals("0")) {
             OtherLoginApi.getINSTANCE().setBaseUrl(minecraftAccount.baseUrl);
-            PojavApplication.sExecutorService.execute(()->{
+            PojavApplication.sExecutorService.execute(() -> {
                 try {
-                    OtherLoginApi.getINSTANCE().login(minecraftAccount.account, minecraftAccount.password, new OtherLoginApi.Listener() {
+                    OtherLoginApi.getINSTANCE().refresh(minecraftAccount, false, new OtherLoginApi.Listener() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            minecraftAccount.expiresAt=System.currentTimeMillis()+30*60*1000;
-                            minecraftAccount.accessToken=authResult.getAccessToken();
-                            ((Activity)getContext()).runOnUiThread(()->{
+                            minecraftAccount.accessToken = authResult.getAccessToken();
+                            ((Activity) getContext()).runOnUiThread(() -> {
                                 ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, minecraftAccount);
                             });
                         }
@@ -317,13 +317,9 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
             return;
         }
         mLoginBarPaint.setColor(getResources().getColor(R.color.minebutton_color));
-        if(minecraftAccount.isMicrosoft){
-            if(System.currentTimeMillis() > minecraftAccount.expiresAt){
-                // Perform login only if needed
-                new MicrosoftBackgroundLogin(true, minecraftAccount.msaRefreshToken)
-                        .performLogin(mProgressListener, mDoneListener, mErrorListener);
-            }
-            return;
+        if (minecraftAccount.isMicrosoft) {
+            new MicrosoftBackgroundLogin(true, minecraftAccount.msaRefreshToken)
+                    .performLogin(mProgressListener, mDoneListener, mErrorListener);
         }
     }
 

@@ -26,12 +26,12 @@ public class MinecraftAccount {
     public boolean isMicrosoft = false;
     public String msaRefreshToken = "0";
     public String xuid;
-    public long expiresAt;
+//    public long expiresAt;
     public String skinFaceBase64;
     private Bitmap mFaceCache;
     public String baseUrl;
     public String account;
-    public String password;
+//    public String password;
     
     void updateSkinFace(String uuid) {
         try {
@@ -134,13 +134,13 @@ public class MinecraftAccount {
         this.account = account;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
 
     public String getBaseUrl() {
