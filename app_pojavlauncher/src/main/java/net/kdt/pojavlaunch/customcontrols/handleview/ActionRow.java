@@ -27,16 +27,19 @@ public class ActionRow extends LinearLayout {
     public static final int SIDE_AUTO = 0x4;
 
     public ActionRow(Context context) {
-        super(context); init();
+        super(context);
+        init();
     }
+
     public ActionRow(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs); init();
+        super(context, attrs);
+        init();
     }
 
     public final ViewTreeObserver.OnPreDrawListener mFollowedViewListener = new ViewTreeObserver.OnPreDrawListener() {
         @Override
         public boolean onPreDraw() {
-            if(mFollowedView == null || !mFollowedView.isShown()){
+            if (mFollowedView == null || !mFollowedView.isShown()) {
                 hide();
                 return true;
             }
@@ -49,8 +52,10 @@ public class ActionRow extends LinearLayout {
     private View mFollowedView = null;
     private final int mSide = SIDE_AUTO;
 
-    /** Add action buttons and configure them */
-    private void init(){
+    /**
+     * Add action buttons and configure them
+     */
+    private void init() {
         setTranslationZ(11);
         setVisibility(GONE);
         setOrientation(HORIZONTAL);
@@ -64,78 +69,78 @@ public class ActionRow extends LinearLayout {
         actionButtons[2] = new AddSubButton(getContext());
 
         // This is not pretty code, don't do this.
-        for(ActionButtonInterface buttonInterface: actionButtons){
-            View button = ((View)(buttonInterface));
+        for (ActionButtonInterface buttonInterface : actionButtons) {
+            View button = ((View) (buttonInterface));
             addView(button, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1F));
         }
 
         setElevation(5F);
     }
 
-    public void setFollowedButton(ControlInterface controlInterface){
-        if(mFollowedView != null)
+    public void setFollowedButton(ControlInterface controlInterface) {
+        if (mFollowedView != null)
             mFollowedView.getViewTreeObserver().removeOnPreDrawListener(mFollowedViewListener);
 
-        for(ActionButtonInterface buttonInterface: actionButtons){
+        for (ActionButtonInterface buttonInterface : actionButtons) {
             buttonInterface.setFollowedView(controlInterface);
-            ((View)(buttonInterface)).setVisibility(buttonInterface.shouldBeVisible() ? VISIBLE : GONE);
+            ((View) (buttonInterface)).setVisibility(buttonInterface.shouldBeVisible() ? VISIBLE : GONE);
         }
 
         setVisibility(VISIBLE);
         mFollowedView = (View) controlInterface;
-        if(mFollowedView != null)
+        if (mFollowedView != null)
             mFollowedView.getViewTreeObserver().addOnPreDrawListener(mFollowedViewListener);
     }
 
-    private float getXPosition(int side){
-        if(side == SIDE_LEFT){
+    private float getXPosition(int side) {
+        if (side == SIDE_LEFT) {
             return mFollowedView.getX() - getWidth();
-        }else if(side == SIDE_RIGHT){
+        } else if (side == SIDE_RIGHT) {
             return mFollowedView.getX() + mFollowedView.getWidth();
-        }else{
-            return mFollowedView.getX() + mFollowedView.getWidth()/2f - getWidth()/2f;
+        } else {
+            return mFollowedView.getX() + mFollowedView.getWidth() / 2f - getWidth() / 2f;
         }
     }
 
-    private float getYPosition(int side){
-        if(side == SIDE_TOP){
+    private float getYPosition(int side) {
+        if (side == SIDE_TOP) {
             return mFollowedView.getY() - getHeight();
-        } else if(side == SIDE_BOTTOM){
+        } else if (side == SIDE_BOTTOM) {
             return mFollowedView.getY() + mFollowedView.getHeight();
-        }else{
-            return mFollowedView.getY() + mFollowedView.getHeight()/2f - getHeight()/2f;
+        } else {
+            return mFollowedView.getY() + mFollowedView.getHeight() / 2f - getHeight() / 2f;
         }
     }
 
-    private void setNewPosition(){
-        if(mFollowedView == null) return;
+    private void setNewPosition() {
+        if (mFollowedView == null) return;
         int side = pickSide();
 
         setX(MathUtils.clamp(getXPosition(side), 0, currentDisplayMetrics.widthPixels - getWidth()));
         setY(getYPosition(side));
     }
 
-    private int pickSide(){
-        if(mFollowedView == null) return mSide; //Value should not matter
+    private int pickSide() {
+        if (mFollowedView == null) return mSide; //Value should not matter
 
-        if(mSide != SIDE_AUTO) return mSide;
+        if (mSide != SIDE_AUTO) return mSide;
         //TODO improve the "algo"
         ViewGroup parent = ((ViewGroup) mFollowedView.getParent());
-        if(parent == null) return mSide;//Value should not matter
+        if (parent == null) return mSide;//Value should not matter
 
         int side = SIDE_TOP;
         float futurePos = getYPosition(side);
-        if(futurePos + getHeight() > (parent.getHeight() + getHeight()/2f)){
+        if (futurePos + getHeight() > (parent.getHeight() + getHeight() / 2f)) {
             side = SIDE_TOP;
-        }else if (futurePos < -getHeight()/2f){
+        } else if (futurePos < -getHeight() / 2f) {
             side = SIDE_BOTTOM;
         }
 
         return side;
     }
 
-    public void hide(){
-        if(mFollowedView != null)
+    public void hide() {
+        if (mFollowedView != null)
             mFollowedView.getViewTreeObserver().removeOnPreDrawListener(mFollowedViewListener);
         setVisibility(GONE);
     }

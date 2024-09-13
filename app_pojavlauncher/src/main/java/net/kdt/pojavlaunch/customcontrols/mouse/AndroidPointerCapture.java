@@ -37,11 +37,11 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
     }
 
     private void enableTouchpadIfNecessary() {
-        if(!mTouchpad.getDisplayState()) mTouchpad.enable(true);
+        if (!mTouchpad.getDisplayState()) mTouchpad.enable(true);
     }
 
     public void handleAutomaticCapture() {
-        if(!mHostView.hasWindowFocus()) {
+        if (!mHostView.hasWindowFocus()) {
             mHostView.requestFocus();
         } else {
             mHostView.requestPointerCapture();
@@ -54,32 +54,32 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
         // Yes, we actually not only receive relative mouse events here, but also absolute touchpad ones!
         // Therefore, we need to know when it's a touchpad and when it's a mouse.
 
-        if((event.getSource() & InputDevice.SOURCE_CLASS_TRACKBALL) != 0) {
+        if ((event.getSource() & InputDevice.SOURCE_CLASS_TRACKBALL) != 0) {
             // If the source claims to be a relative device by belonging to the trackball class,
             // use its coordinates directly.
-            if(mDeviceSupportsRelativeAxis) {
+            if (mDeviceSupportsRelativeAxis) {
                 // If some OEM decides to do a funny and make an absolute touchpad report itself as
                 // a trackball, we will at least have semi-valid relative positions
                 mVector[0] = event.getAxisValue(MotionEvent.AXIS_RELATIVE_X);
                 mVector[1] = event.getAxisValue(MotionEvent.AXIS_RELATIVE_Y);
-            }else {
+            } else {
                 // Otherwise trust the OS, i guess??
                 mVector[0] = event.getX();
                 mVector[1] = event.getY();
             }
-        }else {
+        } else {
             // If it's not a trackball, it's likely a touchpad and needs tracking like a touchscreen.
             mPointerTracker.trackEvent(event);
             // The relative position will already be written down into the mVector variable.
         }
 
-        if(!CallbackBridge.isGrabbing()) {
+        if (!CallbackBridge.isGrabbing()) {
             enableTouchpadIfNecessary();
             // Yes, if the user's touchpad is multi-touch we will also receive events for that.
             // So, handle the scrolling gesture ourselves.
             mVector[0] *= mMousePrescale;
             mVector[1] *= mMousePrescale;
-            if(event.getPointerCount() < 2) {
+            if (event.getPointerCount() < 2) {
                 mTouchpad.applyMotionVector(mVector);
                 mScroller.resetScrollOvershoot();
             } else {
@@ -115,7 +115,7 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
 
     private void checkSameDevice(InputDevice inputDevice) {
         int newIdentifier = inputDevice.getId();
-        if(mInputDeviceIdentifier != newIdentifier) {
+        if (mInputDeviceIdentifier != newIdentifier) {
             reinitializeDeviceSpecificProperties(inputDevice);
             mInputDeviceIdentifier = newIdentifier;
         }
@@ -130,7 +130,7 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        if(hasFocus && MainActivity.isAndroid8OrHigher()) mHostView.requestPointerCapture();
+        if (hasFocus && MainActivity.isAndroid8OrHigher()) mHostView.requestPointerCapture();
     }
 
     public void detach() {

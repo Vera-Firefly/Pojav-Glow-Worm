@@ -19,12 +19,12 @@ public class ForgeVersionListAdapter extends BaseExpandableListAdapter implement
         this.mLayoutInflater = layoutInflater;
         mGameVersions = new ArrayList<>();
         mForgeVersions = new ArrayList<>();
-        for(String version : forgeVersions) {
+        for (String version : forgeVersions) {
             int dashIndex = version.indexOf("-");
             String gameVersion = version.substring(0, dashIndex);
             List<String> versionList;
             int gameVersionIndex = mGameVersions.indexOf(gameVersion);
-            if(gameVersionIndex != -1) versionList = mForgeVersions.get(gameVersionIndex);
+            if (gameVersionIndex != -1) versionList = mForgeVersions.get(gameVersionIndex);
             else {
                 versionList = new ArrayList<>();
                 mGameVersions.add(gameVersion);
@@ -71,7 +71,7 @@ public class ForgeVersionListAdapter extends BaseExpandableListAdapter implement
 
     @Override
     public View getGroupView(int i, boolean b, View convertView, ViewGroup viewGroup) {
-        if(convertView == null)
+        if (convertView == null)
             convertView = mLayoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, viewGroup, false);
 
         ((TextView) convertView).setText(getGameVersion(i));
@@ -81,7 +81,7 @@ public class ForgeVersionListAdapter extends BaseExpandableListAdapter implement
 
     @Override
     public View getChildView(int i, int i1, boolean b, View convertView, ViewGroup viewGroup) {
-        if(convertView == null)
+        if (convertView == null)
             convertView = mLayoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, viewGroup, false);
         ((TextView) convertView).setText(getForgeVersion(i, i1));
         return convertView;
@@ -91,7 +91,7 @@ public class ForgeVersionListAdapter extends BaseExpandableListAdapter implement
         return mGameVersions.get(i);
     }
 
-    private String getForgeVersion(int i, int i1){
+    private String getForgeVersion(int i, int i1) {
         return mForgeVersions.get(i).get(i1);
     }
 

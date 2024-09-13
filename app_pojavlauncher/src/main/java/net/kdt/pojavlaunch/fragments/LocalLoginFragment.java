@@ -22,7 +22,7 @@ public class LocalLoginFragment extends Fragment {
 
     private EditText mUsernameEditText;
 
-    public LocalLoginFragment(){
+    public LocalLoginFragment() {
         super(R.layout.fragment_local_login);
     }
 
@@ -30,18 +30,20 @@ public class LocalLoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mUsernameEditText = view.findViewById(R.id.login_edit_email);
         view.findViewById(R.id.login_button).setOnClickListener(v -> {
-            if(!checkEditText()) return;
+            if (!checkEditText()) return;
 
             ExtraCore.setValue(ExtraConstants.MOJANG_LOGIN_TODO, new String[]{
-                    mUsernameEditText.getText().toString(), "" });
+                    mUsernameEditText.getText().toString(), ""});
 
             Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
         });
     }
 
 
-    /** @return Whether the mail (and password) text are eligible to make an auth request  */
-    private boolean checkEditText(){
+    /**
+     * @return Whether the mail (and password) text are eligible to make an auth request
+     */
+    private boolean checkEditText() {
 
         String text = mUsernameEditText.getText().toString();
 

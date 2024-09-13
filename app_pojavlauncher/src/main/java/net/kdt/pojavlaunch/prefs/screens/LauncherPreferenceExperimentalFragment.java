@@ -1,27 +1,17 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
-import androidx.preference.*;
-
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
+import androidx.preference.SwitchPreference;
 
 import com.firefly.ui.dialog.CustomDialog;
 
@@ -31,6 +21,8 @@ import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.DeletableListPreference;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.utils.MesaUtils;
+
+import java.util.Set;
 
 // Experimental Settings for Mesa renderer
 public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFragment {
@@ -45,7 +37,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         computeVisibility();
 
         final Preference downloadMesa = requirePreference("DownloadMesa", Preference.class);
-        downloadMesa.setOnPreferenceClickListener((a)-> {
+        downloadMesa.setOnPreferenceClickListener((a) -> {
             loadMesaList();
             return true;
         });
@@ -53,25 +45,25 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         final DeletableListPreference CMesaLibP = requirePreference("CMesaLibrary", DeletableListPreference.class);
         final ListPreference CDriverModelP = requirePreference("CDriverModels", ListPreference.class);
         final ListPreference CMesaLDOP = requirePreference("ChooseMldo", ListPreference.class);
-        
+
         setListPreference(CMesaLibP, "CMesaLibrary");
         setListPreference(CDriverModelP, "CDriverModels");
         setListPreference(CMesaLDOP, "ChooseMldo");
-        
+
         CMesaLibP.setOnPreferenceChangeListener((pre, obj) -> {
-            Tools.MESA_LIBS = (String)obj;
+            Tools.MESA_LIBS = (String) obj;
             setListPreference(CDriverModelP, "CDriverModels");
             CDriverModelP.setValueIndex(0);
             return true;
         });
-        
+
         CDriverModelP.setOnPreferenceChangeListener((pre, obj) -> {
-            Tools.DRIVER_MODEL = (String)obj;
+            Tools.DRIVER_MODEL = (String) obj;
             return true;
         });
 
         CMesaLDOP.setOnPreferenceChangeListener((pre, obj) -> {
-            Tools.LOADER_OVERRIDE = (String)obj;
+            Tools.LOADER_OVERRIDE = (String) obj;
             return true;
         });
 
@@ -123,7 +115,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         computeVisibility();
     }
 
-    private void computeVisibility(){
+    private void computeVisibility() {
         requirePreference("SpareFrameBuffer").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("MesaRendererChoose").setVisible(LauncherPreferences.PREF_EXP_SETUP);
         requirePreference("customMesaVersionPref").setVisible(LauncherPreferences.PREF_EXP_SETUP);
@@ -170,17 +162,17 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
 
     private void onExpRendererDialog(Preference pre) {
         new CustomDialog.Builder(getContext())
-            .setTitle(getString(R.string.preference_rendererexp_alertdialog_warning))
-            .setMessage(getString(R.string.preference_rendererexp_alertdialog_message))
-            .setConfirmListener(R.string.preference_rendererexp_alertdialog_done, customView -> true)
-            .setCancelListener(R.string.preference_rendererexp_alertdialog_cancel, customView -> {
-                onChangeRenderer();
-                ((SwitchPreference) pre).setChecked(false);
-                return true;
-            })
-            .setCancelable(false)
-            .build()
-            .show();
+                .setTitle(getString(R.string.preference_rendererexp_alertdialog_warning))
+                .setMessage(getString(R.string.preference_rendererexp_alertdialog_message))
+                .setConfirmListener(R.string.preference_rendererexp_alertdialog_done, customView -> true)
+                .setCancelListener(R.string.preference_rendererexp_alertdialog_cancel, customView -> {
+                    onChangeRenderer();
+                    ((SwitchPreference) pre).setChecked(false);
+                    return true;
+                })
+                .setCancelable(false)
+                .build()
+                .show();
     }
 
     // Custom Mesa GL/GLSL Version
@@ -195,40 +187,40 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         mMesaGLSLVersion.setText(LauncherPreferences.PREF_MESA_GLSL_VERSION);
 
         new CustomDialog.Builder(getContext())
-            .setCustomView(view)
-            .setCancelable(false)
-            .setConfirmListener(R.string.alertdialog_done, customView -> {
-                String glVersion = mMesaGLVersion.getText().toString();
-                String glslVersion = mMesaGLSLVersion.getText().toString();
+                .setCustomView(view)
+                .setCancelable(false)
+                .setConfirmListener(R.string.alertdialog_done, customView -> {
+                    String glVersion = mMesaGLVersion.getText().toString();
+                    String glslVersion = mMesaGLSLVersion.getText().toString();
 
-                boolean validGLVersion = isValidVersion(glVersion, "2.8", "4.6");
-                boolean validGLSLVersion = isValidVersion(glslVersion, "280", "460");
+                    boolean validGLVersion = isValidVersion(glVersion, "2.8", "4.6");
+                    boolean validGLSLVersion = isValidVersion(glslVersion, "280", "460");
 
-                if (!validGLVersion || !validGLSLVersion) {
-                    if (!validGLVersion) {
-                        mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
-                        mMesaGLVersion.requestFocus();
+                    if (!validGLVersion || !validGLSLVersion) {
+                        if (!validGLVersion) {
+                            mMesaGLVersion.setError(getString(R.string.customglglsl_alertdialog_error_gl));
+                            mMesaGLVersion.requestFocus();
+                        }
+                        if (!validGLSLVersion) {
+                            mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
+                            mMesaGLSLVersion.requestFocus();
+                        }
+                        return false;
                     }
-                    if (!validGLSLVersion) {
-                        mMesaGLSLVersion.setError(getString(R.string.customglglsl_alertdialog_error_glsl));
-                        mMesaGLSLVersion.requestFocus();
-                    }
-                    return false;
-                }
 
-                LauncherPreferences.PREF_MESA_GL_VERSION = glVersion;
-                LauncherPreferences.PREF_MESA_GLSL_VERSION = glslVersion;
+                    LauncherPreferences.PREF_MESA_GL_VERSION = glVersion;
+                    LauncherPreferences.PREF_MESA_GLSL_VERSION = glslVersion;
 
-                LauncherPreferences.DEFAULT_PREF.edit()
-                    .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
-                    .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
-                    .apply();
+                    LauncherPreferences.DEFAULT_PREF.edit()
+                            .putString("mesaGLVersion", LauncherPreferences.PREF_MESA_GL_VERSION)
+                            .putString("mesaGLSLVersion", LauncherPreferences.PREF_MESA_GLSL_VERSION)
+                            .apply();
 
-                return true;
-            })
-            .setCancelListener(R.string.alertdialog_cancel, customView -> true)
-            .build()
-            .show();
+                    return true;
+                })
+                .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+                .build()
+                .show();
     }
 
     // Check whether the GL/GLSL version is within the acceptable range
@@ -238,7 +230,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
             float minVersionNumber = Float.parseFloat(minVersion);
             float maxVersionNumber = Float.parseFloat(maxVersion);
 
-        return versionNumber >= minVersionNumber && versionNumber <= maxVersionNumber;
+            return versionNumber >= minVersionNumber && versionNumber <= maxVersionNumber;
         } catch (NumberFormatException e) {
             return false;
         }
@@ -249,9 +241,9 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         if ("mesa_3d".equals(rendererValue)) {
             LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", expRenderer).apply();
         } else if ("vulkan_zink".equals(rendererValue)
-        || "opengles3_virgl".equals(rendererValue)
-        || "freedreno".equals(rendererValue)
-        || "panfrost".equals(rendererValue)) {
+                || "opengles3_virgl".equals(rendererValue)
+                || "freedreno".equals(rendererValue)
+                || "panfrost".equals(rendererValue)) {
             expRenderer = LauncherPreferences.DEFAULT_PREF.getString("renderer", null);
             LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", "mesa_3d").apply();
         }

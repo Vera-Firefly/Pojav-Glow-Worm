@@ -44,14 +44,14 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((TextView)view.findViewById(R.id.title_textview)).setText(getTitleText());
+        ((TextView) view.findViewById(R.id.title_textview)).setText(getTitleText());
         mProgressBar = view.findViewById(R.id.mod_dl_list_progress);
         mExpandableListView = view.findViewById(R.id.mod_dl_expandable_version_list);
         mExpandableListView.setOnChildClickListener(this);
         mRetryView = view.findViewById(R.id.mod_dl_retry_layout);
         view.findViewById(R.id.forge_installer_retry_button).setOnClickListener(this);
         ModloaderListenerProxy taskProxy = getTaskProxy();
-        if(taskProxy != null) {
+        if (taskProxy != null) {
             mExpandableListView.setEnabled(false);
             taskProxy.attachListener(this);
         }
@@ -61,7 +61,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
     @Override
     public void onStop() {
         ModloaderListenerProxy taskProxy = getTaskProxy();
-        if(taskProxy != null) taskProxy.detachListener();
+        if (taskProxy != null) taskProxy.detachListener();
         super.onStop();
     }
 
@@ -69,16 +69,16 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
     public void run() {
         try {
             T versions = loadVersionList();
-            Tools.runOnUiThread(()->{
-                if(versions != null) {
+            Tools.runOnUiThread(() -> {
+                if (versions != null) {
                     mExpandableListView.setAdapter(createAdapter(versions, mInflater));
-                }else{
+                } else {
                     mRetryView.setVisibility(View.VISIBLE);
                 }
                 mProgressBar.setVisibility(View.GONE);
             });
-        }catch (IOException e) {
-            Tools.runOnUiThread(()-> {
+        } catch (IOException e) {
+            Tools.runOnUiThread(() -> {
                 if (getContext() != null) {
                     Tools.showError(getContext(), e);
                     mRetryView.setVisibility(View.VISIBLE);
@@ -97,7 +97,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
 
     @Override
     public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-        if(ProgressKeeper.hasOngoingTasks()) {
+        if (ProgressKeeper.hasOngoingTasks()) {
             Toast.makeText(expandableListView.getContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
             return true;
         }
@@ -113,7 +113,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
 
     @Override
     public void onDownloadFinished(File downloadedFile) {
-        Tools.runOnUiThread(()->{
+        Tools.runOnUiThread(() -> {
             Context context = requireContext();
             getTaskProxy().detachListener();
             setTaskProxy(null);
@@ -126,7 +126,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
 
     @Override
     public void onDataNotAvailable() {
-        Tools.runOnUiThread(()->{
+        Tools.runOnUiThread(() -> {
             Context context = requireContext();
             getTaskProxy().detachListener();
             setTaskProxy(null);
@@ -139,7 +139,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
 
     @Override
     public void onDownloadError(Exception e) {
-        Tools.runOnUiThread(()->{
+        Tools.runOnUiThread(() -> {
             Context context = requireContext();
             getTaskProxy().detachListener();
             setTaskProxy(null);
@@ -149,11 +149,18 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
     }
 
     public abstract int getTitleText();
+
     public abstract int getNoDataMsg();
+
     public abstract ModloaderListenerProxy getTaskProxy();
+
     public abstract T loadVersionList() throws IOException;
+
     public abstract void setTaskProxy(ModloaderListenerProxy proxy);
+
     public abstract ExpandableListAdapter createAdapter(T versionList, LayoutInflater layoutInflater);
+
     public abstract Runnable createDownloadTask(Object selectedVersion, ModloaderListenerProxy listenerProxy);
+
     public abstract void onDownloadFinished(Context context, File downloadedFile);
 }

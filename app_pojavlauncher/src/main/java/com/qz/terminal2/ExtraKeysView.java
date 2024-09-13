@@ -3,15 +3,6 @@ package com.qz.terminal2;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.ScheduledExecutorService;
-
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Arrays;
-
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -23,7 +14,15 @@ import android.widget.ToggleButton;
 
 import com.termux.terminal.TerminalSession;
 import com.termux.view.TerminalView;
+
 import net.kdt.pojavlaunch.R;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A view showing extra keys (such as Escape, Ctrl, Alt) not normally available on an Android soft
@@ -37,7 +36,7 @@ public final class ExtraKeysView extends GridLayout {
     private static final int BUTTON_PRESSED_COLOR = 0x7FFFFFFF;
 
     /**
-     *  Variables used when swiping the extra keys row. Prevent a KEY_PRESS_DOWN when swiping
+     * Variables used when swiping the extra keys row. Prevent a KEY_PRESS_DOWN when swiping
      */
     private float actionDownPosition;
     private static final int MIN_SWIPE_DISTANCE = 50;
@@ -45,25 +44,26 @@ public final class ExtraKeysView extends GridLayout {
     public ExtraKeysView(Context context, AttributeSet attrs) {
         super(context, attrs);
         reload(new String[][]{
-                {"ESC", "/", "-", "HOME", "UP", "END", "PGUP"}, 
+                {"ESC", "/", "-", "HOME", "UP", "END", "PGUP"},
                 {"TAB", "CTRL", "ALT", "LEFT", "DOWN", "RIGHT", "PGDN"}
-            }, ExtraKeysView.arrowsOnlyCharDisplay);
+        }, ExtraKeysView.arrowsOnlyCharDisplay);
     }
 
     /**
      * HashMap that implements Python dict.get(key, default) function.
      * Default java.util .get(key) is then the same as .get(key, null);
      */
-    static class CleverMap<K,V> extends HashMap<K,V> {
+    static class CleverMap<K, V> extends HashMap<K, V> {
         V get(K key, V defaultValue) {
-            if(containsKey(key))
+            if (containsKey(key))
                 return get(key);
             else
                 return defaultValue;
         }
     }
 
-    static class CharDisplayMap extends CleverMap<String, String> {}
+    static class CharDisplayMap extends CleverMap<String, String> {
+    }
 
     /**
      * Keys are displayed in a natural looking way, like "→" for "RIGHT"
@@ -118,12 +118,16 @@ public final class ExtraKeysView extends GridLayout {
     private PopupWindow popupWindow;
     private int longPressCount;
 
-    /** @deprecated call readSpecialButton(SpecialButton.CTRL); */
+    /**
+     * @deprecated call readSpecialButton(SpecialButton.CTRL);
+     */
     public boolean readControlButton() {
         return readSpecialButton(SpecialButton.CTRL);
     }
 
-    /** @deprecated call readSpecialButton(SpecialButton.ALT); */
+    /**
+     * @deprecated call readSpecialButton(SpecialButton.ALT);
+     */
     public boolean readAltButton() {
         return readSpecialButton(SpecialButton.ALT);
     }
@@ -133,13 +137,13 @@ public final class ExtraKeysView extends GridLayout {
         if (state == null)
             throw new RuntimeException("Must be a valid special button (see source)");
 
-        if (! state.isOn)
+        if (!state.isOn)
             return false;
 
         if (state.button.isPressed())
             return true;
 
-        if (! state.button.isChecked())
+        if (!state.button.isChecked())
             return false;
 
         state.button.setChecked(false);
@@ -235,8 +239,8 @@ public final class ExtraKeysView extends GridLayout {
 
     public static final CharDisplayMap arrowsOnlyCharDisplay = new CharDisplayMap() {{
         putAll(classicArrowsDisplay);
-        putAll(wellKnownCharactersDisplay); 
-        putAll(lessKnownCharactersDisplay); 
+        putAll(wellKnownCharactersDisplay);
+        putAll(lessKnownCharactersDisplay);
         putAll(nicerLookingDisplay);
     }};
 
@@ -259,7 +263,7 @@ public final class ExtraKeysView extends GridLayout {
         // no alias for ALT
 
         // Directions are sometimes written as first and last letter for brevety
-        put("LT", "LEFT"); 
+        put("LT", "LEFT");
         put("RT", "RIGHT");
         put("DN", "DOWN");
         // put("UP", "UP"); well, "UP" is already two letters
@@ -290,8 +294,8 @@ public final class ExtraKeysView extends GridLayout {
      * Modifies the array, doesn't return a new one.
      */
     void replaceAliases(String[][] buttons) {
-        for(int i = 0; i < buttons.length; i++)
-            for(int j = 0; j < buttons[i].length; j++)
+        for (int i = 0; i < buttons.length; i++)
+            for (int j = 0; j < buttons[i].length; j++)
                 buttons[i][j] = controlCharsAliases.get(buttons[i][j], buttons[i][j]);
     }
 
@@ -308,19 +312,19 @@ public final class ExtraKeysView extends GridLayout {
      * Reload the view given parameters in termux.properties
      *
      * @param buttons matrix of String as defined in termux.properties extrakeys
-     * Can Contain The Strings CTRL ALT TAB FN ENTER LEFT RIGHT UP DOWN or normal strings
-     * Some aliases are possible like RETURN for ENTER, LT for LEFT and more (@see controlCharsAliases for the whole list).
-     * Any string of length > 1 in total Uppercase will print a warning
-     *
-     * Examples:
-     * "ENTER" will trigger the ENTER keycode
-     * "LEFT" will trigger the LEFT keycode and be displayed as "←"
-     * "→" will input a "→" character
-     * "−" will input a "−" character
-     * "-_-" will input the string "-_-"
+     *                Can Contain The Strings CTRL ALT TAB FN ENTER LEFT RIGHT UP DOWN or normal strings
+     *                Some aliases are possible like RETURN for ENTER, LT for LEFT and more (@see controlCharsAliases for the whole list).
+     *                Any string of length > 1 in total Uppercase will print a warning
+     *                <p>
+     *                Examples:
+     *                "ENTER" will trigger the ENTER keycode
+     *                "LEFT" will trigger the LEFT keycode and be displayed as "←"
+     *                "→" will input a "→" character
+     *                "−" will input a "−" character
+     *                "-_-" will input the string "-_-"
      */
     void reload(String[][] buttons, CharDisplayMap charDisplayMap) {
-        for(SpecialButtonState state : specialButtons.values())
+        for (SpecialButtonState state : specialButtons.values())
             state.button = null;
 
         removeAllViews();
@@ -338,7 +342,7 @@ public final class ExtraKeysView extends GridLayout {
                 final String buttonText = buttons[row][col];
 
                 Button button;
-                if(Arrays.asList("CTRL", "ALT", "FN").contains(buttonText)) {
+                if (Arrays.asList("CTRL", "ALT", "FN").contains(buttonText)) {
                     SpecialButtonState state = specialButtons.get(SpecialButton.valueOf(buttonText)); // for valueOf: https://stackoverflow.com/a/604426/1980630
                     state.isOn = true;
                     button = state.button = new ToggleButton(getContext(), null, android.R.attr.buttonBarButtonStyle);
@@ -356,7 +360,7 @@ public final class ExtraKeysView extends GridLayout {
                 button.setOnClickListener(v -> {
                     finalButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                     View root = getRootView();
-                    if(Arrays.asList("CTRL", "ALT", "FN").contains(buttonText)) {
+                    if (Arrays.asList("CTRL", "ALT", "FN").contains(buttonText)) {
                         ToggleButton self = (ToggleButton) finalButton;
                         self.setChecked(self.isChecked());
                         self.setTextColor(self.isChecked() ? INTERESTING_COLOR : TEXT_COLOR);
@@ -429,8 +433,8 @@ public final class ExtraKeysView extends GridLayout {
 
                 LayoutParams param = new GridLayout.LayoutParams();
                 param.width = 0;
-                if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) { // special handle api 21
-                    param.height = (int)(37.5 * getResources().getDisplayMetrics().density + 0.5); // 37.5 equal to R.id.viewpager layout_height / rows in DP
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) { // special handle api 21
+                    param.height = (int) (37.5 * getResources().getDisplayMetrics().density + 0.5); // 37.5 equal to R.id.viewpager layout_height / rows in DP
                 } else {
                     param.height = 0;
                 }

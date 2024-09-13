@@ -12,8 +12,15 @@ import net.kdt.pojavlaunch.customcontrols.buttons.ControlInterface;
 
 @SuppressLint("AppCompatCustomView")
 public class CloneButton extends Button implements ActionButtonInterface {
-    public CloneButton(Context context) {super(context); init();}
-    public CloneButton(Context context, @Nullable AttributeSet attrs) {super(context, attrs); init();}
+    public CloneButton(Context context) {
+        super(context);
+        init();
+    }
+
+    public CloneButton(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
 
     public void init() {
         setOnClickListener(this);
@@ -35,7 +42,7 @@ public class CloneButton extends Button implements ActionButtonInterface {
 
     @Override
     public void onClick() {
-        if(mCurrentlySelectedButton == null) return;
+        if (mCurrentlySelectedButton == null) return;
 
         mCurrentlySelectedButton.cloneButton();
         mCurrentlySelectedButton.getControlLayoutParent().removeEditWindow();

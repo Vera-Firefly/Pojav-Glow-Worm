@@ -1,10 +1,8 @@
 package com.kdt;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -16,22 +14,24 @@ import java.util.List;
 
 /**
  * Basic adapter, expect it uses the what is passed by the code, no the resources
+ *
  * @param <T>
  */
 public class SimpleArrayAdapter<T> extends BaseAdapter {
     private List<T> mObjects;
+
     public SimpleArrayAdapter(List<T> objects) {
         setObjects(objects);
     }
 
     public void setObjects(@Nullable List<T> objects) {
-        if(objects == null){
-            if(mObjects != Collections.emptyList()) {
+        if (objects == null) {
+            if (mObjects != Collections.emptyList()) {
                 mObjects = Collections.emptyList();
                 notifyDataSetChanged();
             }
         } else {
-            if(objects != mObjects){
+            if (objects != mObjects) {
                 mObjects = objects;
                 notifyDataSetChanged();
             }
@@ -56,7 +56,7 @@ public class SimpleArrayAdapter<T> extends BaseAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
         }
 

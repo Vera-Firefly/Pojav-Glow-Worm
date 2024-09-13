@@ -10,7 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -33,13 +38,14 @@ import net.kdt.pojavlaunch.utils.CropperUtils;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener{
+public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener {
     public static final String TAG = "ProfileEditorFragment";
     public static final String DELETED_PROFILE = "deleted_profile";
 
@@ -55,7 +61,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
     private List<String> mRenderNames;
 
-    public ProfileEditorFragment(){
+    public ProfileEditorFragment() {
         super(R.layout.fragment_profile_editor);
     }
 
@@ -64,10 +70,10 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Paths, which can be changed
         String value = (String) ExtraCore.consumeValue(ExtraConstants.FILE_SELECTOR);
-        if(value != null){
-            if(mValueToConsume.equals(FileSelectorFragment.BUNDLE_SELECT_FOLDER)){
+        if (value != null) {
+            if (mValueToConsume.equals(FileSelectorFragment.BUNDLE_SELECT_FOLDER)) {
                 mTempProfile.gameDir = value;
-            }else{
+            } else {
                 mTempProfile.controlFile = value;
             }
         }
@@ -94,7 +100,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         });
 
         mDeleteButton.setOnClickListener(v -> {
-            if(LauncherProfiles.mainProfileJson.profiles.size() > 1){
+            if (LauncherProfiles.mainProfileJson.profiles.size() > 1) {
                 ProfileIconCache.dropIcon(mProfileKey);
                 LauncherProfiles.mainProfileJson.profiles.remove(mProfileKey);
                 LauncherProfiles.write(ProfilePathManager.getCurrentProfile());
@@ -121,13 +127,13 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
             bundle.putString(FileSelectorFragment.BUNDLE_ROOT_PATH, Tools.CTRLMAP_PATH);
             mValueToConsume = FileSelectorFragment.BUNDLE_SELECT_FILE;
             mValueToConsume = "select_file";
-            
+
             Tools.swapFragment(requireActivity(),
                     FileSelectorFragment.class, FileSelectorFragment.TAG, bundle);
         });
 
         // Setup the expendable list behavior
-        mVersionSelectButton.setOnClickListener(v -> VersionSelectorDialog.open(v.getContext(), false, (id, snapshot)->{
+        mVersionSelectButton.setOnClickListener(v -> VersionSelectorDialog.open(v.getContext(), false, (id, snapshot) -> {
             mTempProfile.lastVersionId = id;
             mDefaultVersion.setText(id);
         }));
@@ -136,12 +142,11 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mProfileIcon.setOnClickListener(v -> CropperUtils.startCropper(mCropperLauncher));
 
 
-
         loadValues(LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, ""), view.getContext());
     }
 
-    private void loadValues(@NonNull String profile, @NonNull Context context){
-        if(mTempProfile == null){
+    private void loadValues(@NonNull String profile, @NonNull Context context) {
+        if (mTempProfile == null) {
             mTempProfile = getProfile(profile);
         }
         mProfileIcon.setImageDrawable(
@@ -157,14 +162,14 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
             if (nindex != -1) jvmIndex = nindex;
         }
         mDefaultRuntime.setAdapter(new RTSpinnerAdapter(context, runtimes));
-        if(jvmIndex == -1) jvmIndex = runtimes.size() - 1;
+        if (jvmIndex == -1) jvmIndex = runtimes.size() - 1;
         mDefaultRuntime.setSelection(jvmIndex);
 
         // Renderer spinner
         int rendererIndex = mDefaultRenderer.getAdapter().getCount() - 1;
-        if(mTempProfile.pojavRendererName != null) {
+        if (mTempProfile.pojavRendererName != null) {
             int nindex = mRenderNames.indexOf(mTempProfile.pojavRendererName);
-            if(nindex != -1) rendererIndex = nindex;
+            if (nindex != -1) rendererIndex = nindex;
         }
         mDefaultRenderer.setSelection(rendererIndex);
 
@@ -175,19 +180,19 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultControl.setText(mTempProfile.controlFile == null ? "" : mTempProfile.controlFile);
     }
 
-    private MinecraftProfile getProfile(@NonNull String profile){
+    private MinecraftProfile getProfile(@NonNull String profile) {
         MinecraftProfile minecraftProfile;
-        if(getArguments() == null) {
+        if (getArguments() == null) {
             minecraftProfile = new MinecraftProfile(LauncherProfiles.mainProfileJson.profiles.get(profile));
             mProfileKey = profile;
-        }else{
+        } else {
             minecraftProfile = MinecraftProfile.createTemplate();
             mProfileKey = LauncherProfiles.getFreeProfileKey();
         }
         return minecraftProfile;
     }
 
-    private void bindViews(@NonNull View view){
+    private void bindViews(@NonNull View view) {
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
         mDefaultRenderer = view.findViewById(R.id.vprof_editor_profile_renderer);
@@ -213,16 +218,18 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
 
-        if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
-        if(mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
-        if(mTempProfile.gameDir.isEmpty()) mTempProfile.gameDir = null;
+        if (mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
+        if (mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
+        if (mTempProfile.gameDir.isEmpty()) mTempProfile.gameDir = null;
 
         Runtime selectedRuntime = (Runtime) mDefaultRuntime.getSelectedItem();
         mTempProfile.javaDir = (selectedRuntime.name.equals("<Default>") || selectedRuntime.versionString == null)
                 ? null : Tools.LAUNCHERPROFILES_RTPREFIX + selectedRuntime.name;
 
-        if(mDefaultRenderer.getSelectedItemPosition() == mRenderNames.size()) mTempProfile.pojavRendererName = null;
-        else mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
+        if (mDefaultRenderer.getSelectedItemPosition() == mRenderNames.size())
+            mTempProfile.pojavRendererName = null;
+        else
+            mTempProfile.pojavRendererName = mRenderNames.get(mDefaultRenderer.getSelectedItemPosition());
 
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write(ProfilePathManager.getCurrentProfile());
@@ -232,24 +239,24 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     @Override
     public void onCropped(Bitmap contentBitmap) {
         mProfileIcon.setImageBitmap(contentBitmap);
-        Log.i("bitmap", "w="+contentBitmap.getWidth() +" h="+contentBitmap.getHeight());
+        Log.i("bitmap", "w=" + contentBitmap.getWidth() + " h=" + contentBitmap.getHeight());
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try (Base64OutputStream base64OutputStream = new Base64OutputStream(byteArrayOutputStream, Base64.NO_WRAP)) {
             contentBitmap.compress(
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.R ?
-                    // On Android < 30, there was no distinction between "lossy" and "lossless",
-                    // and the type is picked by the quality parameter. We set the quality to 60.
-                    // so it should be lossy,
-                    Bitmap.CompressFormat.WEBP:
-                    // On Android >= 30, we can explicitly specify that we want lossy compression
-                    // with the visual quality of 60.
-                    Bitmap.CompressFormat.WEBP_LOSSY,
-                60,
-                base64OutputStream
+                    Build.VERSION.SDK_INT < Build.VERSION_CODES.R ?
+                            // On Android < 30, there was no distinction between "lossy" and "lossless",
+                            // and the type is picked by the quality parameter. We set the quality to 60.
+                            // so it should be lossy,
+                            Bitmap.CompressFormat.WEBP :
+                            // On Android >= 30, we can explicitly specify that we want lossy compression
+                            // with the visual quality of 60.
+                            Bitmap.CompressFormat.WEBP_LOSSY,
+                    60,
+                    base64OutputStream
             );
             base64OutputStream.flush();
             byteArrayOutputStream.flush();
-        }catch (IOException e) {
+        } catch (IOException e) {
             Tools.showErrorRemote(e);
             return;
         }

@@ -19,6 +19,7 @@ import java.io.IOException;
 public class OptiFineInstallFragment extends ModVersionListFragment<OptiFineUtils.OptiFineVersions> {
     public static final String TAG = "OptiFineInstallFragment";
     private static ModloaderListenerProxy sTaskProxy;
+
     @Override
     public int getTitleText() {
         return R.string.of_dl_select_version;

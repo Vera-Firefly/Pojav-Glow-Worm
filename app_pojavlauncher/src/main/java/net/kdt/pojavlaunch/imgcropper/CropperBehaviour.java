@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 public interface CropperBehaviour {
     /**
      * Get the largest side of the image currently loaded into this CropperBehaviour.
+     *
      * @return the largest side of the loaded image
      */
     int getLargestImageSide();
@@ -13,6 +14,7 @@ public interface CropperBehaviour {
     /**
      * This method is called by CropperView for the CropperBehaviour to draw its image with all
      * the transforms applied, It is called before the selection rectangle is drawn.
+     *
      * @param canvas the canvas to draw the image on
      */
     void drawPreHighlight(Canvas canvas);
@@ -36,6 +38,7 @@ public interface CropperBehaviour {
 
     /**
      * This method is called by CropperView to pan the image
+     *
      * @param dx pan delta-X
      * @param dy pan delta-Y
      */
@@ -43,7 +46,8 @@ public interface CropperBehaviour {
 
     /**
      * This method is called by CropperView to zoom the image
-     * @param dz zoom delta-Z
+     *
+     * @param dz      zoom delta-Z
      * @param originX the X coordinate of a point at which the image should be zoomed
      * @param originY the Y coordinate of a point at which the image should be zoomed
      */
@@ -52,10 +56,12 @@ public interface CropperBehaviour {
     /**
      * Crop the image according to current transforms, with the targetMaxSide specifying the
      * maximum side of the resulting 1:1 bitmap.
+     *
      * @param targetMaxSide the maximum side of the 1:1 bitmap
      * @return the crop of the behaviour's image
      */
     Bitmap crop(int targetMaxSide);
+
     CropperBehaviour DUMMY = new CropperBehaviour() {
         @Override
         public int getLargestImageSide() {

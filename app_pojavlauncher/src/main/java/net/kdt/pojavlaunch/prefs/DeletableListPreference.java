@@ -2,10 +2,11 @@ package net.kdt.pojavlaunch.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import androidx.preference.ListPreference;
-import android.widget.Toast;
-import androidx.appcompat.app.AlertDialog;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.preference.ListPreference;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
@@ -78,19 +79,19 @@ public class DeletableListPreference extends ListPreference {
 
     private void showDeleteConfirmationDialog(String version) {
         new AlertDialog.Builder(getContext())
-            .setTitle(R.string.preference_rendererexp_mesa_delete_title)
-            .setMessage(getContext().getString(R.string.preference_rendererexp_mesa_delete_message, version))
-            .setPositiveButton(R.string.alertdialog_done, (dialog, which) -> {
-                boolean success = MesaUtils.INSTANCE.deleteMesaLib(version);
-                if (success) {
-                    Toast.makeText(getContext(), R.string.preference_rendererexp_mesa_deleted, Toast.LENGTH_SHORT).show();
-                    setEntriesAndValues();
-                } else {
-                    Toast.makeText(getContext(), R.string.preference_rendererexp_mesa_delete_fail, Toast.LENGTH_SHORT).show();
-                }
-            })
-            .setNegativeButton(R.string.alertdialog_cancel, null)
-            .show();
+                .setTitle(R.string.preference_rendererexp_mesa_delete_title)
+                .setMessage(getContext().getString(R.string.preference_rendererexp_mesa_delete_message, version))
+                .setPositiveButton(R.string.alertdialog_done, (dialog, which) -> {
+                    boolean success = MesaUtils.INSTANCE.deleteMesaLib(version);
+                    if (success) {
+                        Toast.makeText(getContext(), R.string.preference_rendererexp_mesa_deleted, Toast.LENGTH_SHORT).show();
+                        setEntriesAndValues();
+                    } else {
+                        Toast.makeText(getContext(), R.string.preference_rendererexp_mesa_delete_fail, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(R.string.alertdialog_cancel, null)
+                .show();
     }
 
     private void setEntriesAndValues() {

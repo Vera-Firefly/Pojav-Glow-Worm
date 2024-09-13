@@ -25,7 +25,7 @@ public class InGameEventProcessor implements TouchEventProcessor {
         switch (motionEvent.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 mTracker.startTracking(motionEvent);
-                if(LauncherPreferences.PREF_DISABLE_GESTURES) break;
+                if (LauncherPreferences.PREF_DISABLE_GESTURES) break;
                 mEventTransitioned = false;
                 checkGestures();
                 break;
@@ -35,7 +35,7 @@ public class InGameEventProcessor implements TouchEventProcessor {
                 CallbackBridge.mouseX += motionVector[0] * mSensitivity;
                 CallbackBridge.mouseY += motionVector[1] * mSensitivity;
                 CallbackBridge.sendCursorPos(CallbackBridge.mouseX, CallbackBridge.mouseY);
-                if(LauncherPreferences.PREF_DISABLE_GESTURES) break;
+                if (LauncherPreferences.PREF_DISABLE_GESTURES) break;
                 checkGestures();
                 break;
             case MotionEvent.ACTION_UP:
@@ -56,7 +56,7 @@ public class InGameEventProcessor implements TouchEventProcessor {
         // Only register right click events if it's a fresh event stream, not one after a transition.
         // This is done to avoid problems when people hold the button for just a bit too long after
         // exiting a menu for example.
-        if(!mEventTransitioned) mRightClickGesture.inputEvent();
+        if (!mEventTransitioned) mRightClickGesture.inputEvent();
     }
 
     private void cancelGestures(boolean isSwitching) {

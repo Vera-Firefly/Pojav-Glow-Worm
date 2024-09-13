@@ -2,7 +2,6 @@ package com.qz.terminal2;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.view.Gravity;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -13,14 +12,13 @@ import com.termux.terminal.TerminalEmulator;
 import com.termux.terminal.TerminalSession;
 import com.termux.view.TerminalViewClient;
 
-import java.io.Console;
-import java.util.List;
-
 public final class TermuxViewClient implements TerminalViewClient {
 
     final ConsoleActivity mActivity;
 
-    /** Keeping track of the special keys acting as Ctrl and Fn for the soft keyboard and other hardware keys. */
+    /**
+     * Keeping track of the special keys acting as Ctrl and Fn for the soft keyboard and other hardware keys.
+     */
     boolean mVirtualControlKeyDown, mVirtualFnKeyDown;
 
     public TermuxViewClient(ConsoleActivity activity) {
@@ -52,10 +50,11 @@ public final class TermuxViewClient implements TerminalViewClient {
     public void copyModeChanged(boolean copyMode) {
         // Disable drawer while copying.
     }
-    private  void log(String log)
-    {
-        System.out.println("TermuxViewClient:"+log);
+
+    private void log(String log) {
+        System.out.println("TermuxViewClient:" + log);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent e, TerminalSession currentSession) {
 
@@ -70,7 +69,7 @@ public final class TermuxViewClient implements TerminalViewClient {
             // Get the unmodified code point:
             int unicodeChar = e.getUnicodeChar(0);
 
-             if (unicodeChar == 'k'/* keyboard */) {
+            if (unicodeChar == 'k'/* keyboard */) {
                 InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             } else if (unicodeChar == 'm'/* menu */) {
@@ -99,7 +98,7 @@ public final class TermuxViewClient implements TerminalViewClient {
         return handleVirtualKeys(keyCode, e, false);
     }
 
-    
+
     @Override
     public boolean readControlKey() {
         return (mActivity.mExtraKeysView != null && mActivity.mExtraKeysView.readSpecialButton(ExtraKeysView.SpecialButton.CTRL)) || mVirtualControlKeyDown;
@@ -206,7 +205,8 @@ public final class TermuxViewClient implements TerminalViewClient {
             } else if (resultingCodePoint != -1) {
                 session.writeCodePoint(altDown, resultingCodePoint);
 
-                System.out.println("---------------------->input:"+resultingCodePoint);}
+                System.out.println("---------------------->input:" + resultingCodePoint);
+            }
             return true;
         }
 
@@ -218,7 +218,9 @@ public final class TermuxViewClient implements TerminalViewClient {
         return false;
     }
 
-    /** Handle dedicated volume buttons as virtual keys if applicable. */
+    /**
+     * Handle dedicated volume buttons as virtual keys if applicable.
+     */
     private boolean handleVirtualKeys(int keyCode, KeyEvent event, boolean down) {
         InputDevice inputDevice = event.getDevice();
         if (inputDevice != null && inputDevice.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {

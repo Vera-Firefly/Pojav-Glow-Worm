@@ -22,7 +22,7 @@ public class ModpackInstaller {
     public static ModLoader installModpack(ModDetail modDetail, int selectedVersion, InstallFunction installFunction) throws IOException {
         String versionUrl = modDetail.versionUrls[selectedVersion];
         String versionHash = modDetail.versionHashes[selectedVersion];
-        String modpackName = modDetail.title.toLowerCase(Locale.ROOT).trim().replace(" ", "_" );
+        String modpackName = modDetail.title.toLowerCase(Locale.ROOT).trim().replace(" ", "_");
 
         // Build a new minecraft instance, folder first
 
@@ -39,13 +39,13 @@ public class ModpackInstaller {
             });
 
             // Install the modpack
-            modLoaderInfo = installFunction.installModpack(modpackFile, new File(ProfilePathManager.getCurrentPath(), "custom_instances/"+modpackName));
+            modLoaderInfo = installFunction.installModpack(modpackFile, new File(ProfilePathManager.getCurrentPath(), "custom_instances/" + modpackName));
 
         } finally {
             modpackFile.delete();
             ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
         }
-        if(modLoaderInfo == null) {
+        if (modLoaderInfo == null) {
             return null;
         }
 

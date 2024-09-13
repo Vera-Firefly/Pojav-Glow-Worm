@@ -56,7 +56,9 @@ public class ControlButton extends TextView implements ControlInterface {
     }
 
     @Override
-    public View getControlView() {return this;}
+    public View getControlView() {
+        return this;
+    }
 
     public ControlData getProperties() {
         return mProperties;
@@ -89,19 +91,23 @@ public class ControlButton extends TextView implements ControlInterface {
     }
 
 
-    public void loadEditValues(EditControlPopup editControlPopup){
+    public void loadEditValues(EditControlPopup editControlPopup) {
         editControlPopup.loadValues(getProperties());
     }
 
-    /** Add another instance of the ControlButton to the parent layout */
-    public void cloneButton(){
+    /**
+     * Add another instance of the ControlButton to the parent layout
+     */
+    public void cloneButton() {
         ControlData cloneData = new ControlData(getProperties());
         cloneData.dynamicX = "0.5 * ${screen_width}";
         cloneData.dynamicY = "0.5 * ${screen_height}";
         ((ControlLayout) getParent()).addControlButton(cloneData);
     }
 
-    /** Remove any trace of this button from the layout */
+    /**
+     * Remove any trace of this button from the layout
+     */
     public void removeButton() {
         getControlLayoutParent().getLayout().mControlDataList.remove(getProperties());
         getControlLayoutParent().removeView(this);
@@ -111,20 +117,20 @@ public class ControlButton extends TextView implements ControlInterface {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getActionMasked()){
+        switch (event.getActionMasked()) {
             case MotionEvent.ACTION_MOVE:
                 //Send the event to be taken as a mouse action
-                if(getProperties().passThruEnabled && CallbackBridge.isGrabbing()){
+                if (getProperties().passThruEnabled && CallbackBridge.isGrabbing()) {
                     View gameSurface = getControlLayoutParent().getGameSurface();
-                    if(gameSurface != null) gameSurface.dispatchTouchEvent(event);
+                    if (gameSurface != null) gameSurface.dispatchTouchEvent(event);
                 }
 
                 //If out of bounds
-                if(event.getX() < getControlView().getLeft() || event.getX() > getControlView().getRight() ||
-                        event.getY() < getControlView().getTop()  || event.getY() > getControlView().getBottom()){
-                    if(getProperties().isSwipeable && !mIsPointerOutOfBounds){
+                if (event.getX() < getControlView().getLeft() || event.getX() > getControlView().getRight() ||
+                        event.getY() < getControlView().getTop() || event.getY() > getControlView().getBottom()) {
+                    if (getProperties().isSwipeable && !mIsPointerOutOfBounds) {
                         //Remove keys
-                        if(!triggerToggle()) {
+                        if (!triggerToggle()) {
                             sendKeyPresses(false);
                         }
                     }
@@ -134,10 +140,10 @@ public class ControlButton extends TextView implements ControlInterface {
                 }
 
                 //Else if we now are in bounds
-                if(mIsPointerOutOfBounds) {
+                if (mIsPointerOutOfBounds) {
                     getControlLayoutParent().onTouch(this, event);
                     //RE-press the button
-                    if(getProperties().isSwipeable && !getProperties().isToggle){
+                    if (getProperties().isSwipeable && !getProperties().isToggle) {
                         sendKeyPresses(true);
                     }
                 }
@@ -146,7 +152,7 @@ public class ControlButton extends TextView implements ControlInterface {
 
             case MotionEvent.ACTION_DOWN: // 0
             case MotionEvent.ACTION_POINTER_DOWN: // 5
-                if(!getProperties().isToggle){
+                if (!getProperties().isToggle) {
                     sendKeyPresses(true);
                 }
                 break;
@@ -154,14 +160,14 @@ public class ControlButton extends TextView implements ControlInterface {
             case MotionEvent.ACTION_UP: // 1
             case MotionEvent.ACTION_CANCEL: // 3
             case MotionEvent.ACTION_POINTER_UP: // 6
-                if(getProperties().passThruEnabled){
+                if (getProperties().passThruEnabled) {
                     View gameSurface = getControlLayoutParent().getGameSurface();
-                    if(gameSurface != null) gameSurface.dispatchTouchEvent(event);
+                    if (gameSurface != null) gameSurface.dispatchTouchEvent(event);
                 }
-                if(mIsPointerOutOfBounds) getControlLayoutParent().onTouch(this, event);
+                if (mIsPointerOutOfBounds) getControlLayoutParent().onTouch(this, event);
                 mIsPointerOutOfBounds = false;
 
-                if(!triggerToggle()) {
+                if (!triggerToggle()) {
                     sendKeyPresses(false);
                 }
                 break;
@@ -174,11 +180,10 @@ public class ControlButton extends TextView implements ControlInterface {
     }
 
 
-
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean triggerToggle(){
+    public boolean triggerToggle() {
         //returns true a the toggle system is triggered
-        if(mProperties.isToggle){
+        if (mProperties.isToggle) {
             mIsToggled = !mIsToggled;
             invalidate();
             sendKeyPresses(mIsToggled);
@@ -187,31 +192,31 @@ public class ControlButton extends TextView implements ControlInterface {
         return false;
     }
 
-    public void sendKeyPresses(boolean isDown){
+    public void sendKeyPresses(boolean isDown) {
         setActivated(isDown);
-        for(int keycode : mProperties.keycodes){
-            if(keycode >= GLFW_KEY_UNKNOWN){
+        for (int keycode : mProperties.keycodes) {
+            if (keycode >= GLFW_KEY_UNKNOWN) {
                 sendKeyPress(keycode, CallbackBridge.getCurrentMods(), isDown);
                 CallbackBridge.setModifiers(keycode, isDown);
-            }else{
-                Log.i("punjabilauncher", "sendSpecialKey("+keycode+","+isDown+")");
+            } else {
+                Log.i("punjabilauncher", "sendSpecialKey(" + keycode + "," + isDown + ")");
                 sendSpecialKey(keycode, isDown);
             }
         }
     }
 
-    private void sendSpecialKey(int keycode, boolean isDown){
+    private void sendSpecialKey(int keycode, boolean isDown) {
         switch (keycode) {
             case ControlData.SPECIALBTN_KEYBOARD:
-                if(isDown) MainActivity.switchKeyboardState();
+                if (isDown) MainActivity.switchKeyboardState();
                 break;
 
             case ControlData.SPECIALBTN_TOGGLECTRL:
-                if(isDown)MainActivity.mControlLayout.toggleControlVisible();
+                if (isDown) MainActivity.mControlLayout.toggleControlVisible();
                 break;
 
             case ControlData.SPECIALBTN_VIRTUALMOUSE:
-                if(isDown) MainActivity.toggleMouse(getContext());
+                if (isDown) MainActivity.toggleMouse(getContext());
                 break;
 
             case ControlData.SPECIALBTN_MOUSEPRI:

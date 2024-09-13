@@ -4,6 +4,6 @@ import androidx.annotation.Keep;
 
 @Keep
 public class MinecraftSelectedUser {
-	public String account;
-	public String profile;
+    public String account;
+    public String profile;
 }

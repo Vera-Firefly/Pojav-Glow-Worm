@@ -12,6 +12,7 @@ public interface ContextExecutorTask {
     /**
      * ContextExecutor will execute this function first if a foreground Activity that was attached to the
      * ContextExecutor is available.
+     *
      * @param activity the activity
      */
     void executeWithActivity(Activity activity);
@@ -19,6 +20,7 @@ public interface ContextExecutorTask {
     /**
      * ContextExecutor will execute this function if a foreground Activity is not available, but the app
      * is still running.
+     *
      * @param context the application context
      */
     void executeWithApplication(Context context);

@@ -14,8 +14,15 @@ import net.kdt.pojavlaunch.customcontrols.buttons.ControlInterface;
 
 @SuppressLint("AppCompatCustomView")
 public class AddSubButton extends Button implements ActionButtonInterface {
-    public AddSubButton(Context context) {super(context); init();}
-    public AddSubButton(Context context, @Nullable AttributeSet attrs) {super(context, attrs); init();}
+    public AddSubButton(Context context) {
+        super(context);
+        init();
+    }
+
+    public AddSubButton(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
 
     public void init() {
         setText(R.string.customctrl_addsubbutton);
@@ -36,9 +43,9 @@ public class AddSubButton extends Button implements ActionButtonInterface {
 
     @Override
     public void onClick() {
-        if(mCurrentlySelectedButton instanceof ControlDrawer){
-            ((ControlDrawer)mCurrentlySelectedButton).getControlLayoutParent().addSubButton(
-                    (ControlDrawer)mCurrentlySelectedButton,
+        if (mCurrentlySelectedButton instanceof ControlDrawer) {
+            ((ControlDrawer) mCurrentlySelectedButton).getControlLayoutParent().addSubButton(
+                    (ControlDrawer) mCurrentlySelectedButton,
                     new ControlData()
             );
         }

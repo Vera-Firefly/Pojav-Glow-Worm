@@ -104,8 +104,8 @@ public class ApiHandler {
     }
 
     private static void addHeaders(HttpURLConnection connection, Map<String, String> headers) {
-        if(headers != null) {
-            for(String key : headers.keySet())
+        if (headers != null) {
+            for (String key : headers.keySet())
                 connection.addRequestProperty(key, headers.get(key));
         }
     }
@@ -157,7 +157,7 @@ public class ApiHandler {
     private static String urlEncodeUTF8(String input) {
         try {
             return URLEncoder.encode(input, "UTF-8");
-        }catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("UTF-8 is required");
         }
     }

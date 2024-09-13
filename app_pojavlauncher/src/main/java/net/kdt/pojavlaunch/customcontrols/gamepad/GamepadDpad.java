@@ -18,10 +18,11 @@ public class GamepadDpad {
 
     /**
      * Convert the event to a 2 int array: keycode and keyAction, similar to a keyEvent
+     *
      * @param event The motion to convert
      * @return int[0] keycode, int[1] keyAction
      */
-    public int[] convertEvent(MotionEvent event){
+    public int[] convertEvent(MotionEvent event) {
         // Use the hat axis value to find the D-pad direction
         float xaxis = event.getAxisValue(MotionEvent.AXIS_HAT_X);
         float yaxis = event.getAxisValue(MotionEvent.AXIS_HAT_Y);
@@ -40,7 +41,7 @@ public class GamepadDpad {
             mLastKeycode = KEYCODE_DPAD_UP;
         } else if (Float.compare(yaxis, 1.0f) == 0) {
             mLastKeycode = KEYCODE_DPAD_DOWN;
-        }else {
+        } else {
             //No keycode change
             action = KeyEvent.ACTION_UP;
         }
@@ -49,13 +50,14 @@ public class GamepadDpad {
 
     }
 
-    @SuppressWarnings("unused") public static boolean isDpadEvent(MotionEvent event) {
+    @SuppressWarnings("unused")
+    public static boolean isDpadEvent(MotionEvent event) {
         // Check that input comes from a device with directional pads.
         // And... also the joystick since it declares sometimes as a joystick.
         return (event.getSource() & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK;
     }
 
-    public static boolean isDpadEvent(KeyEvent event){
+    public static boolean isDpadEvent(KeyEvent event) {
         //return ((event.getSource() & InputDevice.SOURCE_DPAD) == InputDevice.SOURCE_DPAD) && (event.getDevice().getKeyboardType() == KEYBOARD_TYPE_NON_ALPHABETIC);
         return event.isFromSource(SOURCE_GAMEPAD) && event.getDevice().getKeyboardType() != KEYBOARD_TYPE_ALPHABETIC;
     }

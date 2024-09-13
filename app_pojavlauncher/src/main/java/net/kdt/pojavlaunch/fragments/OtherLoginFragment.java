@@ -20,19 +20,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.google.gson.Gson;
-import com.kdt.mcgui.MineButton;
-import com.kdt.mcgui.MineEditText;
 import com.externallogin.login.AuthResult;
 import com.externallogin.login.OtherLoginApi;
 import com.externallogin.login.Servers;
+import com.google.gson.Gson;
+import com.kdt.mcgui.MineButton;
+import com.kdt.mcgui.MineEditText;
 
 import net.kdt.pojavlaunch.PojavApplication;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
-import net.kdt.pojavlaunch.fragments.MainMenuFragment;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 
 import org.json.JSONObject;
@@ -114,7 +113,7 @@ public class OtherLoginFragment extends Fragment {
                                 .setPositiveButton(R.string.other_login_confirm, (dialogInterface, i1) -> {
                                     progressDialog.show();
                                     PojavApplication.sExecutorService.execute(() -> {
-                                        String data = OtherLoginApi.getINSTANCE().getServeInfo(i==0?editText.getText().toString():"https://auth.mc-user.com:233/" + editText.getText().toString());
+                                        String data = OtherLoginApi.getINSTANCE().getServeInfo(i == 0 ? editText.getText().toString() : "https://auth.mc-user.com:233/" + editText.getText().toString());
                                         requireActivity().runOnUiThread(() -> {
                                             progressDialog.dismiss();
                                             if (!Objects.isNull(data)) {
@@ -179,7 +178,7 @@ public class OtherLoginFragment extends Fragment {
             if (!checkAccountInformation(user, pass)) return;
 
             if (!(baseUrl == null || baseUrl.isEmpty())) {
-                requireActivity().runOnUiThread(() ->  progressDialog.show());
+                requireActivity().runOnUiThread(() -> progressDialog.show());
                 try {
                     OtherLoginApi.getINSTANCE().setBaseUrl(currentBaseUrl);
                     OtherLoginApi.getINSTANCE().login(user, pass, new OtherLoginApi.Listener() {
@@ -223,20 +222,20 @@ public class OtherLoginFragment extends Fragment {
 
                         @Override
                         public void onFailed(String error) {
-                            requireActivity().runOnUiThread(()->{
+                            requireActivity().runOnUiThread(() -> {
                                 progressDialog.dismiss();
-                                AlertDialog dialog=new AlertDialog.Builder(requireContext())
+                                AlertDialog dialog = new AlertDialog.Builder(requireContext())
                                         .setTitle(R.string.other_login_warning)
-                                        .setTitle("An error occurred while logging in：\n"+error)
-                                        .setPositiveButton(R.string.other_login_confirm,null)
+                                        .setTitle("An error occurred while logging in：\n" + error)
+                                        .setPositiveButton(R.string.other_login_confirm, null)
                                         .create();
                                 dialog.show();
                             });
                         }
                     });
                 } catch (IOException e) {
-                    requireActivity().runOnUiThread(()->progressDialog.dismiss());
-                    Log.e("login",e.toString());
+                    requireActivity().runOnUiThread(() -> progressDialog.dismiss());
+                    Log.e("login", e.toString());
                 }
             } else {
                 // error
@@ -288,7 +287,7 @@ public class OtherLoginFragment extends Fragment {
         if (serversFile.exists()) {
             try {
                 servers = new Gson().fromJson(Tools.read(serversFile.getAbsolutePath()), Servers.class);
-                currentBaseUrl=servers.getServer().get(0).getBaseUrl();
+                currentBaseUrl = servers.getServer().get(0).getBaseUrl();
                 for (Servers.Server server : servers.getServer()) {
                     serverList.add(server.getServerName());
                 }

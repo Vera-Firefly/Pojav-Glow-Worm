@@ -1,7 +1,9 @@
 package net.kdt.pojavlaunch;
 
 import androidx.annotation.Keep;
+
 import java.util.*;
+
 import net.kdt.pojavlaunch.value.*;
 
 @Keep
@@ -35,12 +37,14 @@ public class JMinecraftVersionList {
         public String time;
         public String type;
     }
+
     @Keep
     public static class JavaVersionInfo {
         public String component;
         public int majorVersion;
         public int version; // parameter used by LabyMod 4
     }
+
     @Keep
     public static class LoggingConfig {
         public LoggingClientConfig client;
@@ -52,6 +56,7 @@ public class JMinecraftVersionList {
             public String type;
         }
     }
+
     // Since 1.13
     @Keep
     public static class Arguments {
@@ -80,6 +85,7 @@ public class JMinecraftVersionList {
             }
         }
     }
+
     @Keep
     public static class AssetIndex extends FileProperties {
         public long totalSize;

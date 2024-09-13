@@ -12,6 +12,7 @@ import net.kdt.pojavlaunch.Tools;
 
 public class ProfileTypeSelectFragment extends Fragment {
     public static final String TAG = "ProfileTypeSelectFragment";
+
     public ProfileTypeSelectFragment() {
         super(R.layout.fragment_profile_type);
     }
@@ -27,13 +28,13 @@ public class ProfileTypeSelectFragment extends Fragment {
         // in FabricInstallFragment.onDownloadFinished() and ModVersionListFragment.onDownloadFinished()
         view.findViewById(R.id.optifine_profile).setOnClickListener(v -> Tools.swapFragment(requireActivity(), OptiFineInstallFragment.class,
                 OptiFineInstallFragment.TAG, null));
-        view.findViewById(R.id.modded_profile_fabric).setOnClickListener((v)->
+        view.findViewById(R.id.modded_profile_fabric).setOnClickListener((v) ->
                 Tools.swapFragment(requireActivity(), FabricInstallFragment.class, FabricInstallFragment.TAG, null));
-        view.findViewById(R.id.modded_profile_forge).setOnClickListener((v)->
+        view.findViewById(R.id.modded_profile_forge).setOnClickListener((v) ->
                 Tools.swapFragment(requireActivity(), ForgeInstallFragment.class, ForgeInstallFragment.TAG, null));
-        view.findViewById(R.id.modded_profile_modpack).setOnClickListener((v)->
+        view.findViewById(R.id.modded_profile_modpack).setOnClickListener((v) ->
                 Tools.swapFragment(requireActivity(), SearchModFragment.class, SearchModFragment.TAG, null));
-        view.findViewById(R.id.modded_profile_quilt).setOnClickListener((v)->
+        view.findViewById(R.id.modded_profile_quilt).setOnClickListener((v) ->
                 Tools.swapFragment(requireActivity(), QuiltInstallFragment.class, QuiltInstallFragment.TAG, null));
     }
 }

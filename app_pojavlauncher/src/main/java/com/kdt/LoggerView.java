@@ -45,7 +45,7 @@ public class LoggerView extends ConstraintLayout {
     /**
      * Inflate the layout, and add component behaviors
      */
-    private void init(){
+    private void init() {
         inflate(getContext(), R.layout.view_logger, this);
         mLogTextView = findViewById(R.id.content_log_view);
         mLogTextView.setTypeface(Typeface.MONOSPACE);
@@ -59,9 +59,9 @@ public class LoggerView extends ConstraintLayout {
         mLogToggle.setOnCheckedChangeListener(
                 (compoundButton, isChecked) -> {
                     mLogTextView.setVisibility(isChecked ? VISIBLE : GONE);
-                    if(isChecked) {
+                    if (isChecked) {
                         Logger.setLogListener(mLogListener);
-                    }else{
+                    } else {
                         mLogTextView.setText("");
                         Logger.setLogListener(null); // Makes the JNI code be able to skip expensive logger callbacks
                         // NOTE: was tested by rapidly smashing the log on/off button, no sync issues found :)
@@ -81,7 +81,7 @@ public class LoggerView extends ConstraintLayout {
         ToggleButton autoscrollToggle = findViewById(R.id.content_log_toggle_autoscroll);
         autoscrollToggle.setOnCheckedChangeListener(
                 (compoundButton, isChecked) -> {
-                    if(isChecked) mScrollView.fullScroll(View.FOCUS_DOWN);
+                    if (isChecked) mScrollView.fullScroll(View.FOCUS_DOWN);
                     mScrollView.setKeepFocusing(isChecked);
                 }
         );
@@ -89,10 +89,10 @@ public class LoggerView extends ConstraintLayout {
 
         // Listen to logs
         mLogListener = text -> {
-            if(mLogTextView.getVisibility() != VISIBLE) return;
+            if (mLogTextView.getVisibility() != VISIBLE) return;
             post(() -> {
                 mLogTextView.append(text + '\n');
-                if(mScrollView.isKeepFocusing()) mScrollView.fullScroll(View.FOCUS_DOWN);
+                if (mScrollView.isKeepFocusing()) mScrollView.fullScroll(View.FOCUS_DOWN);
             });
 
         };

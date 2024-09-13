@@ -12,16 +12,16 @@ public class GamepadButton {
     private boolean mIsDown = false;
     private boolean mIsToggled = false;
 
-    public void update(KeyEvent event){
+    public void update(KeyEvent event) {
         boolean isKeyDown = (event.getAction() == KeyEvent.ACTION_DOWN);
         update(isKeyDown);
     }
 
-    public void update(boolean isKeyDown){
-        if(isKeyDown != mIsDown){
+    public void update(boolean isKeyDown) {
+        if (isKeyDown != mIsDown) {
             mIsDown = isKeyDown;
-            if(isToggleable){
-                if(isKeyDown){
+            if (isToggleable) {
+                if (isKeyDown) {
                     mIsToggled = !mIsToggled;
                     Gamepad.sendInput(keycodes, mIsToggled);
                 }
@@ -31,15 +31,15 @@ public class GamepadButton {
         }
     }
 
-    public void resetButtonState(){
-        if(mIsDown || mIsToggled){
+    public void resetButtonState() {
+        if (mIsDown || mIsToggled) {
             Gamepad.sendInput(keycodes, false);
         }
         mIsDown = false;
         mIsToggled = false;
     }
 
-    public boolean isDown(){
+    public boolean isDown() {
         return isToggleable ? mIsToggled : mIsDown;
     }
 

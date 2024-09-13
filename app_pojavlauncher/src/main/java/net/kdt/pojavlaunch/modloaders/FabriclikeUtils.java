@@ -35,27 +35,30 @@ public class FabriclikeUtils {
         this.mName = mName;
     }
 
-    public FabricVersion[] downloadGameVersions() throws IOException{
+    public FabricVersion[] downloadGameVersions() throws IOException {
         try {
-            return DownloadUtils.downloadStringCached(String.format(GAME_METADATA_URL, mApiUrl), mCachePrefix+"_game_versions",
+            return DownloadUtils.downloadStringCached(String.format(GAME_METADATA_URL, mApiUrl), mCachePrefix + "_game_versions",
                     FabriclikeUtils::deserializeRawVersions
             );
-        }catch (DownloadUtils.ParseException ignored) {}
+        } catch (DownloadUtils.ParseException ignored) {
+        }
         return null;
     }
 
-    public FabricVersion[] downloadLoaderVersions(String gameVersion) throws IOException{
+    public FabricVersion[] downloadLoaderVersions(String gameVersion) throws IOException {
         try {
             String urlEncodedGameVersion = URLEncoder.encode(gameVersion, "UTF-8");
             return DownloadUtils.downloadStringCached(String.format(LOADER_METADATA_URL, mApiUrl, urlEncodedGameVersion),
-                    mCachePrefix+"_loader_versions."+urlEncodedGameVersion,
-                    (input)->{ try {
-                        return deserializeLoaderVersions(input);
-                    }catch (JSONException e) {
-                        throw new DownloadUtils.ParseException(e);
-                    }});
+                    mCachePrefix + "_loader_versions." + urlEncodedGameVersion,
+                    (input) -> {
+                        try {
+                            return deserializeLoaderVersions(input);
+                        } catch (JSONException e) {
+                            throw new DownloadUtils.ParseException(e);
+                        }
+                    });
 
-        }catch (DownloadUtils.ParseException e) {
+        } catch (DownloadUtils.ParseException e) {
             e.printStackTrace();
         }
         return null;
@@ -74,6 +77,7 @@ public class FabriclikeUtils {
     public String getName() {
         return mName;
     }
+
     public String getIconName() {
         return mIconName;
     }
@@ -81,12 +85,12 @@ public class FabriclikeUtils {
     private static FabricVersion[] deserializeLoaderVersions(String input) throws JSONException {
         JSONArray jsonArray = new JSONArray(input);
         FabricVersion[] fabricVersions = new FabricVersion[jsonArray.length()];
-        for(int i = 0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i).getJSONObject("loader");
             FabricVersion fabricVersion = new FabricVersion();
             fabricVersion.version = jsonObject.getString("version");
             //Quilt has a skill issue and does not say which versions are stable or not
-            if(jsonObject.has("stable")) {
+            if (jsonObject.has("stable")) {
                 fabricVersion.stable = jsonObject.getBoolean("stable");
             } else {
                 fabricVersion.stable = !fabricVersion.version.contains("beta");
@@ -99,7 +103,7 @@ public class FabriclikeUtils {
     private static FabricVersion[] deserializeRawVersions(String jsonArrayIn) throws DownloadUtils.ParseException {
         try {
             return Tools.GLOBAL_GSON.fromJson(jsonArrayIn, FabricVersion[].class);
-        }catch (JsonSyntaxException e) {
+        } catch (JsonSyntaxException e) {
             e.printStackTrace();
             throw new DownloadUtils.ParseException(null);
         }

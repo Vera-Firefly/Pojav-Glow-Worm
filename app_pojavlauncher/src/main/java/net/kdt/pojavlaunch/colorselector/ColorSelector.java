@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import net.kdt.pojavlaunch.R;
 
-public class ColorSelector implements HueSelectionListener, RectangleSelectionListener, AlphaSelectionListener, TextWatcher{
+public class ColorSelector implements HueSelectionListener, RectangleSelectionListener, AlphaSelectionListener, TextWatcher {
     private static final int ALPHA_MASK = ~(0xFF << 24);
     private final View mRootView;
     private final HueView mHueView;
@@ -24,8 +24,8 @@ public class ColorSelector implements HueSelectionListener, RectangleSelectionLi
     private final EditText mTextView;
 
     private ColorSelectionListener mColorSelectionListener;
-    private final float[] mHueTemplate = new float[] {0,1,1};
-    private final float[] mHsvSelected = new float[] {360,1,1};
+    private final float[] mHueTemplate = new float[]{0, 1, 1};
+    private final float[] mHsvSelected = new float[]{360, 1, 1};
     private int mAlphaSelected = 0xff;
     private final ColorStateList mTextColors;
     private boolean mWatch = true;
@@ -35,12 +35,13 @@ public class ColorSelector implements HueSelectionListener, RectangleSelectionLi
 
     /**
      * Creates a color selector dialog for this Context.
-     * @param context Context used for this ColorSelector dialog
+     *
+     * @param context                Context used for this ColorSelector dialog
      * @param colorSelectionListener Color selection listener to which the events will be sent to. Can be null.
      */
     public ColorSelector(Context context, ViewGroup parent, @Nullable ColorSelectionListener colorSelectionListener) {
 
-        mRootView = LayoutInflater.from(context).inflate(R.layout.dialog_color_selector,parent, false);
+        mRootView = LayoutInflater.from(context).inflate(R.layout.dialog_color_selector, parent, false);
         mHueView = mRootView.findViewById(R.id.color_selector_hue_view);
         mLuminosityIntensityView = mRootView.findViewById(R.id.color_selector_rectangle_view);
         mAlphaView = mRootView.findViewById(R.id.color_selector_alpha_view);
@@ -58,8 +59,10 @@ public class ColorSelector implements HueSelectionListener, RectangleSelectionLi
         parent.addView(mRootView);
     }
 
-    /** @return The root view, mainly for position manipulation purposes */
-    public View getRootView(){
+    /**
+     * @return The root view, mainly for position manipulation purposes
+     */
+    public View getRootView() {
         return mRootView;
     }
 
@@ -72,6 +75,7 @@ public class ColorSelector implements HueSelectionListener, RectangleSelectionLi
 
     /**
      * Shows the color selector with the desired ARGB color selected
+     *
      * @param previousColor the desired ARGB color
      */
     public void show(int previousColor) {
@@ -101,6 +105,7 @@ public class ColorSelector implements HueSelectionListener, RectangleSelectionLi
 
     /**
      * Replaces the alpha value of the color passed in, and returns the result.
+     *
      * @param color the color to replace the alpha of
      * @param alpha the alpha to use
      * @return the new color
@@ -114,7 +119,7 @@ public class ColorSelector implements HueSelectionListener, RectangleSelectionLi
         int color = Color.HSVToColor(mAlphaSelected, mHsvSelected);
         mColorView.setColor(color);
         mWatch = false;
-        mTextView.setText(String.format("%08X",color));
+        mTextView.setText(String.format("%08X", color));
         notifyColorSelector(color);
     }
 
@@ -131,38 +136,40 @@ public class ColorSelector implements HueSelectionListener, RectangleSelectionLi
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
 
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
 
     @Override
     public void afterTextChanged(Editable s) {
-        if(mWatch) {
+        if (mWatch) {
             try {
                 int color = Integer.parseInt(s.toString(), 16);
                 mTextView.setTextColor(mTextColors);
                 runColor(color);
-            }catch (NumberFormatException exception) {
+            } catch (NumberFormatException exception) {
                 mTextView.setTextColor(Color.RED);
             }
-        }else{
+        } else {
             mWatch = true;
         }
     }
 
-    public void setColorSelectionListener(ColorSelectionListener listener){
+    public void setColorSelectionListener(ColorSelectionListener listener) {
         mColorSelectionListener = listener;
     }
 
-    public void setAlphaEnabled(boolean alphaEnabled){
+    public void setAlphaEnabled(boolean alphaEnabled) {
         mAlphaEnabled = alphaEnabled;
         mAlphaView.setVisibility(alphaEnabled ? View.VISIBLE : View.GONE);
         mAlphaView.setAlpha(255);
     }
 
-    private void notifyColorSelector(int color){
-        if(mColorSelectionListener != null)
+    private void notifyColorSelector(int color) {
+        if (mColorSelectionListener != null)
             mColorSelectionListener.onColorSelected(color);
     }
 }

@@ -28,7 +28,7 @@ public class LayoutConverter {
                 CustomControls layout = LayoutConverter.convertV2Layout(layoutJobj);
                 layout.save(jsonPath);
                 return layout;
-            }else if (layoutJobj.getInt("version") >= 3 && layoutJobj.getInt("version") <= 5) {
+            } else if (layoutJobj.getInt("version") >= 3 && layoutJobj.getInt("version") <= 5) {
                 return LayoutConverter.convertV3_4Layout(layoutJobj);
             } else if (layoutJobj.getInt("version") == 6 || layoutJobj.getInt("version") == 7) {
                 return Tools.GLOBAL_GSON.fromJson(jsonLayoutData, CustomControls.class);

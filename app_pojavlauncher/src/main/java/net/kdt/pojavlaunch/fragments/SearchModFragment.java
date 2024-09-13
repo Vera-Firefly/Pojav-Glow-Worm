@@ -52,7 +52,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
 
     private final SearchFilters mSearchFilters;
 
-    public SearchModFragment(){
+    public SearchModFragment() {
         super(R.layout.fragment_mod_search);
         mSearchFilters = new SearchFilters();
         mSearchFilters.isModpack = true;
@@ -91,12 +91,12 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
             return false;
         });
 
-        mOverlay.post(()->{
-           int overlayHeight = mOverlay.getHeight();
-           mRecyclerview.setPadding(mRecyclerview.getPaddingLeft(),
-                   mRecyclerview.getPaddingTop() + overlayHeight,
-                   mRecyclerview.getPaddingRight(),
-                   mRecyclerview.getPaddingBottom());
+        mOverlay.post(() -> {
+            int overlayHeight = mOverlay.getHeight();
+            mRecyclerview.setPadding(mRecyclerview.getPaddingLeft(),
+                    mRecyclerview.getPaddingTop() + overlayHeight,
+                    mRecyclerview.getPaddingRight(),
+                    mRecyclerview.getPaddingBottom());
         });
         mFilterButton.setOnClickListener(v -> displayFilterDialog());
 
@@ -154,7 +154,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
             assert mApplyButton != null;
 
             // Setup the expendable list behavior
-            mSelectVersionButton.setOnClickListener(v -> VersionSelectorDialog.open(v.getContext(), true, (id, snapshot)-> mSelectedVersion.setText(id)));
+            mSelectVersionButton.setOnClickListener(v -> VersionSelectorDialog.open(v.getContext(), true, (id, snapshot) -> mSelectedVersion.setText(id)));
 
             // Apply visually all the current settings
             mSelectedVersion.setText(mSearchFilters.mcVersion);

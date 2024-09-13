@@ -18,12 +18,13 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 
-public class FabriclikeDownloadTask implements Runnable, Tools.DownloaderFeedback{
+public class FabriclikeDownloadTask implements Runnable, Tools.DownloaderFeedback {
     private final ModloaderDownloadListener mModloaderDownloadListener;
     private final FabriclikeUtils mUtils;
     private final String mGameVersion;
     private final String mLoaderVersion;
     private final boolean mCreateProfile;
+
     public FabriclikeDownloadTask(ModloaderDownloadListener modloaderDownloadListener, FabriclikeUtils utils, String mGameVersion, String mLoaderVersion, boolean mCreateProfile) {
         this.mModloaderDownloadListener = modloaderDownloadListener;
         this.mUtils = utils;
@@ -36,29 +37,29 @@ public class FabriclikeDownloadTask implements Runnable, Tools.DownloaderFeedbac
     public void run() {
         ProgressKeeper.submitProgress(ProgressLayout.INSTALL_MODPACK, 0, R.string.fabric_dl_progress);
         try {
-            if(runCatching()) mModloaderDownloadListener.onDownloadFinished(null);
+            if (runCatching()) mModloaderDownloadListener.onDownloadFinished(null);
             else mModloaderDownloadListener.onDataNotAvailable();
-        }catch (IOException e) {
+        } catch (IOException e) {
             mModloaderDownloadListener.onDownloadError(e);
         }
         ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
     }
 
-    private boolean runCatching() throws IOException{
+    private boolean runCatching() throws IOException {
         String fabricJson = DownloadUtils.downloadString(mUtils.createJsonDownloadUrl(mGameVersion, mLoaderVersion));
         String versionId;
         try {
             JSONObject fabricJsonObject = new JSONObject(fabricJson);
             versionId = fabricJsonObject.getString("id");
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
             return false;
         }
         File versionJsonDir = new File(ProfilePathHome.getVersionsHome(), versionId);
-        File versionJsonFile = new File(versionJsonDir, versionId+".json");
+        File versionJsonFile = new File(versionJsonDir, versionId + ".json");
         FileUtils.ensureDirectory(versionJsonDir);
         Tools.write(versionJsonFile.getAbsolutePath(), fabricJson);
-        if(mCreateProfile) {
+        if (mCreateProfile) {
             LauncherProfiles.load(ProfilePathManager.getCurrentProfile());
             MinecraftProfile fabricProfile = new MinecraftProfile();
             fabricProfile.lastVersionId = versionId;
@@ -72,7 +73,7 @@ public class FabriclikeDownloadTask implements Runnable, Tools.DownloaderFeedbac
 
     @Override
     public void updateProgress(int curr, int max) {
-        int progress100 = (int)(((float)curr / (float)max)*100f);
+        int progress100 = (int) (((float) curr / (float) max) * 100f);
         ProgressKeeper.submitProgress(ProgressLayout.INSTALL_MODPACK, progress100, R.string.fabric_dl_progress, mUtils.getName());
     }
 }

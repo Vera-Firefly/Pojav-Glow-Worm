@@ -1,10 +1,14 @@
 package org.lwjgl.glfw;
 
-import net.kdt.pojavlaunch.*;
-import android.content.*;
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.view.Choreographer;
 
 import androidx.annotation.Nullable;
+
+import net.kdt.pojavlaunch.GrabListener;
+import net.kdt.pojavlaunch.LwjglGlfwKeycode;
+import net.kdt.pojavlaunch.MainActivity;
 
 import java.util.ArrayList;
 
@@ -14,11 +18,11 @@ public class CallbackBridge {
     public static final Choreographer sChoreographer = Choreographer.getInstance();
     private static boolean isGrabbing = false;
     private static final ArrayList<GrabListener> grabListeners = new ArrayList<>();
-    
+
     public static final int CLIPBOARD_COPY = 2000;
     public static final int CLIPBOARD_PASTE = 2001;
     public static final int CLIPBOARD_OPEN = 2002;
-    
+
     public static volatile int windowWidth, windowHeight;
     public static volatile int physicalWidth, physicalHeight;
     public static float mouseX, mouseY;
@@ -29,7 +33,7 @@ public class CallbackBridge {
         putMouseEventWithCoords(button, true, x, y);
         sChoreographer.postFrameCallbackDelayed(l -> putMouseEventWithCoords(button, false, x, y), 33);
     }
-    
+
     public static void putMouseEventWithCoords(int button, boolean isDown, float x, float y /* , int dz, long nanos */) {
         sendCursorPos(x, y);
         sendMouseKeycode(button, CallbackBridge.getCurrentMods(), isDown);
@@ -44,15 +48,15 @@ public class CallbackBridge {
 
     public static void sendKeycode(int keycode, char keychar, int scancode, int modifiers, boolean isDown) {
         // TODO CHECK: This may cause input issue, not receive input!
-        if(keycode != 0)  nativeSendKey(keycode,scancode,isDown ? 1 : 0, modifiers);
-        if(isDown && keychar != '\u0000') {
-            nativeSendCharMods(keychar,modifiers);
+        if (keycode != 0) nativeSendKey(keycode, scancode, isDown ? 1 : 0, modifiers);
+        if (isDown && keychar != '\u0000') {
+            nativeSendCharMods(keychar, modifiers);
             nativeSendChar(keychar);
         }
     }
 
-    public static void sendChar(char keychar, int modifiers){
-        nativeSendCharMods(keychar,modifiers);
+    public static void sendChar(char keychar, int modifiers) {
+        nativeSendCharMods(keychar, modifiers);
         nativeSendChar(keychar);
     }
 
@@ -86,7 +90,7 @@ public class CallbackBridge {
         sendMouseKeycode(keycode, CallbackBridge.getCurrentMods(), true);
         sendMouseKeycode(keycode, CallbackBridge.getCurrentMods(), false);
     }
-    
+
     public static void sendScroll(double xoffset, double yoffset) {
         nativeSendScroll(xoffset, yoffset);
     }
@@ -118,7 +122,8 @@ public class CallbackBridge {
             case CLIPBOARD_OPEN:
                 MainActivity.openLink(copy);
                 return null;
-            default: return null;
+            default:
+                return null;
         }
     }
 
@@ -127,20 +132,24 @@ public class CallbackBridge {
         int currMods = 0;
         if (holdingAlt) {
             currMods |= LwjglGlfwKeycode.GLFW_MOD_ALT;
-        } if (holdingCapslock) {
+        }
+        if (holdingCapslock) {
             currMods |= LwjglGlfwKeycode.GLFW_MOD_CAPS_LOCK;
-        } if (holdingCtrl) {
+        }
+        if (holdingCtrl) {
             currMods |= LwjglGlfwKeycode.GLFW_MOD_CONTROL;
-        } if (holdingNumlock) {
+        }
+        if (holdingNumlock) {
             currMods |= LwjglGlfwKeycode.GLFW_MOD_NUM_LOCK;
-        } if (holdingShift) {
+        }
+        if (holdingShift) {
             currMods |= LwjglGlfwKeycode.GLFW_MOD_SHIFT;
         }
         return currMods;
     }
 
-    public static void setModifiers(int keyCode, boolean isDown){
-        switch (keyCode){
+    public static void setModifiers(int keyCode, boolean isDown) {
+        switch (keyCode) {
             case LwjglGlfwKeycode.GLFW_KEY_LEFT_SHIFT:
                 CallbackBridge.holdingShift = isDown;
                 return;
@@ -168,7 +177,7 @@ public class CallbackBridge {
         isGrabbing = grabbing;
         sChoreographer.postFrameCallbackDelayed((time) -> {
             // If the grab re-changed, skip notify process
-            if(isGrabbing != grabbing) return;
+            if (isGrabbing != grabbing) return;
 
             System.out.println("Grab changed : " + grabbing);
             synchronized (grabListeners) {
@@ -178,30 +187,48 @@ public class CallbackBridge {
         }, 16);
 
     }
+
     public static void addGrabListener(GrabListener listener) {
         synchronized (grabListeners) {
             listener.onGrabState(isGrabbing);
             grabListeners.add(listener);
         }
     }
+
     public static void removeGrabListener(GrabListener listener) {
         synchronized (grabListeners) {
             grabListeners.remove(listener);
         }
     }
 
-    @CriticalNative public static native void nativeSetUseInputStackQueue(boolean useInputStackQueue);
+    @CriticalNative
+    public static native void nativeSetUseInputStackQueue(boolean useInputStackQueue);
 
-    @CriticalNative private static native boolean nativeSendChar(char codepoint);
+    @CriticalNative
+    private static native boolean nativeSendChar(char codepoint);
+
     // GLFW: GLFWCharModsCallback deprecated, but is Minecraft still use?
-    @CriticalNative private static native boolean nativeSendCharMods(char codepoint, int mods);
-    @CriticalNative private static native void nativeSendKey(int key, int scancode, int action, int mods);
+    @CriticalNative
+    private static native boolean nativeSendCharMods(char codepoint, int mods);
+
+    @CriticalNative
+    private static native void nativeSendKey(int key, int scancode, int action, int mods);
+
     // private static native void nativeSendCursorEnter(int entered);
-    @CriticalNative private static native void nativeSendCursorPos(float x, float y);
-    @CriticalNative private static native void nativeSendMouseButton(int button, int action, int mods);
-    @CriticalNative private static native void nativeSendScroll(double xoffset, double yoffset);
-    @CriticalNative private static native void nativeSendScreenSize(int width, int height);
+    @CriticalNative
+    private static native void nativeSendCursorPos(float x, float y);
+
+    @CriticalNative
+    private static native void nativeSendMouseButton(int button, int action, int mods);
+
+    @CriticalNative
+    private static native void nativeSendScroll(double xoffset, double yoffset);
+
+    @CriticalNative
+    private static native void nativeSendScreenSize(int width, int height);
+
     public static native void nativeSetWindowAttrib(int attrib, int value);
+
     static {
         System.loadLibrary("pojavexec");
     }

@@ -21,6 +21,7 @@ public class ModloaderInstallTracker implements SharedPreferences.OnSharedPrefer
 
     /**
      * Create a ModInstallTracker object. This must be done in the Activity's onCreate method.
+     *
      * @param activity the host activity
      */
     public ModloaderInstallTracker(Activity activity) {
@@ -48,18 +49,18 @@ public class ModloaderInstallTracker implements SharedPreferences.OnSharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefName) {
-        if(!"modLoaderAvailable".equals(prefName)) return;
+        if (!"modLoaderAvailable".equals(prefName)) return;
         runCheck();
     }
 
     @SuppressLint("ApplySharedPref")
     private void runCheck() {
-        if(!mSharedPreferences.getBoolean("modLoaderAvailable", false)) return;
+        if (!mSharedPreferences.getBoolean("modLoaderAvailable", false)) return;
         SharedPreferences.Editor editor = mSharedPreferences.edit().putBoolean("modLoaderAvailable", false);
-        if(!editor.commit()) editor.apply();
+        if (!editor.commit()) editor.apply();
         ModLoader modLoader = deserializeModLoader(mSharedPreferences);
         File modInstallFile = deserializeInstallFile(mSharedPreferences);
-        if(modLoader == null || modInstallFile == null) return;
+        if (modLoader == null || modInstallFile == null) return;
         startModInstallation(modLoader, modInstallFile);
     }
 
@@ -75,8 +76,9 @@ public class ModloaderInstallTracker implements SharedPreferences.OnSharedPrefer
     /**
      * Store the data necessary to start a ModLoader installation for the tracker to start the installer
      * sometime.
-     * @param context the Context
-     * @param modLoader the ModLoader to store
+     *
+     * @param context        the Context
+     * @param modLoader      the ModLoader to store
      * @param modInstallFile the installer jar to store
      */
     @SuppressLint("ApplySharedPref")
@@ -91,16 +93,16 @@ public class ModloaderInstallTracker implements SharedPreferences.OnSharedPrefer
     }
 
     private static ModLoader deserializeModLoader(SharedPreferences sharedPreferences) {
-        if(!sharedPreferences.contains("modLoaderType") ||
-        !sharedPreferences.contains("modLoaderVersion") ||
-        !sharedPreferences.contains("minecraftVersion")) return null;
+        if (!sharedPreferences.contains("modLoaderType") ||
+                !sharedPreferences.contains("modLoaderVersion") ||
+                !sharedPreferences.contains("minecraftVersion")) return null;
         return new ModLoader(sharedPreferences.getInt("modLoaderType", -1),
                 sharedPreferences.getString("modLoaderVersion", ""),
                 sharedPreferences.getString("minecraftVersion", ""));
     }
 
     private static File deserializeInstallFile(SharedPreferences sharedPreferences) {
-        if(!sharedPreferences.contains("modInstallerJar")) return null;
+        if (!sharedPreferences.contains("modInstallerJar")) return null;
         return new File(sharedPreferences.getString("modInstallerJar", ""));
     }
 }

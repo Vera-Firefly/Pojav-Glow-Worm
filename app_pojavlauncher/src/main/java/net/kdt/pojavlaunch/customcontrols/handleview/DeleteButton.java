@@ -12,8 +12,15 @@ import net.kdt.pojavlaunch.customcontrols.buttons.ControlInterface;
 
 @SuppressLint("AppCompatCustomView")
 public class DeleteButton extends Button implements ActionButtonInterface {
-    public DeleteButton(Context context) {super(context); init();}
-    public DeleteButton(Context context, @Nullable AttributeSet attrs) {super(context, attrs); init();}
+    public DeleteButton(Context context) {
+        super(context);
+        init();
+    }
+
+    public DeleteButton(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
 
     public void init() {
         setOnClickListener(this);
@@ -36,7 +43,7 @@ public class DeleteButton extends Button implements ActionButtonInterface {
 
     @Override
     public void onClick() {
-        if(mCurrentlySelectedButton == null) return;
+        if (mCurrentlySelectedButton == null) return;
 
         mCurrentlySelectedButton.removeButton();
     }

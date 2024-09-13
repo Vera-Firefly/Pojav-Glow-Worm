@@ -4,9 +4,9 @@ import androidx.annotation.Keep;
 
 @Keep
 public class MinecraftAuthenticationDatabase {
-	public String accessToken;
+    public String accessToken;
     public String displayName;
-	public String username;
+    public String username;
     public String uuid;
-	// public MinecraftProfile[] profiles;
+    // public MinecraftProfile[] profiles;
 }

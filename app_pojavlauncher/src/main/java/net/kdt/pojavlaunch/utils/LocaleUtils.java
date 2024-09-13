@@ -3,14 +3,18 @@ package net.kdt.pojavlaunch.utils;
 
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
 
-import android.content.*;
-import android.content.res.*;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
 
-import androidx.preference.*;
-import java.util.*;
-import net.kdt.pojavlaunch.prefs.*;
+import androidx.preference.PreferenceManager;
+
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
+
+import java.util.Locale;
 
 public class LocaleUtils extends ContextWrapper {
 
@@ -29,11 +33,11 @@ public class LocaleUtils extends ContextWrapper {
             Configuration configuration = resources.getConfiguration();
 
             /**
-            * en-XA is a pseudo-language (usually used for UI testing)
-            * that has no corresponding resource directory
-            * Therefore, when the application is set to this language
-            * the system falls back to the default resource in the values directory
-            */
+             * en-XA is a pseudo-language (usually used for UI testing)
+             * that has no corresponding resource directory
+             * Therefore, when the application is set to this language
+             * the system falls back to the default resource in the values directory
+             */
             Locale defaultLocale = new Locale("en", "XA");
             configuration.setLocale(defaultLocale);
             Locale.setDefault(defaultLocale);

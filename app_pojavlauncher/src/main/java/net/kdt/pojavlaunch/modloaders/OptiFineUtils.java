@@ -15,22 +15,23 @@ public class OptiFineUtils {
         try {
             return DownloadUtils.downloadStringCached("https://optifine.net/downloads",
                     "of_downloads_page", new OptiFineScraper());
-        }catch (DownloadUtils.ParseException e) {
+        } catch (DownloadUtils.ParseException e) {
             e.printStackTrace();
             return null;
         }
     }
 
     public static void addAutoInstallArgs(Intent intent, File modInstallerJar) {
-        intent.putExtra("javaArgs", "-javaagent:"+ Tools.DIR_DATA+"/forge_installer/forge_installer.jar"
+        intent.putExtra("javaArgs", "-javaagent:" + Tools.DIR_DATA + "/forge_installer/forge_installer.jar"
                 + "=OFNPS" +// No Profile Suppression
-                " -jar "+modInstallerJar.getAbsolutePath());
+                " -jar " + modInstallerJar.getAbsolutePath());
     }
 
     public static class OptiFineVersions {
         public List<String> minecraftVersions;
         public List<List<OptiFineVersion>> optifineVersions;
     }
+
     public static class OptiFineVersion {
         public String minecraftVersion;
         public String versionName;

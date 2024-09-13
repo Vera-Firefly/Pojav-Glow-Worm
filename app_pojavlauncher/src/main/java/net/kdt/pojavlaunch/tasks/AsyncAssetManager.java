@@ -20,10 +20,13 @@ import java.io.InputStream;
 
 public class AsyncAssetManager {
 
-    private AsyncAssetManager(){}
+    private AsyncAssetManager() {
+    }
 
-    /** Unpack single files, with no regard to version tracking */
-    public static void unpackSingleFiles(Context ctx){
+    /**
+     * Unpack single files, with no regard to version tracking
+     */
+    public static void unpackSingleFiles(Context ctx) {
         ProgressLayout.setProgress(ProgressLayout.EXTRACT_SINGLE_FILES, 0);
         sExecutorService.execute(() -> {
             try {
@@ -31,10 +34,10 @@ public class AsyncAssetManager {
                 Tools.copyAssetFile(ctx, "default.json", Tools.CTRLMAP_PATH, false);
 
                 Tools.copyAssetFile(ctx, "launcher_profiles.json", ProfilePathHome.getGameHome(), false);
-                Tools.copyAssetFile(ctx,"resolv.conf",Tools.DIR_DATA, false);
+                Tools.copyAssetFile(ctx, "resolv.conf", Tools.DIR_DATA, false);
 
                 File path = new File(Tools.DIR_GAME_HOME + "/login/version");
-                Tools.copyAssetFile(ctx,"login/version",path.getParent(),false);
+                Tools.copyAssetFile(ctx, "login/version", path.getParent(), false);
                 InputStream in = ctx.getAssets().open("login/version");
                 byte[] b = new byte[in.available()];
                 in.read(b);
@@ -42,10 +45,10 @@ public class AsyncAssetManager {
                 in.close();
                 path.getParentFile().mkdirs();
                 int oldVersion = Integer.parseInt(Tools.read(Tools.DIR_GAME_HOME + "/login/version"));
-                boolean overwrite=newVersion>oldVersion;
-                Tools.copyAssetFile(ctx,"login/version",path.getParent(),overwrite);
-                Tools.copyAssetFile(ctx,"login/nide8auth.jar",path.getParent(),overwrite);
-                Tools.copyAssetFile(ctx,"login/authlib-injector.jar",path.getParent(),overwrite);
+                boolean overwrite = newVersion > oldVersion;
+                Tools.copyAssetFile(ctx, "login/version", path.getParent(), overwrite);
+                Tools.copyAssetFile(ctx, "login/nide8auth.jar", path.getParent(), overwrite);
+                Tools.copyAssetFile(ctx, "login/authlib-injector.jar", path.getParent(), overwrite);
             } catch (IOException e) {
                 Log.e("AsyncAssetManager", "Failed to unpack critical components !");
             }
@@ -53,7 +56,7 @@ public class AsyncAssetManager {
         });
     }
 
-    public static void unpackComponents(Context ctx){
+    public static void unpackComponents(Context ctx) {
         ProgressLayout.setProgress(ProgressLayout.EXTRACT_COMPONENTS, 0);
         sExecutorService.execute(() -> {
             try {
@@ -67,7 +70,7 @@ public class AsyncAssetManager {
                 unpackComponent(ctx, "arc_dns_injector", true);
                 unpackComponent(ctx, "forge_installer", true);
             } catch (IOException e) {
-                Log.e("AsyncAssetManager", "Failed o unpack components !",e );
+                Log.e("AsyncAssetManager", "Failed o unpack components !", e);
             }
             ProgressLayout.clearProgress(ProgressLayout.EXTRACT_COMPONENTS);
         });
@@ -79,7 +82,7 @@ public class AsyncAssetManager {
 
         File versionFile = new File(rootDir + "/" + component + "/version");
         InputStream is = am.open("components/" + component + "/version");
-        if(!versionFile.exists()) {
+        if (!versionFile.exists()) {
             if (versionFile.getParentFile().exists() && versionFile.getParentFile().isDirectory()) {
                 FileUtils.deleteDirectory(versionFile.getParentFile());
             }
@@ -87,7 +90,7 @@ public class AsyncAssetManager {
 
             Log.i("UnpackPrep", component + ": Pack was installed manually, or does not exist, unpacking new...");
             String[] fileList = am.list("components/" + component);
-            for(String s : fileList) {
+            for (String s : fileList) {
                 Tools.copyAssetFile(ctx, "components/" + component + "/" + s, rootDir + "/" + component, true);
             }
         } else {

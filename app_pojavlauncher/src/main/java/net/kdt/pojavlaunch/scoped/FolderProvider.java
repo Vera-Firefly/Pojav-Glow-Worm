@@ -50,25 +50,25 @@ public class FolderProvider extends DocumentsProvider {
     // The default columns to return information about a root if no specific
     // columns are requested in a query.
     private static final String[] DEFAULT_ROOT_PROJECTION = new String[]{
-        Root.COLUMN_ROOT_ID,
-        Root.COLUMN_MIME_TYPES,
-        Root.COLUMN_FLAGS,
-        Root.COLUMN_ICON,
-        Root.COLUMN_TITLE,
-        Root.COLUMN_SUMMARY,
-        Root.COLUMN_DOCUMENT_ID,
-        Root.COLUMN_AVAILABLE_BYTES
+            Root.COLUMN_ROOT_ID,
+            Root.COLUMN_MIME_TYPES,
+            Root.COLUMN_FLAGS,
+            Root.COLUMN_ICON,
+            Root.COLUMN_TITLE,
+            Root.COLUMN_SUMMARY,
+            Root.COLUMN_DOCUMENT_ID,
+            Root.COLUMN_AVAILABLE_BYTES
     };
 
     // The default columns to return information about a document if no specific
     // columns are requested in a query.
     private static final String[] DEFAULT_DOCUMENT_PROJECTION = new String[]{
-        Document.COLUMN_DOCUMENT_ID,
-        Document.COLUMN_MIME_TYPE,
-        Document.COLUMN_DISPLAY_NAME,
-        Document.COLUMN_LAST_MODIFIED,
-        Document.COLUMN_FLAGS,
-        Document.COLUMN_SIZE
+            Document.COLUMN_DOCUMENT_ID,
+            Document.COLUMN_MIME_TYPE,
+            Document.COLUMN_DISPLAY_NAME,
+            Document.COLUMN_LAST_MODIFIED,
+            Document.COLUMN_FLAGS,
+            Document.COLUMN_SIZE
     };
 
     @Override
@@ -100,7 +100,8 @@ public class FolderProvider extends DocumentsProvider {
         final MatrixCursor result = new MatrixCursor(projection != null ? projection : DEFAULT_DOCUMENT_PROJECTION);
         final File parent = getFileForDocId(parentDocumentId);
         final File[] children = parent.listFiles();
-        if(children == null) throw new FileNotFoundException("Unable to list files in "+parent.getAbsolutePath());
+        if (children == null)
+            throw new FileNotFoundException("Unable to list files in " + parent.getAbsolutePath());
         for (File file : children) {
             includeFile(result, null, file);
         }
@@ -153,9 +154,9 @@ public class FolderProvider extends DocumentsProvider {
     public String renameDocument(String documentId, String displayName) throws FileNotFoundException {
         File sourceFile = getFileForDocId(documentId);
         File sourceParent = sourceFile.getParentFile();
-        if(sourceParent == null) throw new FileNotFoundException("Cannot rename root");
+        if (sourceParent == null) throw new FileNotFoundException("Cannot rename root");
         File targetFile = new File(getDocIdForFile(sourceParent) + "/" + displayName);
-        if(!sourceFile.renameTo(targetFile)){
+        if (!sourceFile.renameTo(targetFile)) {
             throw new FileNotFoundException("Couldn't rename the document with id" + documentId);
         }
         return getDocIdForFile(targetFile);
@@ -165,7 +166,7 @@ public class FolderProvider extends DocumentsProvider {
     public String moveDocument(String sourceDocumentId, String sourceParentDocumentId, String targetParentDocumentId) throws FileNotFoundException {
         File sourceFile = getFileForDocId(sourceParentDocumentId + sourceDocumentId);
         File targetFile = new File(targetParentDocumentId + sourceDocumentId);
-        if(!sourceFile.renameTo(targetFile)){
+        if (!sourceFile.renameTo(targetFile)) {
             throw new FileNotFoundException("Failed to move the document with id " + sourceFile.getPath());
         }
         return getDocIdForFile(targetFile);
@@ -179,13 +180,13 @@ public class FolderProvider extends DocumentsProvider {
     @Override
     public void deleteDocument(String documentId) throws FileNotFoundException {
         File file = getFileForDocId(documentId);
-        if(file.isDirectory()){
+        if (file.isDirectory()) {
             try {
                 FileUtils.deleteDirectory(file);
             } catch (IOException e) {
                 throw new FileNotFoundException("Failed to delete document with id " + documentId);
             }
-        }else{
+        } else {
             if (!file.delete()) {
                 throw new FileNotFoundException("Failed to delete document with id " + documentId);
             }
@@ -194,7 +195,7 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public String getDocumentType(String documentId) throws FileNotFoundException {
-        Log.i("FolderPRovider", "getDocumentType("+documentId+")");
+        Log.i("FolderPRovider", "getDocumentType(" + documentId + ")");
         File file = getFileForDocId(documentId);
         return getMimeType(file);
     }
@@ -225,7 +226,7 @@ public class FolderProvider extends DocumentsProvider {
             if (isInsideHome) {
                 if (file.isDirectory()) {
                     File[] listing = file.listFiles();
-                    if(listing != null) Collections.addAll(pending, listing);
+                    if (listing != null) Collections.addAll(pending, listing);
                 } else {
                     if (file.getName().toLowerCase().contains(query)) {
                         includeFile(result, null, file);
@@ -284,7 +285,7 @@ public class FolderProvider extends DocumentsProvider {
      * @param file   the File object representing the desired file (may be null if given docID)
      */
     private void includeFile(MatrixCursor result, String docId, File file)
-        throws FileNotFoundException {
+            throws FileNotFoundException {
         if (docId == null) {
             docId = getDocIdForFile(file);
         } else {
@@ -298,8 +299,8 @@ public class FolderProvider extends DocumentsProvider {
             flags |= Document.FLAG_SUPPORTS_WRITE;
         }
         File parent = file.getParentFile();
-        if(parent != null) { // Only fails in one case: when the parent is /, which you can't delete.
-            if(parent.canWrite()) flags |= Document.FLAG_SUPPORTS_DELETE;
+        if (parent != null) { // Only fails in one case: when the parent is /, which you can't delete.
+            if (parent.canWrite()) flags |= Document.FLAG_SUPPORTS_DELETE;
         }
 
         final String displayName = file.getName();
@@ -320,10 +321,10 @@ public class FolderProvider extends DocumentsProvider {
     @TargetApi(26)
     public DocumentsContract.Path findDocumentPath(@Nullable String parentDocumentId, String childDocumentId) throws FileNotFoundException {
         File source = BASE_DIR;
-        if(parentDocumentId != null) source = getFileForDocId(parentDocumentId);
+        if (parentDocumentId != null) source = getFileForDocId(parentDocumentId);
         File destination = getFileForDocId(childDocumentId);
         List<String> pathIds = new ArrayList<>();
-        while(!source.equals(destination) && destination != null) {
+        while (!source.equals(destination) && destination != null) {
             pathIds.add(getDocIdForFile(destination));
             destination = destination.getParentFile();
         }

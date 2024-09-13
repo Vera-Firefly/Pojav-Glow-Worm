@@ -21,7 +21,7 @@ import java.io.IOException;
 public interface ModpackApi {
 
     /**
-     * @param searchFilters Filters
+     * @param searchFilters      Filters
      * @param previousPageResult The result from the previous page
      * @return the list of mod items from specified offset
      */
@@ -37,6 +37,7 @@ public interface ModpackApi {
 
     /**
      * Fetch the mod details
+     *
      * @param item The moditem that was selected
      * @return Detailed data about a mod(pack)
      */
@@ -44,7 +45,8 @@ public interface ModpackApi {
 
     /**
      * Download and install the mod(pack)
-     * @param modDetail The mod detail data
+     *
+     * @param modDetail       The mod detail data
      * @param selectedVersion The selected version
      */
     default void handleInstallation(Context context, ModDetail modDetail, int selectedVersion) {
@@ -56,7 +58,7 @@ public interface ModpackApi {
                 ModLoader loaderInfo = installMod(modDetail, selectedVersion);
                 if (loaderInfo == null) return;
                 loaderInfo.getDownloadTask(new NotificationDownloadListener(context, loaderInfo)).run();
-            }catch (IOException e) {
+            } catch (IOException e) {
                 Tools.showErrorRemote(context, R.string.modpack_install_download_failed, e);
             }
         });
@@ -66,7 +68,8 @@ public interface ModpackApi {
      * Install the mod(pack).
      * May require the download of additional files.
      * May requires launching the installation of a modloader
-     * @param modDetail The mod detail data
+     *
+     * @param modDetail       The mod detail data
      * @param selectedVersion The selected version
      */
     ModLoader installMod(ModDetail modDetail, int selectedVersion) throws IOException;

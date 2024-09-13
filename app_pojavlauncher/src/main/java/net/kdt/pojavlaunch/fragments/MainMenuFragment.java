@@ -1,8 +1,5 @@
 package net.kdt.pojavlaunch.fragments;
 
-import com.movtery.ui.fragment.ProfilePathManagerFragment;
-import com.qz.terminal2.ConsoleActivity;
-
 import static net.kdt.pojavlaunch.Tools.runOnUiThread;
 import static net.kdt.pojavlaunch.Tools.shareLog;
 
@@ -28,6 +25,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.kdt.mcgui.mcVersionSpinner;
+import com.movtery.ui.fragment.ProfilePathManagerFragment;
+import com.qz.terminal2.ConsoleActivity;
 
 import net.kdt.pojavlaunch.CustomControlsActivity;
 import net.kdt.pojavlaunch.R;
@@ -43,7 +42,7 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
     private mcVersionSpinner mVersionSpinner;
     private boolean mTasksRunning;
 
-    public MainMenuFragment(){
+    public MainMenuFragment() {
         super(R.layout.fragment_launcher);
     }
 
@@ -61,13 +60,13 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
         mVersionSpinner = view.findViewById(R.id.mc_version_spinner);
 
         mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
-        mNewsButton.setOnLongClickListener((v)->{
+        mNewsButton.setOnLongClickListener((v) -> {
             Tools.swapFragment(requireActivity(), SearchModFragment.class, SearchModFragment.TAG, null);
             return true;
         });
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
         mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
-        mInstallJarButton.setOnLongClickListener(v->{
+        mInstallJarButton.setOnLongClickListener(v -> {
             runInstallerWithConfirmation(true);
             return true;
         });

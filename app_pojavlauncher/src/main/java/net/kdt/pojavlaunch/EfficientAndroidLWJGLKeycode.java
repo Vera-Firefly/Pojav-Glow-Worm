@@ -161,14 +161,14 @@ public class EfficientAndroidLWJGLKeycode {
 
     }
 
-    public static boolean containsIndex(int index){
+    public static boolean containsIndex(int index) {
         return index >= 0;
     }
 
     public static String[] generateKeyName() {
         if (androidKeyNameArray == null) {
             androidKeyNameArray = new String[sAndroidKeycodes.length];
-            for(int i=0; i < androidKeyNameArray.length; ++i){
+            for (int i = 0; i < androidKeyNameArray.length; ++i) {
                 androidKeyNameArray[i] = KeyEvent.keyCodeToString(sAndroidKeycodes[i]).replace("KEYCODE_", "");
             }
         }
@@ -183,8 +183,8 @@ public class EfficientAndroidLWJGLKeycode {
         CallbackBridge.holdingNumlock = keyEvent.isNumLockOn();
         CallbackBridge.holdingShift = keyEvent.isShiftPressed();
 
-        System.out.println(keyEvent.getKeyCode() + " " +keyEvent.getDisplayLabel());
-        char key = (char)(keyEvent.getUnicodeChar() != 0 ? keyEvent.getUnicodeChar() : '\u0000');
+        System.out.println(keyEvent.getKeyCode() + " " + keyEvent.getDisplayLabel());
+        char key = (char) (keyEvent.getUnicodeChar() != 0 ? keyEvent.getUnicodeChar() : '\u0000');
         sendKeyPress(
                 getValueByIndex(valueIndex),
                 key,
@@ -193,7 +193,7 @@ public class EfficientAndroidLWJGLKeycode {
                 keyEvent.getAction() == KeyEvent.ACTION_DOWN);
     }
 
-    public static void execKeyIndex(int index){
+    public static void execKeyIndex(int index) {
         //Send a quick key press.
         sendKeyPress(getValueByIndex(index));
     }
@@ -202,22 +202,24 @@ public class EfficientAndroidLWJGLKeycode {
         return sLwjglKeycodes[index];
     }
 
-    public static int getIndexByKey(int key){
+    public static int getIndexByKey(int key) {
         return Arrays.binarySearch(sAndroidKeycodes, key);
     }
 
-    /** @return the index at which the key is in the array, searching linearly */
+    /**
+     * @return the index at which the key is in the array, searching linearly
+     */
     public static int getIndexByValue(int lwjglKey) {
         //You should avoid using this function on performance critical areas
         for (int i = 0; i < sLwjglKeycodes.length; i++) {
-            if(sLwjglKeycodes[i] == lwjglKey) return i;
+            if (sLwjglKeycodes[i] == lwjglKey) return i;
         }
         return 0;
     }
 
-    private static void add(int androidKeycode, short LWJGLKeycode){
+    private static void add(int androidKeycode, short LWJGLKeycode) {
         sAndroidKeycodes[mTmpCount] = androidKeycode;
         sLwjglKeycodes[mTmpCount] = LWJGLKeycode;
-        mTmpCount ++;
+        mTmpCount++;
     }
 }

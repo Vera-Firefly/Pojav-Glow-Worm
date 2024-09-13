@@ -32,7 +32,7 @@ public class ControlHandleView extends View {
     private final ViewTreeObserver.OnPreDrawListener mPositionListener = new ViewTreeObserver.OnPreDrawListener() {
         @Override
         public boolean onPreDraw() {
-            if(mView == null || !mView.getControlView().isShown()){
+            if (mView == null || !mView.getControlView().isShown()) {
                 hide();
                 return true;
             }
@@ -43,17 +43,18 @@ public class ControlHandleView extends View {
         }
     };
 
-    private void init(){
+    private void init() {
         int size = getResources().getDimensionPixelOffset(R.dimen._22sdp);
-        mDrawable.setBounds(0,0,size,size);
+        mDrawable.setBounds(0, 0, size, size);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(size, size);
         setLayoutParams(params);
         setBackground(mDrawable);
         setTranslationZ(10.5F);
     }
 
-    public void setControlButton(ControlInterface controlInterface){
-        if(mView != null) mView.getControlView().getViewTreeObserver().removeOnPreDrawListener(mPositionListener);
+    public void setControlButton(ControlInterface controlInterface) {
+        if (mView != null)
+            mView.getControlView().getViewTreeObserver().removeOnPreDrawListener(mPositionListener);
 
         setVisibility(VISIBLE);
         mView = controlInterface;
@@ -66,7 +67,7 @@ public class ControlHandleView extends View {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getActionMasked()){
+        switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 mXOffset = event.getX();
                 mYOffset = event.getY();
@@ -88,8 +89,8 @@ public class ControlHandleView extends View {
         return true;
     }
 
-    public void hide(){
-        if(mView != null)
+    public void hide() {
+        if (mView != null)
             mView.getControlView().getViewTreeObserver().removeOnPreDrawListener(mPositionListener);
         setVisibility(GONE);
     }

@@ -254,7 +254,7 @@ public class EditControlPopup {
         for (int i = 0; i < mRootView.getChildCount(); ++i) {
             mRootView.getChildAt(i).setVisibility(VISIBLE);
         }
-        for(Spinner s : mKeycodeSpinners) {
+        for (Spinner s : mKeycodeSpinners) {
             s.setVisibility(View.INVISIBLE);
         }
     }
@@ -363,7 +363,7 @@ public class EditControlPopup {
         loadValues(data);
 
         // Size linked to the parent drawer depending on the drawer settings
-        if(drawerOrientation != ControlDrawerData.Orientation.FREE){
+        if (drawerOrientation != ControlDrawerData.Orientation.FREE) {
             mSizeTextview.setVisibility(GONE);
             mSizeXTextView.setVisibility(GONE);
             mWidthEditText.setVisibility(GONE);
@@ -498,13 +498,13 @@ public class EditControlPopup {
         });
         mForwardLockSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (internalChanges) return;
-            if(mCurrentlyEditedButton.getProperties() instanceof ControlJoystickData){
+            if (mCurrentlyEditedButton.getProperties() instanceof ControlJoystickData) {
                 ((ControlJoystickData) mCurrentlyEditedButton.getProperties()).forwardLock = isChecked;
             }
         });
         mAbsoluteTrackingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (internalChanges) return;
-            if(mCurrentlyEditedButton.getProperties() instanceof ControlJoystickData){
+            if (mCurrentlyEditedButton.getProperties() instanceof ControlJoystickData) {
                 ((ControlJoystickData) mCurrentlyEditedButton.getProperties()).absolute = isChecked;
             }
         });

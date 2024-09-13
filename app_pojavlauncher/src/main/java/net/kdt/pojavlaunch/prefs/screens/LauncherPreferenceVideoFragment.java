@@ -1,10 +1,7 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,12 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
-import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.SwitchPreference;
 import androidx.preference.SwitchPreferenceCompat;
@@ -75,7 +67,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         setListPreference(rendererListPreference, "renderer");
 
         rendererListPreference.setOnPreferenceChangeListener((pre, obj) -> {
-            Tools.LOCAL_RENDERER = (String)obj;
+            Tools.LOCAL_RENDERER = (String) obj;
             return true;
         });
 
@@ -88,7 +80,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         computeVisibility();
     }
 
-    private void computeVisibility(){
+    private void computeVisibility() {
         requirePreference("force_vsync", SwitchPreferenceCompat.class)
                 .setVisible(LauncherPreferences.PREF_USE_ALTERNATE_SURFACE);
     }
@@ -110,42 +102,42 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         mSetVideoResolution = view.findViewById(R.id.set_resolution);
         mSetVideoResolution.setText(String.valueOf(seek.getValue()));
         new CustomDialog.Builder(requireContext())
-            .setCustomView(view)
-            .setConfirmListener(R.string.alertdialog_done, customView -> {
-                String checkValue = mSetVideoResolution.getText().toString();
-                if (checkValue.isEmpty()) {
-                    mSetVideoResolution.setError(getString(R.string.global_error_field_empty));
-                    return false;
-                }
-                int Value;
-                try {
-                    Value = Integer.parseInt(checkValue);
-                } catch (NumberFormatException e) {
-                    Log.e("VideoResolution", e.toString());
-                    // mSetVideoResolution.setError(e.toString());
-                    mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_outofrange, checkValue));
-                    return false;
-                }
-                if (Value < 25 || Value > 1000) {
-                    if (Value < 25) {
-                        mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_small, 25));
+                .setCustomView(view)
+                .setConfirmListener(R.string.alertdialog_done, customView -> {
+                    String checkValue = mSetVideoResolution.getText().toString();
+                    if (checkValue.isEmpty()) {
+                        mSetVideoResolution.setError(getString(R.string.global_error_field_empty));
+                        return false;
                     }
-                    if (Value > 1000) {
-                        mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_big, 1000));
+                    int Value;
+                    try {
+                        Value = Integer.parseInt(checkValue);
+                    } catch (NumberFormatException e) {
+                        Log.e("VideoResolution", e.toString());
+                        // mSetVideoResolution.setError(e.toString());
+                        mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_outofrange, checkValue));
+                        return false;
                     }
-                    return false;
-                }
-                if (Value > 100) {
-                    seek.setRange(25, Value);
-                } else {
-                    seek.setRange(25, 100);
-                }
-                seek.setValue(Value);
-                return true;
-            })
-            .setCancelListener(R.string.alertdialog_cancel, customView -> true)
-            .build()
-            .show();
+                    if (Value < 25 || Value > 1000) {
+                        if (Value < 25) {
+                            mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_small, 25));
+                        }
+                        if (Value > 1000) {
+                            mSetVideoResolution.setError(requireContext().getString(R.string.setting_set_resolution_too_big, 1000));
+                        }
+                        return false;
+                    }
+                    if (Value > 100) {
+                        seek.setRange(25, Value);
+                    } else {
+                        seek.setRange(25, 100);
+                    }
+                    seek.setValue(Value);
+                    return true;
+                })
+                .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+                .build()
+                .show();
     }
 
 }

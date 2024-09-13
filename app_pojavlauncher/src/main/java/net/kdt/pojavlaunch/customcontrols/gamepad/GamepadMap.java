@@ -18,24 +18,24 @@ public class GamepadMap {
     public final GamepadButton BUTTON_B = new GamepadButton();
     public final GamepadButton BUTTON_X = new GamepadButton();
     public final GamepadButton BUTTON_Y = new GamepadButton();
-    
+
     public final GamepadButton BUTTON_START = new GamepadButton();
     public final GamepadButton BUTTON_SELECT = new GamepadButton();
 
     public final GamepadButton TRIGGER_RIGHT = new GamepadButton();         //R2
     public final GamepadButton TRIGGER_LEFT = new GamepadButton();          //L2
-    
+
     public final GamepadButton SHOULDER_RIGHT = new GamepadButton();        //R1
     public final GamepadButton SHOULDER_LEFT = new GamepadButton();         //L1
-    
+
     public int[] DIRECTION_FORWARD;
     public int[] DIRECTION_BACKWARD;
     public int[] DIRECTION_RIGHT;
     public int[] DIRECTION_LEFT;
-    
+
     public final GamepadButton THUMBSTICK_RIGHT = new GamepadButton();      //R3
     public final GamepadButton THUMBSTICK_LEFT = new GamepadButton();       //L3
-    
+
     public final GamepadButton DPAD_UP = new GamepadButton();
     public final GamepadButton DPAD_RIGHT = new GamepadButton();
     public final GamepadButton DPAD_DOWN = new GamepadButton();
@@ -45,7 +45,7 @@ public class GamepadMap {
     /*
      * Sets all buttons to a not pressed state, sending an input if needed
      */
-    public void resetPressedState(){
+    public void resetPressedState() {
         BUTTON_A.resetButtonState();
         BUTTON_B.resetButtonState();
         BUTTON_X.resetButtonState();
@@ -73,7 +73,7 @@ public class GamepadMap {
     /*
      * Returns a pre-done mapping used when the mouse is grabbed by the game.
      */
-    public static GamepadMap getDefaultGameMap(){
+    public static GamepadMap getDefaultGameMap() {
         GamepadMap gameMap = new GamepadMap();
 
         gameMap.BUTTON_A.keycodes = new int[]{LwjglGlfwKeycode.GLFW_KEY_SPACE};
@@ -110,7 +110,7 @@ public class GamepadMap {
     /*
      * Returns a pre-done mapping used when the mouse is NOT grabbed by the game.
      */
-    public static GamepadMap getDefaultMenuMap(){
+    public static GamepadMap getDefaultMenuMap() {
         GamepadMap menuMap = new GamepadMap();
 
         menuMap.BUTTON_A.keycodes = new int[]{LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_LEFT};
@@ -146,21 +146,22 @@ public class GamepadMap {
     /*
      * Returns all GamepadButtons, does not include directional keys
      */
-    public GamepadButton[] getButtons(){
-        return new GamepadButton[]{ BUTTON_A, BUTTON_B, BUTTON_X, BUTTON_Y,
-                                    BUTTON_SELECT, BUTTON_START,
-                                    TRIGGER_LEFT, TRIGGER_RIGHT,
-                                    SHOULDER_LEFT, SHOULDER_RIGHT,
-                                    THUMBSTICK_LEFT, THUMBSTICK_RIGHT,
-                                    DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT};
+    public GamepadButton[] getButtons() {
+        return new GamepadButton[]{BUTTON_A, BUTTON_B, BUTTON_X, BUTTON_Y,
+                BUTTON_SELECT, BUTTON_START,
+                TRIGGER_LEFT, TRIGGER_RIGHT,
+                SHOULDER_LEFT, SHOULDER_RIGHT,
+                THUMBSTICK_LEFT, THUMBSTICK_RIGHT,
+                DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT};
     }
 
     /*
      * Returns an pre-initialized GamepadMap with only empty keycodes
      */
-    @SuppressWarnings("unused") public static GamepadMap getEmptyMap(){
+    @SuppressWarnings("unused")
+    public static GamepadMap getEmptyMap() {
         GamepadMap emptyMap = new GamepadMap();
-        for(GamepadButton button : emptyMap.getButtons())
+        for (GamepadButton button : emptyMap.getButtons())
             button.keycodes = new int[]{};
 
         emptyMap.DIRECTION_LEFT = new int[]{};

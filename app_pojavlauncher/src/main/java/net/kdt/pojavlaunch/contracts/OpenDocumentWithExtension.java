@@ -19,11 +19,12 @@ public class OpenDocumentWithExtension extends ActivityResultContract<Object, Ur
      * Create a new OpenDocumentWithExtension contract.
      * If the extension provided to the constructor is not available in the device's MIME
      * type database, the filter will default to "all types"
+     *
      * @param extension the extension to filter by
      */
     public OpenDocumentWithExtension(String extension) {
         String extensionMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-        if(extensionMimeType == null) extensionMimeType = "*/*";
+        if (extensionMimeType == null) extensionMimeType = "*/*";
         mimeType = extensionMimeType;
     }
 

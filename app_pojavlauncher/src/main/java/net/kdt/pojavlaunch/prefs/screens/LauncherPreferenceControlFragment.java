@@ -14,6 +14,7 @@ import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 public class LauncherPreferenceControlFragment extends LauncherPreferenceFragment {
     private boolean mGyroAvailable = false;
+
     @Override
     public void onCreatePreferences(Bundle b, String str) {
         // Get values
@@ -50,7 +51,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
         CustomSeekBarPreference seek6 = requirePreference("mousespeed",
                 CustomSeekBarPreference.class);
         seek6.setRange(25, 300);
-        seek6.setValue((int)(mouseSpeed *100f));
+        seek6.setValue((int) (mouseSpeed * 100f));
         seek6.setSuffix(" %");
 
         CustomSeekBarPreference deadzoneSeek = requirePreference("gamepad_deadzone_scale",
@@ -61,17 +62,17 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
 
 
         Context context = getContext();
-        if(context != null) {
-            mGyroAvailable = ((SensorManager)context.getSystemService(Context.SENSOR_SERVICE)).getDefaultSensor(Sensor.TYPE_GYROSCOPE) != null;
+        if (context != null) {
+            mGyroAvailable = ((SensorManager) context.getSystemService(Context.SENSOR_SERVICE)).getDefaultSensor(Sensor.TYPE_GYROSCOPE) != null;
         }
-        PreferenceCategory gyroCategory =  requirePreference("gyroCategory",
+        PreferenceCategory gyroCategory = requirePreference("gyroCategory",
                 PreferenceCategory.class);
         gyroCategory.setVisible(mGyroAvailable);
 
         CustomSeekBarPreference gyroSensitivitySeek = requirePreference("gyroSensitivity",
                 CustomSeekBarPreference.class);
         gyroSensitivitySeek.setRange(25, 300);
-        gyroSensitivitySeek.setValue((int) (gyroSpeed*100f));
+        gyroSensitivitySeek.setValue((int) (gyroSpeed * 100f));
         gyroSensitivitySeek.setSuffix(" %");
 
         CustomSeekBarPreference gyroSampleRateSeek = requirePreference("gyroSampleRate",
@@ -88,7 +89,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
         computeVisibility();
     }
 
-    private void computeVisibility(){
+    private void computeVisibility() {
         requirePreference("timeLongPressTrigger").setVisible(!LauncherPreferences.PREF_DISABLE_GESTURES);
         requirePreference("gyroSensitivity").setVisible(LauncherPreferences.PREF_ENABLE_GYRO);
         requirePreference("gyroSampleRate").setVisible(LauncherPreferences.PREF_ENABLE_GYRO);

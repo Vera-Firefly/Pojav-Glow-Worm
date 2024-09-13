@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class ModDownloader {
     private static final ThreadLocal<byte[]> sThreadLocalBuffer = new ThreadLocal<>();
-    private final ThreadPoolExecutor mDownloadPool = new ThreadPoolExecutor(4,4,100, TimeUnit.MILLISECONDS,
+    private final ThreadPoolExecutor mDownloadPool = new ThreadPoolExecutor(4, 4, 100, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<>());
     private final AtomicBoolean mTerminator = new AtomicBoolean(false);
     private final AtomicLong mDownloadSize = new AtomicLong(0);
@@ -38,13 +38,14 @@ public class ModDownloader {
     }
 
     public void submitDownload(int fileSize, String relativePath, @Nullable String downloadHash, String... url) {
-        if(mUseFileCount) mTotalSize += 1;
+        if (mUseFileCount) mTotalSize += 1;
         else mTotalSize += fileSize;
         mDownloadPool.execute(new DownloadTask(url, new File(mDestinationDirectory, relativePath), downloadHash));
     }
 
     public void submitDownload(FileInfoProvider infoProvider) {
-        if(!mUseFileCount) throw new RuntimeException("This method can only be used in a file-counting ModDownloader");
+        if (!mUseFileCount)
+            throw new RuntimeException("This method can only be used in a file-counting ModDownloader");
         mTotalSize += 1;
         mDownloadPool.execute(new FileInfoQueryTask(infoProvider));
     }
@@ -52,24 +53,24 @@ public class ModDownloader {
     public void awaitFinish(Tools.DownloaderFeedback feedback) throws IOException {
         try {
             mDownloadPool.shutdown();
-            while(!mDownloadPool.awaitTermination(20, TimeUnit.MILLISECONDS) && !mTerminator.get()) {
+            while (!mDownloadPool.awaitTermination(20, TimeUnit.MILLISECONDS) && !mTerminator.get()) {
                 feedback.updateProgress((int) mDownloadSize.get(), (int) mTotalSize);
             }
-            if(mTerminator.get()) {
+            if (mTerminator.get()) {
                 mDownloadPool.shutdownNow();
                 synchronized (mExceptionSyncPoint) {
-                    if(mFirstIOException == null) mExceptionSyncPoint.wait();
+                    if (mFirstIOException == null) mExceptionSyncPoint.wait();
                     throw mFirstIOException;
                 }
             }
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     private static byte[] getThreadLocalBuffer() {
         byte[] buffer = sThreadLocalBuffer.get();
-        if(buffer != null) return buffer;
+        if (buffer != null) return buffer;
         buffer = new byte[8192];
         sThreadLocalBuffer.set(buffer);
         return buffer;
@@ -78,7 +79,7 @@ public class ModDownloader {
     private void downloadFailed(IOException exception) {
         mTerminator.set(true);
         synchronized (mExceptionSyncPoint) {
-            if(mFirstIOException == null) {
+            if (mFirstIOException == null) {
                 mFirstIOException = exception;
                 mExceptionSyncPoint.notify();
             }
@@ -87,17 +88,19 @@ public class ModDownloader {
 
     class FileInfoQueryTask implements Runnable {
         private final FileInfoProvider mFileInfoProvider;
+
         public FileInfoQueryTask(FileInfoProvider fileInfoProvider) {
             this.mFileInfoProvider = fileInfoProvider;
         }
+
         @Override
         public void run() {
             try {
                 FileInfo fileInfo = mFileInfoProvider.getFileInfo();
-                if(fileInfo == null) return;
+                if (fileInfo == null) return;
                 new DownloadTask(new String[]{fileInfo.url},
                         new File(mDestinationDirectory, fileInfo.relativePath), fileInfo.sha1).run();
-            }catch (IOException e) {
+            } catch (IOException e) {
                 downloadFailed(e);
             }
         }
@@ -118,17 +121,17 @@ public class ModDownloader {
 
         @Override
         public void run() {
-            for(String sourceUrl : mDownloadUrls) {
+            for (String sourceUrl : mDownloadUrls) {
                 try {
                     DownloadUtils.ensureSha1(mDestination, mSha1, (Callable<Void>) () -> {
                         IOException exception = tryDownload(sourceUrl);
-                        if(exception != null) {
+                        if (exception != null) {
                             throw exception;
                         }
                         return null;
                     });
 
-                }catch (IOException e) {
+                } catch (IOException e) {
                     downloadFailed(e);
                 }
             }
@@ -139,7 +142,7 @@ public class ModDownloader {
             for (int i = 0; i < 5; i++) {
                 try {
                     DownloadUtils.downloadFileMonitored(sourceUrl, mDestination, getThreadLocalBuffer(), this);
-                    if(mUseFileCount) mDownloadSize.addAndGet(1);
+                    if (mUseFileCount) mDownloadSize.addAndGet(1);
                     return null;
                 } catch (InterruptedIOException e) {
                     throw new InterruptedException();
@@ -147,7 +150,7 @@ public class ModDownloader {
                     e.printStackTrace();
                     exception = e;
                 }
-                if(!mUseFileCount) {
+                if (!mUseFileCount) {
                     mDownloadSize.addAndGet(-last);
                     last = 0;
                 }
@@ -157,7 +160,7 @@ public class ModDownloader {
 
         @Override
         public void updateProgress(int curr, int max) {
-            if(mUseFileCount) return;
+            if (mUseFileCount) return;
             mDownloadSize.addAndGet(curr - last);
             last = curr;
         }

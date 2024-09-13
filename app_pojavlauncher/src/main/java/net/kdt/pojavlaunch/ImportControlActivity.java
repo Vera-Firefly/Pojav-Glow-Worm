@@ -35,7 +35,7 @@ public class ImportControlActivity extends Activity {
 
     private EditText mEditText;
 
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +47,12 @@ public class ImportControlActivity extends Activity {
 
     /**
      * Override the previous loaded intent
+     *
      * @param intent the intent used to replace the old one.
      */
     @Override
     protected void onNewIntent(Intent intent) {
-        if(intent != null) setIntent(intent);
+        if (intent != null) setIntent(intent);
         mHasIntentChanged = true;
     }
 
@@ -61,10 +62,10 @@ public class ImportControlActivity extends Activity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        if(!mHasIntentChanged) return;
+        if (!mHasIntentChanged) return;
         mIsFileVerified = false;
         getUriData();
-        if(mUriData == null) {
+        if (mUriData == null) {
             finishAndRemoveTask();
             return;
         }
@@ -76,7 +77,7 @@ public class ImportControlActivity extends Activity {
         new Thread(() -> {
             importControlFile();
 
-            if(verify())mIsFileVerified = true;
+            if (verify()) mIsFileVerified = true;
             else runOnUiThread(() -> {
                 Toast.makeText(
                         ImportControlActivity.this,
@@ -96,16 +97,17 @@ public class ImportControlActivity extends Activity {
 
     /**
      * Start the import.
+     *
      * @param view the view which called the function
      */
     public void startImport(View view) {
         String fileName = trimFileName(mEditText.getText().toString());
         //Step 1 check for suffixes.
-        if(!isFileNameValid(fileName)){
+        if (!isFileNameValid(fileName)) {
             Toast.makeText(this, getText(R.string.import_control_invalid_name), Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!mIsFileVerified){
+        if (!mIsFileVerified) {
             Toast.makeText(this, getText(R.string.import_control_verifying_file), Toast.LENGTH_LONG).show();
             return;
         }
@@ -118,7 +120,7 @@ public class ImportControlActivity extends Activity {
     /**
      * Copy a the file from the Intent data with a provided name into the controlmap folder.
      */
-    private void importControlFile(){
+    private void importControlFile() {
         InputStream is;
         try {
             is = getContentResolver().openInputStream(mUriData);
@@ -134,22 +136,24 @@ public class ImportControlActivity extends Activity {
 
     /**
      * Tell if the clean version of the filename is valid.
+     *
      * @param fileName the string to test
      * @return whether the filename is valid
      */
-    private static boolean isFileNameValid(String fileName){
+    private static boolean isFileNameValid(String fileName) {
         fileName = trimFileName(fileName);
 
-        if(fileName.isEmpty()) return false;
+        if (fileName.isEmpty()) return false;
         return !FileUtils.exists(Tools.CTRLMAP_PATH + "/" + fileName + ".json");
     }
 
     /**
      * Remove or undesirable chars from the string
+     *
      * @param fileName The string to trim
      * @return The trimmed string
      */
-    private static String trimFileName(String fileName){
+    private static String trimFileName(String fileName) {
         return fileName
                 .replace(".json", "")
                 .replaceAll("%..", "/")
@@ -161,24 +165,26 @@ public class ImportControlActivity extends Activity {
     /**
      * Tries to get an Uri from the various sources
      */
-    private void getUriData(){
+    private void getUriData() {
         mUriData = getIntent().getData();
-        if(mUriData != null) return;
+        if (mUriData != null) return;
         try {
             mUriData = getIntent().getClipData().getItemAt(0).getUri();
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
     /**
      * Verify if the control file is valid
+     *
      * @return Whether the control file is valid
      */
-    private static boolean verify(){
-        try{
+    private static boolean verify() {
+        try {
             String jsonLayoutData = Tools.read(Tools.CTRLMAP_PATH + "/TMP_IMPORT_FILE.json");
             JSONObject layoutJobj = new JSONObject(jsonLayoutData);
             return layoutJobj.has("version") && layoutJobj.has("mControlDataList");
-        }catch (JSONException | IOException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
             return false;
         }

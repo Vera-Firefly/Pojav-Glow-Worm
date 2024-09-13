@@ -42,59 +42,59 @@ public class CommonApi implements ModpackApi {
         int totalSize = 0;
 
         Future<?>[] futures = new Future<?>[mModpackApis.length];
-        for(int i = 0; i < mModpackApis.length; i++) {
+        for (int i = 0; i < mModpackApis.length; i++) {
             // If there is an array and its length is zero, this means that we've exhausted the results for this
             // search query and we don't need to actually do the search
-            if(results[i] != null && results[i].results.length == 0) continue;
+            if (results[i] != null && results[i].results.length == 0) continue;
             // If the previous page result is not null (aka the arrays aren't fresh)
             // and the previous result is null, it means that na error has occured on the previous
             // page. We lost contingency anyway, so don't bother requesting.
-            if(previousPageResult != null && results[i] == null) continue;
+            if (previousPageResult != null && results[i] == null) continue;
             futures[i] = PojavApplication.sExecutorService.submit(new ApiDownloadTask(i, searchFilters,
                     results[i]));
         }
 
-        if(Thread.interrupted()) {
+        if (Thread.interrupted()) {
             cancelAllFutures(futures);
             return null;
         }
         boolean hasSuccessful = false;
         // Count up all the results
-        for(int i = 0; i < mModpackApis.length; i++) {
+        for (int i = 0; i < mModpackApis.length; i++) {
             Future<?> future = futures[i];
-            if(future == null) continue;
+            if (future == null) continue;
             try {
                 SearchResult searchResult = results[i] = (SearchResult) future.get();
-                if(searchResult != null) hasSuccessful = true;
+                if (searchResult != null) hasSuccessful = true;
                 else continue;
                 totalSize += searchResult.totalResultCount;
-            }catch (Exception e) {
+            } catch (Exception e) {
                 cancelAllFutures(futures);
                 e.printStackTrace();
                 return null;
             }
         }
-        if(!hasSuccessful) {
+        if (!hasSuccessful) {
             return null;
         }
         // Then build an array with all the mods
         ArrayList<ModItem[]> filteredResults = new ArrayList<>(results.length);
 
         // Sanitize returned values
-        for(SearchResult result : results) {
-            if(result == null) continue;
+        for (SearchResult result : results) {
+            if (result == null) continue;
             ModItem[] searchResults = result.results;
             // If the length is zero, we don't need to perform needless copies
-            if(searchResults.length == 0) continue;
+            if (searchResults.length == 0) continue;
             filteredResults.add(searchResults);
         }
         filteredResults.trimToSize();
-        if(Thread.interrupted()) return null;
+        if (Thread.interrupted()) return null;
 
         ModItem[] concatenatedItems = buildFusedResponse(filteredResults);
-        if(Thread.interrupted()) return null;
+        if (Thread.interrupted()) return null;
         // Recycle or create new search result
-        if(commonApiSearchResult == null) commonApiSearchResult = new CommonApiSearchResult();
+        if (commonApiSearchResult == null) commonApiSearchResult = new CommonApiSearchResult();
         commonApiSearchResult.searchResults = results;
         commonApiSearchResult.totalResultCount = totalSize;
         commonApiSearchResult.results = concatenatedItems;
@@ -103,7 +103,7 @@ public class CommonApi implements ModpackApi {
 
     @Override
     public ModDetail getModDetails(ModItem item) {
-        Log.i("CommonApi", "Invoking getModDetails on item.apiSource="+item.apiSource +" item.title="+item.title);
+        Log.i("CommonApi", "Invoking getModDetails on item.apiSource=" + item.apiSource + " item.title=" + item.title);
         return getModpackApi(item.apiSource).getModDetails(item);
     }
 
@@ -123,8 +123,10 @@ public class CommonApi implements ModpackApi {
         }
     }
 
-    /** Fuse the arrays in a way that's fair for every endpoint */
-    private ModItem[] buildFusedResponse(List<ModItem[]> modMatrix){
+    /**
+     * Fuse the arrays in a way that's fair for every endpoint
+     */
+    private ModItem[] buildFusedResponse(List<ModItem[]> modMatrix) {
         int totalSize = 0;
 
         // Calculate the total size of the merged array
@@ -158,8 +160,8 @@ public class CommonApi implements ModpackApi {
     }
 
     private void cancelAllFutures(Future<?>[] futures) {
-        for(Future<?> future : futures) {
-            if(future == null) continue;
+        for (Future<?> future : futures) {
+            if (future == null) continue;
             future.cancel(true);
         }
     }

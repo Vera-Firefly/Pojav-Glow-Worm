@@ -28,16 +28,17 @@ public class ModLoader {
 
     /**
      * Get the Version ID (the name of the mod loader in the versions/ folder)
+     *
      * @return the Version ID as a string
      */
     public String getVersionId() {
         switch (modLoaderType) {
             case MOD_LOADER_FORGE:
-                return minecraftVersion+"-forge-"+modLoaderVersion;
+                return minecraftVersion + "-forge-" + modLoaderVersion;
             case MOD_LOADER_FABRIC:
-                return "fabric-loader-"+modLoaderVersion+"-"+minecraftVersion;
+                return "fabric-loader-" + modLoaderVersion + "-" + minecraftVersion;
             case MOD_LOADER_QUILT:
-                return "quilt-loader-"+modLoaderVersion+"-"+minecraftVersion;
+                return "quilt-loader-" + modLoaderVersion + "-" + minecraftVersion;
             default:
                 return null;
         }
@@ -46,6 +47,7 @@ public class ModLoader {
     /**
      * Get the Runnable that needs to run in order to download the mod loader.
      * The task will also install the mod loader if it does not require GUI installation
+     *
      * @param listener the listener that gets notified of the installation status
      * @return the task Runnable that needs to be ran
      */
@@ -66,7 +68,8 @@ public class ModLoader {
      * Get the Intent to start the graphical installation of the mod loader.
      * This method should only be ran after the download task of the specified mod loader finishes.
      * This method returns null if the mod loader does not require GUI installation
-     * @param context the package resolving Context (can be the base context)
+     *
+     * @param context         the package resolving Context (can be the base context)
      * @param modInstallerJar the JAR file of the mod installer, provided by ModloaderDownloadListener after the installation
      *                        finishes.
      * @return the Intent which the launcher needs to start in order to install the mod loader
@@ -86,6 +89,7 @@ public class ModLoader {
 
     /**
      * Check whether the mod loader this object denotes requires GUI installation
+     *
      * @return true if mod loader requires GUI installation, false otherwise
      */
     public boolean requiresGuiInstallation() {

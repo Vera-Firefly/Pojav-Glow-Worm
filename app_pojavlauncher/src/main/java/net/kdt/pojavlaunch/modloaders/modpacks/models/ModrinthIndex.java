@@ -31,7 +31,8 @@ public class ModrinthIndex {
 
         public ModrinthIndexFileHashes hashes;
 
-        @Nullable public ModrinthIndexFileEnv env;
+        @Nullable
+        public ModrinthIndexFileEnv env;
 
         @NonNull
         @Override

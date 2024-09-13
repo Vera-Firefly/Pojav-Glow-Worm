@@ -31,9 +31,9 @@ import java.io.InputStream;
 
 public class CropperUtils {
     public static ActivityResultLauncher<?> registerCropper(Fragment fragment, final CropperListener cropperListener) {
-        return fragment.registerForActivityResult(new ActivityResultContracts.OpenDocument(), (result)->{
+        return fragment.registerForActivityResult(new ActivityResultContracts.OpenDocument(), (result) -> {
             Context context = fragment.getContext();
-            if(context == null) return;
+            if (context == null) return;
             if (result == null) {
                 Toast.makeText(context, R.string.cropper_select_cancelled, Toast.LENGTH_SHORT).show();
                 return;
@@ -56,28 +56,28 @@ public class CropperUtils {
         assert cropImageView != null;
         assert finishProgressBar != null;
         bindViews(dialog, cropImageView);
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v->{
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             dialog.dismiss();
             // I chose 70 dp here because it resolves to 192x192 on my device
             // (which has a typical screen density of 395 dpi)
             cropperListener.onCropped(cropImageView.crop((int) Tools.dpToPx(70)));
         });
-        PojavApplication.sExecutorService.execute(()->{
+        PojavApplication.sExecutorService.execute(() -> {
             CropperBehaviour cropperBehaviour = null;
             try {
-                 cropperBehaviour = createBehaviour(cropImageView, contentResolver, selectedUri);
-            }catch (Exception e) {
+                cropperBehaviour = createBehaviour(cropImageView, contentResolver, selectedUri);
+            } catch (Exception e) {
                 cropperListener.onFailed(e);
             }
             CropperBehaviour finalBehaviour = cropperBehaviour;
-            Tools.runOnUiThread(()->finishSetup(dialog, finishProgressBar, cropImageView, finalBehaviour));
+            Tools.runOnUiThread(() -> finishSetup(dialog, finishProgressBar, cropImageView, finalBehaviour));
         });
     }
 
     // Fixes the chin that the dialog has on my huawei fon
     private static void fixDialogHeight(AlertDialog dialog) {
         Window dialogWindow = dialog.getWindow();
-        if(dialogWindow != null)
+        if (dialogWindow != null)
             dialogWindow.setLayout(
                     WindowManager.LayoutParams.MATCH_PARENT, // width
                     WindowManager.LayoutParams.WRAP_CONTENT  // height
@@ -86,30 +86,30 @@ public class CropperUtils {
 
     private static void finishSetup(AlertDialog dialog, View progressBar,
                                     CropperView cropImageView, CropperBehaviour cropperBehaviour) {
-        if(cropperBehaviour == null) {
+        if (cropperBehaviour == null) {
             dialog.dismiss();
             return;
         }
         progressBar.setVisibility(View.GONE);
         cropImageView.setCropperBehaviour(cropperBehaviour);
         cropperBehaviour.applyImage();
-        cropImageView.post(()->{
+        cropImageView.post(() -> {
             fixDialogHeight(dialog);
             cropImageView.requestLayout();
         });
     }
 
     private static CropperBehaviour createBehaviour(CropperView cropImageView,
-                                      ContentResolver contentResolver,
-                                      Uri selectedUri) throws Exception {
+                                                    ContentResolver contentResolver,
+                                                    Uri selectedUri) throws Exception {
         try (InputStream inputStream = contentResolver.openInputStream(selectedUri)) {
-            if(inputStream == null) return null;
+            if (inputStream == null) return null;
             try {
                 BitmapRegionDecoder regionDecoder = BitmapRegionDecoder.newInstance(inputStream, false);
                 RegionDecoderCropBehaviour cropBehaviour = new RegionDecoderCropBehaviour(cropImageView);
                 cropBehaviour.setRegionDecoder(regionDecoder);
                 return cropBehaviour;
-            }catch (IOException e) {
+            } catch (IOException e) {
                 // Catch IOE here to detect the case when BitmapRegionDecoder does not support this image format.
                 // If it does not, we will just have to load the bitmap in full resolution using BitmapFactory.
                 Log.w("CropperUtils", "Failed to load image into BitmapRegionDecoder", e);
@@ -118,7 +118,7 @@ public class CropperUtils {
         // We can safely re-open the stream here as ACTION_OPEN_DOCUMENT grants us long-term access
         // to the file that we have picked.
         try (InputStream inputStream = contentResolver.openInputStream(selectedUri)) {
-            if(inputStream == null) return null;
+            if (inputStream == null) return null;
             Bitmap originalBitmap = BitmapFactory.decodeStream(inputStream);
             BitmapCropBehaviour cropBehaviour = new BitmapCropBehaviour(cropImageView);
             cropBehaviour.setBitmap(originalBitmap);
@@ -133,14 +133,14 @@ public class CropperUtils {
         assert horizontalLock != null;
         assert verticalLock != null;
         assert reset != null;
-        horizontalLock.setOnClickListener(v->
+        horizontalLock.setOnClickListener(v ->
                 imageCropperView.horizontalLock = horizontalLock.isChecked()
         );
-        verticalLock.setOnClickListener(v->
+        verticalLock.setOnClickListener(v ->
                 imageCropperView.verticalLock = verticalLock.isChecked()
         );
-        reset.setOnClickListener(v->
-            imageCropperView.resetTransforms()
+        reset.setOnClickListener(v ->
+                imageCropperView.resetTransforms()
         );
     }
 
@@ -150,8 +150,10 @@ public class CropperUtils {
                 (ActivityResultLauncher<String[]>) resultLauncher;
         realResultLauncher.launch(new String[]{"image/*"});
     }
+
     public interface CropperListener {
         void onCropped(Bitmap contentBitmap);
+
         void onFailed(Exception exception);
     }
 }

@@ -12,7 +12,7 @@ public class LauncherPreferenceMiscellaneousFragment extends LauncherPreferenceF
     public void onCreatePreferences(Bundle b, String str) {
         addPreferencesFromResource(R.xml.pref_misc);
         Preference driverPreference = requirePreference("zinkPreferSystemDriver");
-        if(!Tools.checkVulkanSupport(driverPreference.getContext().getPackageManager())) {
+        if (!Tools.checkVulkanSupport(driverPreference.getContext().getPackageManager())) {
             driverPreference.setVisible(false);
         }
     }

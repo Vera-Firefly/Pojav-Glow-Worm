@@ -7,6 +7,7 @@ import android.util.*;
 import android.view.*;
 
 import java.util.*;
+
 import net.kdt.pojavlaunch.utils.*;
 
 public class AWTCanvasView extends TextureView implements TextureView.SurfaceTextureListener, Runnable {
@@ -18,15 +19,17 @@ public class AWTCanvasView extends TextureView implements TextureView.SurfaceTex
     private final TextPaint mFpsPaint;
 
     // Temporary count fps https://stackoverflow.com/a/13729241
-    private final LinkedList<Long> mTimes = new LinkedList<Long>(){{add(System.nanoTime());}};
-    
+    private final LinkedList<Long> mTimes = new LinkedList<Long>() {{
+        add(System.nanoTime());
+    }};
+
     public AWTCanvasView(Context ctx) {
         this(ctx, null);
     }
-    
+
     public AWTCanvasView(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
-        
+
         mFpsPaint = new TextPaint();
         mFpsPaint.setColor(Color.WHITE);
         mFpsPaint.setTextSize(20);
@@ -88,7 +91,9 @@ public class AWTCanvasView extends TextureView implements TextureView.SurfaceTex
         surface.release();
     }
 
-    /** Calculates and returns frames per second */
+    /**
+     * Calculates and returns frames per second
+     */
     private double fps() {
         long lastTime = System.nanoTime();
         double difference = (lastTime - mTimes.getFirst()) / NANOS;
@@ -100,13 +105,15 @@ public class AWTCanvasView extends TextureView implements TextureView.SurfaceTex
         return difference > 0 ? mTimes.size() / difference : 0.0;
     }
 
-    /** Make the view fit the proper aspect ratio of the surface */
-    private void refreshSize(){
+    /**
+     * Make the view fit the proper aspect ratio of the surface
+     */
+    private void refreshSize() {
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
 
-        if(getHeight() < getWidth()){
+        if (getHeight() < getWidth()) {
             layoutParams.width = AWT_CANVAS_WIDTH * getHeight() / AWT_CANVAS_HEIGHT;
-        }else{
+        } else {
             layoutParams.height = AWT_CANVAS_HEIGHT * getWidth() / AWT_CANVAS_WIDTH;
         }
 

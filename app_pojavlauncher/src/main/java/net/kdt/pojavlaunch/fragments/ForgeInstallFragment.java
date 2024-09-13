@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 
 import net.kdt.pojavlaunch.JavaGUILauncherActivity;
 import net.kdt.pojavlaunch.R;
-import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.modloaders.ForgeDownloadTask;
 import net.kdt.pojavlaunch.modloaders.ForgeUtils;
 import net.kdt.pojavlaunch.modloaders.ForgeVersionListAdapter;
@@ -42,6 +41,7 @@ public class ForgeInstallFragment extends ModVersionListFragment<List<String>> {
     public ModloaderListenerProxy getTaskProxy() {
         return sTaskProxy;
     }
+
     @Override
     public void setTaskProxy(ModloaderListenerProxy proxy) {
         sTaskProxy = proxy;

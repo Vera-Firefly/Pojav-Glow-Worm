@@ -1,5 +1,7 @@
 package com.qz.terminal2;
 
+import static net.kdt.pojavlaunch.R.string;
+
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
@@ -22,7 +24,6 @@ import com.termux.terminal.EmulatorDebug;
 import com.termux.terminal.TerminalSession;
 import com.termux.terminal.TerminalSession.SessionChangedCallback;
 
-import static net.kdt.pojavlaunch.R.string;
 import net.kdt.pojavlaunch.JavaGUILauncherActivity;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
@@ -46,13 +47,17 @@ public final class TermuxService extends Service implements SessionChangedCallba
     private static final String ACTION_STOP_SERVICE = "com.termux.aservice_stop";
     private static final String ACTION_LOCK_WAKE = "com.termux.service_wake_lock";
     private static final String ACTION_UNLOCK_WAKE = "com.termux.service_wake_unlock";
-    /** Intent action to launch a new terminal session. Executed from TermuxWidgetProvider. */
+    /**
+     * Intent action to launch a new terminal session. Executed from TermuxWidgetProvider.
+     */
     public static final String ACTION_EXECUTE = "com.termux.service_execute";
     public static final String EXTRA_ARGUMENTS = "com.termux.execute.arguments";
     public static final String EXTRA_CURRENT_WORKING_DIRECTORY = "com.termux.execute.cwd";
-    
 
-    /** This service is only bound from inside the same process and never uses IPC. */
+
+    /**
+     * This service is only bound from inside the same process and never uses IPC.
+     */
     class LocalBinder extends Binder {
         public final TermuxService service = TermuxService.this;
     }
@@ -62,16 +67,20 @@ public final class TermuxService extends Service implements SessionChangedCallba
     private final Handler mHandler = new Handler();
 
     private TerminalSession mTerminalSessions = null;
-    
+
     SessionChangedCallback mSessionChangeCallback;
 
-    /** The wake lock and wifi lock are always acquired and released together. */
+    /**
+     * The wake lock and wifi lock are always acquired and released together.
+     */
     private PowerManager.WakeLock mWakeLock;
     private WifiManager.WifiLock mWifiLock;
 
-    /** If the user has executed the {@link #ACTION_STOP_SERVICE} intent. */
+    /**
+     * If the user has executed the {@link #ACTION_STOP_SERVICE} intent.
+     */
     boolean mWantsToStop = false;
-    
+
     private int port;
 
     @SuppressLint("Wakelock")
@@ -118,23 +127,23 @@ public final class TermuxService extends Service implements SessionChangedCallba
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
-    
-    
+
+
     public TerminalSession getTermSession() {
         return mTerminalSessions;
     }
-    
+
     private File homeFile;
     private File cacheFile;
     private File binFile;
     private File libFile;
     private File localFile;
-    
+
     private String javaHome;
-    
+
     private ServerSocket serverSocket;
     private Socket clientSocket;
-    
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -143,25 +152,25 @@ public final class TermuxService extends Service implements SessionChangedCallba
         binFile = new File(cacheFile, "bin");
         libFile = new File(cacheFile, "lib");
         localFile = new File(cacheFile, "local");
-        
+
         javaHome = Tools.MULTIRT_HOME + "/" + LauncherPreferences.PREF_DEFAULT_RUNTIME;
-        
+
         startSocket();
     }
-    
-    
+
+
     @Override
     public void onDestroy() {
         if (mWakeLock != null) mWakeLock.release();
         if (mWifiLock != null) mWifiLock.release();
-        
+
         try {
             if (serverSocket != null) serverSocket.close();
             if (clientSocket != null) clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         mTerminalSessions.finishIfRunning();
     }
 
@@ -181,11 +190,12 @@ public final class TermuxService extends Service implements SessionChangedCallba
         executablePath = processArgs[0];
         int lastSlashIndex = executablePath.lastIndexOf('/');
         String processName = (isLoginShell ? "-" : "") +
-            (lastSlashIndex == -1 ? executablePath : executablePath.substring(lastSlashIndex + 1));
+                (lastSlashIndex == -1 ? executablePath : executablePath.substring(lastSlashIndex + 1));
 
         String[] args = new String[processArgs.length];
         args[0] = processName;
-        if (processArgs.length > 1) System.arraycopy(processArgs, 1, args, 1, processArgs.length - 1);
+        if (processArgs.length > 1)
+            System.arraycopy(processArgs, 1, args, 1, processArgs.length - 1);
 
         TerminalSession session = new TerminalSession(executablePath, cwd, args, env, this);
         return session;
@@ -225,14 +235,14 @@ public final class TermuxService extends Service implements SessionChangedCallba
     public void onColorsChanged(TerminalSession session) {
         if (mSessionChangeCallback != null) mSessionChangeCallback.onColorsChanged(session);
     }
-    
+
     private void startSocket() {
-        new Thread(() ->{
+        new Thread(() -> {
             try {
                 serverSocket = new ServerSocket(0);
                 port = serverSocket.getLocalPort();
-                while(true) {
-                	clientSocket = serverSocket.accept();
+                while (true) {
+                    clientSocket = serverSocket.accept();
                     Log.d("TermuxServer", "Socket Running...");
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     StringBuilder cmd = new StringBuilder();
@@ -245,23 +255,23 @@ public final class TermuxService extends Service implements SessionChangedCallba
                     handler.sendMessage(message);
                 }
             } catch (IOException e) {
-                    Log.e("TermuxService", e.getMessage());
+                Log.e("TermuxService", e.getMessage());
             }
         }).start();
     }
-    
+
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message message) {
             super.handleMessage(message);
-            execCommand((String)message.obj);
+            execCommand((String) message.obj);
         }
     };
-    
+
     private void execCommand(String cmd) {
         String[] args = cmd.split(" ");
         if (args.length > 0) {
-            Intent intent  = new Intent(this, JavaGUILauncherActivity.class);
+            Intent intent = new Intent(this, JavaGUILauncherActivity.class);
             Bundle bundle = new Bundle();
             StringBuilder javaArgs = new StringBuilder();
             String type = args[0];
@@ -285,10 +295,10 @@ public final class TermuxService extends Service implements SessionChangedCallba
 
     private void startTerminal(Intent intent) {
         CountDownLatch latch = new CountDownLatch(1);
-        
-        if (!binFile.exists() || binFile.length() == 0 || 
-            !libFile.exists() || libFile.length() == 0) {
-            
+
+        if (!binFile.exists() || binFile.length() == 0 ||
+                !libFile.exists() || libFile.length() == 0) {
+
             File boot = new File(Tools.NATIVE_LIB_DIR, "libterm-boot.so");
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.execute(() -> {
@@ -300,8 +310,8 @@ public final class TermuxService extends Service implements SessionChangedCallba
                 } finally {
                     latch.countDown();
                 }
-             });
-             executorService.shutdown();
+            });
+            executorService.shutdown();
         } else {
             latch.countDown();
         }
@@ -311,7 +321,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
+
         File term = new File(binFile, "tcsh");
         String executablePath = term.getAbsolutePath();
 
@@ -344,24 +354,24 @@ public final class TermuxService extends Service implements SessionChangedCallba
         final String serverClassPath = "SYSTEMSERVERCLASSPATH=" + System.getenv("SYSTEMSERVERCLASSPATH");
         final String packageName = "PACKAGE_NAME=" + getPackageName();
         final String localPort = "LOCAL_PORT=" + port;
-        final String javaHomeEnv = "JAVA_HOME=" +  javaHome;
+        final String javaHomeEnv = "JAVA_HOME=" + javaHome;
         final String binPath = "PATH=" + System.getenv("PATH") + ":" + binFile.getAbsolutePath() + ":" + javaHome + "/bin:" +
-                                LocalEnv.getGccBin(localFile.getAbsolutePath());
-        
-        final String libPath = "LD_LIBRARY_PATH=" + libFile.getAbsolutePath() + ":" + 
-                                LocalEnv.getJavaLibEnv(javaHome);
+                LocalEnv.getGccBin(localFile.getAbsolutePath());
+
+        final String libPath = "LD_LIBRARY_PATH=" + libFile.getAbsolutePath() + ":" +
+                LocalEnv.getJavaLibEnv(javaHome);
         if (failSafe) {
             // Keep the default path so that system binaries can be used in the failsafe session.
             final String pathEnv = "PATH=" + System.getenv("PATH");
             return new String[]{
-                termEnv, homeEnv, 
-                androidRootEnv, androidDataEnv, 
-                pathEnv, externalStorageEnv,
-                serverJars, dex2oatClassPath, 
-                bootClassPath, serverClassPath,
-                packageName, localPort,
-                javaHomeEnv,
-                binPath, libPath
+                    termEnv, homeEnv,
+                    androidRootEnv, androidDataEnv,
+                    pathEnv, externalStorageEnv,
+                    serverJars, dex2oatClassPath,
+                    bootClassPath, serverClassPath,
+                    packageName, localPort,
+                    javaHomeEnv,
+                    binPath, libPath
             };
         } else {
             final String ps1Env = "PS1=$ ";
@@ -371,8 +381,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
             return new String[]{termEnv, homeEnv, ps1Env, langEnv, pwdEnv, androidRootEnv, androidDataEnv, externalStorageEnv};
         }
     }
-    
-    
+
 
     private String[] setupProcessArgs(String fileToExecute, String[] args) {
         // The file to execute may either be:

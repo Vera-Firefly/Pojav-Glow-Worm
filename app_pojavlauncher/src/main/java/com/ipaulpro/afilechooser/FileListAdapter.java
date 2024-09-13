@@ -16,19 +16,24 @@
 
 package com.ipaulpro.afilechooser;
 
-import android.content.*;
-import android.view.*;
-import android.widget.*;
-import java.io.*;
-import java.util.*;
-import net.kdt.pojavlaunch.*;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import net.kdt.pojavlaunch.R;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * List adapter for Files.
- * 
- * @version 2013-12-11
- * @author paulburke (ipaulpro)
  *
+ * @author paulburke (ipaulpro)
+ * @version 2013-12-11
  * @addDate 2018-08-08
  * @addToMyProject khanhduy032
  */

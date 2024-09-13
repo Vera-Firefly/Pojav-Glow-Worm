@@ -3,9 +3,8 @@ package com.qz.utils;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
-import java.io.BufferedOutputStream;
+
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +53,7 @@ public class Utils {
             }
         }
     }
-    
+
     public static void unZipFromAssets(Context context, String zipFileName, String outputDir) {
         AssetManager assetManager = context.getAssets();
         try {
@@ -91,7 +90,7 @@ public class Utils {
             Log.e(TAG, "Failed to unzip file: " + zipFileName, e);
         }
     }
-    
+
     public static void setFolderPermissions(String folderPath) {
         File folder = new File(folderPath);
         folder.setReadable(true, false);

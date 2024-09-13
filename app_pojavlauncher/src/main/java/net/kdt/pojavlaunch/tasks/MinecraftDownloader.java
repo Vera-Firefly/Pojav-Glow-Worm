@@ -49,9 +49,10 @@ public class MinecraftDownloader {
 
     /**
      * Start the game version download process on the global executor service.
-     * @param version The JMinecraftVersionList.Version from the version list, if available
+     *
+     * @param version     The JMinecraftVersionList.Version from the version list, if available
      * @param realVersion The version ID (necessary)
-     * @param listener The download status listener
+     * @param listener    The download status listener
      */
     public void start(boolean downloader,
                       @Nullable JMinecraftVersionList.Version version,
@@ -77,7 +78,8 @@ public class MinecraftDownloader {
 
     /**
      * Download the game version.
-     * @param verInfo The JMinecraftVersionList.Version from the version list, if available
+     *
+     * @param verInfo     The JMinecraftVersionList.Version from the version list, if available
      * @param versionName The version ID (necessary)
      * @throws Exception when an exception occurs in the function body or in any of the downloading threads.
      */
@@ -101,25 +103,26 @@ public class MinecraftDownloader {
 
         // I have tried pre-filling the queue directly instead of doing this, but it didn't work.
         // What a shame.
-        for(DownloaderTask scheduledTask : mScheduledDownloadTasks) downloaderPool.execute(scheduledTask);
+        for (DownloaderTask scheduledTask : mScheduledDownloadTasks)
+            downloaderPool.execute(scheduledTask);
         downloaderPool.shutdown();
 
         try {
             while (mDownloaderThreadException.get() == null &&
                     !downloaderPool.awaitTermination(33, TimeUnit.MILLISECONDS)) {
                 long dlFileCounter = mDownloadFileCounter.get();
-                int progress = (int)((dlFileCounter * 100L) / mDownloadFileCount);
+                int progress = (int) ((dlFileCounter * 100L) / mDownloadFileCount);
                 ProgressLayout.setProgress(ProgressLayout.DOWNLOAD_MINECRAFT, progress,
                         R.string.newdl_downloading_game_files, dlFileCounter,
-                        mDownloadFileCount, (double)mDownloadSizeCounter.get() / (1024d * 1024d));
+                        mDownloadFileCount, (double) mDownloadSizeCounter.get() / (1024d * 1024d));
             }
             Exception thrownException = mDownloaderThreadException.get();
-            if(thrownException != null) {
+            if (thrownException != null) {
                 throw thrownException;
             } else {
                 ensureJarFileCopy();
             }
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             // Interrupted while waiting, which means that the download was cancelled.
             // Kill all downloading threads immediately, and ignore any exceptions thrown by them
             downloaderPool.shutdownNow();
@@ -137,20 +140,21 @@ public class MinecraftDownloader {
     /**
      * Ensure that there is a copy of the client JAR file in the version folder, if a copy is
      * needed.
+     *
      * @throws IOException if the copy fails
      */
     private void ensureJarFileCopy() throws IOException {
-        if(mSourceJarFile == null) return;
-        if(mSourceJarFile.equals(mTargetJarFile)) return;
-        if(mTargetJarFile.exists()) return;
+        if (mSourceJarFile == null) return;
+        if (mSourceJarFile.equals(mTargetJarFile)) return;
+        if (mTargetJarFile.exists()) return;
         FileUtils.ensureParentDirectory(mTargetJarFile);
-        Log.i("NewMCDownloader", "Copying " + mSourceJarFile.getName() + " to "+mTargetJarFile.getAbsolutePath());
+        Log.i("NewMCDownloader", "Copying " + mSourceJarFile.getName() + " to " + mTargetJarFile.getAbsolutePath());
         org.apache.commons.io.FileUtils.copyFile(mSourceJarFile, mTargetJarFile, false);
     }
 
     private File downloadGameJson(JMinecraftVersionList.Version verInfo) throws IOException, MirrorTamperedException {
         File targetFile = createGameJsonPath(verInfo.id);
-        if(verInfo.sha1 == null && targetFile.canRead() && targetFile.isFile())
+        if (verInfo.sha1 == null && targetFile.canRead() && targetFile.isFile())
             return targetFile;
         FileUtils.ensureParentDirectory(targetFile);
         try {
@@ -160,19 +164,19 @@ public class MinecraftDownloader {
                 DownloadMirror.downloadFileMirrored(DownloadMirror.DOWNLOAD_CLASS_METADATA, verInfo.url, targetFile);
                 return null;
             });
-        }catch (DownloadUtils.SHA1VerificationException e) {
-            if(DownloadMirror.isMirrored()) throw new MirrorTamperedException();
+        } catch (DownloadUtils.SHA1VerificationException e) {
+            if (DownloadMirror.isMirrored()) throw new MirrorTamperedException();
             else throw e;
         }
         return targetFile;
     }
 
-    private JAssets downloadAssetsIndex(JMinecraftVersionList.Version verInfo) throws IOException{
+    private JAssets downloadAssetsIndex(JMinecraftVersionList.Version verInfo) throws IOException {
         JMinecraftVersionList.AssetIndex assetIndex = verInfo.assetIndex;
-        if(assetIndex == null || verInfo.assets == null) return null;
-        File targetFile = new File(ProfilePathHome.getAssetsHome(), "indexes"+ File.separator + verInfo.assets + ".json");
+        if (assetIndex == null || verInfo.assets == null) return null;
+        File targetFile = new File(ProfilePathHome.getAssetsHome(), "indexes" + File.separator + verInfo.assets + ".json");
         FileUtils.ensureParentDirectory(targetFile);
-        DownloadUtils.ensureSha1(targetFile, assetIndex.sha1, ()-> {
+        DownloadUtils.ensureSha1(targetFile, assetIndex.sha1, () -> {
             ProgressLayout.setProgress(ProgressLayout.DOWNLOAD_MINECRAFT, 0,
                     R.string.newdl_downloading_metadata, targetFile.getName());
             DownloadMirror.downloadFileMirrored(DownloadMirror.DOWNLOAD_CLASS_METADATA, assetIndex.url, targetFile);
@@ -180,42 +184,43 @@ public class MinecraftDownloader {
         });
         return Tools.GLOBAL_GSON.fromJson(Tools.read(targetFile), JAssets.class);
     }
-    
+
     private MinecraftClientInfo getClientInfo(JMinecraftVersionList.Version verInfo) {
         Map<String, MinecraftClientInfo> downloads = verInfo.downloads;
-        if(downloads == null) return null;
+        if (downloads == null) return null;
         return downloads.get("client");
     }
 
     /**
      * Download (if necessary) and process a version's metadata, scheduling all downloads that this
      * version needs.
-     * @param verInfo The JMinecraftVersionList.Version from the version list, if available
+     *
+     * @param verInfo     The JMinecraftVersionList.Version from the version list, if available
      * @param versionName The version ID (necessary)
      * @throws IOException if the download of any of the metadata files fails
      */
     private void downloadAndProcessMetadata(JMinecraftVersionList.Version verInfo, String versionName) throws IOException, MirrorTamperedException {
         File versionJsonFile;
-        if(verInfo != null) versionJsonFile = downloadGameJson(verInfo);
+        if (verInfo != null) versionJsonFile = downloadGameJson(verInfo);
         else versionJsonFile = createGameJsonPath(versionName);
-        if(versionJsonFile.canRead())  {
+        if (versionJsonFile.canRead()) {
             verInfo = Tools.GLOBAL_GSON.fromJson(Tools.read(versionJsonFile), JMinecraftVersionList.Version.class);
         } else {
             throw new IOException("Unable to read Version JSON for version " + versionName);
         }
 
         JAssets assets = downloadAssetsIndex(verInfo);
-        if(assets != null) scheduleAssetDownloads(assets);
+        if (assets != null) scheduleAssetDownloads(assets);
 
 
         MinecraftClientInfo minecraftClientInfo = getClientInfo(verInfo);
-        if(minecraftClientInfo != null) scheduleGameJarDownload(minecraftClientInfo, versionName);
+        if (minecraftClientInfo != null) scheduleGameJarDownload(minecraftClientInfo, versionName);
 
-        if(verInfo.libraries != null) scheduleLibraryDownloads(verInfo.libraries);
+        if (verInfo.libraries != null) scheduleLibraryDownloads(verInfo.libraries);
 
-        if(verInfo.logging != null) scheduleLoggingAssetDownloadIfNeeded(verInfo.logging);
+        if (verInfo.logging != null) scheduleLoggingAssetDownloadIfNeeded(verInfo.logging);
 
-        if(Tools.isValidString(verInfo.inheritsFrom)) {
+        if (Tools.isValidString(verInfo.inheritsFrom)) {
             JMinecraftVersionList.Version inheritedVersion = AsyncMinecraftDownloader.getListedVersion(verInfo.inheritsFrom);
             // Infinite inheritance !?! :noway:
             downloadAndProcessMetadata(inheritedVersion, verInfo.inheritsFrom);
@@ -238,16 +243,16 @@ public class MinecraftDownloader {
     private void scheduleLibraryDownloads(DependentLibrary[] dependentLibraries) throws IOException {
         Tools.preProcessLibraries(dependentLibraries);
         growDownloadList(dependentLibraries.length);
-        for(DependentLibrary dependentLibrary : dependentLibraries) {
+        for (DependentLibrary dependentLibrary : dependentLibraries) {
             // Don't download lwjgl, we have our own bundled in.
-            if(dependentLibrary.name.startsWith("org.lwjgl")) continue;
+            if (dependentLibrary.name.startsWith("org.lwjgl")) continue;
 
             String libArtifactPath = Tools.artifactToPath(dependentLibrary);
             String sha1 = null, url = null;
             long size = 0;
             boolean skipIfFailed = false;
-            if(dependentLibrary.downloads != null) {
-                if(dependentLibrary.downloads.artifact != null) {
+            if (dependentLibrary.downloads != null) {
+                if (dependentLibrary.downloads.artifact != null) {
                     MinecraftLibraryArtifact artifact = dependentLibrary.downloads.artifact;
                     sha1 = artifact.sha1;
                     url = artifact.url;
@@ -259,32 +264,32 @@ public class MinecraftDownloader {
                     continue;
                 }
             }
-            if(url == null) {
+            if (url == null) {
                 url = (dependentLibrary.url == null
                         ? "https://libraries.minecraft.net/"
-                        : dependentLibrary.url.replace("http://","https://")) + libArtifactPath;
+                        : dependentLibrary.url.replace("http://", "https://")) + libArtifactPath;
                 skipIfFailed = true;
             }
-            if(!LauncherPreferences.PREF_CHECK_LIBRARY_SHA) sha1 = null;
+            if (!LauncherPreferences.PREF_CHECK_LIBRARY_SHA) sha1 = null;
             scheduleDownload(new File(ProfilePathHome.getLibrariesHome(), libArtifactPath),
                     DownloadMirror.DOWNLOAD_CLASS_LIBRARIES,
                     url, sha1, size, skipIfFailed
             );
         }
     }
-    
+
     private void scheduleAssetDownloads(JAssets assets) throws IOException {
         Map<String, JAssetInfo> assetObjects = assets.objects;
-        if(assetObjects == null) return;
+        if (assetObjects == null) return;
         Set<String> assetNames = assetObjects.keySet();
         growDownloadList(assetNames.size());
-        for(String asset : assetNames) {
+        for (String asset : assetNames) {
             JAssetInfo assetInfo = assetObjects.get(asset);
-            if(assetInfo == null) continue;
+            if (assetInfo == null) continue;
             File targetFile;
             String hashedPath = assetInfo.hash.substring(0, 2) + File.separator + assetInfo.hash;
             String basePath = assets.mapToResources ? ProfilePathHome.getResourcesHome() : ProfilePathHome.getAssetsHome();
-            if(assets.virtual || assets.mapToResources) {
+            if (assets.virtual || assets.mapToResources) {
                 targetFile = new File(basePath, asset);
             } else {
                 targetFile = new File(basePath, "objects" + File.separator + hashedPath);
@@ -300,11 +305,11 @@ public class MinecraftDownloader {
     }
 
     private void scheduleLoggingAssetDownloadIfNeeded(JMinecraftVersionList.LoggingConfig loggingConfig) throws IOException {
-        if(loggingConfig.client == null || loggingConfig.client.file == null) return;
+        if (loggingConfig.client == null || loggingConfig.client.file == null) return;
         JMinecraftVersionList.FileProperties loggingFileProperties = loggingConfig.client.file;
         File internalLoggingConfig = new File(Tools.DIR_DATA + File.separator + "security",
                 loggingFileProperties.id.replace("client", "log4j-rce-patch"));
-        if(internalLoggingConfig.exists()) return;
+        if (internalLoggingConfig.exists()) return;
         File destination = new File(ProfilePathHome.getGameHome(), loggingFileProperties.id);
         scheduleDownload(destination,
                 DownloadMirror.DOWNLOAD_CLASS_LIBRARIES,
@@ -332,7 +337,7 @@ public class MinecraftDownloader {
 
     private static byte[] getLocalBuffer() {
         byte[] tlb = sThreadLocalDownloadBuffer.get();
-        if(tlb != null) return tlb;
+        if (tlb != null) return tlb;
         tlb = new byte[32768];
         sThreadLocalDownloadBuffer.set(tlb);
         return tlb;
@@ -361,24 +366,24 @@ public class MinecraftDownloader {
         public void run() {
             try {
                 runCatching();
-            }catch (Exception e) {
+            } catch (Exception e) {
                 mDownloaderThreadException.set(e);
             }
         }
 
         private void runCatching() throws Exception {
-            if(Tools.isValidString(mTargetSha1)) {
+            if (Tools.isValidString(mTargetSha1)) {
                 verifyFileSha1();
-            }else {
+            } else {
                 mTargetSha1 = null; // Nullify SHA1 as DownloadUtils.ensureSha1 only checks for null,
-                                    // not for string validity
-                if(mTargetPath.exists()) finishWithoutDownloading();
+                // not for string validity
+                if (mTargetPath.exists()) finishWithoutDownloading();
                 else downloadFile();
             }
         }
-        
+
         private void verifyFileSha1() throws Exception {
-            if(mTargetPath.isFile() && mTargetPath.canRead() && Tools.compareSHA1(mTargetPath, mTargetSha1)) {
+            if (mTargetPath.isFile() && mTargetPath.canRead() && Tools.compareSHA1(mTargetPath, mTargetSha1)) {
                 finishWithoutDownloading();
             } else {
                 // Rely on the download function to throw an IOE in case if the file is not
@@ -386,7 +391,7 @@ public class MinecraftDownloader {
                 downloadFile();
             }
         }
-        
+
         private void downloadFile() throws Exception {
             try {
                 DownloadUtils.ensureSha1(mTargetPath, mTargetSha1, () -> {
@@ -394,8 +399,8 @@ public class MinecraftDownloader {
                             getLocalBuffer(), this);
                     return null;
                 });
-            }catch (Exception e) {
-                if(!mSkipIfFailed) throw e;
+            } catch (Exception e) {
+                if (!mSkipIfFailed) throw e;
             }
             mDownloadFileCounter.incrementAndGet();
         }
@@ -407,8 +412,8 @@ public class MinecraftDownloader {
 
         @Override
         public void updateProgress(int curr, int max) {
-           mDownloadSizeCounter.addAndGet(curr - mLastCurr);
-           mLastCurr = curr;
+            mDownloadSizeCounter.addAndGet(curr - mLastCurr);
+            mLastCurr = curr;
         }
     }
 }

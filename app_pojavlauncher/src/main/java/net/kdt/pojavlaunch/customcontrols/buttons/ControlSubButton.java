@@ -2,7 +2,6 @@ package net.kdt.pojavlaunch.customcontrols.buttons;
 
 import android.annotation.SuppressLint;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 
 import net.kdt.pojavlaunch.customcontrols.ControlData;
@@ -21,7 +20,7 @@ public class ControlSubButton extends ControlButton {
         filterProperties();
     }
 
-    private void filterProperties(){
+    private void filterProperties() {
         if (parentDrawer != null && parentDrawer.drawerData.orientation != ControlDrawerData.Orientation.FREE) {
             mProperties.setHeight(parentDrawer.getProperties().getHeight());
             mProperties.setWidth(parentDrawer.getProperties().getWidth());
@@ -43,9 +42,9 @@ public class ControlSubButton extends ControlButton {
 
     @Override
     public void setLayoutParams(ViewGroup.LayoutParams params) {
-        if(parentDrawer != null && parentDrawer.drawerData.orientation != ControlDrawerData.Orientation.FREE){
-            params.width = (int)parentDrawer.mProperties.getWidth();
-            params.height = (int)parentDrawer.mProperties.getHeight();
+        if (parentDrawer != null && parentDrawer.drawerData.orientation != ControlDrawerData.Orientation.FREE) {
+            params.width = (int) parentDrawer.mProperties.getWidth();
+            params.height = (int) parentDrawer.mProperties.getHeight();
         }
         super.setLayoutParams(params);
     }
@@ -53,7 +52,7 @@ public class ControlSubButton extends ControlButton {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(!getControlLayoutParent().getModifiable() || parentDrawer.drawerData.orientation == ControlDrawerData.Orientation.FREE){
+        if (!getControlLayoutParent().getModifiable() || parentDrawer.drawerData.orientation == ControlDrawerData.Orientation.FREE) {
             return super.onTouchEvent(event);
         }
 
@@ -85,7 +84,7 @@ public class ControlSubButton extends ControlButton {
 
     @Override
     public void snapAndAlign(float x, float y) {
-        if(parentDrawer.drawerData.orientation == ControlDrawerData.Orientation.FREE)
+        if (parentDrawer.drawerData.orientation == ControlDrawerData.Orientation.FREE)
             super.snapAndAlign(x, y);
         // Else the button is forced into place
     }

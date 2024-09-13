@@ -15,7 +15,7 @@ import java.io.File;
 public class NotificationDownloadListener implements ModloaderDownloadListener {
     private final Context mContext;
     private final ModLoader mModLoader;
-    
+
     public NotificationDownloadListener(Context context, ModLoader modLoader) {
         mModLoader = modLoader;
         mContext = context.getApplicationContext();
@@ -23,7 +23,7 @@ public class NotificationDownloadListener implements ModloaderDownloadListener {
 
     @Override
     public void onDownloadFinished(File downloadedFile) {
-        if(mModLoader.requiresGuiInstallation()) {
+        if (mModLoader.requiresGuiInstallation()) {
             ModloaderInstallTracker.saveModLoader(mContext, mModLoader, downloadedFile);
             Intent mainActivityIntent = new Intent(mContext, LauncherActivity.class);
             sendIntentNotification(mainActivityIntent, R.string.modpack_install_notification_success);
@@ -51,7 +51,7 @@ public class NotificationDownloadListener implements ModloaderDownloadListener {
     }
 
     private void sendEmptyNotification(int localeString) {
-        Tools.runOnUiThread(()->NotificationUtils.sendBasicNotification(mContext,
+        Tools.runOnUiThread(() -> NotificationUtils.sendBasicNotification(mContext,
                 R.string.modpack_install_notification_title,
                 localeString,
                 null,

@@ -35,21 +35,21 @@ import net.kdt.pojavlaunch.R;
 
 import java.util.List;
 
-public class ConsoleActivity extends AppCompatActivity implements ServiceConnection{
+public class ConsoleActivity extends AppCompatActivity implements ServiceConnection {
 
     private Process process = null;
-    
+
     private ProgressDialog mDialog;
-    
+
     public TerminalView mEmulatorView;
     public ExtraKeysView mExtraKeysView;
     private TerminalSession mSession;
     public TermuxService mTermService;
-    
+
     private int mFontSize;
     private int MIN_FONTSIZE;
     private int MAX_FONTSIZE = 256;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +60,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         startService();
     }
 
-    private void computeFontSize(){
+    private void computeFontSize() {
         float dipInPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, this.getResources().getDisplayMetrics());
         MIN_FONTSIZE = (int) (4f * dipInPixels);
         int defaultFontSize = Math.round(12 * dipInPixels);
@@ -68,18 +68,18 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         mFontSize = defaultFontSize;
         mFontSize = Math.max(MIN_FONTSIZE, Math.min(mFontSize, MAX_FONTSIZE));
     }
-    
-    private  void initView(){
+
+    private void initView() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mEmulatorView = findViewById(R.id.emulatorView) ;
+        mEmulatorView = findViewById(R.id.emulatorView);
         mExtraKeysView = findViewById(R.id.extraKeysView);
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         mEmulatorView.setTextSize(mFontSize);
         mEmulatorView.requestFocus();
         mEmulatorView.setOnKeyListener(new TermuxViewClient(this));
     }
-    
-    private void  startService(){
+
+    private void startService() {
         showDialog();
         Intent serviceIntent = new Intent(this, TermuxService.class);
         // Start the service and make it run regardless of who is bound to it:
@@ -88,7 +88,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         if (!bindService(serviceIntent, this, 0))
             throw new RuntimeException("bindService() failed");
     }
-    
+
     private void showDialog() {
         mDialog = new ProgressDialog(ConsoleActivity.this);
         mDialog.setTitle(R.string.main_termianl_init);
@@ -133,7 +133,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         }
 
         private boolean backkeyInterceptor(int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
                 onKeyUp(keyCode, event);
                 return false;
             } else {
@@ -141,7 +141,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
             }
         }
     };
-    
+
     void doPaste() {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = clipboard.getPrimaryClip();
@@ -160,7 +160,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         Intent openLink = new Intent(Intent.ACTION_VIEW, webLink);
         PackageManager pm = getPackageManager();
         List<ResolveInfo> handlers = pm.queryIntentActivities(openLink, 0);
-        if(handlers.size() > 0)
+        if (handlers.size() > 0)
             startActivity(openLink);
     }
 
@@ -170,7 +170,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
         unbindService(this);
         mTermService.stopSelf();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem keyboard = menu.add("KeyBoard");
@@ -180,16 +180,16 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
             KeyboardUtils.setSoftKeyboardVisibility(() -> {
                 KeyboardUtils.showSoftKeyboard(this, mEmulatorView);
             }, this, mEmulatorView, !KeyboardUtils.isSoftKeyboardVisible(this));
-                
+
             return false;
         });
         return super.onCreateOptionsMenu(menu);
     }
-    
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
             finish();
         return super.onOptionsItemSelected(item);
     }
@@ -212,7 +212,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
 
             @Override
             public void onSessionFinished(final TerminalSession finishedSession) {
-                
+
             }
 
             @Override
@@ -231,7 +231,9 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
 
             }
         };
-    };
+    }
+
+    ;
 
     @Override
     public void onServiceDisconnected(ComponentName componentName) {
@@ -247,7 +249,7 @@ public class ConsoleActivity extends AppCompatActivity implements ServiceConnect
     private void ignoreBatteryOptimization() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
- 
+
             boolean hasIgnored = powerManager.isIgnoringBatteryOptimizations(getPackageName());
             if (!hasIgnored) {
                 Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);

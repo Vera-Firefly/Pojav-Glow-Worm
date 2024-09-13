@@ -1,25 +1,21 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.os.Bundle;
-
 import android.widget.Toast;
+
 import androidx.preference.Preference;
 
 import com.firefly.feature.UpdateLauncher;
-import com.kdt.pickafile.FileListView;
+
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 

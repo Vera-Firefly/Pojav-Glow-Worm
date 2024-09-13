@@ -43,7 +43,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
 
     @Override
     public void onDownloadDone() {
-        ProgressKeeper.waitUntilDone(()->ContextExecutor.execute(this));
+        ProgressKeeper.waitUntilDone(() -> ContextExecutor.execute(this));
     }
 
     @Override

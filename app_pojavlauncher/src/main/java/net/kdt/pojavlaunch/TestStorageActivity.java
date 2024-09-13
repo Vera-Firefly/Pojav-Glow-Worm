@@ -21,19 +21,21 @@ import net.kdt.pojavlaunch.tasks.AsyncAssetManager;
 
 public class TestStorageActivity extends Activity {
     private final int REQUEST_STORAGE_REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owe);
         Toast.makeText(this, R.string.app_start_toast, Toast.LENGTH_SHORT).show();
-        if(Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29 && !isStorageAllowed(this)) requestStoragePermission();
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29 && !isStorageAllowed(this))
+            requestStoragePermission();
         else exit();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == REQUEST_STORAGE_REQUEST_CODE) {
+        if (requestCode == REQUEST_STORAGE_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 exit();
             } else {
@@ -61,7 +63,7 @@ public class TestStorageActivity extends Activity {
     }
 
     private void exit() {
-        if(!Tools.checkStorageRoot(this)) {
+        if (!Tools.checkStorageRoot(this)) {
             startActivity(new Intent(this, MissingStorageActivity.class));
             return;
         }
@@ -70,7 +72,7 @@ public class TestStorageActivity extends Activity {
         AsyncAssetManager.unpackSingleFiles(this);
         UnpackJRE.unpackAllJre(getAssets());
 
-        Intent intent =  new Intent(this, LauncherActivity.class);
+        Intent intent = new Intent(this, LauncherActivity.class);
         startActivity(intent);
         finish();
     }

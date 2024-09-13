@@ -32,7 +32,7 @@ public class MicrosoftLoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mWebview = (WebView) inflater.inflate(R.layout.fragment_microsoft_login, container, false);
         setWebViewSettings();
-        if(savedInstanceState == null) startNewSession();
+        if (savedInstanceState == null) startNewSession();
         else restoreWebViewState(savedInstanceState);
         return mWebview;
     }
@@ -49,7 +49,7 @@ public class MicrosoftLoginFragment extends Fragment {
     }
 
     private void startNewSession() {
-        CookieManager.getInstance().removeAllCookies((b)->{
+        CookieManager.getInstance().removeAllCookies((b) -> {
             mWebview.clearHistory();
             mWebview.clearCache(true);
             mWebview.clearFormData();
@@ -63,8 +63,8 @@ public class MicrosoftLoginFragment extends Fragment {
     }
 
     private void restoreWebViewState(Bundle savedInstanceState) {
-        Log.i("MSAuthFragment","Restoring state...");
-        if(mWebview.restoreState(savedInstanceState) == null) {
+        Log.i("MSAuthFragment", "Restoring state...");
+        if (mWebview.restoreState(savedInstanceState) == null) {
             Log.w("MSAuthFragment", "Failed to restore state, starting afresh");
             // if, for some reason, we failed to restore our session,
             // just start afresh
@@ -77,7 +77,7 @@ public class MicrosoftLoginFragment extends Fragment {
         super.onStart();
         // If we have switched to a blank client and haven't fully gone though the lifecycle callbacks to restore it,
         // restore it here.
-        if(mBlankClient) mWebview.setWebViewClient(new WebViewTrackClient());
+        if (mBlankClient) mWebview.setWebViewClient(new WebViewTrackClient());
     }
 
     @Override
@@ -94,15 +94,22 @@ public class MicrosoftLoginFragment extends Fragment {
     }
 
     /* Expose webview actions to others */
-    public boolean canGoBack(){ return mWebview.canGoBack();}
-    public void goBack(){ mWebview.goBack();}
+    public boolean canGoBack() {
+        return mWebview.canGoBack();
+    }
 
-    /** Client to track when to sent the data to the launcher */
+    public void goBack() {
+        mWebview.goBack();
+    }
+
+    /**
+     * Client to track when to sent the data to the launcher
+     */
     class WebViewTrackClient extends WebViewClient {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if(url.startsWith("ms-xal-00000000402b5328")) {
+            if (url.startsWith("ms-xal-00000000402b5328")) {
                 // Should be captured by the activity to kill the fragment and get
                 ExtraCore.setValue(ExtraConstants.MICROSOFT_LOGIN_TODO, Uri.parse(url));
                 Toast.makeText(view.getContext(), R.string.microsoft_login_fragment, Toast.LENGTH_SHORT).show();
@@ -112,7 +119,7 @@ public class MicrosoftLoginFragment extends Fragment {
             }
 
             // Sometimes, the user just clicked cancel
-            if(url.contains("res=cancel")){
+            if (url.contains("res=cancel")) {
                 requireActivity().onBackPressed();
                 return true;
             }
@@ -122,10 +129,12 @@ public class MicrosoftLoginFragment extends Fragment {
         }
 
         @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {}
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        }
 
         @Override
-        public void onPageFinished(WebView view, String url) {}
+        public void onPageFinished(WebView view, String url) {
+        }
     }
 
 

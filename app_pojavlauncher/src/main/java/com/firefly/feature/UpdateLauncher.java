@@ -1,28 +1,26 @@
 package com.firefly.feature;
 
-import static net.kdt.pojavlaunch.Architecture.*;
+import static net.kdt.pojavlaunch.Architecture.ARCH_ARM;
+import static net.kdt.pojavlaunch.Architecture.ARCH_ARM64;
+import static net.kdt.pojavlaunch.Architecture.ARCH_X86;
+import static net.kdt.pojavlaunch.Architecture.ARCH_X86_64;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
-
-import androidx.core.content.FileProvider;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
 import com.firefly.ui.dialog.CustomDialog;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +29,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class UpdateLauncher {
     private static final String GITHUB_API = "https://api.github.com/repos/Vera-Firefly/Pojav-Glow-Worm/releases/latest";
@@ -63,7 +63,7 @@ public class UpdateLauncher {
         public GetLatestReleaseTask(boolean ignore) {
             this.ignore = ignore;
         }
-    
+
         @Override
         protected JSONObject doInBackground(String... urls) {
             OkHttpClient client = new OkHttpClient();
@@ -139,16 +139,16 @@ public class UpdateLauncher {
                 int releaseVersionCode = Integer.parseInt(tagName.replaceAll("[^\\d]", ""));
                 if (savedVersionCode > localVersionCode && savedVersionCode >= releaseVersionCode) {
                     new CustomDialog.Builder(context)
-                        .setTitle(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_title))
-                        .setMessage(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_message, apkFile.getAbsolutePath()))
-                        .setConfirmListener(R.string.pgw_settings_updatelauncher_install, customView -> {
-                            installApk(apkFile);
-                            return true;
-                        })
-                        .setCancelListener(R.string.alertdialog_cancel, customView -> true)
-                        .setCancelable(false)
-                        .build()
-                        .show();
+                            .setTitle(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_title))
+                            .setMessage(context.getString(R.string.pgw_settings_updatelauncher_install_prompt_message, apkFile.getAbsolutePath()))
+                            .setConfirmListener(R.string.pgw_settings_updatelauncher_install, customView -> {
+                                installApk(apkFile);
+                                return true;
+                            })
+                            .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+                            .setCancelable(false)
+                            .build()
+                            .show();
                 } else {
                     apkFile.delete();
                     apkVersionFile.delete();
@@ -170,27 +170,27 @@ public class UpdateLauncher {
         String archModel = getArchModel();
 
         new CustomDialog.Builder(context)
-            .setTitle(context.getString(R.string.pgw_settings_updatelauncher_new_version, versionName))
-            .setScrollMessage(releaseNotes)
-            .setConfirmListener(R.string.pgw_settings_updatelauncher_update, customView -> {
-                showDownloadSourceDialog(tagName, versionName, archModel);
-                return true;
-            })
-            .setButton1Listener(context.getString(R.string.pgw_settings_updatelauncher_cancel), customView -> {
-                File ignoreVersion = new File(dir, "ignore_version");
-                try (FileOutputStream OutputStream = new FileOutputStream(ignoreVersion)) {
-                    OutputStream.write(tagName.getBytes());
-                    OutputStream.flush();
-                    DEFAULT_PREF.edit().putString("ignoreVersion", tagName).apply();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-                return true;
-            })
-            .setCancelListener(R.string.alertdialog_cancel, customView -> true)
-            .build()
-            .show();
+                .setTitle(context.getString(R.string.pgw_settings_updatelauncher_new_version, versionName))
+                .setScrollMessage(releaseNotes)
+                .setConfirmListener(R.string.pgw_settings_updatelauncher_update, customView -> {
+                    showDownloadSourceDialog(tagName, versionName, archModel);
+                    return true;
+                })
+                .setButton1Listener(context.getString(R.string.pgw_settings_updatelauncher_cancel), customView -> {
+                    File ignoreVersion = new File(dir, "ignore_version");
+                    try (FileOutputStream OutputStream = new FileOutputStream(ignoreVersion)) {
+                        OutputStream.write(tagName.getBytes());
+                        OutputStream.flush();
+                        DEFAULT_PREF.edit().putString("ignoreVersion", tagName).apply();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                    return true;
+                })
+                .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+                .build()
+                .show();
     }
 
     private void showDownloadSourceDialog(String tagName, String versionName, String archModel) {
@@ -199,28 +199,28 @@ public class UpdateLauncher {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.pgw_settings_updatelauncher_source)
-            .setCancelable(false)
-            .setSingleChoiceItems(downloadSources, -1, (dialog, which) -> {
-                String selectedSource = downloadSources[which];
-                String apkUrl;
-                switch (selectedSource) {
-                    case "GitHub":
-                        apkUrl = "https://" + githubUrl;
-                        break;
-                    case "GHPROXY":
-                        apkUrl = "https://mirror.ghproxy.com/" + githubUrl;
-                        break;
-                    default:
-                        apkUrl = null;
-                }
+                .setCancelable(false)
+                .setSingleChoiceItems(downloadSources, -1, (dialog, which) -> {
+                    String selectedSource = downloadSources[which];
+                    String apkUrl;
+                    switch (selectedSource) {
+                        case "GitHub":
+                            apkUrl = "https://" + githubUrl;
+                            break;
+                        case "GHPROXY":
+                            apkUrl = "https://mirror.ghproxy.com/" + githubUrl;
+                            break;
+                        default:
+                            apkUrl = null;
+                    }
 
-                if (apkUrl != null) {
-                    dialog.dismiss();
-                    startDownload(apkUrl, tagName);
-                }
-            })
-            .setNegativeButton(R.string.alertdialog_cancel, (dialog, id) -> dialog.cancel())
-            .show();
+                    if (apkUrl != null) {
+                        dialog.dismiss();
+                        startDownload(apkUrl, tagName);
+                    }
+                })
+                .setNegativeButton(R.string.alertdialog_cancel, (dialog, id) -> dialog.cancel())
+                .show();
     }
 
     private void startDownload(String apkUrl, String tagName) {
@@ -296,16 +296,16 @@ public class UpdateLauncher {
             progressDialog.dismiss();
             if (apkFile != null) {
                 new CustomDialog.Builder(context)
-                    .setTitle(context.getString(R.string.pgw_settings_updatelauncher_download_complete))
-                    .setMessage(context.getString(R.string.pgw_settings_updatelauncher_file_location, apkFile.getAbsolutePath()))
-                    .setConfirmListener(R.string.pgw_settings_updatelauncher_install, customView -> {
-                        installApk(apkFile);
-                        return true;
-                    })
-                    .setCancelListener(R.string.alertdialog_cancel, customView -> true)
-                    .setCancelable(false)
-                    .build()
-                    .show();
+                        .setTitle(context.getString(R.string.pgw_settings_updatelauncher_download_complete))
+                        .setMessage(context.getString(R.string.pgw_settings_updatelauncher_file_location, apkFile.getAbsolutePath()))
+                        .setConfirmListener(R.string.pgw_settings_updatelauncher_install, customView -> {
+                            installApk(apkFile);
+                            return true;
+                        })
+                        .setCancelListener(R.string.alertdialog_cancel, customView -> true)
+                        .setCancelable(false)
+                        .build()
+                        .show();
             } else {
                 Toast.makeText(context, context.getString(R.string.pgw_settings_updatelauncher_download_fail), Toast.LENGTH_SHORT).show();
             }
@@ -323,10 +323,10 @@ public class UpdateLauncher {
 
     private String getArchModel() {
         int arch = Tools.DEVICE_ARCHITECTURE;
-        if(arch == ARCH_ARM64) return "arm64-v8a";
-        if(arch == ARCH_ARM) return "armeabi-v7a";
-        if(arch == ARCH_X86_64) return "x86_64";
-        if(arch == ARCH_X86) return "x86";
+        if (arch == ARCH_ARM64) return "arm64-v8a";
+        if (arch == ARCH_ARM) return "armeabi-v7a";
+        if (arch == ARCH_X86_64) return "x86_64";
+        if (arch == ARCH_X86) return "x86";
         return "all";
     }
 }

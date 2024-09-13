@@ -34,7 +34,7 @@ public class KeyboardUtils {
     /**
      * Toggle the soft keyboard. The {@link InputMethodManager#SHOW_FORCED} is passed as
      * {@code showFlags} so that keyboard is forcefully shown if it needs to be enabled.
-     *
+     * <p>
      * This is also important for soft keyboard to be shown when a hardware keyboard is connected, and
      * user has disabled the {@code Show on-screen keyboard while hardware keyboard is connected} toggle
      * in Android "Language and Input" settings but the current soft keyboard app overrides the
@@ -51,14 +51,14 @@ public class KeyboardUtils {
     /**
      * Show the soft keyboard. The {@code 0} value is passed as {@code flags} so that keyboard is
      * forcefully shown.
-     *
+     * <p>
      * This is also important for soft keyboard to be shown on app startup when a hardware keyboard
      * is connected, and user has disabled the {@code Show on-screen keyboard while hardware keyboard
      * is connected} toggle in Android "Language and Input" settings but the current soft keyboard app
      * overrides the default implementation of {@link InputMethodService#onEvaluateInputViewShown()}
      * and returns {@code true}.
      * https://cs.android.com/android/platform/superproject/+/android-11.0.0_r3:frameworks/base/core/java/android/inputmethodservice/InputMethodService.java;l=1751
-     *
+     * <p>
      * Also check {@link InputMethodService#onShowInputRequested(int, boolean)} which must return
      * {@code true}, which can be done by failing its {@code ((flags&InputMethod.SHOW_EXPLICIT) == 0)}
      * check by passing {@code 0} as {@code flags}.
@@ -95,7 +95,7 @@ public class KeyboardUtils {
     }
 
     public static boolean areDisableSoftKeyboardFlagsSet(final Activity activity) {
-        if (activity == null ||  activity.getWindow() == null) return false;
+        if (activity == null || activity.getWindow() == null) return false;
         return (activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM) != 0;
     }
 
@@ -140,7 +140,7 @@ public class KeyboardUtils {
     /**
      * Check if hardware keyboard is connected.
      * Based on default implementation of {@link InputMethodService#onEvaluateInputViewShown()}.
-     *
+     * <p>
      * https://developer.android.com/guide/topics/resources/providing-resources#ImeQualifier
      *
      * @param context The Context for operations.
@@ -152,7 +152,7 @@ public class KeyboardUtils {
 
         Configuration config = context.getResources().getConfiguration();
         return config.keyboard != Configuration.KEYBOARD_NOKEYS
-            || config.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO;
+                || config.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO;
     }
 
     /**
@@ -185,7 +185,7 @@ public class KeyboardUtils {
              * https://github.com/termux/termux-app/issues/1995#issuecomment-837080079
              */
             // If soft keyboard is disabled by user only if hardware keyboard is connected
-            if(isSoftKeyboardEnabledOnlyIfNoHardware) {
+            if (isSoftKeyboardEnabledOnlyIfNoHardware) {
                 boolean isHardKeyboardConnected = KeyboardUtils.isHardKeyboardConnected(context);
                 Log.d(LOG_TAG, "Hardware keyboard connected=" + isHardKeyboardConnected);
                 return isHardKeyboardConnected;

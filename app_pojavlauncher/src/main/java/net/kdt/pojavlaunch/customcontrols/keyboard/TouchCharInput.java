@@ -19,12 +19,15 @@ import net.kdt.pojavlaunch.R;
  */
 public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText {
     public static final String TEXT_FILLER = "                              ";
+
     public TouchCharInput(@NonNull Context context) {
         this(context, null);
     }
+
     public TouchCharInput(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, R.attr.editTextStyle);
     }
+
     public TouchCharInput(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setup();
@@ -42,20 +45,20 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
-        if(mIsDoingInternalChanges)return;
-        if(mCharacterSender != null){
-            for(int i=0; i < lengthBefore; ++i){
+        if (mIsDoingInternalChanges) return;
+        if (mCharacterSender != null) {
+            for (int i = 0; i < lengthBefore; ++i) {
                 mCharacterSender.sendBackspace();
             }
 
-            for(int i=start, count = 0; count < lengthAfter; ++i){
+            for (int i = start, count = 0; count < lengthAfter; ++i) {
                 mCharacterSender.sendChar(text.charAt(i));
                 ++count;
             }
         }
 
         //Reset the keyboard state
-        if(text.length() < 1) clear();
+        if (text.length() < 1) clear();
     }
 
 
@@ -85,13 +88,13 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
     /**
      * Toggle on and off the soft keyboard, depending of the state
      */
-    public void switchKeyboardState(){
+    public void switchKeyboardState() {
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
         // Allow, regardless of whether or not a hardware keyboard is declared
-        if(hasFocus()){
+        if (hasFocus()) {
             clear();
             disable();
-        }else{
+        } else {
             enable();
             imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
         }
@@ -103,7 +106,7 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
      * It does not affect the in-game input
      */
     @SuppressLint("SetTextI18n")
-    public void clear(){
+    public void clear() {
         mIsDoingInternalChanges = true;
         //Braille space, doesn't trigger keyboard auto-complete
         //replacing directly the text without though setText avoids notifying changes
@@ -112,16 +115,20 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
         mIsDoingInternalChanges = false;
     }
 
-    /** Regain ability to exist, take focus and have some text being input */
-    public void enable(){
+    /**
+     * Regain ability to exist, take focus and have some text being input
+     */
+    public void enable() {
         setEnabled(true);
         setFocusable(true);
         setVisibility(VISIBLE);
         requestFocus();
     }
 
-    /** Lose ability to exist, take focus and have some text being input */
-    public void disable(){
+    /**
+     * Lose ability to exist, take focus and have some text being input
+     */
+    public void disable() {
         clear();
         setVisibility(GONE);
         clearFocus();
@@ -129,19 +136,25 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
         //setFocusable(false);
     }
 
-    /** Send the enter key. */
-    private void sendEnter(){
+    /**
+     * Send the enter key.
+     */
+    private void sendEnter() {
         mCharacterSender.sendEnter();
         clear();
     }
 
-    /** Just sets the char sender that should be used. */
-    public void setCharacterSender(CharacterSenderStrategy characterSender){
+    /**
+     * Just sets the char sender that should be used.
+     */
+    public void setCharacterSender(CharacterSenderStrategy characterSender) {
         mCharacterSender = characterSender;
     }
 
-    /** This function deals with anything that has to be executed when the constructor is called */
-    private void setup(){
+    /**
+     * This function deals with anything that has to be executed when the constructor is called
+     */
+    private void setup() {
         setOnEditorActionListener((textView, i, keyEvent) -> {
             sendEnter();
             clear();

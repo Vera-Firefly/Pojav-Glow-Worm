@@ -3,7 +3,9 @@ package com.movtery.utils;
 import android.app.ActivityManager;
 import android.content.Context;
 
-/**This class is modified from Fold Craft Launcher.*/
+/**
+ * This class is modified from Fold Craft Launcher.
+ */
 public class MemoryUtils {
     private static ActivityManager activityManager;
 
