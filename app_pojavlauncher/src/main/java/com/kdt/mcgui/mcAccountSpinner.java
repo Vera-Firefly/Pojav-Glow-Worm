@@ -319,8 +319,12 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
         }
         mLoginBarPaint.setColor(getResources().getColor(R.color.minebutton_color));
         if (minecraftAccount.isMicrosoft) {
-            new MicrosoftBackgroundLogin(true, minecraftAccount.msaRefreshToken)
-                    .performLogin(mProgressListener, mDoneListener, mErrorListener);
+            if (System.currentTimeMillis() > minecraftAccount.expiresAt) {
+                // Perform login only if needed
+                new MicrosoftBackgroundLogin(true, minecraftAccount.msaRefreshToken)
+                        .performLogin(mProgressListener, mDoneListener, mErrorListener);
+            }
+            return;
         }
     }
 

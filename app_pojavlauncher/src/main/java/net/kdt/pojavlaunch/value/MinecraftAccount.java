@@ -26,7 +26,7 @@ public class MinecraftAccount {
     public boolean isMicrosoft = false;
     public String msaRefreshToken = "0";
     public String xuid;
-    //    public long expiresAt;
+    public long expiresAt;
     public String skinFaceBase64;
     private Bitmap mFaceCache;
     public String baseUrl;

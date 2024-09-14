@@ -63,6 +63,7 @@ public class MicrosoftBackgroundLogin {
     public String mcToken;
     public String mcUuid;
     public boolean doesOwnGame;
+    public long expiresAt;
 
     public MicrosoftBackgroundLogin(boolean isRefresh, String authCode) {
         mIsRefresh = isRefresh;
@@ -99,6 +100,7 @@ public class MicrosoftBackgroundLogin {
                     acc.profileId = mcUuid;
                     acc.isMicrosoft = true;
                     acc.msaRefreshToken = msRefreshToken;
+                    acc.expiresAt = expiresAt;
                     acc.updateSkinFace();
                 }
                 acc.save();
@@ -250,6 +252,7 @@ public class MicrosoftBackgroundLogin {
         }
 
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() < 300) {
+            expiresAt = System.currentTimeMillis() + 86400000;
             JSONObject jo = new JSONObject(Tools.read(conn.getInputStream()));
             conn.disconnect();
             Log.i("MicrosoftLogin", "MC token: " + jo.getString("access_token"));
