@@ -3,9 +3,9 @@
 
     <!-- Microsoft Login -->
     <string name="microsoft_login_fragment">Nagsimula ang pag-login!</string>
-    <string name="preference_category_visibility_title">Pagkakakita</string>
-    <string name="preference_category_in_game_title">Sa laro</string>
-    <string name="preference_category_in_menu_title">Sa Menu</string>
+    <string name="customctrl_visibility_title">Pagkakakita</string>
+    <string name="customctrl_visibility_ingame">Sa laro</string>
+    <string name="customctrl_visibility_in_menus">Sa Menu</string>
     <string name="preference_category_microsoft_account_title">Microsoft Account</string>
     <string name="preference_category_local_account_title">Local Account</string>
     <!-- Pojav Glow·Worm -->

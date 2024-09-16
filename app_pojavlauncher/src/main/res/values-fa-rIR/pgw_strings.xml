@@ -3,9 +3,9 @@
 
     <!-- Microsoft Login -->
     <string name="microsoft_login_fragment">شروع ورود!</string>
-    <string name="preference_category_visibility_title">دید</string>
-    <string name="preference_category_in_game_title">در بازی</string>
-    <string name="preference_category_in_menu_title">در منو</string>
+    <string name="customctrl_visibility_title">دید</string>
+    <string name="customctrl_visibility_ingame">در بازی</string>
+    <string name="customctrl_visibility_in_menus">در منو</string>
     <string name="preference_category_microsoft_account_title">حساب مایکروسافت</string>
     <string name="preference_category_local_account_title">حساب محلی</string>
     <!-- Pojav Glow·Worm -->

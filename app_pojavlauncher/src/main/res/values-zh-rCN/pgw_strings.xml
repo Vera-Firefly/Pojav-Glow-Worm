@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">开始登陆!</string>
-    <string name="preference_category_visibility_title">可见性</string>
-    <string name="preference_category_in_game_title">游戏内显示</string>
-    <string name="preference_category_in_menu_title">游戏外显示</string>
+    <string name="customctrl_visibility_title">可见性</string>
+    <string name="customctrl_visibility_ingame">游戏内显示</string>
+    <string name="customctrl_visibility_in_menus">游戏外显示</string>
     <string name="preference_category_microsoft_account_title">微软账号</string>
     <string name="preference_category_local_account_title">离线账号</string>
     <!-- Pojav Glow·Worm -->

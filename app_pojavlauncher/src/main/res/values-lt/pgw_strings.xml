@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">Prisijungimas pradėtas!</string>
-    <string name="preference_category_visibility_title">Matomumas</string>
-    <string name="preference_category_in_game_title">Žaidime</string>
-    <string name="preference_category_in_menu_title">Meniu</string>
+    <string name="customctrl_visibility_title">Matomumas</string>
+    <string name="customctrl_visibility_ingame">Žaidime</string>
+    <string name="customctrl_visibility_in_menus">Meniu</string>
     <string name="preference_category_microsoft_account_title">Microsoft paskyra</string>
     <string name="preference_category_local_account_title">Vietinė paskyra</string>
     <!-- Pojav Glow·Worm -->

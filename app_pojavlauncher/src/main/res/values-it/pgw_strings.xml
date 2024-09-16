@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">Accesso avviato!</string>
-    <string name="preference_category_visibility_title">Visibilità</string>
-    <string name="preference_category_in_game_title">In gioco</string>
-    <string name="preference_category_in_menu_title">Nel menù</string>
+    <string name="customctrl_visibility_title">Visibilità</string>
+    <string name="customctrl_visibility_ingame">In gioco</string>
+    <string name="customctrl_visibility_in_menus">Nel menù</string>
     <string name="preference_category_microsoft_account_title">Account Microsoft</string>
     <string name="preference_category_local_account_title">Account locale</string>
     <!-- Pojav Glow·Worm -->

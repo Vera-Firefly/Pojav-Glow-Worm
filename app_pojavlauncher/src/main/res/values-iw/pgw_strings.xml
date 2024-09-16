@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">התחלת כניסה!</string>
-    <string name="preference_category_visibility_title">נראות</string>
-    <string name="preference_category_in_game_title">במשחק</string>
-    <string name="preference_category_in_menu_title">בתפריט</string>
+    <string name="customctrl_visibility_title">נראות</string>
+    <string name="customctrl_visibility_ingame">במשחק</string>
+    <string name="customctrl_visibility_in_menus">בתפריט</string>
     <string name="preference_category_microsoft_account_title">חשבון Microsoft</string>
     <string name="preference_category_local_account_title">חשבון מקומי</string>
     <!-- Pojav Glow·Worm -->

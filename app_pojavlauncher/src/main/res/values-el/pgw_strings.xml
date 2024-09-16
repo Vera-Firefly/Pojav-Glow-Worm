@@ -3,9 +3,9 @@
 
     <!-- Microsoft Σύνδεση -->
     <string name="microsoft_login_fragment">Η σύνδεση ξεκίνησε!</string>
-    <string name="preference_category_visibility_title">Ορατότητα</string>
-    <string name="preference_category_in_game_title">Στο παιχνίδι</string>
-    <string name="preference_category_in_menu_title">Στο μενού</string>
+    <string name="customctrl_visibility_title">Ορατότητα</string>
+    <string name="customctrl_visibility_ingame">Στο παιχνίδι</string>
+    <string name="customctrl_visibility_in_menus">Στο μενού</string>
     <string name="preference_category_microsoft_account_title">Λογαριασμός Microsoft</string>
     <string name="preference_category_local_account_title">Τοπικός λογαριασμός</string>
     <!-- Pojav Glow·Worm -->

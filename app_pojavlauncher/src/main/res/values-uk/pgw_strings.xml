@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">Вхід розпочато!</string>
-    <string name="preference_category_visibility_title">Видимість</string>
-    <string name="preference_category_in_game_title">У грі</string>
-    <string name="preference_category_in_menu_title">У меню</string>
+    <string name="customctrl_visibility_title">Видимість</string>
+    <string name="customctrl_visibility_ingame">У грі</string>
+    <string name="customctrl_visibility_in_menus">У меню</string>
     <string name="preference_category_microsoft_account_title">Обліковий запис Microsoft</string>
     <string name="preference_category_local_account_title">Локальний обліковий запис</string>
     <!-- Pojav Glow·Worm -->

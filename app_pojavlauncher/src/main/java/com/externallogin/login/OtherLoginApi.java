@@ -53,22 +53,9 @@ public class OtherLoginApi {
         authRequest.setAgent(agent);
         authRequest.setRequestUser(true);
         authRequest.setClientToken(UUID.randomUUID().toString().toLowerCase(Locale.ROOT));
-        System.out.println(new Gson().toJson(authRequest));
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), new Gson().toJson(authRequest));
-        Request request = new Request.Builder()
-                .url(baseUrl + "/authserver/authenticate")
-                .post(body)
-                .build();
-        Call call = client.newCall(request);
-        Response response = call.execute();
-        String res = response.body().string();
-        System.out.println(res);
-        if (response.code() == 200) {
-            AuthResult result = new Gson().fromJson(res, AuthResult.class);
-            listener.onSuccess(result);
-        } else {
-            listener.onFailed("error code：" + response.code() + "\n" + res);
-        }
+        String data = new Gson().toJson(authRequest);
+        System.out.println(data);
+        baseLogin(data, "/authserver/authenticate", listener);
     }
 
     public void refresh(MinecraftAccount account, boolean select, Listener listener) throws IOException {
@@ -87,12 +74,20 @@ public class OtherLoginApi {
         }
         String data = new Gson().toJson(refresh);
         System.out.println(data);
+        baseLogin(data, "/authserver/refresh", listener);
+    }
+
+    private void baseLogin(String data, String url, Listener listener) throws IOException {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), data);
         Request request = new Request.Builder()
-                .url(baseUrl + "/authserver/refresh")
+                .url(baseUrl + url)
                 .post(body)
                 .build();
         Call call = client.newCall(request);
+        callLogin(call, listener);
+    }
+
+    private void callLogin(Call call, Listener listener) throws IOException {
         Response response = call.execute();
         String res = response.body().string();
         System.out.println(res);

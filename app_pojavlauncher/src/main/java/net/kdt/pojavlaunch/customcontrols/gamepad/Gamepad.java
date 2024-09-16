@@ -9,21 +9,6 @@ import static android.view.MotionEvent.AXIS_RZ;
 import static android.view.MotionEvent.AXIS_X;
 import static android.view.MotionEvent.AXIS_Y;
 import static android.view.MotionEvent.AXIS_Z;
-import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_EAST;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_NONE;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_NORTH;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_NORTH_EAST;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_NORTH_WEST;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_SOUTH;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_SOUTH_EAST;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_SOUTH_WEST;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_WEST;
-import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.isJoystickEvent;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_DEADZONE_SCALE;
-import static net.kdt.pojavlaunch.utils.MCOptionUtils.getMcScale;
-import static org.lwjgl.glfw.CallbackBridge.sendKeyPress;
-import static org.lwjgl.glfw.CallbackBridge.sendMouseButton;
 
 import android.content.Context;
 import android.view.Choreographer;
@@ -46,16 +31,32 @@ import net.kdt.pojavlaunch.utils.MCOptionUtils;
 
 import org.lwjgl.glfw.CallbackBridge;
 
+import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_EAST;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_NONE;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_NORTH;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_NORTH_EAST;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_NORTH_WEST;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_SOUTH;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_SOUTH_EAST;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_SOUTH_WEST;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_WEST;
+import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.isJoystickEvent;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_DEADZONE_SCALE;
+import static net.kdt.pojavlaunch.utils.MCOptionUtils.getMcScale;
+import static org.lwjgl.glfw.CallbackBridge.sendKeyPress;
+import static org.lwjgl.glfw.CallbackBridge.sendMouseButton;
+
 import fr.spse.gamepad_remapper.GamepadHandler;
 import fr.spse.gamepad_remapper.Settings;
 
 public class Gamepad implements GrabListener, GamepadHandler {
 
     /* Resolution scaler option, allow downsizing a window */
-    private final float mScaleFactor = LauncherPreferences.DEFAULT_PREF.getInt("resolutionRatio", 100) / 100f;
+    private final float mScaleFactor = LauncherPreferences.DEFAULT_PREF.getInt("resolutionRatio",100)/100f;
 
     /* Sensitivity, adjusted according to screen size */
-    private final double mSensitivityFactor = (1.4 * (1080f / currentDisplayMetrics.heightPixels));
+    private final double mSensitivityFactor = (1.4 * (1080f/ currentDisplayMetrics.heightPixels));
 
     private final ImageView mPointerImageView;
 
@@ -72,12 +73,11 @@ public class Gamepad implements GrabListener, GamepadHandler {
     private double mMouseAngle;
     private double mMouseSensitivity = 19;
 
-    private final GamepadMap mGameMap = GamepadMap.getDefaultGameMap();
-    private final GamepadMap mMenuMap = GamepadMap.getDefaultMenuMap();
-    private GamepadMap mCurrentMap = mGameMap;
+    private GamepadMap mGameMap;
+    private GamepadMap mMenuMap;
+    private GamepadMap mCurrentMap;
 
-    // The negation is to force trigger the onGrabState
-    private boolean isGrabbing = !CallbackBridge.isGrabbing();
+    private boolean isGrabbing;
 
 
     /* Choreographer with time to compute delta on ticking */
@@ -88,7 +88,9 @@ public class Gamepad implements GrabListener, GamepadHandler {
     @SuppressWarnings("FieldCanBeLocal") //the field is used in a WeakReference
     private final MCOptionUtils.MCOptionListener mGuiScaleListener = () -> notifyGUISizeChange(getMcScale());
 
-    public Gamepad(View contextView, InputDevice inputDevice) {
+    private final GamepadDataProvider mMapProvider;
+
+    public Gamepad(View contextView, InputDevice inputDevice, GamepadDataProvider mapProvider, boolean showCursor){
         Settings.setDeadzoneScale(PREF_DEADZONE_SCALE);
 
         mScreenChoreographer = Choreographer.getInstance();
@@ -117,21 +119,41 @@ public class Gamepad implements GrabListener, GamepadHandler {
         int size = (int) ((22 * getMcScale()) / mScaleFactor);
         mPointerImageView.setLayoutParams(new FrameLayout.LayoutParams(size, size));
 
-        CallbackBridge.sendCursorPos(CallbackBridge.windowWidth / 2f, CallbackBridge.windowHeight / 2f);
-        ((ViewGroup) contextView.getParent()).addView(mPointerImageView);
+        mMapProvider = mapProvider;
 
-        placePointerView(CallbackBridge.physicalWidth / 2, CallbackBridge.physicalHeight / 2);
+        CallbackBridge.sendCursorPos(CallbackBridge.windowWidth/2f, CallbackBridge.windowHeight/2f);
 
-        CallbackBridge.addGrabListener(this);
+        if(showCursor) {
+            ((ViewGroup)contextView.getParent()).addView(mPointerImageView);
+        }
+
+
+        placePointerView(CallbackBridge.physicalWidth/2, CallbackBridge.physicalHeight/2);
+
+        reloadGamepadMaps();
+        mMapProvider.attachGrabListener(this);
     }
 
 
-    public void updateJoysticks() {
+    public void reloadGamepadMaps() {
+        if(mGameMap != null) mGameMap.resetPressedState();
+        if(mMenuMap != null) mMenuMap.resetPressedState();
+        GamepadMapStore.load();
+        mGameMap = mMapProvider.getGameMap();
+        mMenuMap = mMapProvider.getMenuMap();
+        mCurrentMap = mGameMap;
+        // Force state refresh
+        boolean currentGrab = CallbackBridge.isGrabbing();
+        isGrabbing = !currentGrab;
+        onGrabState(currentGrab);
+    }
+
+    public void updateJoysticks(){
         updateDirectionalJoystick();
         updateMouseJoystick();
     }
 
-    public void notifyGUISizeChange(int newSize) {
+    public void notifyGUISizeChange(int newSize){
         //Change the pointer size to match UI
         int size = (int) ((22 * newSize) / mScaleFactor);
         mPointerImageView.post(() -> mPointerImageView.setLayoutParams(new FrameLayout.LayoutParams(size, size)));
@@ -139,38 +161,41 @@ public class Gamepad implements GrabListener, GamepadHandler {
     }
 
 
-    public static void sendInput(int[] keycodes, boolean isDown) {
-        for (int keycode : keycodes) {
-            switch (keycode) {
+    public static void sendInput(short[] keycodes, boolean isDown){
+        for(short keycode : keycodes){
+            switch (keycode){
                 case GamepadMap.MOUSE_SCROLL_DOWN:
-                    if (isDown) CallbackBridge.sendScroll(0, -1);
+                    if(isDown) CallbackBridge.sendScroll(0, -1);
                     break;
                 case GamepadMap.MOUSE_SCROLL_UP:
-                    if (isDown) CallbackBridge.sendScroll(0, 1);
+                    if(isDown) CallbackBridge.sendScroll(0, 1);
                     break;
-
-                case LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_RIGHT:
-                    sendMouseButton(LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_RIGHT, isDown);
-                    break;
-                case LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_LEFT:
+                case GamepadMap.MOUSE_LEFT:
                     sendMouseButton(LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_LEFT, isDown);
                     break;
-
+                case GamepadMap.MOUSE_MIDDLE:
+                    sendMouseButton(LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_MIDDLE, isDown);
+                    break;
+                case GamepadMap.MOUSE_RIGHT:
+                    sendMouseButton(LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_RIGHT, isDown);
+                    break;
+                case GamepadMap.UNSPECIFIED:
+                    break;
 
                 default:
                     sendKeyPress(keycode, CallbackBridge.getCurrentMods(), isDown);
+                    CallbackBridge.setModifiers(keycode, isDown);
                     break;
             }
-            CallbackBridge.setModifiers(keycode, isDown);
         }
 
     }
 
-    public static boolean isGamepadEvent(MotionEvent event) {
+    public static boolean isGamepadEvent(MotionEvent event){
         return isJoystickEvent(event);
     }
 
-    public static boolean isGamepadEvent(KeyEvent event) {
+    public static boolean isGamepadEvent(KeyEvent event){
         boolean isGamepad = ((event.getSource() & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD)
                 || ((event.getDevice() != null) && ((event.getDevice().getSources() & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD));
 
@@ -179,16 +204,15 @@ public class Gamepad implements GrabListener, GamepadHandler {
 
     /**
      * Send the new mouse position, computing the delta
-     *
      * @param frameTimeNanos The time to render the frame, used to compute mouse delta
      */
-    private void tick(long frameTimeNanos) {
+    private void tick(long frameTimeNanos){
         //update mouse position
         long newFrameTime = System.nanoTime();
-        if (mLastHorizontalValue != 0 || mLastVerticalValue != 0) {
+        if(mLastHorizontalValue != 0 || mLastVerticalValue != 0){
 
             double acceleration = Math.pow(mMouseMagnitude, MOUSE_MAX_ACCELERATION);
-            if (acceleration > 1) acceleration = 1;
+            if(acceleration > 1) acceleration = 1;
 
             // Compute delta since last tick time
             float deltaX = (float) (Math.cos(mMouseAngle) * acceleration * mMouseSensitivity);
@@ -201,10 +225,10 @@ public class Gamepad implements GrabListener, GamepadHandler {
             CallbackBridge.mouseX += deltaX;
             CallbackBridge.mouseY -= deltaY;
 
-            if (!isGrabbing) {
+            if(!isGrabbing){
                 CallbackBridge.mouseX = MathUtils.clamp(CallbackBridge.mouseX, 0, CallbackBridge.windowWidth);
                 CallbackBridge.mouseY = MathUtils.clamp(CallbackBridge.mouseY, 0, CallbackBridge.windowHeight);
-                placePointerView((int) (CallbackBridge.mouseX / mScaleFactor), (int) (CallbackBridge.mouseY / mScaleFactor));
+                placePointerView((int) (CallbackBridge.mouseX / mScaleFactor), (int) (CallbackBridge.mouseY/ mScaleFactor));
             }
 
             //Send the mouse to the game
@@ -215,11 +239,11 @@ public class Gamepad implements GrabListener, GamepadHandler {
         mLastFrameTime = newFrameTime;
     }
 
-    private void updateMouseJoystick() {
+    private void updateMouseJoystick(){
         GamepadJoystick currentJoystick = isGrabbing ? mRightJoystick : mLeftJoystick;
         float horizontalValue = currentJoystick.getHorizontalAxis();
         float verticalValue = currentJoystick.getVerticalAxis();
-        if (horizontalValue != mLastHorizontalValue || verticalValue != mLastVerticalValue) {
+        if(horizontalValue != mLastHorizontalValue || verticalValue != mLastVerticalValue){
             mLastHorizontalValue = horizontalValue;
             mLastVerticalValue = verticalValue;
 
@@ -237,76 +261,72 @@ public class Gamepad implements GrabListener, GamepadHandler {
 
     }
 
-    private void updateDirectionalJoystick() {
+    private void updateDirectionalJoystick(){
         GamepadJoystick currentJoystick = isGrabbing ? mLeftJoystick : mRightJoystick;
 
         int lastJoystickDirection = mCurrentJoystickDirection;
         mCurrentJoystickDirection = currentJoystick.getHeightDirection();
 
-        if (mCurrentJoystickDirection == lastJoystickDirection) return;
+        if(mCurrentJoystickDirection == lastJoystickDirection) return;
 
         sendDirectionalKeycode(lastJoystickDirection, false, getCurrentMap());
         sendDirectionalKeycode(mCurrentJoystickDirection, true, getCurrentMap());
     }
 
 
-    private GamepadMap getCurrentMap() {
+    private GamepadMap getCurrentMap(){
         return mCurrentMap;
     }
 
-    private static void sendDirectionalKeycode(int direction, boolean isDown, GamepadMap map) {
-        switch (direction) {
+    private static void sendDirectionalKeycode(int direction, boolean isDown, GamepadMap map){
+        switch (direction){
             case DIRECTION_NORTH:
-                sendInput(map.DIRECTION_FORWARD, isDown);
+                map.DIRECTION_FORWARD.update(isDown);
                 break;
             case DIRECTION_NORTH_EAST:
-                sendInput(map.DIRECTION_FORWARD, isDown);
-                sendInput(map.DIRECTION_RIGHT, isDown);
+                map.DIRECTION_FORWARD.update(isDown);
+                map.DIRECTION_RIGHT.update(isDown);
                 break;
             case DIRECTION_EAST:
-                sendInput(map.DIRECTION_RIGHT, isDown);
+                map.DIRECTION_RIGHT.update(isDown);
                 break;
             case DIRECTION_SOUTH_EAST:
-                sendInput(map.DIRECTION_RIGHT, isDown);
-                sendInput(map.DIRECTION_BACKWARD, isDown);
+                map.DIRECTION_RIGHT.update(isDown);
+                map.DIRECTION_BACKWARD.update(isDown);
                 break;
             case DIRECTION_SOUTH:
-                sendInput(map.DIRECTION_BACKWARD, isDown);
+                map.DIRECTION_BACKWARD.update(isDown);
                 break;
             case DIRECTION_SOUTH_WEST:
-                sendInput(map.DIRECTION_BACKWARD, isDown);
-                sendInput(map.DIRECTION_LEFT, isDown);
+                map.DIRECTION_BACKWARD.update(isDown);
+                map.DIRECTION_LEFT.update(isDown);
                 break;
             case DIRECTION_WEST:
-                sendInput(map.DIRECTION_LEFT, isDown);
+                map.DIRECTION_LEFT.update(isDown);
                 break;
             case DIRECTION_NORTH_WEST:
-                sendInput(map.DIRECTION_FORWARD, isDown);
-                sendInput(map.DIRECTION_LEFT, isDown);
+                map.DIRECTION_FORWARD.update(isDown);
+                map.DIRECTION_LEFT.update(isDown);
                 break;
         }
     }
 
-    /**
-     * Place the pointer on the screen, offsetting the image size
-     */
-    private void placePointerView(int x, int y) {
-        mPointerImageView.setX(x - mPointerImageView.getWidth() / 2f);
-        mPointerImageView.setY(y - mPointerImageView.getHeight() / 2f);
+    /** Place the pointer on the screen, offsetting the image size */
+    private void placePointerView(int x, int y){
+        mPointerImageView.setX(x - mPointerImageView.getWidth()/2f);
+        mPointerImageView.setY(y - mPointerImageView.getHeight()/2f);
     }
 
-    /**
-     * Update the grabbing state, and change the currentMap, mouse position and sensibility
-     */
+    /** Update the grabbing state, and change the currentMap, mouse position and sensibility */
     @Override
     public void onGrabState(boolean isGrabbing) {
         boolean lastGrabbingValue = this.isGrabbing;
         this.isGrabbing = isGrabbing;
-        if (lastGrabbingValue == isGrabbing) return;
+        if(lastGrabbingValue == isGrabbing) return;
 
         // Switch grabbing state then
         mCurrentMap.resetPressedState();
-        if (isGrabbing) {
+        if(isGrabbing){
             mCurrentMap = mGameMap;
             mPointerImageView.setVisibility(View.INVISIBLE);
             mMouseSensitivity = 18;
@@ -316,8 +336,8 @@ public class Gamepad implements GrabListener, GamepadHandler {
         mCurrentMap = mMenuMap;
         sendDirectionalKeycode(mCurrentJoystickDirection, false, mGameMap); // removing what we were doing
 
-        CallbackBridge.sendCursorPos(CallbackBridge.windowWidth / 2f, CallbackBridge.windowHeight / 2f);
-        placePointerView(CallbackBridge.physicalWidth / 2, CallbackBridge.physicalHeight / 2);
+        CallbackBridge.sendCursorPos(CallbackBridge.windowWidth/2f, CallbackBridge.windowHeight/2f);
+        placePointerView(CallbackBridge.physicalWidth/2, CallbackBridge.physicalHeight/2);
         mPointerImageView.setVisibility(View.VISIBLE);
         // Sensitivity in menu is MC and HARDWARE resolution dependent
         mMouseSensitivity = 19 * mScaleFactor / mSensitivityFactor;
@@ -326,7 +346,7 @@ public class Gamepad implements GrabListener, GamepadHandler {
     @Override
     public void handleGamepadInput(int keycode, float value) {
         boolean isKeyEventDown = value == 1f;
-        switch (keycode) {
+        switch (keycode){
             case KeyEvent.KEYCODE_BUTTON_A:
                 getCurrentMap().BUTTON_A.update(isKeyEventDown);
                 break;

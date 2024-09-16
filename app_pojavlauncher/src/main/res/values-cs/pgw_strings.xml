@@ -3,9 +3,9 @@
 
     <!-- Microsoft přihlášení -->
     <string name="microsoft_login_fragment">Přihlášení začalo!</string>
-    <string name="preference_category_visibility_title">Viditelnost</string>
-    <string name="preference_category_in_game_title">Ve hře</string>
-    <string name="preference_category_in_menu_title">V menu</string>
+    <string name="customctrl_visibility_title">Viditelnost</string>
+    <string name="customctrl_visibility_ingame">Ve hře</string>
+    <string name="customctrl_visibility_in_menus">V menu</string>
     <string name="preference_category_microsoft_account_title">Microsoft účet</string>
     <string name="preference_category_local_account_title">Místní účet</string>
     <!-- Pojav Glow·Worm -->

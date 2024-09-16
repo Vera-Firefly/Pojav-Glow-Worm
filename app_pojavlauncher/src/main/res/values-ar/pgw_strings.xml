@@ -3,9 +3,9 @@
 
     <!-- تسجيل الدخول إلى Microsoft -->
     <string name="microsoft_login_fragment">!تسجيل الدخول بدأ</string>
-    <string name="preference_category_visibility_title">الظهور</string>
-    <string name="preference_category_in_game_title">داخل اللعبة</string>
-    <string name="preference_category_in_menu_title">في القائمة</string>
+    <string name="customctrl_visibility_title">الظهور</string>
+    <string name="customctrl_visibility_ingame">داخل اللعبة</string>
+    <string name="customctrl_visibility_in_menus">في القائمة</string>
     <string name="preference_category_microsoft_account_title">حساب Microsoft</string>
     <string name="preference_category_local_account_title">حساب محلي</string>
     <!-- Pojav Glow·Worm -->

@@ -3,9 +3,9 @@
 
     <!-- Microsoft Anmeldung -->
     <string name="microsoft_login_fragment">Anmeldung gestartet!</string>
-    <string name="preference_category_visibility_title">Sichtbarkeit</string>
-    <string name="preference_category_in_game_title">Im Spiel</string>
-    <string name="preference_category_in_menu_title">Im Menü</string>
+    <string name="customctrl_visibility_title">Sichtbarkeit</string>
+    <string name="customctrl_visibility_ingame">Im Spiel</string>
+    <string name="customctrl_visibility_in_menus">Im Menü</string>
     <string name="preference_category_microsoft_account_title">Microsoft-Konto</string>
     <string name="preference_category_local_account_title">Lokales Konto</string>
     <!-- Pojav Glow·Worm -->

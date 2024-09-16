@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">Login dimulai!</string>
-    <string name="preference_category_visibility_title">Visibilitas</string>
-    <string name="preference_category_in_game_title">Dalam permainan</string>
-    <string name="preference_category_in_menu_title">Di Menu</string>
+    <string name="customctrl_visibility_title">Visibilitas</string>
+    <string name="customctrl_visibility_ingame">Dalam permainan</string>
+    <string name="customctrl_visibility_in_menus">Di Menu</string>
     <string name="preference_category_microsoft_account_title">Akun Microsoft</string>
     <string name="preference_category_local_account_title">Akun lokal</string>
     <!-- Pojav Glow·Worm -->

@@ -3,9 +3,6 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">Login started!</string>
-    <string name="preference_category_visibility_title">Visibility</string>
-    <string name="preference_category_in_game_title">In game</string>
-    <string name="preference_category_in_menu_title">In Menu</string>
     <string name="preference_category_microsoft_account_title">Microsoft Account</string>
     <string name="preference_category_local_account_title">Local account</string>
     <!-- Pojav Glow·Worm -->

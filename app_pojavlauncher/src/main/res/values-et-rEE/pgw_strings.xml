@@ -3,9 +3,9 @@
 
     <!-- Microsoft Login -->
     <string name="microsoft_login_fragment">Sisselogimine algas!</string>
-    <string name="preference_category_visibility_title">Kuvamine</string>
-    <string name="preference_category_in_game_title">Mängus</string>
-    <string name="preference_category_in_menu_title">Menüüs</string>
+    <string name="customctrl_visibility_title">Kuvamine</string>
+    <string name="customctrl_visibility_ingame">Mängus</string>
+    <string name="customctrl_visibility_in_menus">Menüüs</string>
     <string name="preference_category_microsoft_account_title">Microsofti konto</string>
     <string name="preference_category_local_account_title">Kohalik konto</string>
     <!-- Pojav Glow·Worm -->

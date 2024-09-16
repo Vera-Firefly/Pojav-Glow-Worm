@@ -3,9 +3,9 @@
 
     <!-- Microsoft daxil olma -->
     <string name="microsoft_login_fragment">Daxil olma başladı!</string>
-    <string name="preference_category_visibility_title">Görünürlük</string>
-    <string name="preference_category_in_game_title">Oyunda</string>
-    <string name="preference_category_in_menu_title">Menüde</string>
+    <string name="customctrl_visibility_title">Görünürlük</string>
+    <string name="customctrl_visibility_ingame">Oyunda</string>
+    <string name="customctrl_visibility_in_menus">Menüde</string>
     <string name="preference_category_microsoft_account_title">Microsoft Hesabı</string>
     <string name="preference_category_local_account_title">Yerli hesab</string>
     <!-- Pojav Glow·Worm -->

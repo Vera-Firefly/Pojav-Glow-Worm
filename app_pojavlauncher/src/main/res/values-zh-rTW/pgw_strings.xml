@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">已開始登入！</string>
-    <string name="preference_category_visibility_title">可見性</string>
-    <string name="preference_category_in_game_title">在游戏中</string>
-    <string name="preference_category_in_menu_title">在選單中</string>
+    <string name="customctrl_visibility_title">可見性</string>
+    <string name="customctrl_visibility_ingame">在游戏中</string>
+    <string name="customctrl_visibility_in_menus">在選單中</string>
     <string name="preference_category_microsoft_account_title">Microsoft 帳戶</string>
     <string name="preference_category_local_account_title">本地帳戶</string>
     <!-- Pojav GlowWorm -->

@@ -3,9 +3,9 @@
 
     <!-- Microsoft Login -->
     <string name="microsoft_login_fragment">Connexion démarrée !</string>
-    <string name="preference_category_visibility_title">Visibilité</string>
-    <string name="preference_category_in_game_title">En jeu</string>
-    <string name="preference_category_in_menu_title">Dans le menu</string>
+    <string name="customctrl_visibility_title">Visibilité</string>
+    <string name="customctrl_visibility_ingame">En jeu</string>
+    <string name="customctrl_visibility_in_menus">Dans le menu</string>
     <string name="preference_category_microsoft_account_title">Compte Microsoft</string>
     <string name="preference_category_local_account_title">Compte local</string>
     <!-- Pojav Glow·Worm -->

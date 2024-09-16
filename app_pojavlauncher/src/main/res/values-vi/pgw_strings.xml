@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">Đăng nhập đã bắt đầu!</string>
-    <string name="preference_category_visibility_title">Hiển thị</string>
-    <string name="preference_category_in_game_title">Trong trò chơi</string>
-    <string name="preference_category_in_menu_title">Trong menu</string>
+    <string name="customctrl_visibility_title">Hiển thị</string>
+    <string name="customctrl_visibility_ingame">Trong trò chơi</string>
+    <string name="customctrl_visibility_in_menus">Trong menu</string>
     <string name="preference_category_microsoft_account_title">Tài khoản Microsoft</string>
     <string name="preference_category_local_account_title">Tài khoản cục bộ</string>
     <!-- Pojav Glow·Worm -->

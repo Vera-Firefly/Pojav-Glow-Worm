@@ -3,9 +3,9 @@
 
     <!-- App New Annotation -->
     <string name="microsoft_login_fragment">로그인 시작됨!</string>
-    <string name="preference_category_visibility_title">가시성</string>
-    <string name="preference_category_in_game_title">게임 내</string>
-    <string name="preference_category_in_menu_title">메뉴 내</string>
+    <string name="customctrl_visibility_title">가시성</string>
+    <string name="customctrl_visibility_ingame">게임 내</string>
+    <string name="customctrl_visibility_in_menus">메뉴 내</string>
     <string name="preference_category_microsoft_account_title">Microsoft 계정</string>
     <string name="preference_category_local_account_title">로컬 계정</string>
     <!-- Pojav Glow·Worm -->
