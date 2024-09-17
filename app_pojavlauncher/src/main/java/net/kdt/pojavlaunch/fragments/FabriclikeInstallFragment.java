@@ -175,6 +175,9 @@ public abstract class FabriclikeInstallFragment extends Fragment implements Modl
     }
 
     private ArrayAdapter<FabricVersion> createAdapter(FabricVersion[] fabricVersions, boolean onlyStable) {
+        if (fabricVersions == null) {
+            return new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, new ArrayList<>());
+        }
         ArrayList<FabricVersion> filteredVersions = new ArrayList<>(fabricVersions.length);
         for (FabricVersion fabricVersion : fabricVersions) {
             if (!onlyStable || fabricVersion.stable) filteredVersions.add(fabricVersion);
@@ -241,7 +244,9 @@ public abstract class FabriclikeInstallFragment extends Fragment implements Modl
     }
 
     private void updateLoaderSpinner() {
-        mLoaderVersionSpinner.setAdapter(createAdapter(mLoaderVersionArray, mOnlyStableCheckbox.isChecked()));
+        if (mLoaderVersionArray != null) {
+            mLoaderVersionSpinner.setAdapter(createAdapter(mLoaderVersionArray, mOnlyStableCheckbox.isChecked()));
+        }
     }
 
     class GameVersionSelectedListener implements AdapterView.OnItemSelectedListener {
@@ -288,7 +293,9 @@ public abstract class FabriclikeInstallFragment extends Fragment implements Modl
     }
 
     private void updateGameSpinner() {
-        mGameVersionSpinner.setAdapter(createAdapter(mGameVersionArray, mOnlyStableCheckbox.isChecked()));
+        if (mGameVersionArray != null) {
+            mGameVersionSpinner.setAdapter(createAdapter(mGameVersionArray, mOnlyStableCheckbox.isChecked()));
+        }
     }
 
     protected abstract ModloaderListenerProxy getListenerProxy();
