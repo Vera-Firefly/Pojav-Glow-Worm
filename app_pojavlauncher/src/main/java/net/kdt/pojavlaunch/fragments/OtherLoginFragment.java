@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.externallogin.login.AuthResult;
 import com.externallogin.login.OtherLoginApi;
 import com.externallogin.login.Servers;
+import com.firefly.ui.dialog.CustomDialog;
 import com.google.gson.Gson;
 import com.kdt.mcgui.MineButton;
 import com.kdt.mcgui.MineEditText;
@@ -101,29 +102,33 @@ public class OtherLoginFragment extends Fragment {
             }
         });
         addServer.setOnClickListener(v -> {
-            AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.other_login_aut)
-                    .setItems(new String[]{getString(R.string.other_login_external), getString(R.string.other_login_pass)}, (d, i) -> {
+            CustomDialog dialog = new CustomDialog.Builder(requireContext())
+                    .setTitle(getString(R.string.other_login_aut))
+                    .setCancelable(false)
+                    .setItems(new String[]{getString(R.string.other_login_external), getString(R.string.other_login_pass)}, selectedSource -> {
                         EditText editText = new EditText(requireContext());
                         editText.setMaxLines(1);
                         editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                        AlertDialog dialog1 = new AlertDialog.Builder(requireContext())
-                                .setTitle(R.string.other_login_tip)
-                                .setView(editText)
-                                .setPositiveButton(R.string.other_login_confirm, (dialogInterface, i1) -> {
-                                    progressDialog.show();
+                        CustomDialog dialog1 = new CustomDialog.Builder(requireContext())
+                                .setTitle(getString(R.string.other_login_tip))
+                                .setCustomView(editText)
+                                .setCancelable(false)
+                                .setConfirmListener(R.string.other_login_confirm, customView -> {
                                     PojavApplication.sExecutorService.execute(() -> {
-                                        String data = OtherLoginApi.getINSTANCE().getServeInfo(i == 0 ? editText.getText().toString() : "https://auth.mc-user.com:233/" + editText.getText().toString());
-                                        requireActivity().runOnUiThread(() -> {
-                                            progressDialog.dismiss();
-                                            if (!Objects.isNull(data)) {
+                                        String data = OtherLoginApi.getINSTANCE().getServeInfo(
+                                            selectedSource.equals(getString(R.string.other_login_external))
+                                            ? editText.getText().toString() : "https://auth.mc-user.com:233/" + editText.getText().toString()
+                                        );
+                                        if (!Objects.isNull(data)) {
+                                            requireActivity().runOnUiThread(() -> {
+                                                progressDialog.show();
                                                 try {
                                                     Servers.Server server = new Servers.Server();
                                                     JSONObject jsonObject = new JSONObject(data);
                                                     JSONObject meta = jsonObject.optJSONObject("meta");
                                                     server.setServerName(meta.optString("serverName"));
                                                     server.setBaseUrl(editText.getText().toString());
-                                                    if (i == 0) {
+                                                    if (selectedSource.equals(getString(R.string.other_login_pass))) {
                                                         JSONObject links = meta.optJSONObject("links");
                                                         server.setRegister(links.optString("register"));
                                                     } else {
@@ -140,24 +145,27 @@ public class OtherLoginFragment extends Fragment {
                                                     currentBaseUrl = server.getBaseUrl();
                                                     currentRegisterUrl = server.getRegister();
                                                 } catch (Exception e) {
-                                                    Log.e("test", e.toString());
+                                                    Log.e("OtherLogin: ", Log.getStackTraceString(e));
+                                                } finally {
+                                                    progressDialog.dismiss();
                                                 }
-                                            }
-                                        });
+                                            });
+                                        } else {
+                                        }
                                     });
-
+                                    return true;
                                 })
-                                .setNegativeButton(R.string.other_login_cancel, null)
-                                .create();
-                        if (i == 0) {
+                                .setCancelListener(R.string.other_login_cancel, customView -> true)
+                                .build();
+                        if (selectedSource.equals(getString(R.string.other_login_external))) {
                             editText.setHint(R.string.other_login_address);
                         } else {
                             editText.setHint(R.string.other_login_setid);
                         }
                         dialog1.show();
                     })
-                    .setNegativeButton(R.string.other_login_cancel, null)
-                    .create();
+                    .setConfirmListener(R.string.other_login_cancel, customView -> true)
+                    .build();
             dialog.show();
         });
         register.setOnClickListener(v -> {

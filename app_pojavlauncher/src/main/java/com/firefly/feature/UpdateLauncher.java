@@ -197,11 +197,10 @@ public class UpdateLauncher {
         String[] downloadSources = {"GitHub", "GHPROXY"};
         String githubUrl = String.format(GITHUB_RELEASE_URL, tagName, versionName, archModel);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.pgw_settings_updatelauncher_source)
+        new CustomDialog.Builder(context)
+                .setTitle(context.getString(R.string.pgw_settings_updatelauncher_source))
                 .setCancelable(false)
-                .setSingleChoiceItems(downloadSources, -1, (dialog, which) -> {
-                    String selectedSource = downloadSources[which];
+                .setItems(downloadSources, selectedSource -> {
                     String apkUrl;
                     switch (selectedSource) {
                         case "GitHub":
@@ -213,13 +212,12 @@ public class UpdateLauncher {
                         default:
                             apkUrl = null;
                     }
-
                     if (apkUrl != null) {
-                        dialog.dismiss();
                         startDownload(apkUrl, tagName);
                     }
                 })
-                .setNegativeButton(R.string.alertdialog_cancel, (dialog, id) -> dialog.cancel())
+                .setConfirmListener(R.string.alertdialog_cancel, customView -> true)
+                .build()
                 .show();
     }
 

@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import net.kdt.pojavlaunch.R;
 
 public class CustomDialog {
     private final AlertDialog dialog;
+    private final String[] items;
+    private final OnItemClickListener itemClickListener;
 
     private CustomDialog(Context context, String title, String message, String scrollmessage,
                          View customView, String confirmButtonText, String cancelButtonText,
@@ -20,7 +24,10 @@ public class CustomDialog {
                          String button1Text, String button2Text, String button3Text, String button4Text,
                          OnButtonClickListener button1Listener, OnButtonClickListener button2Listener,
                          OnButtonClickListener button3Listener, OnButtonClickListener button4Listener,
-                         boolean cancelable) {
+                         String[] items, OnItemClickListener itemClickListener, boolean cancelable) {
+
+        this.items = items;
+        this.itemClickListener = itemClickListener;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -37,6 +44,7 @@ public class CustomDialog {
         Button confirmButton = view.findViewById(R.id.custom_dialog_confirm_button);
         Button cancelButton = view.findViewById(R.id.custom_dialog_cancel_button);
         FrameLayout customContainer = view.findViewById(R.id.custom_view_container);
+        ListView listView = view.findViewById(R.id.custom_dialog_list_view);
 
         if (title != null && !title.isEmpty()) {
             titleTextView.setText(title);
@@ -57,6 +65,10 @@ public class CustomDialog {
         if (customView != null && customContainer != null) {
             customContainer.addView(customView);
             customContainer.setVisibility(View.VISIBLE);
+        }
+
+        if (items != null && items.length > 0) {
+            listView.setVisibility(View.VISIBLE);
         }
 
         if (confirmButtonText != null) confirmButton.setText(confirmButtonText);
@@ -124,6 +136,15 @@ public class CustomDialog {
             if (shouldDismiss) dialog.dismiss();
         });
 
+        if (itemClickListener != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, items);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener((parent, view1, position, id) -> {
+                if (itemClickListener != null) itemClickListener.onItemClick(items[position]);
+                dialog.dismiss();
+            });
+        }
+
     }
 
     public void show() {
@@ -140,6 +161,10 @@ public class CustomDialog {
 
     public interface OnCancelListener {
         boolean onCancel(View view);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(String item);
     }
 
     public static class Builder {
@@ -160,6 +185,8 @@ public class CustomDialog {
         private OnButtonClickListener button4Listener;
         private OnCancelListener cancelListener;
         private OnConfirmListener confirmListener;
+        private String[] items;
+        private OnItemClickListener itemClickListener;
         private boolean cancelable = true;
 
         public Builder(Context context) {
@@ -183,6 +210,12 @@ public class CustomDialog {
 
         public Builder setCustomView(View customView) {
             this.customView = customView;
+            return this;
+        }
+
+        public Builder setItems(String[] items, OnItemClickListener listener) {
+            this.items = items;
+            this.itemClickListener = listener;
             return this;
         }
 
@@ -232,7 +265,7 @@ public class CustomDialog {
                     confirmButtonText, cancelButtonText, cancelListener, confirmListener,
                     button1Text, button2Text, button3Text, button4Text,
                     button1Listener, button2Listener, button3Listener, button4Listener,
-                    cancelable);
+                    items, itemClickListener, cancelable);
         }
     }
 }
