@@ -6,6 +6,7 @@ import static net.kdt.pojavlaunch.Tools.runOnUiThread;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,14 +129,14 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
     }
 
     private void setMemoryAllocationDialog(CustomSeekBarPreference seek, int maxRAM) {
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_java_memory, null);
-        mSetJavaMemory = view.findViewById(R.id.set_java_memory);
+        mSetJavaMemory = new EditText(requireContext());
+        mSetJavaMemory.setMaxLines(1);
+        mSetJavaMemory.setInputType(InputType.TYPE_CLASS_NUMBER);
         mSetJavaMemory.setText(String.valueOf(seek.getValue()));
         new CustomDialog.Builder(requireContext())
                 .setTitle(getString(R.string.mcl_memory_allocation))
                 .setMessage(getMemoryInfoText(requireContext()) + "\r\n" + getString(R.string.zh_setting_java_memory_max, String.format("%s MB", maxRAM)))
-                .setCustomView(view)
+                .setCustomView(mSetJavaMemory)
                 .setConfirmListener(R.string.alertdialog_done, customView -> {
                     String checkValue = mSetJavaMemory.getText().toString();
                     if (checkValue.isEmpty()) {
