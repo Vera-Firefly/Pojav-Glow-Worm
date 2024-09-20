@@ -8,6 +8,28 @@
     <string name="customctrl_visibility_in_menus">在選單中</string>
     <string name="preference_category_microsoft_account_title">Microsoft 帳戶</string>
     <string name="preference_category_local_account_title">本地帳戶</string>
+    <string name="controller_button_start">開始</string>
+    <string name="controller_button_select">選擇</string>
+    <string name="controller_button_trigger_left">左觸發鍵</string>
+    <string name="controller_button_trigger_right">右觸發鍵</string>
+    <string name="controller_button_shoulder_left">左肩鍵</string>
+    <string name="controller_button_shoulder_right">右肩鍵</string>
+    <string name="controller_direction_forward">搖桿上</string>
+    <string name="controller_direction_backward">搖桿下</string>
+    <string name="controller_direction_left">搖桿左</string>
+    <string name="controller_direction_right">搖桿右</string>
+    <string name="controller_stick_press_l">左搖桿（按下）</string>
+    <string name="controller_stick_press_r">右搖桿（按下）</string>
+    <string name="controller_dpad_up">方向鍵上</string>
+    <string name="controller_dpad_down">方向鍵下</string>
+    <string name="controller_dpad_left">方向鍵左</string>
+    <string name="controller_dpad_right">方向鍵右</string>
+    <string name="controller_remapper_exit_part1">按住</string>
+    <string name="controller_remapper_exit_part2">退出</string>
+    <string name="controller_remapper_operating_mode">當前模式</string>
+    <string name="controller_remapper_expand_entry">展開以更改鍵碼</string>
+    <string name="preference_remap_controller_title">更改控制器按鍵綁定</string>
+    <string name="preference_remap_controller_description">允許您修改綁定到每個控制器按鍵的鍵盤按鍵</string>
     <!-- Pojav GlowWorm -->
     <string name="preference_enable_log_output_desc">在應用程式正式開始運行遊戲時啟用日誌輸出介面</string>
     <string name="preference_enable_log_output_title">在遊戲啟動時啟用日誌輸出</string>
@@ -57,7 +79,7 @@
     <string name="preference_spare_framebuffer_title">備用幀緩衝區</string>
     <string name="preference_spare_framebuffer">使用第二方案的幀緩衝區，啟動失敗時關閉</string>
     <string name="preference_renderer_setup_extra">渲染器 (額外)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.2 (預設)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.3 (預設)</string>
     <string name="preference_extra_mesa_version">Mesa 版本</string>
     <string name="preference_extra_driver_model">Gallium驅動程序</string>
     <!-- Dialog -->

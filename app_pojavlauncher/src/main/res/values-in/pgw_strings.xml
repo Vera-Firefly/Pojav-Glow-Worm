@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Cadangan framebuffer</string>
     <string name="preference_spare_framebuffer">Gunakan framebuffer skema kedua, tutup jika peluncuran gagal</string>
     <string name="preference_renderer_setup_extra">Renderer (Tambahan)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.2 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.3 (Default)</string>
     <string name="preference_extra_mesa_version">Versi Mesa</string>
     <string name="preference_extra_driver_model">Penggantian Pengemudi Gallium</string>
     <!-- Dialog -->

@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Резервний буфер кадру</string>
     <string name="preference_spare_framebuffer">Використовувати буфер кадру другого плану, закрити, якщо запуск не вдався</string>
     <string name="preference_renderer_setup_extra">Рендерер (Додатково)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.2 (За замовчуванням)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.3 (За замовчуванням)</string>
     <string name="preference_extra_mesa_version">Версія Mesa</string>
     <string name="preference_extra_driver_model">Перезапис драйвера Gallium</string>
     <!-- Dialog -->

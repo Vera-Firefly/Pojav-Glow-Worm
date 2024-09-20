@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Spare Frame Buffer</string>
     <string name="preference_spare_framebuffer">Gamitin ang frame buffer ng pangalawang scheme, isara kung nabigo ang paglunsad</string>
     <string name="preference_renderer_setup_extra">Renderer (Karagdagang)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.2 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.3 (Default)</string>
     <string name="preference_extra_mesa_version">Bersyon ng Mesa</string>
     <string name="preference_extra_driver_model">Gallium Driver Override</string>
     <!-- Dialog -->
