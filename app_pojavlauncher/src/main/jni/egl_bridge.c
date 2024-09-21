@@ -174,7 +174,10 @@ int pojavInitOpenGL() {
         pojav_environ->config_renderer = RENDERER_GL4ES;
         setenv("MESA_LOADER_DRIVER_OVERRIDE", "zink", 1);
         if (!SpareBridge()) set_gl_bridge_tbl();
-    } else if (!strcmp(renderer, "mesa_3d")) {
+    }
+
+    if (!strcmp(renderer, "mesa_3d"))
+    {
 
         if (!strcmp(ldrivermodel, "driver_zink"))
         {

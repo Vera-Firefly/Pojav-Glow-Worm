@@ -46,6 +46,8 @@
     <string name="notif_mouse1">删除成功</string>
     <string name="preference_quit_launcher_title">退出启动器</string>
     <string name="preference_quit_launcher">在应用正式开始运行游戏时,是否退出启动器</string>
+    <string name="preference_fix_q3_behavior_title">修复 Q3 行为</string>
+    <string name="preference_fix_q3_behavior_desc">修复 740v3 上的 Q3 行为</string>
     <!-- Terminal -->
     <string name="main_terminal">Terminal</string>
     <string name="main_termianl_init">初始化</string>

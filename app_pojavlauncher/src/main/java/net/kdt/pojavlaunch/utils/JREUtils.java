@@ -9,17 +9,7 @@ import static net.kdt.pojavlaunch.Tools.MESA_LIBS;
 import static net.kdt.pojavlaunch.Tools.NATIVE_LIB_DIR;
 import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
 import static net.kdt.pojavlaunch.Tools.shareLog;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_DUMP_SHADERS;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_EXP_ENABLE_CUSTOM;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_EXP_ENABLE_SPECIFIC;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_EXP_SETUP;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_LOADER_OVERRIDE;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_MESA_GLSL_VERSION;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_MESA_GL_VERSION;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SPARE_BRIDGE;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SPARE_FRAME_BUFFER;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_VSYNC_IN_ZINK;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_ZINK_PREFER_SYSTEM_DRIVER;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -257,6 +247,8 @@ public class JREUtils {
             envMap.put("POJAV_SPARE_BRIDGE", "1");
         if (PREF_SPARE_FRAME_BUFFER)
             envMap.put("POJAV_SPARE_FRAME_BUFFER", "1");
+        if (FIX_Q3_BEHAVIOR)
+            envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1");
 
         if (Tools.deviceHasHangingLinker())
             envMap.put("POJAV_EMUI_ITERATOR_MITIGATE", "1");

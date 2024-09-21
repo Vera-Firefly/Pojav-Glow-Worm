@@ -21,6 +21,8 @@
     <string name="notif_mouse1">Delete done</string>
     <string name="preference_quit_launcher_title">Quit Launcher</string>
     <string name="preference_quit_launcher">Exit the launcher when the running the game</string>
+    <string name="preference_fix_q3_behavior_title">Fix Q3 behavior</string>
+    <string name="preference_fix_q3_behavior_desc">Fix Q3 behavior on 740v3</string>
     <!-- Terminal -->
     <string name="main_terminal">Terminal</string>
     <string name="main_termianl_init">Initialization</string>

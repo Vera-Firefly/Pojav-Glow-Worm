@@ -79,6 +79,7 @@ public class LauncherPreferences {
     public static boolean PREF_EXP_ENABLE_SPECIFIC = false;
     public static boolean PREF_EXP_ENABLE_CUSTOM = false;
     public static boolean PREF_LOADER_OVERRIDE = false;
+    public static boolean FIX_Q3_BEHAVIOR = false;
 
     public static boolean PREF_VERIFY_MANIFEST = true;
     public static String PREF_DOWNLOAD_SOURCE = "default";
@@ -144,6 +145,7 @@ public class LauncherPreferences {
         PREF_EXP_ENABLE_SPECIFIC = DEFAULT_PREF.getBoolean("ebSpecific", false);
         PREF_EXP_ENABLE_CUSTOM = DEFAULT_PREF.getBoolean("ebCustom", false);
         PREF_LOADER_OVERRIDE = DEFAULT_PREF.getBoolean("ebChooseMldo", false);
+        FIX_Q3_BEHAVIOR = DEFAULT_PREF.getBoolean("q3behavior", false);
 
         PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
         PREF_MESA_LIB = DEFAULT_PREF.getString("CMesaLibrary", "default");
