@@ -60,8 +60,8 @@ public class JREUtils {
 
     public static String LD_LIBRARY_PATH;
     public static String jvmLibraryPath;
-    private String glVersion = PREF_MESA_GL_VERSION;
-    private String glslVersion = PREF_MESA_GLSL_VERSION;
+    private static String glVersion = PREF_MESA_GL_VERSION;
+    private static String glslVersion = PREF_MESA_GLSL_VERSION;
 
     public static String findInLdLibPath(String libName) {
         if (Os.getenv("LD_LIBRARY_PATH") == null) {
@@ -410,7 +410,7 @@ public class JREUtils {
             try {
                 Os.setenv(env.getKey(), env.getValue(), true);
             } catch (NullPointerException exception) {
-                Logging.e("JREUtils", exception.toString());
+                Log.e("JREUtils", exception.toString());
             }
         }
 
