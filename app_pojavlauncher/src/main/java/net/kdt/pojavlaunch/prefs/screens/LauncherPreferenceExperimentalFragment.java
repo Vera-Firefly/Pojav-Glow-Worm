@@ -241,7 +241,7 @@ public class LauncherPreferenceExperimentalFragment extends LauncherPreferenceFr
         if ("mesa_3d".equals(rendererValue)) {
             LauncherPreferences.DEFAULT_PREF.edit().putString("renderer", expRenderer).apply();
         } else if ("vulkan_zink".equals(rendererValue)
-                || "opengles3_virgl".equals(rendererValue)
+                || "virglrenderer".equals(rendererValue)
                 || "freedreno".equals(rendererValue)
                 || "panfrost".equals(rendererValue)) {
             expRenderer = LauncherPreferences.DEFAULT_PREF.getString("renderer", null);

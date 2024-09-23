@@ -49,7 +49,7 @@
         <item>opengles2_vgpu_1</item>
         <item>mesa_3d</item>
         <item>vulkan_zink</item> <!-- zinkrenderer with Vulkan OpenGL4.6 -->
-        <item>opengles3_virgl</item> <!-- virglrenderer with OpenGL ES 3 -->
+        <item>virglrenderer</item> <!-- virglrenderer with OpenGL ES 3 -->
         <item>freedreno</item>
         <item>panfrost</item>
         <item>opengles3_desktopgl_angle_vulkan</item>
