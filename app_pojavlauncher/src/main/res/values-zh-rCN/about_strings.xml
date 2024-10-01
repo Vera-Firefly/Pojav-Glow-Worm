@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 关于页面 -->
+    <string name="mcl_tab_about_launcher">关于启动器</string>
+    <string name="fragment_about_title">关于 Pojav Glow·Worm</string>
+    <string name="fragment_about_open_source">
+    项目 Pojav Glow·Worm 由 Vera-Firefly 魔改而来,是一款基于 PojavLauncher 魔改的 Minecraft 启动器\n
+    它能够在 Android 设备上运行 Minecraft: Java Edition\n
+    Pojav Glow·Worm 针对于渲染器选择方案做出了巨大改变,新增了更多实验性的功能\n
+    可在渲染器实验性设置中找到更多的渲染器配置选项\n
+    \n
+    Pojav Glow·Worm 使用的是 GPLv3 开源协议,\n
+    这一协议具有"传染性",任何使用,修改或衍生自 GPL 类库或软件而来的项目必须采用 GPL 协议进行开源.\n
+    因此,如果你打算传播或分发本软件,请务必遵守 GPLv3 开源协议的相关规定
+    </string>
+    <string name="fragment_about_component_title">第三方组件及其许可证</string>
+    <string name="fragment_about_component">
+    Boardwalk (JVM 启动器): 未知许可/Apache 许可证 2.0 或 GNU GPLv2\n
+    Android Support Libraries: Apache 许可证 2.0\n
+    GL4ES: MIT 许可证\n
+    OpenJDK: GNU GPLv2 许可证\n
+    LWJGL3: BSD-3 许可证\n
+    LWJGLX (LWJGL2 API 兼容层用于 LWJGL3): 未知许可\n
+    Mesa 3D 图形库: MIT 许可证\n
+    pro-grade (Java 沙盒安全管理器): Apache 许可证 2.0\n
+    bhook (用于退出代码捕获): MIT 许可证\n
+    libepoxy: MIT 许可证\n
+    virglrenderer: MIT 许可证\n
+    terminal-view: Apache 2.0\n
+    terminal-emulator: Apache 2.0\n
+    感谢 MCHeads 提供的 Minecraft 头像
+    </string>
+    <string name="fragment_about_contributor_title">项目贡献者(不分贡献率与顺序)</string>
+</resources>

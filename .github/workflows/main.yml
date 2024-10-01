@@ -58,13 +58,13 @@ jobs:
         if: github.repository_owner == 'Vera-Firefly' && github.ref_name == 'main_v3'
         uses: actions/upload-artifact@v4
         with:
-          name: Pojav Glow·Worm-release-${{matrix.arch}}
+          name: PGW-release-${{matrix.arch}}
           path: app_pojavlauncher/build/outputs/apk/release/*
 
       - name: Upload Debug
         uses: actions/upload-artifact@v4
         with:
-          name: Pojav Glow·Worm-debug-${{matrix.arch}}
+          name: PGW-debug-${{matrix.arch}}
           path: app_pojavlauncher/build/outputs/apk/debug/*
 
   buildnoruntime:
@@ -104,5 +104,5 @@ jobs:
       - name: Upload Debug
         uses: actions/upload-artifact@v4
         with:
-          name: Pojav Glow·Worm-debug-${{matrix.arch}}-noruntime
+          name: PGW-debug-${{matrix.arch}}-noruntime
           path: app_pojavlauncher/build/outputs/apk/debug/*

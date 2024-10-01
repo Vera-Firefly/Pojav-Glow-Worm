@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_app">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/fragment_padding_medium"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_textview"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_large"
+                android:text="@string/fragment_about_title" />
+
+            <TextView
+                android:id="@+id/open_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_about_open_source" />
+
+            <View
+                android:id="@+id/view1"
+                style="@style/ThickDivider"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/padding_large" />
+
+            <TextView
+                android:id="@+id/component_title"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_large"
+                android:text="@string/fragment_about_component_title" />
+
+            <TextView
+                android:id="@+id/component_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_about_component" />
+
+            <View
+                android:id="@+id/view2"
+                style="@style/ThickDivider"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/padding_large" />
+
+            <TextView
+                android:id="@+id/contributor_title"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_large"
+                android:text="@string/fragment_about_contributor_title" />
+
+            <com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_pojavteam"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:text="PojavLauncherTeam"
+				/>
+
+            <com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_vera_firefly"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:text="Vera-Firefly"
+				/>
+
+			<com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_movtery"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:text="MovTery"
+				/>
+
+			<com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_eurya2233369"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:text="Eurya2233369"
+				/>
+
+			<com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_coloryr"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:text="Coloryr"
+				/>
+
+			<com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_mio"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:text="ShirosakiMio"
+				/>
+
+			<com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_tungsten"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:text="Tungsten"
+				/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

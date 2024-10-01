@@ -407,7 +407,7 @@ public final class Tools {
         varArgMap.put("user_properties", "{}");
         varArgMap.put("user_type", userType);
         varArgMap.put("version_name", versionName);
-        varArgMap.put("version_type", "Pojav Glow·Worm");
+        varArgMap.put("version_type", "PGW");
 
         List<String> minecraftArgs = new ArrayList<>();
         if (versionInfo.arguments != null) {

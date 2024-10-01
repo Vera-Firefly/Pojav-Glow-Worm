@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- About Fragment -->
+    <string name="mcl_tab_about_launcher">About Launcher</string>
+    <string name="fragment_about_title">About Pojav Glow·Worm</string>
+    <string name="fragment_about_open_source">
+    The project "Pojav Glow·Worm" is a modified version by Vera-Firefly, based on the PojavLauncher\n
+    Which is a Minecraft launcher for Android devices to run Minecraft: Java Edition.\n
+    Pojav Glow·Worm has made significant changes to the renderer selection options and added more experimental features.\n
+    You can find more renderer configuration options in the experimental renderer settings.\n
+    \n
+    Pojav Glow·Worm is licensed under the GPLv3 open source license.\n
+    This license is "viral," meaning any project that uses, modifies, or derives from a GPL library or software must also be open sourced under the GPL license.\n
+    Therefore, if you intend to distribute or share this software, please make sure to comply with the GPLv3 open source license requirements.
+    </string>
+    <string name="fragment_about_component_title">Third party components and their licenses</string>
+    <string name="fragment_about_component">
+    Boardwalk (JVM Launcher): Unknown License/Apache License 2.0 or GNU GPLv2.\n
+    Android Support Libraries: Apache License 2.0.\n
+    GL4ES: MIT License.\n
+    OpenJDK: GNU GPLv2 License.\n
+    LWJGL3: BSD-3 License.\n
+    LWJGLX (LWJGL2 API compatibility layer for LWJGL3): unknown license.\n
+    Mesa 3D Graphics Library: MIT License.\n
+    pro-grade (Java sandboxing security manager): Apache License 2.0.\n
+    bhook (Used for exit code trapping): MIT license.\n
+    libepoxy: MIT License.\n
+    virglrenderer: MIT License.\n
+    terminal-view: Apache 2.0.\n
+    terminal-emulator: Apache 2.0.\n
+    Thanks to MCHeads for providing Minecraft avatars.
+    </string>
+    <string name="fragment_about_contributor_title">Project Contributor(Irrespective of contribution rate and contribution order)</string>
+</resources>
