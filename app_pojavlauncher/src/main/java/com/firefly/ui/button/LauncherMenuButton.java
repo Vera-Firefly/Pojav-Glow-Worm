@@ -37,7 +37,7 @@ public class LauncherMenuButton extends ExtendedButton {
         setAllCaps(false);
 
         int[] sizes = getExtendedViewData().getSizeCompounds();
-        sizes[0] = resources.getDimensionPixelSize(R.dimen._30sdp);
+        sizes[0] = resources.getDimensionPixelSize(R.dimen._35sdp);
         getExtendedViewData().setSizeCompounds(sizes);
         postProcessDrawables();
     }
