@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">Silnik renderujący</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (wszystkie wersje, szybki)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Link (Vulcan) - (wszystkie wersje)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (tylko 1.17+, średnie)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (tylko 1.17+, średnie)</string>
     <string name="mcl_setting_veroption_release">Oficjalne wydanie</string>
     <string name="mcl_setting_veroption_snapshot">Wersja deweloperska</string>
     <string name="mcl_setting_veroption_oldalpha">Dawna Alpha</string>

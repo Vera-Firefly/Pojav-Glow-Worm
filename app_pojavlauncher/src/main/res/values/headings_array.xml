@@ -10,7 +10,7 @@
         <item name="6">@string/mcl_setting_renderer_virgl</item>
         <item name="7">@string/mcl_setting_renderer_freedreno</item>
         <item name="8">@string/mcl_setting_renderer_panfrost</item>
-        <item name="9">@string/mcl_setting_renderer_angle</item>
+        <item name="9">@string/mcl_setting_renderer_ltw</item>
     </string-array>
 
     <string-array name="menu_customcontrol">
@@ -52,7 +52,7 @@
         <item>virglrenderer</item> <!-- virglrenderer with OpenGL ES 3 -->
         <item>freedreno</item>
         <item>panfrost</item>
-        <item>opengles3_desktopgl_angle_vulkan</item>
+        <item>opengles3_ltw</item>
     </string-array>
 
     <string-array name="download_source_names">

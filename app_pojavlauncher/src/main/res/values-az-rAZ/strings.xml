@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (bütün versiyalar, sürətli)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (bütün versiyalar, orta)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (yalnız 1.17+, orta)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (yalnız 1.17+, orta)</string>
     <string name="mcl_setting_veroption_release">Buraxın</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Köhnə-alfa</string>

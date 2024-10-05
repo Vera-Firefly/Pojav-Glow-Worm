@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">Візуалізатор</string>
     <string name="mcl_setting_renderer_gles2_4">Божий GL4ES - (всі версії, швидкі)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) — (усі версії, посереднє)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) — (лише 1.17+, посереднє)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) — (лише 1.17+, посереднє)</string>
     <string name="mcl_setting_veroption_release">Релізи</string>
     <string name="mcl_setting_veroption_snapshot">Снапшоти</string>
     <string name="mcl_setting_veroption_oldalpha">Старі альфа</string>

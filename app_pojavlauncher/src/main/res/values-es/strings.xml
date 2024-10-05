@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">Renderizador</string>
     <string name="mcl_setting_renderer_gles2_4">Santo GL4ES - (Todas las versiones, rápido)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (todas las versiones, medio)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (Solamente 1.17+, medio)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (Solamente 1.17+, medio)</string>
     <string name="mcl_setting_veroption_release">Lanzamientos</string>
     <string name="mcl_setting_veroption_snapshot">Snapshots</string>
     <string name="mcl_setting_veroption_oldalpha">Alphas</string>

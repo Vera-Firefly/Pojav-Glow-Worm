@@ -48,7 +48,7 @@
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (semua versi, cepat)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (semua versi, menengah)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (hanya 1.17 keatas, menengah)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (hanya 1.17 keatas, menengah)</string>
     <string name="mcl_setting_veroption_release">Rilis</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha-lama</string>

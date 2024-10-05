@@ -50,7 +50,7 @@
     <string name="mcl_setting_category_renderer">عارض الرسوميات</string>
     <string name="mcl_setting_renderer_gles2_4">Holy Gl4es - (جميع الإصدارات، بسرعة)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (جميع الإصدارات، متوسط)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (1.17+ فقط، متوسط)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (1.17+ فقط، متوسط)</string>
     <string name="mcl_setting_veroption_release">إصدار نهائي</string>
     <string name="mcl_setting_veroption_snapshot">اللمحات (سنابشوت)</string>
     <string name="mcl_setting_veroption_oldalpha">نسخ ألفا قديمة</string>

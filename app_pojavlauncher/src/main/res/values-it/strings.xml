@@ -44,7 +44,7 @@
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (Tutte le versioni, veloce)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tutte le persone, med)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (solo 1.17+,med)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (solo 1.17+,med)</string>
     <string name="mcl_setting_veroption_release">Finale</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Vecchie-alpha</string>

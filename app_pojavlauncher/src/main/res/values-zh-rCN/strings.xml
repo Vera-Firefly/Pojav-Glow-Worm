@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">渲染器</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (全版本可用,速度较快)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (全版本可用,中)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (仅 1.17 以上、中)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (仅 1.17 以上、中)</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照</string>
     <string name="mcl_setting_veroption_oldalpha">远古 alpha 版</string>

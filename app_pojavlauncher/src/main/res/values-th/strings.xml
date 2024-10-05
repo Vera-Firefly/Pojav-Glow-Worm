@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">การแสดงผล</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (รองรับทุกเวอร์ชั่น, เร็ว)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (รองรับทุกเวอร์ชั่น, กลาง)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (รองรับ 1.17+ เท่านั้น, กลาง)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (รองรับ 1.17+ เท่านั้น, กลาง)</string>
     <string name="mcl_setting_veroption_release">ปล่อย</string>
     <string name="mcl_setting_veroption_snapshot">ภาพรวม</string>
     <string name="mcl_setting_veroption_oldalpha">อัลฟ่าเก่า</string>

@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">렌더러</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (모든 버전 호환, 빠릅니다)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (모든 버전, 살짝 렉이 걸릴 수 있습니다.)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (1.17버전 이상, 살짝 렉이 걸릴 수 있습니다.)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (1.17버전 이상, 살짝 렉이 걸릴 수 있습니다.)</string>
     <string name="mcl_setting_veroption_release">릴리즈</string>
     <string name="mcl_setting_veroption_snapshot">스냅샷</string>
     <string name="mcl_setting_veroption_oldalpha">구-알파버전</string>

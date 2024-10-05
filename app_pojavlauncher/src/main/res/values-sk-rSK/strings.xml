@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">Vykresľovač</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (všetky verzie, rýchly)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink - (všetky verzie, priemerný)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE - (iba 1.17₊, priemerný)</string>
+    <string name="mcl_setting_renderer_ltw">LTW - (iba 1.17₊, priemerný)</string>
     <string name="mcl_setting_veroption_release">Vydanie</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Stará alfa</string>

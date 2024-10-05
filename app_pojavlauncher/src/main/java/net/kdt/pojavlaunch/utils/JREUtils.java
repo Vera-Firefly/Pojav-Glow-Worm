@@ -258,9 +258,9 @@ public class JREUtils {
             if (LOCAL_RENDERER.startsWith("opengles"))
                 envMap.put("POJAV_BETA_RENDERER", LOCAL_RENDERER);
 
-            if (LOCAL_RENDERER.equals("opengles3_desktopgl_angle_vulkan")) {
+            if (LOCAL_RENDERER.equals("opengles3_ltw")) {
                 envMap.put("LIBGL_ES", "3");
-                envMap.put("POJAVEXEC_EGL", "libEGL_angle.so"); // Use ANGLE EGL
+                envMap.put("POJAVEXEC_EGL", "libltw.so"); // Use ANGLE EGL
             }
         }
 
@@ -441,11 +441,17 @@ public class JREUtils {
         purgeArg(userArgs, "-XX:+UseLargePagesInMetaspace");
         purgeArg(userArgs, "-XX:+UseLargePages");
         purgeArg(userArgs, "-Dorg.lwjgl.opengl.libname");
+        // Don't let the user specify a custom Freetype library (as the user is unlikely to specify a version compiled for Android)
+        purgeArg(userArgs, "-Dorg.lwjgl.freetype.libname");
 
         //Add automatically generated args
         userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
         userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
         if (LOCAL_RENDERER != null) userArgs.add("-Dorg.lwjgl.opengl.libname=" + graphicsLib);
+
+        // Force LWJGL to use the Freetype library intended for it, instead of using the one
+        // that we ship with Java (since it may be older than what's needed)
+        userArgs.add("-Dorg.lwjgl.freetype.libname="+ NATIVE_LIB_DIR+"/libfreetype.so");
 
         userArgs.addAll(JVMArgs);
         activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.autoram_info_msg, LauncherPreferences.PREF_RAM_ALLOCATION), Toast.LENGTH_SHORT).show());
@@ -646,8 +652,8 @@ public class JREUtils {
                 case "panfrost":
                     renderLibrary = "libOSMesa_2300d.so";
                     break;
-                case "opengles3_desktopgl_angle_vulkan":
-                    renderLibrary = "libtinywrapper.so";
+                case "opengles3_ltw":
+                    renderLibrary = "libltw.so";
                     break;
                 default:
                     Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");

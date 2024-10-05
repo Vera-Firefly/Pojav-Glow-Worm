@@ -49,7 +49,7 @@
     <string name="mcl_setting_category_renderer">İşleyici</string>
     <string name="mcl_setting_renderer_gles2_4">Kutsal GL4ES - (bütün sürümler için, hızlı)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tüm sürümler için, orta)</string>
-    <string name="mcl_setting_renderer_angle">ANGLE (Vulkan) - (sadece 1.17+, orta)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - (sadece 1.17+, orta)</string>
     <string name="mcl_setting_veroption_release">Sürümler</string>
     <string name="mcl_setting_veroption_snapshot">Test sürümleri</string>
     <string name="mcl_setting_veroption_oldalpha">Eski-alfa</string>
