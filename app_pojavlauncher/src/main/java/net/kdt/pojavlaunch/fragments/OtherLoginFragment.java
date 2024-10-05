@@ -116,7 +116,7 @@ public class OtherLoginFragment extends Fragment {
                                 .setConfirmListener(R.string.other_login_confirm, customView -> {
                                     PojavApplication.sExecutorService.execute(() -> {
                                         String data = OtherLoginApi.getINSTANCE().getServeInfo(
-                                            selectedSource.equals(getString(R.string.other_login_external))
+                                            selectedSource.equals(getString(R.string.other_login_pass))
                                             ? editText.getText().toString() : "https://auth.mc-user.com:233/" + editText.getText().toString()
                                         );
                                         if (!Objects.isNull(data)) {
