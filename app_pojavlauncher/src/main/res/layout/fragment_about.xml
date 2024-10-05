@@ -141,7 +141,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/_66sdp"
 				android:background="?android:attr/selectableItemBackground"
-				android:drawableStart="@drawable/image_wvn"
+				android:drawableStart="@drawable/image_about_wvn"
 				android:text="WesleyVanNeck"
 				/>
 
