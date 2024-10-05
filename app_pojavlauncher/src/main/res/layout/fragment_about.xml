@@ -127,6 +127,24 @@
 				android:text="Tungstend"
 				/>
 
+			<com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_aaaapai"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:drawableStart="@drawable/image_about_aaaapai"
+				android:text="aaaapai"
+				/>
+
+			<com.firefly.ui.button.LauncherMenuButton
+				android:id="@+id/contributor_wvn"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:drawableStart="@drawable/image_wvn"
+				android:text="WesleyVanNeck"
+				/>
+
         </LinearLayout>
     </ScrollView>
 

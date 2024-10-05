@@ -28,6 +28,8 @@ public class AboutFragment extends Fragment {
     private static final String GITHUB_URL_COLORYR = "https://github.com/Coloryr";
     private static final String GITHUB_URL_MIO = "https://github.com/ShirosakiMio";
     private static final String GITHUB_URL_T = "https://github.com/Tungstend";
+    private static final String GITHUB_URL_APAI = "https://github.com/aaaapai";
+    private static final String GITHUB_URL_WVN = "https://github.com/WesleyVanNeck";
     public AboutFragment() {
         super(R.layout.fragment_about);
     }
@@ -41,6 +43,8 @@ public class AboutFragment extends Fragment {
         Button mContributorButton5 = view.findViewById(R.id.contributor_coloryr);
         Button mContributorButton6 = view.findViewById(R.id.contributor_mio);
         Button mContributorButton7 = view.findViewById(R.id.contributor_tungstend);
+        Button mContributorButton8 = view.findViewById(R.id.contributor_aaaapai);
+        Button mContributorButton9 = view.findViewById(R.id.contributor_wvn);
 
         mContributorButton1.setOnClickListener(v -> Tools.openURL(requireActivity(), GITHUB_URL_PLT));
         mContributorButton2.setOnClickListener(v -> Tools.openURL(requireActivity(), GITHUB_URL_VF));
@@ -49,6 +53,8 @@ public class AboutFragment extends Fragment {
         mContributorButton5.setOnClickListener(v -> Tools.openURL(requireActivity(), GITHUB_URL_COLORYR));
         mContributorButton6.setOnClickListener(v -> Tools.openURL(requireActivity(), GITHUB_URL_MIO));
         mContributorButton7.setOnClickListener(v -> Tools.openURL(requireActivity(), GITHUB_URL_T));
+        mContributorButton8.setOnClickListener(v -> Tools.openURL(requireActivity(), GITHUB_URL_APAI));
+        mContributorButton9.setOnClickListener(v -> Tools.openURL(requireActivity(), GITHUB_URL_WVN));
 
         mContributorButton2.setOnLongClickListener((v) -> {
             Tools.openURL(requireActivity(), Tools.URL_HOME);
