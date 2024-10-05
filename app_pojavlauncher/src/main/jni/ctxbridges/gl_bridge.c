@@ -64,7 +64,7 @@ gl_render_window_t* gl_init_context(gl_render_window_t *share) {
 
     {
         EGLBoolean bindResult;
-        if (!strcmp(getenv("POJAV_BETA_RENDERER"), "opengles3_ltw")
+        if (!strcmp(getenv("POJAV_BETA_RENDERER"), "opengles3_ltw"))
         {
             printf("EGLBridge: Binding to desktop OpenGL\n");
             bindResult = eglBindAPI_p(EGL_OPENGL_API);
