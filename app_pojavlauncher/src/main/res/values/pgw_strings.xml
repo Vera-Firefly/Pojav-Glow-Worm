@@ -23,6 +23,7 @@
     <string name="preference_quit_launcher">Exit the launcher when the running the game</string>
     <string name="preference_fix_q3_behavior_title">Fix Q3 behavior</string>
     <string name="preference_fix_q3_behavior_desc">Fix Q3 behavior on 740v3</string>
+    <string name="worning_system_vulkan_adreno">We have detected that your device is an Adreno GPU. Turning this option on may cause the Zink renderer to not work properly.\nAre you sure you want to turn this option on?</string>
     <!-- Terminal -->
     <string name="main_terminal">Terminal</string>
     <string name="main_termianl_init">Initialization</string>

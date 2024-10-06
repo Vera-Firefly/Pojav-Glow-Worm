@@ -48,6 +48,7 @@
     <string name="preference_quit_launcher">在運行遊戲時退出啟動器</string>
     <string name="preference_fix_q3_behavior_title">修復 Q3 行為</string>
     <string name="preference_fix_q3_behavior_desc">修復 740v3 上的 Q3 行為</string>
+    <string name="worning_system_vulkan_adreno">我們檢測到您的設備為 Adreno GPU，開啟該選項可能會導致 Zink 渲染器無法正常使用。\n您真的確定要開啟這個選項嗎？</string>
     <!-- Terminal -->
     <string name="main_terminal">Terminal</string>
     <string name="main_termianl_init">初始化</string>
