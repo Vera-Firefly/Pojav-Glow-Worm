@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
@@ -84,12 +86,12 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
         mPlayButton.setOnClickListener(v -> {
-            ExtraCore.setValue(ExtraConstants.START_DOWNLOADER, true);
             ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> ExtraCore.setValue(ExtraConstants.START_DOWNLOADER, true), true), 1000);
         });
         mPlayButton.setOnLongClickListener(v -> {
-            ExtraCore.setValue(ExtraConstants.SKIP_DOWNLOADER, true);
             ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> ExtraCore.setValue(ExtraConstants.SKIP_DOWNLOADER, true), true), 1000);
             return true;
         });
 
