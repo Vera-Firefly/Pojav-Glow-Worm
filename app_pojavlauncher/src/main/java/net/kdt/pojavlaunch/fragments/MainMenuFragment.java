@@ -87,11 +87,11 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
 
         mPlayButton.setOnClickListener(v -> {
             ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
-            new Handler(Looper.getMainLooper()).postDelayed(() -> ExtraCore.setValue(ExtraConstants.START_DOWNLOADER, true), 1000);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> ExtraCore.setValue(ExtraConstants.START_DOWNLOADER, true), 10);
         });
         mPlayButton.setOnLongClickListener(v -> {
             ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
-            new Handler(Looper.getMainLooper()).postDelayed(() -> ExtraCore.setValue(ExtraConstants.SKIP_DOWNLOADER, true), 1000);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> ExtraCore.setValue(ExtraConstants.SKIP_DOWNLOADER, true), 10);
             return true;
         });
 
