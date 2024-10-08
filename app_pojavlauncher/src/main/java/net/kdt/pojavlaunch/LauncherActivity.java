@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch;
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 
 import android.Manifest;
 import android.app.NotificationManager;
@@ -256,7 +257,7 @@ public class LauncherActivity extends BaseActivity {
 
     @Override
     public boolean setFullscreen() {
-        return false;
+        return PREF_IGNORE_NOTCH;
     }
 
     @Override
