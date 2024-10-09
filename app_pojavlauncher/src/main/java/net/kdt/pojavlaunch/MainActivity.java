@@ -44,6 +44,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.firefly.utils.ResolutionAdjuster;
 import com.kdt.LoggerView;
 import com.movtery.feature.ProfileLanguageSelector;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
@@ -220,6 +221,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     case 5:
                         openCustomControls();
                         break;
+                    case 6:{
+                        ResolutionAdjuster adjuster = new ResolutionAdjuster(this, minecraftGLView);
+                        adjuster.showSeekBarDialog();
+                    } break;
                 }
                 drawerLayout.closeDrawers();
             };
