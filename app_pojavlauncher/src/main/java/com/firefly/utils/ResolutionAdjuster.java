@@ -8,22 +8,29 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import net.kdt.pojavlaunch.MinecraftGLSurface;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.R;
 
 public class ResolutionAdjuster {
 
-    private float mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
+    private float mScaleFactor;
     private final Context context;
     private final OnResolutionChangeListener listener;
+    private MinecraftGLSurface glSurface;
 
-    public ResolutionAdjuster(Context context, OnResolutionChangeListener listener) {
+    public ResolutionAdjuster(Context context, MinecraftGLSurface glSurface, OnResolutionChangeListener listener) {
         this.context = context;
+        this.glSurface = glSurface;
         this.listener = listener;
     }
 
     // 显示滑动条弹窗
     public void showSeekBarDialog() {
+        if (glSurface == null) {
+            glSurface = new MinecraftGLSurface(context);
+        }
+        mScaleFactor = glSurface.mScaleFactor;
         int percentage = Math.round(mScaleFactor * 100);
         // 动态创建一个LinearLayout作为容器
         // 什么?为什么不用.xml来构建?
@@ -68,7 +75,7 @@ public class ResolutionAdjuster {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                LauncherPreferences.PREF_SCALE_FACTOR = (int) (mScaleFactor * 100);
+                // Nothing to do here
             }
         });
 
