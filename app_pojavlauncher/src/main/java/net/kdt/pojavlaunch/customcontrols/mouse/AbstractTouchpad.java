@@ -41,4 +41,6 @@ public interface AbstractTouchpad {
      * Sets the state of the touchpad to "disabled".
      */
     void disable();
+
+    void refreshScaleFactor(float scaleFactor);
 }

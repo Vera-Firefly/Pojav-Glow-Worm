@@ -67,7 +67,7 @@ public class MinecraftGLSurface extends View implements GrabListener {
             .remapDpad(true));
 
     /* Resolution scaler option, allow downsizing a window */
-    public float mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
+    private float mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
     /* Sensitivity, adjusted according to screen size */
     private final double mSensitivityFactor = (1.4 * (1080f / Tools.getDisplayMetrics((Activity) getContext()).heightPixels));
 
@@ -92,6 +92,15 @@ public class MinecraftGLSurface extends View implements GrabListener {
         setFocusable(true);
     }
 
+    public void refreshSize(float value) {
+        this.mScaleFactor = value;
+        mInGUIProcessor.refreshScaleFactor(mScaleFactor);
+        if (mPointerCapture != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mPointerCapture.refreshScaleFactor(mScaleFactor);
+        }
+        if (mGamepad != null) mGamepad.refreshScaleFactor(mScaleFactor);
+        refreshSize();
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setUpPointerCapture(AbstractTouchpad touchpad) {

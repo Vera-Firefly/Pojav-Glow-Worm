@@ -26,7 +26,7 @@ public class HotbarView extends View implements MCOptionUtils.MCOptionListener, 
             LwjglGlfwKeycode.GLFW_KEY_4, LwjglGlfwKeycode.GLFW_KEY_5, LwjglGlfwKeycode.GLFW_KEY_6,
             LwjglGlfwKeycode.GLFW_KEY_7, LwjglGlfwKeycode.GLFW_KEY_8, LwjglGlfwKeycode.GLFW_KEY_9};
     private final DropGesture mDropGesture = new DropGesture(new Handler(Looper.getMainLooper()));
-    private final float mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
+    private float mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
     private int mWidth;
     private int mLastIndex;
     private int mGuiScale;
@@ -50,6 +50,10 @@ public class HotbarView extends View implements MCOptionUtils.MCOptionListener, 
     public HotbarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initialize();
+    }
+
+    public void refreshScaleFactor(float scaleFactor) {
+        this.mScaleFactor = scaleFactor;
     }
 
     private void initialize() {

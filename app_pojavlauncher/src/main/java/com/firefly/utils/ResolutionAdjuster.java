@@ -7,34 +7,23 @@ import android.widget.TextView;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.util.Log;
 
-import net.kdt.pojavlaunch.MinecraftGLSurface;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.R;
-import net.kdt.pojavlaunch.Tools;
 
 public class ResolutionAdjuster {
 
-    private float mScaleFactor;
+    private float mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
     private final Context context;
-    private MinecraftGLSurface glSurface;
+    private final OnResolutionChangeListener listener;
 
-    // 构造函数，传入Context
-    public ResolutionAdjuster(Context context) {
+    public ResolutionAdjuster(Context context, OnResolutionChangeListener listener) {
         this.context = context;
-    }
-    public ResolutionAdjuster(Context context, MinecraftGLSurface glSurface) {
-        this.context = context;
-        this.glSurface = glSurface;
+        this.listener = listener;
     }
 
     // 显示滑动条弹窗
     public void showSeekBarDialog() {
-        if (glSurface == null) {
-            glSurface = new MinecraftGLSurface(context);
-        }
-        mScaleFactor = glSurface.mScaleFactor;
         int percentage = Math.round(mScaleFactor * 100);
         // 动态创建一个LinearLayout作为容器
         // 什么?为什么不用.xml来构建?
@@ -66,13 +55,10 @@ public class ResolutionAdjuster {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // 更新缩放因子
                 mScaleFactor = (progress + 25) / 100f;
-                glSurface.mScaleFactor = mScaleFactor;
+                listener.onChange(mScaleFactor);
                 int scaleFactor = Math.round(mScaleFactor * 100);
                 // 实时更新显示的缩放因子
                 scaleTextView.setText(scaleFactor + "%");
-
-                // 新分辨率
-                if (glSurface != null) glSurface.refreshSize();
             }
 
             @Override
@@ -82,7 +68,7 @@ public class ResolutionAdjuster {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // Nothing to do here
+                LauncherPreferences.PREF_SCALE_FACTOR = (int) (mScaleFactor * 100);
             }
         });
 
@@ -96,4 +82,7 @@ public class ResolutionAdjuster {
         builder.show();
     }
 
+    public interface OnResolutionChangeListener {
+        void onChange(float value);
+    }
 }

@@ -38,7 +38,7 @@ public class Touchpad extends View implements GrabListener, AbstractTouchpad {
     private Drawable mMousePointerDrawable;
     private float mMouseX, mMouseY;
     /* Resolution scaler option, allow downsizing a window */
-    private final float mScaleFactor = DEFAULT_PREF.getInt("resolutionRatio", 100) / 100f;
+    private float mScaleFactor = DEFAULT_PREF.getInt("resolutionRatio", 100) / 100f;
 
     public Touchpad(@NonNull Context context) {
         this(context, null);
@@ -47,6 +47,11 @@ public class Touchpad extends View implements GrabListener, AbstractTouchpad {
     public Touchpad(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
+    }
+
+    @Override
+    public void refreshScaleFactor(float scaleFactor) {
+        this.mScaleFactor = scaleFactor;
     }
 
     /**
