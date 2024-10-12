@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Spare Frame Buffer</string>
     <string name="preference_spare_framebuffer">Use the frame buffer from the secondary scheme, close if launch fails</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.3 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.4 (Default)</string>
     <string name="preference_extra_mesa_version">Mesa Version</string>
     <string name="preference_extra_driver_model">Gallium Driver Override</string>
     <!-- Dialog -->

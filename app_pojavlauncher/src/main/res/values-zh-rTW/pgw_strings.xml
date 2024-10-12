@@ -83,7 +83,7 @@
     <string name="preference_spare_framebuffer_title">備用幀緩衝區</string>
     <string name="preference_spare_framebuffer">使用第二方案的幀緩衝區，啟動失敗時關閉</string>
     <string name="preference_renderer_setup_extra">渲染器 (額外)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.3 (預設)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.4 (預設)</string>
     <string name="preference_extra_mesa_version">Mesa 版本</string>
     <string name="preference_extra_driver_model">Gallium驅動程序</string>
     <!-- Dialog -->

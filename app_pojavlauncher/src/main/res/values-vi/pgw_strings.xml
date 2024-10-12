@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Bộ đệm khung dự phòng</string>
     <string name="preference_spare_framebuffer">Sử dụng bộ đệm khung của sơ đồ thứ hai, đóng lại nếu khởi động thất bại</string>
     <string name="preference_renderer_setup_extra">Trình kết xuất (Thêm)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.3 (Mặc định)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.4 (Mặc định)</string>
     <string name="preference_extra_mesa_version">Phiên bản Mesa</string>
     <string name="preference_extra_driver_model">Ghi đè trình điều khiển Gallium</string>
     <!-- Dialog -->

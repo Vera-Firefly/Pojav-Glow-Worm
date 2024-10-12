@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Náhradní framebuffer</string>
     <string name="preference_spare_framebuffer">Použít framebuffer druhého schématu, pokud se spuštění nezdaří</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.3 (Výchozí)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.4 (Výchozí)</string>
     <string name="preference_extra_mesa_version">Verze Mesa</string>
     <string name="preference_extra_driver_model">Override ovladače Gallium</string>
     <!-- Dialog -->

@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">إطار مؤقت احتياطي</string>
     <string name="preference_spare_framebuffer">استخدام الإطار المؤقت الثاني في حال فشل الإطلاق</string>
     <string name="preference_renderer_setup_extra">Renderer (إضافي)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.3 (افتراضي)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.4 (افتراضي)</string>
     <string name="preference_extra_mesa_version">إصدار Mesa</string>
     <string name="preference_extra_driver_model">تجاوز برنامج تشغيل Gallium</string>
     <!-- مربع الحوار -->

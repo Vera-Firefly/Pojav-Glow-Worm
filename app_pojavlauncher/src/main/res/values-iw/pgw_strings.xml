@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">מסגרת רזרבית</string>
     <string name="preference_spare_framebuffer">השתמש במסגרת רזרבית של תוכנית שניה, סגור אם ההפעלה נכשלה</string>
     <string name="preference_renderer_setup_extra">רנדר (תוספת)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.3 (ברירת מחדל)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.4 (ברירת מחדל)</string>
     <string name="preference_extra_mesa_version">גרסת Mesa</string>
     <string name="preference_extra_driver_model">החלפת דרייבר Gallium</string>
     <!-- Dialog -->

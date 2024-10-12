@@ -57,7 +57,7 @@
     <string name="preference_spare_framebuffer_title">Ersatz-Framebuffer</string>
     <string name="preference_spare_framebuffer">Den Framebuffer des zweiten Schemas verwenden, wenn der Start fehlschlägt</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa24.2.3 (Standard)</string>
+    <string name="preference_renderer_extra_default">Mesa24.2.4 (Standard)</string>
     <string name="preference_extra_mesa_version">Mesa-Version</string>
     <string name="preference_extra_driver_model">Gallium-Treiber-Override</string>
     <!-- Dialog -->
