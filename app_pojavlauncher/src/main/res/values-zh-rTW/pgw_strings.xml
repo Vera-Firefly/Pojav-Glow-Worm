@@ -30,6 +30,7 @@
     <string name="controller_remapper_expand_entry">展開以更改鍵碼</string>
     <string name="preference_remap_controller_title">更改控制器按鍵綁定</string>
     <string name="preference_remap_controller_description">允許您修改綁定到每個控制器按鍵的鍵盤按鍵</string>
+    <string name="mcn_signal_title">應用/遊戲 因致命訊號 %d 中止, 請查看 latestlog.txt 以取得更多詳細資訊</string>
     <!-- Pojav GlowWorm -->
     <string name="preference_enable_log_output_desc">在應用程式正式開始運行遊戲時啟用日誌輸出介面</string>
     <string name="preference_enable_log_output_title">在遊戲啟動時啟用日誌輸出</string>
