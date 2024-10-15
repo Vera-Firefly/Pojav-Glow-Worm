@@ -42,7 +42,7 @@ public class ResolutionAdjuster {
         // 因为麻烦
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);  // 设置水平排列
-        layout.setPadding(50, 40, 50, 40);
+        layout.setPadding(50, 40, 50, 20);
         layout.setGravity(Gravity.CENTER);
 
         // 动态创建一个 SeekBar ,用于调整缩放因子
@@ -113,8 +113,9 @@ public class ResolutionAdjuster {
         boolean isLandscape = context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE || width > height;
 
         double progressDouble = (double) progress / 100;
-        int previewWidth = (int) ((isLandscape ? width : height) * progressDouble);
-        int previewHeight = (int) ((isLandscape ? height : width) * progressDouble);
+        // 计算要显示的宽高,用Tools现有的方案getDisplayFriendlyRes()确保是偶数
+        int previewWidth = Tools.getDisplayFriendlyRes(isLandscape ? width : height, (float) progressDouble);
+        int previewHeight = Tools.getDisplayFriendlyRes(isLandscape ? height : width, (float) progressDouble);
 
         String preview = previewWidth + " x " + previewHeight;
         resolutionTextView.setText(preview);  // 实时更新TextView中的分辨率
