@@ -252,7 +252,7 @@ public class JREUtils {
         if (Tools.deviceHasHangingLinker())
             envMap.put("POJAV_EMUI_ITERATOR_MITIGATE", "1");
         if (FFmpegPlugin.isAvailable)
-            envMap.put("PATH", FFmpegPlugin.libraryPath + ":" + envMap.get("PATH"));
+            envMap.put("PATH", FFmpegPlugin.libraryPath + ":" + Os.getenv("PATH"));
 
         if (LOCAL_RENDERER != null) {
             if (LOCAL_RENDERER.startsWith("opengles"))
@@ -422,6 +422,11 @@ public class JREUtils {
         String runtimeHome = MultiRTUtils.getRuntimeHome(runtime.name).getAbsolutePath();
 
         JREUtils.relocateLibPath(runtime, runtimeHome);
+
+        if (runtime.javaVersion > 11) {
+            String libName = runtime.javaVersion == 17 ? "/libjsph17.so" : "/libjsph21.so";
+            Os.setenv("JSP", NATIVE_LIB_DIR + libName, true);
+        }
 
         setJavaEnvironment(runtimeHome);
 
