@@ -424,6 +424,10 @@ public class JREUtils {
         JREUtils.relocateLibPath(runtime, runtimeHome);
 
         setJavaEnvironment(runtimeHome);
+        if (runtime.javaVersion > 11) {
+            String libName = runtime.javaVersion == 17 ? "/libjsph17.so" : "/libjsph21.so";
+            Os.setenv("JSP", NATIVE_LIB_DIR + libName, true);
+        }
 
         final String graphicsLib = loadGraphicsLibrary();
         if (LOCAL_RENDERER != null && !LOCAL_RENDERER.startsWith("opengles"))
