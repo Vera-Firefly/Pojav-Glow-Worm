@@ -418,16 +418,28 @@ public class JREUtils {
 
     }
 
+    private void checkAndUsedJSPH(final Runtime runtime) {
+        boolean onUseJSPH = runtime.javaVersion > 11;
+        if (!onUseJSPH) return;
+        File dir = new File(NATIVE_LIB_DIR);
+        if (!dir.isDirectory()) return;
+        String jsphName = runtime.javaVersion == 17 ? "libjsph17" : "libjsph21";
+        File[] files = dir.listFiles((dir1, name) -> name.startsWith(jsphName));
+        if (files != null && files.length > 0) {
+            String libName = NATIVE_LIB_DIR + "/" + jsphName + ".so";
+            Os.setenv("JSP", libName, true);
+        } else {
+            System.out.println("Native: Library" + jsphName + ".so not found, some mod cannot used");
+        }
+    }
+
     public static int launchJavaVM(final Activity activity, final Runtime runtime, File gameDirectory, final List<String> JVMArgs, final String userArgsString) throws Throwable {
         String runtimeHome = MultiRTUtils.getRuntimeHome(runtime.name).getAbsolutePath();
 
         JREUtils.relocateLibPath(runtime, runtimeHome);
 
         setJavaEnvironment(runtimeHome);
-        if (runtime.javaVersion > 11) {
-            String libName = runtime.javaVersion == 17 ? "/libjsph17.so" : "/libjsph21.so";
-            Os.setenv("JSP", NATIVE_LIB_DIR + libName, true);
-        }
+        checkAndUsedJSPH(runtime);
 
         final String graphicsLib = loadGraphicsLibrary();
         if (LOCAL_RENDERER != null && !LOCAL_RENDERER.startsWith("opengles"))
