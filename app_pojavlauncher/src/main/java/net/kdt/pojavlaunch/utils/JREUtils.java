@@ -418,7 +418,7 @@ public class JREUtils {
 
     }
 
-    private void checkAndUsedJSPH(final Runtime runtime) {
+    private static void checkAndUsedJSPH(final Runtime runtime) {
         boolean onUseJSPH = runtime.javaVersion > 11;
         if (!onUseJSPH) return;
         File dir = new File(NATIVE_LIB_DIR);
@@ -429,7 +429,7 @@ public class JREUtils {
             String libName = NATIVE_LIB_DIR + "/" + jsphName + ".so";
             Os.setenv("JSP", libName, true);
         } else {
-            System.out.println("Native: Library" + jsphName + ".so not found, some mod cannot used");
+            System.out.println("Native: Library " + jsphName + ".so not found, some mod cannot used");
         }
     }
 
