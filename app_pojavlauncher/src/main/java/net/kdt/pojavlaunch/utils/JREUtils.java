@@ -427,7 +427,11 @@ public class JREUtils {
         File[] files = dir.listFiles((dir1, name) -> name.startsWith(jsphName));
         if (files != null && files.length > 0) {
             String libName = NATIVE_LIB_DIR + "/" + jsphName + ".so";
-            Os.setenv("JSP", libName, true);
+            try {
+                Os.setenv("JSP", libName, true);
+            } catch (Exception e) {
+                System.err.println("Error setting environment variable: " + e.getMessage());
+            }
         } else {
             System.out.println("Native: Library " + jsphName + ".so not found, some mod cannot used");
         }
