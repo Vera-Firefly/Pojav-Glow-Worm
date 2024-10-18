@@ -67,7 +67,7 @@ public class MinecraftGLSurface extends View implements GrabListener {
             .remapDpad(true));
 
     /* Resolution scaler option, allow downsizing a window */
-    public float mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
+    private float mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
     /* Sensitivity, adjusted according to screen size */
     private final double mSensitivityFactor = (1.4 * (1080f / Tools.getDisplayMetrics((Activity) getContext()).heightPixels));
 

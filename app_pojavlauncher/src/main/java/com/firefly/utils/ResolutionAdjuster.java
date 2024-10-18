@@ -11,30 +11,24 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 
-import net.kdt.pojavlaunch.MinecraftGLSurface;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 
 public class ResolutionAdjuster {
 
-    private float mScaleFactor;
+    private static float mScaleFactor;
     private final Context context;
     private final OnResolutionChangeListener listener;
-    private MinecraftGLSurface glSurface;
 
-    public ResolutionAdjuster(Context context, MinecraftGLSurface glSurface, OnResolutionChangeListener listener) {
+    public ResolutionAdjuster(Context context, OnResolutionChangeListener listener) {
         this.context = context;
-        this.glSurface = glSurface;
         this.listener = listener;
     }
 
     // 显示滑动条弹窗
     public void showSeekBarDialog() {
-        if (glSurface == null) {
-            glSurface = new MinecraftGLSurface(context);
-        }
-        mScaleFactor = glSurface.mScaleFactor;
+        if (mScaleFactor == 0.0f) mScaleFactor = LauncherPreferences.PREF_SCALE_FACTOR / 100f;
         int percentage = Math.round(mScaleFactor * 100);
 
         // 动态创建一个LinearLayout
