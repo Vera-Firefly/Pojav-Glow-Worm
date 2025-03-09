@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">렌더러 실험적 설정</string>
     <string name="preference_renderer_setup_title">렌더러 실험적 설정 활성화</string>
     <string name="preference_renderer_setup">더 많은 렌더러 전용 설정 사용</string>
-    <string name="preference_spare_framebuffer_title">예비 프레임 버퍼</string>
-    <string name="preference_spare_framebuffer">두 번째 스킴의 프레임 버퍼를 사용합니다. 실행에 실패하면 닫습니다</string>
     <string name="preference_renderer_setup_extra">렌더러 (추가)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (기본값)</string>
     <string name="preference_extra_mesa_version">Mesa 버전</string>

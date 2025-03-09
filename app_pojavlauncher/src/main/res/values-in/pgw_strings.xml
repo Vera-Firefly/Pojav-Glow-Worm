@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">Pengaturan eksperimen renderer</string>
     <string name="preference_renderer_setup_title">Aktifkan Pengaturan Eksperimen Renderer</string>
     <string name="preference_renderer_setup">Gunakan lebih banyak pengaturan khusus renderer</string>
-    <string name="preference_spare_framebuffer_title">Cadangan framebuffer</string>
-    <string name="preference_spare_framebuffer">Gunakan framebuffer skema kedua, tutup jika peluncuran gagal</string>
     <string name="preference_renderer_setup_extra">Renderer (Tambahan)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (Default)</string>
     <string name="preference_extra_mesa_version">Versi Mesa</string>

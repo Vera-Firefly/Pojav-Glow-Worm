@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">Πειραματικές ρυθμίσεις renderer</string>
     <string name="preference_renderer_setup_title">Ενεργοποίηση πειραματικών ρυθμίσεων renderer</string>
     <string name="preference_renderer_setup">Χρήση επιπλέον ρυθμίσεων συγκεκριμένων για τον renderer</string>
-    <string name="preference_spare_framebuffer_title">Εφεδρικό framebuffer</string>
-    <string name="preference_spare_framebuffer">Χρησιμοποιήστε το framebuffer του δεύτερου σχήματος, κλείστε αν η εκκίνηση αποτύχει</string>
     <string name="preference_renderer_setup_extra">Renderer (Επιπλέον)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (Προεπιλογή)</string>
     <string name="preference_extra_mesa_version">Έκδοση Mesa</string>

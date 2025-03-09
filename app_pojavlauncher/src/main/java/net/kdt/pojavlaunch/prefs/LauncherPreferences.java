@@ -77,7 +77,8 @@ public class LauncherPreferences {
 
     public static boolean PREF_EXP_SETUP = false;
 
-    public static boolean PREF_SPARE_FRAME_BUFFER = false;
+    public static boolean PREF_INITIAL_FRAMEBUFFER = false;
+    public static boolean PREF_GL_INITIAL_FRAMEBUFFER = false;
     public static boolean PREF_EXP_ENABLE_SYSTEM = true;
     public static boolean PREF_EXP_ENABLE_SPECIFIC = false;
     public static boolean PREF_EXP_ENABLE_CUSTOM = false;
@@ -146,7 +147,8 @@ public class LauncherPreferences {
         PREF_VSYNC_IN_ZINK = DEFAULT_PREF.getBoolean("vsync_in_zink", true);
 
         PREF_BRIDGE_CONFIG = DEFAULT_PREF.getString("configBridge", "default");
-        PREF_SPARE_FRAME_BUFFER = DEFAULT_PREF.getBoolean("SpareFrameBuffer", false);
+        PREF_INITIAL_FRAMEBUFFER = DEFAULT_PREF.getBoolean("InitialFrameBuffer", false);
+        PREF_GL_INITIAL_FRAMEBUFFER = DEFAULT_PREF.getBoolean("glInitialFrameBuffer", false);
         PREF_EXP_ENABLE_SYSTEM = DEFAULT_PREF.getBoolean("ebSystem", true);
         PREF_EXP_ENABLE_SPECIFIC = DEFAULT_PREF.getBoolean("ebSpecific", false);
         PREF_EXP_ENABLE_CUSTOM = DEFAULT_PREF.getBoolean("ebCustom", false);

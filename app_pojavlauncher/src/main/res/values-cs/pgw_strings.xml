@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">Experimentální nastavení rendereru</string>
     <string name="preference_renderer_setup_title">Povolit experimentální nastavení rendereru</string>
     <string name="preference_renderer_setup">Použít více specifických nastavení rendereru</string>
-    <string name="preference_spare_framebuffer_title">Náhradní framebuffer</string>
-    <string name="preference_spare_framebuffer">Použít framebuffer druhého schématu, pokud se spuštění nezdaří</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (Výchozí)</string>
     <string name="preference_extra_mesa_version">Verze Mesa</string>

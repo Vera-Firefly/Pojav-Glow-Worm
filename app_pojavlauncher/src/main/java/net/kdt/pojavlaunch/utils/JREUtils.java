@@ -242,10 +242,12 @@ public class JREUtils {
         if (PREF_ZINK_PREFER_SYSTEM_DRIVER)
             envMap.put("POJAV_ZINK_PREFER_SYSTEM_DRIVER", "1");
         if (PREF_VSYNC_IN_ZINK)
-            envMap.put("POJAV_VSYNC_IN_ZINK", "1");
+            envMap.put("ALLOW_VSYNC_IN_ZINK", "1");
         if (PREF_EXP_SETUP)
             envMap.put("ALLOW_GL_EXP", "1");
-        if (PREF_SPARE_FRAME_BUFFER && !BRIDGE_CONFIG.equals("xxx3"))
+        if (PREF_INITIAL_FRAMEBUFFER && !BRIDGE_CONFIG.equals("default") && !BRIDGE_CONFIG.equals("xxx3"))
+            envMap.put("OSM_INITIAL_FRAMEBUFFER", "1");
+        if (PREF_INITIAL_FRAMEBUFFER && PREF_GL_INITIAL_FRAMEBUFFER)
             envMap.put("GL_WORKAROUND_FRAMEBUFFER", "1");
         if (FIX_Q3_BEHAVIOR)
             envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1");

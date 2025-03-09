@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">Rendereri eksperimentaalsed seaded</string>
     <string name="preference_renderer_setup_title">Luba Renderer\'i eksperimentaalsed seaded</string>
     <string name="preference_renderer_setup">Kasutage täiendavaid renderer-spetsiifilisi seadeid</string>
-    <string name="preference_spare_framebuffer_title">Varu raami puhverserver</string>
-    <string name="preference_spare_framebuffer">Kasutage teise skeemi raamipuhverserverit, sulgege, kui käivitamine ebaõnnestub</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (Vaikimisi)</string>
     <string name="preference_extra_mesa_version">Mesa versioon</string>

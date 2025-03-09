@@ -50,18 +50,14 @@ void xxx2_osm_apply_current_l(ANativeWindow_Buffer* buf) {
 }
 
 void xxx2_osm_apply_current_ll(ANativeWindow_Buffer* buf) {
-    if (SpareBuffer())
+    if (InitialFrameBuffer())
     {
-    #ifdef FRAME_BUFFER_SUPPOST
         abuffer = malloc(buf->width * buf->height * 4);
         OSMesaMakeCurrent_p((OSMesaContext)xxx2_osm->window,
                                 abuffer,
                                 GL_UNSIGNED_BYTE,
                                 buf->width,
                                 buf->height);
-    #else
-        printf("[ERROR]: Macro FRAME_BUFFER_SUPPOST is undefined\n");
-    #endif
     } else OSMesaMakeCurrent_p((OSMesaContext)xxx2_osm->window,
                                    setbuffer,
                                    GL_UNSIGNED_BYTE,

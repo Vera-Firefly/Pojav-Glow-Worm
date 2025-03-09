@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">Configuration expérimentale du renderer</string>
     <string name="preference_renderer_setup_title">Activer la configuration expérimentale du renderer</string>
     <string name="preference_renderer_setup">Utiliser plus de paramètres spécifiques au renderer</string>
-    <string name="preference_spare_framebuffer_title">Tampon de trame de secours</string>
-    <string name="preference_spare_framebuffer">Utiliser le tampon de trame du deuxième schéma, fermer en cas d\'échec de lancement</string>
     <string name="preference_renderer_setup_extra">Renderer (Supplémentaire)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (Par défaut)</string>
     <string name="preference_extra_mesa_version">Version de Mesa</string>

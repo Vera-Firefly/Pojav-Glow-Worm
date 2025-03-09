@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">Eksperimentong Pag-setup ng Rendra</string>
     <string name="preference_renderer_setup_title">I-enable ang Eksperimentong Pag-setup ng Rendra</string>
     <string name="preference_renderer_setup">Gamitin ang higit pang partikular na mga setting ng renderer</string>
-    <string name="preference_spare_framebuffer_title">Spare Frame Buffer</string>
-    <string name="preference_spare_framebuffer">Gamitin ang frame buffer ng pangalawang scheme, isara kung nabigo ang paglunsad</string>
     <string name="preference_renderer_setup_extra">Renderer (Karagdagang)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (Default)</string>
     <string name="preference_extra_mesa_version">Bersyon ng Mesa</string>

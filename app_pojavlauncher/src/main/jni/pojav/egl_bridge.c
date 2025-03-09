@@ -430,10 +430,9 @@ Java_org_lwjgl_vulkan_VK_getVulkanDriverHandle(ABI_COMPAT JNIEnv *env, ABI_COMPA
     return (jlong) maybe_load_vulkan();
 }
 
-#ifdef FRAME_BUFFER_SUPPOST
 EXTERNAL_API JNIEXPORT void JNICALL
 Java_org_lwjgl_opengl_GL_nativeRegalMakeCurrent(JNIEnv *env, jclass clazz) {
-    if (SpareBuffer() && (pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1
+    if (InitialFrameBuffer() && (pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1
      || pojav_environ->config_renderer == RENDERER_VIRGL
      || pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX2))
     {
@@ -449,29 +448,28 @@ Java_org_lwjgl_opengl_GL_nativeRegalMakeCurrent(JNIEnv *env, jclass clazz) {
 
 EXTERNAL_API JNIEXPORT jlong JNICALL
 Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
-    if (SpareBuffer() && pojav_environ->config_renderer == RENDERER_VIRGL)
+    if (InitialFrameBuffer() && pojav_environ->config_renderer == RENDERER_VIRGL)
     {
         return &gbuffer;
-    } else if (SpareBuffer() && pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1) {
+    } else if (InitialFrameBuffer() && pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1) {
         return &mbuffer;
-    } else if (SpareBuffer() && pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX2) {
+    } else if (InitialFrameBuffer() && pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX2) {
         return &abuffer;
     }
 }
 
 EXTERNAL_API JNIEXPORT jintArray JNICALL
 Java_org_lwjgl_opengl_GL_getNativeWidthHeight(JNIEnv *env, jobject thiz) {
-    if (SpareBuffer() && (pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1
+    if (InitialFrameBuffer() && (pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1
      || pojav_environ->config_renderer == RENDERER_VIRGL
      || pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX2))
     {
-        jintArray ret = (*env)->NewIntArray(env,2);
+        jintArray ret = (*env)->NewIntArray(env, 2);
         jint arr[] = {pojav_environ->savedWidth, pojav_environ->savedHeight};
-        (*env)->SetIntArrayRegion(env,ret,0,2,arr);
+        (*env)->SetIntArrayRegion(env, ret, 0, 2, arr);
         return ret;
     }
 }
-#endif
 
 EXTERNAL_API void pojavSwapInterval(int interval) {
     if(pojav_environ->config_renderer == RENDERER_VK_ZINK

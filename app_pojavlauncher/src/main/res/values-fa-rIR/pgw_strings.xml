@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">تنظیمات آزمایشی رندرر</string>
     <string name="preference_renderer_setup_title">فعال کردن تنظیمات آزمایشی رندرر</string>
     <string name="preference_renderer_setup">استفاده از تنظیمات خاص رندرر</string>
-    <string name="preference_spare_framebuffer_title">بافر صفحه اضافی</string>
-    <string name="preference_spare_framebuffer">استفاده از بافر صفحه طرح دوم، در صورت شکست راه‌اندازی ببندید</string>
     <string name="preference_renderer_setup_extra">رندرر (اضافی)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (پیش‌فرض)</string>
     <string name="preference_extra_mesa_version">نسخه Mesa</string>

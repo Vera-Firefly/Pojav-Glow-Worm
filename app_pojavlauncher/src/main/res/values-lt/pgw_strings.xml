@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">Eksperimentiniai vaizdo apdorojimo nustatymai</string>
     <string name="preference_renderer_setup_title">Įjungti vaizdo apdorojimo eksperimentinius nustatymus</string>
     <string name="preference_renderer_setup">Naudoti daugiau vaizdo apdorojimo nustatymų</string>
-    <string name="preference_spare_framebuffer_title">Atsarginis rėmelio buferis</string>
-    <string name="preference_spare_framebuffer">Naudoti antrosios schemos rėmelio buferį, uždaryti, jei paleidimas nepavyko</string>
     <string name="preference_renderer_setup_extra">Papildomas vaizdo apdorojimas</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (numatytasis)</string>
     <string name="preference_extra_mesa_version">Mesa versija</string>

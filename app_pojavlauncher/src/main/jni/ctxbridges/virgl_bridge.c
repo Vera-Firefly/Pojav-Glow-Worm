@@ -159,20 +159,13 @@ int virglInit() {
         return 0;
     }
 
-    if (SpareBuffer())
+    if (InitialFrameBuffer())
     {
-    #ifdef FRAME_BUFFER_SUPPOST
-
         printf("OSMDroid: width=%i;height=%i, reserving %i bytes for frame buffer\n",
            pojav_environ->savedWidth, pojav_environ->savedHeight,
            pojav_environ->savedWidth * 4 * pojav_environ->savedHeight);
         gbuffer = calloc(pojav_environ->savedWidth *4, pojav_environ->savedHeight +1);
-
-    #else
-        printf("[WORNING]: Macro FRAME_BUFFER_SUPPOST is undefined, defult to close\n");
-    #endif
-
-    } else printf("OSMDroid: do not set frame buffer\n");
+    } else printf("OSMDroid: No frame buffer initiated\n");
     return 0;
 }
 

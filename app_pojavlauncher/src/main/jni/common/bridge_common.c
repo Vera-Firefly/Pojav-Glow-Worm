@@ -9,12 +9,12 @@
 
 void *abuffer;
 void *gbuffer;
-void* mbuffer;
+void *mbuffer;
 
 EGLConfig config;
 struct PotatoBridge potatoBridge;
 
-int SpareBuffer() {
-    if (getenv("GL_WORKAROUND_FRAMEBUFFER") != NULL) return 1;
+int InitialFrameBuffer() {
+    if (getenv("OSM_INITIAL_FRAMEBUFFER") != NULL) return 1;
     return 0;
 }

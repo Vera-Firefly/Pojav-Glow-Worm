@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_EXP_SETUP;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_INITIAL_FRAMEBUFFER;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_LOADER_OVERRIDE;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_USE_ALTERNATE_SURFACE;
@@ -229,10 +230,11 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
     private void computeVisibility() {
         requirePreference("force_vsync").setVisible(PREF_USE_ALTERNATE_SURFACE);
         requirePreference("chooseTurnipDriver").setVisible(PGWTools.isAdrenoGPU() && !PREF_ZINK_PREFER_SYSTEM_DRIVER);
-        requirePreference("SpareFrameBuffer").setVisible(PREF_EXP_SETUP);
+        requirePreference("InitialFrameBuffer").setVisible(PREF_EXP_SETUP);
         requirePreference("MesaRendererChoose").setVisible(PREF_EXP_SETUP);
         requirePreference("customMesaVersionPref").setVisible(PREF_EXP_SETUP);
         requirePreference("customMesaLoaderDriverOverride").setVisible(PREF_EXP_SETUP);
+        requirePreference("glInitialFrameBuffer").setVisible(PREF_INITIAL_FRAMEBUFFER);
         requirePreference("ebChooseMldo").setVisible(PGWTools.isAdrenoGPU());
         requirePreference("ChooseMldo").setVisible(PREF_LOADER_OVERRIDE);
     }

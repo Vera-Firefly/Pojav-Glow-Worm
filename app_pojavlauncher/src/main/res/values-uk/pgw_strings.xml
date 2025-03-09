@@ -52,8 +52,6 @@
     <string name="preference_category_renderer_experimental_settings">Експериментальні налаштування рендерера</string>
     <string name="preference_renderer_setup_title">Увімкнути експериментальні налаштування рендерера</string>
     <string name="preference_renderer_setup">Використовувати додаткові налаштування рендерера</string>
-    <string name="preference_spare_framebuffer_title">Резервний буфер кадру</string>
-    <string name="preference_spare_framebuffer">Використовувати буфер кадру другого плану, закрити, якщо запуск не вдався</string>
     <string name="preference_renderer_setup_extra">Рендерер (Додатково)</string>
     <string name="preference_renderer_extra_default">Mesa25.0.0 (За замовчуванням)</string>
     <string name="preference_extra_mesa_version">Версія Mesa</string>
