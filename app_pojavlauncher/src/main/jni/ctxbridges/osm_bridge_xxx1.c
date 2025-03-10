@@ -105,10 +105,10 @@ void xxx1_osm_apply_current_l(ANativeWindow_Buffer* buffer) {
 void xxx1_osm_apply_current_ll(ANativeWindow_Buffer* buffer) {
     if (InitialFrameBuffer())
     {
-        mbuffer = malloc(buffer->width * buffer->height * 4);
-        printf("%s: reserving %d bytes for frame buffer\n", osm_LogTag, mbuffer);
+        gbuffer = malloc(buffer->width * buffer->height * 4);
+        printf("%s: reserving %d bytes for frame buffer\n", osm_LogTag, gbuffer);
         OSMesaMakeCurrent_p(currentBundle->context,
-                               mbuffer,
+                               gbuffer,
                                GL_UNSIGNED_BYTE,
                                buffer->width,
                                buffer->height);

@@ -24,6 +24,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.InputDevice;
@@ -81,12 +83,16 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public static volatile ClipboardManager GLOBAL_CLIPBOARD;
     public static final String INTENT_MINECRAFT_VERSION = "intent_version";
 
+    private boolean getCurrentFps = false;
+    private final Handler fpsHandler = new Handler(Looper.getMainLooper());
+
     volatile public static boolean isInputStackCall;
 
     public static TouchCharInput touchCharInput;
     private MinecraftGLSurface minecraftGLView;
     private static Touchpad touchpad;
     private LoggerView loggerView;
+    private TextView currentFpsView;
     private DrawerLayout drawerLayout;
     private ListView navDrawer;
     private View mDrawerPullButton;
@@ -225,13 +231,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     case 5:
                         openCustomControls();
                         break;
-                    case 6:{
-                        ResolutionAdjuster adjuster = new ResolutionAdjuster(this, value -> {
-                            minecraftGLView.refreshSize(value);
-                            mHotbarView.refreshScaleFactor(value);
-                        });
-                        adjuster.showSeekBarDialog();
-                    } break;
+                    case 6:
+                        openResolutionAdjuster();
+                        break;
+                    case 7:
+                        initCurrentFps();
+                        break;
                 }
                 drawerLayout.closeDrawers();
             };
@@ -250,7 +255,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     if (PREF_ENABLE_LOG_OUTPUT) {
                         runOnUiThread(this::openLogOutput);
                     }
-
                     runCraft(finalVersion, mVersionInfo);
                 } catch (Throwable e) {
                     Tools.showErrorRemote(e);
@@ -294,6 +298,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     private void bindValues() {
         mControlLayout = findViewById(R.id.main_control_layout);
         minecraftGLView = findViewById(R.id.main_game_render_view);
+        currentFpsView = findViewById(R.id.current_fps_view);
         touchpad = findViewById(R.id.main_touchpad);
         drawerLayout = findViewById(R.id.main_drawer_options);
         navDrawer = findViewById(R.id.main_navigation_view);
@@ -454,8 +459,38 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         isInEditor = true;
     }
 
+    private final Runnable fpsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!getCurrentFps) return;
+            int fps = CallbackBridge.initFps();
+            currentFpsView.setText("FPS: " + fps);
+            fpsHandler.postDelayed(this, 1000);
+        }
+    };
+
+    private void initCurrentFps() {
+        if (!getCurrentFps) {
+            getCurrentFps = true;
+            currentFpsView.setVisibility(View.VISIBLE);
+            fpsHandler.post(fpsRunnable);
+        } else {
+          getCurrentFps = false;
+          fpsHandler.removeCallbacks(fpsRunnable);
+          currentFpsView.setVisibility(View.GONE);
+        }
+    }
+
     private void openLogOutput() {
         loggerView.setVisibility(View.VISIBLE);
+    }
+
+    private void openResolutionAdjuster() {
+        ResolutionAdjuster adjuster = new ResolutionAdjuster(this, value -> {
+            minecraftGLView.refreshSize(value);
+            mHotbarView.refreshScaleFactor(value);
+        });
+        adjuster.showSeekBarDialog();
     }
 
     public static void toggleMouse(Context ctx) {

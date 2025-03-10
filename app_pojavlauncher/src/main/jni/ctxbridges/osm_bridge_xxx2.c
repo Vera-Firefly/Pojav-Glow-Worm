@@ -52,9 +52,9 @@ void xxx2_osm_apply_current_l(ANativeWindow_Buffer* buf) {
 void xxx2_osm_apply_current_ll(ANativeWindow_Buffer* buf) {
     if (InitialFrameBuffer())
     {
-        abuffer = malloc(buf->width * buf->height * 4);
+        gbuffer = malloc(buf->width * buf->height * 4);
         OSMesaMakeCurrent_p((OSMesaContext)xxx2_osm->window,
-                                abuffer,
+                                gbuffer,
                                 GL_UNSIGNED_BYTE,
                                 buf->width,
                                 buf->height);

@@ -52,6 +52,7 @@
         <item>@string/preference_gyro_sensitivity_title</item>
         <item>@string/mcl_option_customcontrol</item>
         <item>@string/mcl_setting_title_resolution_scaler</item>
+        <item>@string/mcl_setting_current_fps</item>
     </string-array>
 
     <string-array name="download_source_names">

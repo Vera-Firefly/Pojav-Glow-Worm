@@ -229,6 +229,8 @@ public class CallbackBridge {
 
     public static native void nativeSetWindowAttrib(int attrib, int value);
 
+    public static native int initFps();
+
     static {
         System.loadLibrary("pgw");
     }

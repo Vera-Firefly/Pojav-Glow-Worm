@@ -7,9 +7,7 @@
 #include <EGL/egl.h>
 #include "ctxbridges/renderer_config.h"
 
-void *abuffer;
 void *gbuffer;
-void *mbuffer;
 
 EGLConfig config;
 struct PotatoBridge potatoBridge;

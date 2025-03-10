@@ -50,6 +50,8 @@
 // This means that you are forced to have this function/variable for ABI compatibility
 #define ABI_COMPAT __attribute__((unused))
 
+static int currentFps = 0;
+
 void bigcore_set_affinity();
 
 void* loadTurnipVulkan();
@@ -351,6 +353,7 @@ EXTERNAL_API void pojavSetWindowHint(int hint, int value) {
 }
 
 EXTERNAL_API void pojavSwapBuffers() {
+    currentFps++;
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK
      || pojav_environ->config_renderer == RENDERER_GL4ES)
     {
@@ -430,6 +433,13 @@ Java_org_lwjgl_vulkan_VK_getVulkanDriverHandle(ABI_COMPAT JNIEnv *env, ABI_COMPA
     return (jlong) maybe_load_vulkan();
 }
 
+EXTERNAL_API JNIEXPORT jint JNICALL
+Java_org_lwjgl_glfw_CallbackBridge_initFps(JNIEnv *env, jclass clazz) {
+    int fps = currentFps;
+    currentFps = 0;
+    return fps;
+}
+
 EXTERNAL_API JNIEXPORT void JNICALL
 Java_org_lwjgl_opengl_GL_nativeRegalMakeCurrent(JNIEnv *env, jclass clazz) {
     if (InitialFrameBuffer() && (pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1
@@ -448,13 +458,12 @@ Java_org_lwjgl_opengl_GL_nativeRegalMakeCurrent(JNIEnv *env, jclass clazz) {
 
 EXTERNAL_API JNIEXPORT jlong JNICALL
 Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
-    if (InitialFrameBuffer() && pojav_environ->config_renderer == RENDERER_VIRGL)
+    if (InitialFrameBuffer() &&
+       (pojav_environ->config_renderer == RENDERER_VIRGL
+     || pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1
+     || pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX2))
     {
         return &gbuffer;
-    } else if (InitialFrameBuffer() && pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1) {
-        return &mbuffer;
-    } else if (InitialFrameBuffer() && pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX2) {
-        return &abuffer;
     }
 }
 

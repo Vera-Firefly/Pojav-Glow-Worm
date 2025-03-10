@@ -27,15 +27,26 @@
 				android:defaultFocusHighlightEnabled="false"
 				tools:ignore="UnusedAttribute" />
 
+            <TextView
+                android:id="@+id/current_fps_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:translationZ="1dp"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:padding="8dp"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"/>
+
 			<net.kdt.pojavlaunch.customcontrols.mouse.Touchpad
 				android:layout_height="match_parent"
 				android:layout_width="match_parent"
 				android:orientation="vertical"
 				android:id="@+id/main_touchpad"
-				android:translationZ="1dp"
+				android:translationZ="2dp"
 				android:focusable="false"
 				android:visibility="gone" />
-
 
 			<net.kdt.pojavlaunch.customcontrols.keyboard.TouchCharInput
 				android:id="@+id/mainTouchCharInput"

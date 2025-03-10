@@ -46,8 +46,6 @@ int InitialFrameBuffer();
 
 #endif
 
-extern void *abuffer;
 extern void *gbuffer;
-extern void *mbuffer;
 
 
