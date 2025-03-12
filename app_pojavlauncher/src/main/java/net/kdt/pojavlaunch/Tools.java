@@ -256,6 +256,8 @@ public final class Tools {
             }
         }
 
+        javaArgList.add("-javaagent:" + DIR_GAME_HOME + "/patcher/MioLibPatcher.jar");
+
         getCacioJavaArgs(javaArgList, runtime);
 
         boolean is7 = VersionNumber.compare(VersionNumber.asVersion(versionInfo.id != null ? versionInfo.id : "0.0").getCanonical(), "1.12") < 0;
@@ -264,7 +266,7 @@ public final class Tools {
 
         javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(versionId, gamedir)));
         javaArgList.add("-cp");
-        javaArgList.add(getLWJGL3ClassPath() + ":" + launchClassPath);
+        javaArgList.add(launchClassPath + ":" + getLWJGL3ClassPath());
 
         javaArgList.add(versionInfo.mainClass);
         javaArgList.addAll(Arrays.asList(launchArgs));
