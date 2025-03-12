@@ -4,8 +4,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <dlfcn.h>
-#include "br_loader.h"
 #include "egl_loader.h"
+
+#define BR_LOADER
+#include "br_loader.h"
 
 EGLBoolean (*eglMakeCurrent_p) (EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx);
 EGLBoolean (*eglDestroyContext_p) (EGLDisplay dpy, EGLContext ctx);

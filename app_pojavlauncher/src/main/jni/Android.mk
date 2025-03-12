@@ -30,6 +30,7 @@ LOCAL_CFLAGS += -g -rdynamic
 LOCAL_SRC_FILES := \
     ctxbridges/br_loader.c \
     ctxbridges/gl_bridge.c \
+    ctxbridges/osm_ctx.c \
     ctxbridges/osm_bridge.c \
     ctxbridges/osm_bridge_xxx1.c \
     ctxbridges/osm_bridge_xxx2.c \

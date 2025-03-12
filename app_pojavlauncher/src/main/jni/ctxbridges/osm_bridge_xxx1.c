@@ -7,6 +7,8 @@
 #include <string.h>
 #include <environ/environ.h>
 #include "osm_bridge_xxx1.h"
+
+#define OSM_CTX
 #include "renderer_config.h"
 
 static const char* osm_LogTag = "OSMBridge";
@@ -92,35 +94,16 @@ void xxx1_osm_release_window() {
 }
 
 void xxx1_osm_apply_current_l(ANativeWindow_Buffer* buffer) {
-    OSMesaMakeCurrent_p(currentBundle->context,
-                        buffer->bits,
-                        GL_UNSIGNED_BYTE,
-                        buffer->width,
-                        buffer->height);
+    osm_make_current_l(currentBundle->context, buffer->bits, buffer->width, buffer->height);
     if (buffer->stride != currentBundle->last_stride)
-        OSMesaPixelStore_p(OSMESA_ROW_LENGTH, buffer->stride);
+        osm_pixel_store(buffer->stride);
     currentBundle->last_stride = buffer->stride;
 }
 
 void xxx1_osm_apply_current_ll(ANativeWindow_Buffer* buffer) {
-    if (InitialFrameBuffer())
-    {
-        gbuffer = malloc(buffer->width * buffer->height * 4);
-        printf("%s: reserving %d bytes for frame buffer\n", osm_LogTag, gbuffer);
-        OSMesaMakeCurrent_p(currentBundle->context,
-                               gbuffer,
-                               GL_UNSIGNED_BYTE,
-                               buffer->width,
-                               buffer->height);
-    } else {
-        OSMesaMakeCurrent_p(currentBundle->context,
-                               setbuffer,
-                               GL_UNSIGNED_BYTE,
-                               buffer->width,
-                               buffer->height);
-    }
+    osm_make_current_ll(currentBundle->context, buffer->width, buffer->height);
     if (buffer->stride != currentBundle->last_stride)
-        OSMesaPixelStore_p(OSMESA_ROW_LENGTH, buffer->stride);
+        osm_pixel_store(buffer->stride);
     currentBundle->last_stride = buffer->stride;
 }
 
@@ -163,8 +146,7 @@ void xxx1_osm_make_current(xxx1_osm_render_window_t* bundle) {
     }
 
     xxx1_osm_apply_current_ll(&currentBundle->buffer);
-    OSMesaPixelStore_p(OSMESA_Y_UP, 0);
-
+    osm_screen_o();
 }
 
 void xxx1_osm_swap_buffers() {

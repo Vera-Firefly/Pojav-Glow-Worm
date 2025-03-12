@@ -277,9 +277,9 @@ public class JREUtils {
                 if (envKey.equals("DLOPEN")) return;
                 if (envKey.equals("POJAV_RENDERER")) {
                     if (!RendererUtils.isGalliumRenderer(envValue)) {
-                        JREUtils.setRendererTag(envValue);
+                        JREUtils.initRendererTag(envValue);
                     } else {
-                        JREUtils.setRendererTag("mesa_3d");
+                        JREUtils.initRendererTag("mesa_3d");
                         envMap.put("LOCAL_DRIVER_MODEL", envValue);
                     }
                 } else if (envKey.equals("LIB_MESA_NAME")) {
@@ -308,7 +308,7 @@ public class JREUtils {
             envMap.put("allow_higher_compat_version", "true");
             envMap.put("allow_glsl_extension_directive_midshader", "true");
         } else {
-            JREUtils.setRendererTag(LOCAL_RENDERER);
+            JREUtils.initRendererTag(LOCAL_RENDERER);
             if (LIBGL_GL != null && !LIBGL_GL.equals("default"))
                 envMap.put("LIBGL_GL", LIBGL_GL);
         }
@@ -316,14 +316,14 @@ public class JREUtils {
         if (!LOCAL_RENDERER.startsWith("opengles") && !PREF_EXP_SETUP) {
             switch (LOCAL_RENDERER) {
                 case "vulkan_zink": {
-                    JREUtils.setRendererTag("mesa_3d");
+                    JREUtils.initRendererTag("mesa_3d");
                     envMap.put("LOCAL_DRIVER_MODEL", "gallium_zink");
                     envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                     envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
                 }
                 break;
                 case "gallium_virgl": {
-                    JREUtils.setRendererTag("mesa_3d");
+                    JREUtils.initRendererTag("mesa_3d");
                     envMap.put("LOCAL_DRIVER_MODEL", "gallium_virgl");
                     envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
                     envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
@@ -331,13 +331,13 @@ public class JREUtils {
                 }
                 break;
                 case "gallium_freedreno": {
-                    JREUtils.setRendererTag("mesa_3d");
+                    JREUtils.initRendererTag("mesa_3d");
                     envMap.put("LOCAL_DRIVER_MODEL", "gallium_freedreno");
                     envMap.put("LOCAL_LOADER_OVERRIDE", "kgsl");
                 }
                 break;
                 case "gallium_panfrost": {
-                    JREUtils.setRendererTag("mesa_3d");
+                    JREUtils.initRendererTag("mesa_3d");
                     envMap.put("LOCAL_DRIVER_MODEL", "gallium_panfrost");
                     envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
                     envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
@@ -410,7 +410,7 @@ public class JREUtils {
 
             envMap.put("LIB_MESA_NAME", loadGraphicsLibrary());
             envMap.put("LOCAL_DRIVER_MODEL", DRIVER_MODEL);
-            JREUtils.setRendererTag("mesa_3d");
+            JREUtils.initRendererTag("mesa_3d");
         }
 
         if (!envMap.containsKey("LIBGL_ES")) {
@@ -886,7 +886,7 @@ public class JREUtils {
         }
     }
 
-    public static native void setRendererTag(String tag);
+    public static native void initRendererTag(String tag);
 
     public static native int chdir(String path);
     public static native boolean dlopen(String libPath);

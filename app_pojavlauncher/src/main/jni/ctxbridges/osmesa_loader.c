@@ -6,9 +6,11 @@
 #include <dlfcn.h>
 #include <string.h>
 #include "environ/environ.h"
-#include "br_loader.h"
 #include "osmesa_loader.h"
 #include "renderer_config.h"
+
+#define BR_LOADER
+#include "br_loader.h"
 
 GLboolean (*OSMesaMakeCurrent_p) (OSMesaContext ctx, void *buffer, GLenum type, GLsizei width, GLsizei height);
 OSMesaContext (*OSMesaGetCurrentContext_p) (void);

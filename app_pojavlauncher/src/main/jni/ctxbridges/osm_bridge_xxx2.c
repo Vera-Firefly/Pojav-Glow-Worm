@@ -14,6 +14,8 @@
 #include "environ/environ.h"
 #include "osm_bridge_xxx2.h"
 #include "osmesa_loader.h"
+
+#define OSM_CTX
 #include "renderer_config.h"
 
 static struct xxx2_osm_render_window_t *xxx2_osm;
@@ -43,31 +45,17 @@ void xxx2_osm_apply_current_l(ANativeWindow_Buffer* buf) {
     if (ctx == NULL)
         printf("Zink: attempted to swap buffers without context!");
 
-    OSMesaMakeCurrent_p(ctx, buf->bits, GL_UNSIGNED_BYTE, buf->width, buf->height);
+    osm_make_current_l(ctx, buf->bits, buf->width, buf->height);
     if (buf->stride != xxx2_osm->last_stride)
-        OSMesaPixelStore_p(OSMESA_ROW_LENGTH, buf->stride);
+        osm_pixel_store(buf->stride);
     xxx2_osm->last_stride = buf->stride;
 }
 
 void xxx2_osm_apply_current_ll(ANativeWindow_Buffer* buf) {
-    if (InitialFrameBuffer())
-    {
-        gbuffer = malloc(buf->width * buf->height * 4);
-        OSMesaMakeCurrent_p((OSMesaContext)xxx2_osm->window,
-                                gbuffer,
-                                GL_UNSIGNED_BYTE,
-                                buf->width,
-                                buf->height);
-    } else OSMesaMakeCurrent_p((OSMesaContext)xxx2_osm->window,
-                                   setbuffer,
-                                   GL_UNSIGNED_BYTE,
-                                   buf->width,
-                                   buf->height);
-
+    osm_make_current_ll(xxx2_osm->window, buf->width, buf->height);
     if (buf->stride != xxx2_osm->last_stride)
-        OSMesaPixelStore_p(OSMESA_ROW_LENGTH, buf->stride);
+        osm_pixel_store(buf->stride);
     xxx2_osm->last_stride = buf->stride;
-
 }
 
 void xxx2OsmSwapBuffers() {
@@ -95,15 +83,14 @@ void xxx2OsmMakeCurrent(void *window) {
 
     xxx2_osm->window = window;
     xxx2_osm_apply_current_ll(&xxx2_osm->buffer);
-    OSMesaPixelStore_p(OSMESA_Y_UP, 0);
+    osm_screen_o();
 
     if (!hasCleaned)
     {
         hasCleaned = true;
         printf("OSMDroid: vendor: %s\n", glGetString_p(GL_VENDOR));
         printf("OSMDroid: renderer: %s\n", glGetString_p(GL_RENDERER));
-        glClear_p(GL_COLOR_BUFFER_BIT);
-        glClearColor_p(0.4f, 0.4f, 0.4f, 1.0f);
+        osm_clean_color();
         ANativeWindow_unlockAndPost(xxx2_osm->nativeSurface);
     }
 }

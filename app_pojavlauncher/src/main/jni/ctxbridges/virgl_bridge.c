@@ -14,6 +14,9 @@
 #include "virgl_bridge.h"
 #include "egl_loader.h"
 #include "osmesa_loader.h"
+
+#define POTATOBRIDGE
+#define INITIAL_FRAME_BUFFER
 #include "renderer_config.h"
 
 int (*vtest_main_p)(int argc, char **argv);

@@ -14,6 +14,8 @@
 #include "environ/environ.h"
 #include "osm_bridge_xxx3.h"
 #include "osmesa_loader.h"
+
+#define OSM_CTX
 #include "renderer_config.h"
 
 static struct xxx3_osm_render_window_t *xxx3_osm;
@@ -69,9 +71,9 @@ void* xxx3OsmCreateContext(void* contextSrc) {
 
 
 void xxx3_osm_apply_current(ANativeWindow_Buffer* buf) {
-    OSMesaMakeCurrent_p(xxx3_osm->context, buf->bits, GL_UNSIGNED_BYTE, buf->width, buf->height);
+    osm_make_current_l(xxx3_osm->context, buf->bits, buf->width, buf->height);
     if (buf->stride != xxx3_osm->last_stride)
-        OSMesaPixelStore_p(OSMESA_ROW_LENGTH, buf->stride);
+        osm_pixel_store(buf->stride);
     xxx3_osm->last_stride = buf->stride;
 }
 
@@ -92,15 +94,14 @@ void xxx3OsmMakeCurrent(void* window) {
     }
 
     xxx3_osm_apply_current(&xxx3_osm->buffer);
-    OSMesaPixelStore_p(OSMESA_Y_UP, 0);
+    osm_screen_o();
 
     if (!hasCleaned)
     {
         hasCleaned = true;
         printf("%s vendor: %s\n", osm_LogTag, glGetString_p(GL_VENDOR));
         printf("%s renderer: %s\n", osm_LogTag, glGetString_p(GL_RENDERER));
-        glClear_p(GL_COLOR_BUFFER_BIT);
-        glClearColor_p(0.4f, 0.4f, 0.4f, 1.0f);
+        osm_clean_color();
         ANativeWindow_unlockAndPost(xxx3_osm->nativeSurface);
     }
 }

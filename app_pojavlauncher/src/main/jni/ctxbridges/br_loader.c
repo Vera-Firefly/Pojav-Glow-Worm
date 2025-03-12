@@ -4,9 +4,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <dlfcn.h>
-#include "br_loader.h"
 #include "egl_loader.h"
 #include "osmesa_loader.h"
+
+#define BR_LOADER
+#include "br_loader.h"
 
 __eglMustCastToProperFunctionPointerType (*eglGetProcAddress_p) (const char *procname);
 void* (*OSMesaGetProcAddress_p)(const char* funcName);

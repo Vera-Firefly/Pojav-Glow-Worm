@@ -22,8 +22,7 @@
 
 
 
-#ifndef POTATOBRIDGE_H
-#define POTATOBRIDGE_H
+#ifdef POTATOBRIDGE
 #include <EGL/egl.h>
 
 struct PotatoBridge {
@@ -37,15 +36,24 @@ struct PotatoBridge {
 extern struct PotatoBridge potatoBridge;
 extern EGLConfig config;
 
-#endif // POTATOBRIDGE_H
+#endif // PotatoBridge
 
-#ifndef SPARE_RENDERER_CONFIG_H
-#define SPARE_RENDERER_CONFIG_H
+
+#ifdef INITIAL_FRAME_BUFFER
 
 int InitialFrameBuffer();
+extern void *gbuffer;
 
 #endif
 
-extern void *gbuffer;
 
+#ifdef OSM_CTX
+#include <GL/osmesa.h>
 
+void osm_make_current_l(OSMesaContext context, void *buffer, int width, int height);
+void osm_make_current_ll(OSMesaContext context, int width, int height);
+void osm_screen_o();
+void osm_pixel_store(int32_t stride);
+void osm_clean_color();
+
+#endif

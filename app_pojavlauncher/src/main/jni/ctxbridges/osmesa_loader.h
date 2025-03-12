@@ -2,8 +2,8 @@
 // Modifile by Vera-Firefly on 28.08.2023.
 //
 
-#ifndef POJAVLAUNCHER_OSMESA_LOADER_H
-#define POJAVLAUNCHER_OSMESA_LOADER_H
+#ifndef OSMESA_LOADER_H
+#define OSMESA_LOADER_H
 
 #include <GL/osmesa.h>
 
@@ -23,4 +23,4 @@ extern void (*glReadBuffer_p) (GLenum mode);
 extern void* (*OSMesaGetProcAddress_p)(const char* funcName);
 
 void dlsym_OSMesa();
-#endif //POJAVLAUNCHER_OSMESA_LOADER_H
+#endif //OSMESA_LOADER_H
