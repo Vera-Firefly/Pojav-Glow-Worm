@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Abilita le Impostazioni Sperimentali del Renderer</string>
     <string name="preference_renderer_setup">Usa più impostazioni specifiche del renderer</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (Predefinito)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (Predefinito)</string>
     <string name="preference_extra_mesa_version">Versione di Mesa</string>
     <string name="preference_extra_driver_model">Override del driver Gallium</string>
     <!-- Dialog -->

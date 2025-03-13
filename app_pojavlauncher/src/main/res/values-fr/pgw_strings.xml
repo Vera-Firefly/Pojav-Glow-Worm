@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Activer la configuration expérimentale du renderer</string>
     <string name="preference_renderer_setup">Utiliser plus de paramètres spécifiques au renderer</string>
     <string name="preference_renderer_setup_extra">Renderer (Supplémentaire)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (Par défaut)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (Par défaut)</string>
     <string name="preference_extra_mesa_version">Version de Mesa</string>
     <string name="preference_extra_driver_model">Remplacement du pilote Gallium</string>
     <!-- Dialog -->

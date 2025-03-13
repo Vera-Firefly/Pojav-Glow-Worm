@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Enable Renderer Exp Setup</string>
     <string name="preference_renderer_setup">Use more renderer-specific settings</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (Default)</string>
     <string name="preference_extra_mesa_version">Mesa Version</string>
     <string name="preference_extra_driver_model">Gallium Driver Override</string>
     <!-- Dialog -->

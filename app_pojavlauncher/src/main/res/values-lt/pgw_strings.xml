@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Įjungti vaizdo apdorojimo eksperimentinius nustatymus</string>
     <string name="preference_renderer_setup">Naudoti daugiau vaizdo apdorojimo nustatymų</string>
     <string name="preference_renderer_setup_extra">Papildomas vaizdo apdorojimas</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (numatytasis)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (numatytasis)</string>
     <string name="preference_extra_mesa_version">Mesa versija</string>
     <string name="preference_extra_driver_model">Gallium draiverio perrašymas</string>
     <!-- Dialog -->

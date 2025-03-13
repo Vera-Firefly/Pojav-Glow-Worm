@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Aktifkan Pengaturan Eksperimen Renderer</string>
     <string name="preference_renderer_setup">Gunakan lebih banyak pengaturan khusus renderer</string>
     <string name="preference_renderer_setup_extra">Renderer (Tambahan)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (Default)</string>
     <string name="preference_extra_mesa_version">Versi Mesa</string>
     <string name="preference_extra_driver_model">Penggantian Pengemudi Gallium</string>
     <!-- Dialog -->

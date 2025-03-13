@@ -85,7 +85,7 @@
     <string name="preference_osm_initial_framebuffer_title">OSM初始帧缓冲区</string>
     <string name="preference_gl_initial_framebuffer_title">GL初始帧缓冲区</string>
     <string name="preference_renderer_setup_extra">渲染器 (拓展)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (默认)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (默认)</string>
     <string name="preference_extra_mesa_version">Mesa版本</string>
     <string name="preference_extra_driver_model">Gallium驱动程序</string>
     <!-- Dialog -->

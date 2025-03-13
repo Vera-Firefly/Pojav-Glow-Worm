@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">I-enable ang Eksperimentong Pag-setup ng Rendra</string>
     <string name="preference_renderer_setup">Gamitin ang higit pang partikular na mga setting ng renderer</string>
     <string name="preference_renderer_setup_extra">Renderer (Karagdagang)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (Default)</string>
     <string name="preference_extra_mesa_version">Bersyon ng Mesa</string>
     <string name="preference_extra_driver_model">Gallium Driver Override</string>
     <!-- Dialog -->

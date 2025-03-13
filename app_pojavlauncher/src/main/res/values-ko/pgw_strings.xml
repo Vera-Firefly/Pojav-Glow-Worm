@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">렌더러 실험적 설정 활성화</string>
     <string name="preference_renderer_setup">더 많은 렌더러 전용 설정 사용</string>
     <string name="preference_renderer_setup_extra">렌더러 (추가)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (기본값)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (기본값)</string>
     <string name="preference_extra_mesa_version">Mesa 버전</string>
     <string name="preference_extra_driver_model">Gallium 드라이버 오버라이드</string>
     <!-- Dialog -->

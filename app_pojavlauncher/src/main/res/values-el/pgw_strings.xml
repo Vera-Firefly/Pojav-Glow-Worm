@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Ενεργοποίηση πειραματικών ρυθμίσεων renderer</string>
     <string name="preference_renderer_setup">Χρήση επιπλέον ρυθμίσεων συγκεκριμένων για τον renderer</string>
     <string name="preference_renderer_setup_extra">Renderer (Επιπλέον)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (Προεπιλογή)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (Προεπιλογή)</string>
     <string name="preference_extra_mesa_version">Έκδοση Mesa</string>
     <string name="preference_extra_driver_model">Override οδηγού Gallium</string>
     <!-- Διάλογος -->

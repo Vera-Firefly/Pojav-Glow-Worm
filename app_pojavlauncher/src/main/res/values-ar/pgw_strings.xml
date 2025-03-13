@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">تمكين إعدادات Renderer التجريبية</string>
     <string name="preference_renderer_setup">استخدام إعدادات Renderer المحددة</string>
     <string name="preference_renderer_setup_extra">Renderer (إضافي)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (افتراضي)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (افتراضي)</string>
     <string name="preference_extra_mesa_version">إصدار Mesa</string>
     <string name="preference_extra_driver_model">تجاوز برنامج تشغيل Gallium</string>
     <!-- مربع الحوار -->

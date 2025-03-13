@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Kích hoạt cài đặt thử nghiệm của trình kết xuất</string>
     <string name="preference_renderer_setup">Sử dụng các cài đặt đặc thù cho trình kết xuất</string>
     <string name="preference_renderer_setup_extra">Trình kết xuất (Thêm)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (Mặc định)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (Mặc định)</string>
     <string name="preference_extra_mesa_version">Phiên bản Mesa</string>
     <string name="preference_extra_driver_model">Ghi đè trình điều khiển Gallium</string>
     <!-- Dialog -->

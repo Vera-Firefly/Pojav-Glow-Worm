@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Experimentelle Renderer-Einstellungen aktivieren</string>
     <string name="preference_renderer_setup">Weitere renderer-spezifische Einstellungen verwenden</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (Standard)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (Standard)</string>
     <string name="preference_extra_mesa_version">Mesa-Version</string>
     <string name="preference_extra_driver_model">Gallium-Treiber-Override</string>
     <!-- Dialog -->

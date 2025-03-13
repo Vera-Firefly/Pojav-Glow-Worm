@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">Увімкнути експериментальні налаштування рендерера</string>
     <string name="preference_renderer_setup">Використовувати додаткові налаштування рендерера</string>
     <string name="preference_renderer_setup_extra">Рендерер (Додатково)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0 (За замовчуванням)</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1 (За замовчуванням)</string>
     <string name="preference_extra_mesa_version">Версія Mesa</string>
     <string name="preference_extra_driver_model">Перезапис драйвера Gallium</string>
     <!-- Dialog -->

@@ -53,7 +53,7 @@
     <string name="preference_renderer_setup_title">レンダラーの実験的設定を有効にする</string>
     <string name="preference_renderer_setup">よりレンダラー固有の設定を使用する</string>
     <string name="preference_renderer_setup_extra">レンダラー（追加）</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.0（デフォルト）</string>
+    <string name="preference_renderer_extra_default">Mesa25.0.1（デフォルト）</string>
     <string name="preference_extra_mesa_version">Mesaバージョン</string>
     <string name="preference_extra_driver_model">Galliumドライバーのオーバーライド</string>
     <!-- Dialog -->
