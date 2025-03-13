@@ -4,6 +4,7 @@
 #include <jni.h>
 #include <assert.h>
 #include <dlfcn.h>
+#include <limits.h>
 
 #include <string.h>
 #include <stdbool.h>
@@ -356,7 +357,10 @@ EXTERNAL_API void pojavSetWindowHint(int hint, int value) {
 }
 
 EXTERNAL_API void pojavSwapBuffers() {
+    if (currentFps >= INT_MAX - 1)
+        currentFps = 0;
     currentFps++;
+
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK
      || pojav_environ->config_renderer == RENDERER_GL4ES)
     {
