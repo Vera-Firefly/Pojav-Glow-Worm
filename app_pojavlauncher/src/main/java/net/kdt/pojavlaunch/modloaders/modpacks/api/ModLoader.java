@@ -8,14 +8,17 @@ import net.kdt.pojavlaunch.modloaders.FabriclikeDownloadTask;
 import net.kdt.pojavlaunch.modloaders.FabriclikeUtils;
 import net.kdt.pojavlaunch.modloaders.ForgeDownloadTask;
 import net.kdt.pojavlaunch.modloaders.ForgeUtils;
+import net.kdt.pojavlaunch.modloaders.NeoForgeDownloadTask;
+import net.kdt.pojavlaunch.modloaders.NeoForgeUtils;
 import net.kdt.pojavlaunch.modloaders.ModloaderDownloadListener;
 
 import java.io.File;
 
 public class ModLoader {
     public static final int MOD_LOADER_FORGE = 0;
-    public static final int MOD_LOADER_FABRIC = 1;
-    public static final int MOD_LOADER_QUILT = 2;
+    public static final int MOD_LOADER_NEOFORGE = 1;
+    public static final int MOD_LOADER_FABRIC = 2;
+    public static final int MOD_LOADER_QUILT = 3;
     public final int modLoaderType;
     public final String modLoaderVersion;
     public final String minecraftVersion;
@@ -35,6 +38,8 @@ public class ModLoader {
         switch (modLoaderType) {
             case MOD_LOADER_FORGE:
                 return minecraftVersion + "-forge-" + modLoaderVersion;
+            case MOD_LOADER_NEOFORGE:
+                return "neoforge-"+modLoaderVersion;
             case MOD_LOADER_FABRIC:
                 return "fabric-loader-" + modLoaderVersion + "-" + minecraftVersion;
             case MOD_LOADER_QUILT:
@@ -55,6 +60,8 @@ public class ModLoader {
         switch (modLoaderType) {
             case MOD_LOADER_FORGE:
                 return new ForgeDownloadTask(listener, minecraftVersion, modLoaderVersion);
+            case MOD_LOADER_NEOFORGE:
+                return new NeoForgeDownloadTask(listener, minecraftVersion, modLoaderVersion);
             case MOD_LOADER_FABRIC:
                 return createFabriclikeTask(listener, FabriclikeUtils.FABRIC_UTILS);
             case MOD_LOADER_QUILT:
@@ -80,6 +87,9 @@ public class ModLoader {
             case MOD_LOADER_FORGE:
                 ForgeUtils.addAutoInstallArgs(baseIntent, modInstallerJar, getVersionId());
                 return baseIntent;
+            case MOD_LOADER_NEOFORGE:
+                NeoForgeUtils.addAutoInstallArgs(baseIntent, modInstallerJar);
+                return baseIntent;
             case MOD_LOADER_QUILT:
             case MOD_LOADER_FABRIC:
             default:
@@ -95,6 +105,7 @@ public class ModLoader {
     public boolean requiresGuiInstallation() {
         switch (modLoaderType) {
             case MOD_LOADER_FORGE:
+            case MOD_LOADER_NEOFORGE:
                 return true;
             case MOD_LOADER_FABRIC:
             case MOD_LOADER_QUILT:

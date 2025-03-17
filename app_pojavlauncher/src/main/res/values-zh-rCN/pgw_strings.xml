@@ -53,6 +53,10 @@
     <string name="preference_fix_q3_behavior_title">修复 Q3 行为</string>
     <string name="preference_fix_q3_behavior_desc">修复 740v3 上的 Q3 行为</string>
     <string name="worning_system_vulkan_adreno">我们检测到您的设备为 AdrenoGPU ,打开该选项可能会导致 Zink 渲染器无法正常使用\n你真的确定你要开启这个选项?</string>
+    <string name="neoforge_dl_searching">正在搜索 NeoForge 版本号</string>  
+    <string name="neoforge_dl_no_installer">抱歉, 此版本的 NeoForge 没有安装程序, 当前尚不支持</string>  
+    <string name="neoforge_dl_select_version">选择 NeoForge 版本</string>
+    <string name="modloader_dl_install_neoforge">创建 NeoForge 配置</string>
     <!-- Terminal -->
     <string name="main_terminal">Terminal</string>
     <string name="main_termianl_init">初始化</string>
