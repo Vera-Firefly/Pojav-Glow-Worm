@@ -284,6 +284,7 @@ dependencies {
     implementation 'top.fifthlight.touchcontroller:proxy-client:0.0.1'
 
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
+    implementation 'org.greenrobot:eventbus:3.3.1'
     // implementation 'com.intuit.sdp:sdp-android:1.0.5'
     // implementation 'com.intuit.ssp:ssp-android:1.0.5'
 

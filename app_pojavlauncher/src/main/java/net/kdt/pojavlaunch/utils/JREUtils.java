@@ -33,6 +33,7 @@ import com.movtery.feature.version.VersionInfo;
 import com.movtery.plugins.renderer.RendererPlugin;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
+import com.movtery.event.value.JvmExitEvent;
 import com.oracle.dalvik.VMLauncher;
 
 import net.kdt.pojavlaunch.Architecture;
@@ -47,6 +48,7 @@ import net.kdt.pojavlaunch.multirt.Runtime;
 import net.kdt.pojavlaunch.plugins.FFmpegPlugin;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
+import org.greenrobot.eventbus.EventBus;
 import org.lwjgl.glfw.CallbackBridge;
 
 import java.io.BufferedReader;
@@ -509,9 +511,12 @@ public class JREUtils {
         dlopen(NATIVE_LIB_DIR + "/libopenal.so");
 
         if (!renderer) return;
+
         String rendererLib = loadGraphicsLibrary();
         RendererPlugin.Renderer customRenderer = RendererPlugin.getSelectedRenderer();
+
         if (customRenderer != null) {
+            rendererLib = customRenderer.getPath() + "/" + loadGraphicsLibrary();
             customRenderer.getEnv().forEach(envPair -> {
                 if (envPair.getFirst().equals("DLOPEN")) {
                     String[] libs = envPair.getSecond().split(",");
@@ -521,6 +526,7 @@ public class JREUtils {
                 }
             });
         }
+
         if (!dlopen(rendererLib) && !dlopen(findInLdLibPath(rendererLib))) {
             Log.e("RENDER_LIBRARY", "Failed to load renderer " + rendererLib);
         }
@@ -578,6 +584,7 @@ public class JREUtils {
                 dialog.show();
             });
         }
+        EventBus.getDefault().post(new JvmExitEvent(exitCode));
         return exitCode;
     }
 

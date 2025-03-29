@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -22,6 +23,7 @@ import androidx.core.content.FileProvider;
 
 import com.kdt.LoggerView;
 
+import com.movtery.event.value.JvmExitEvent;
 import net.kdt.pojavlaunch.customcontrols.keyboard.AwtCharSender;
 import net.kdt.pojavlaunch.customcontrols.keyboard.TouchCharInput;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
@@ -31,6 +33,8 @@ import net.kdt.pojavlaunch.utils.JREUtils;
 import net.kdt.pojavlaunch.utils.MathUtils;
 
 import org.apache.commons.io.IOUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.lwjgl.glfw.CallbackBridge;
 
 import java.io.File;
@@ -47,6 +51,7 @@ import java.util.zip.ZipFile;
 
 public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouchListener {
 
+    public static final String SUBSCRIBE_JVM_EXIT_EVENT = "subscribe_jvm_exit_event";
     private AWTCanvasView mTextureView;
     private LoggerView mLoggerView;
     private TouchCharInput mTouchCharInput;
@@ -56,6 +61,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
     private GestureDetector mGestureDetector;
 
     private boolean mIsVirtualMouseEnabled;
+    private boolean mSubscribeJvmExitEvent;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -161,6 +167,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
                 finish();
                 return;
             }
+            mSubscribeJvmExitEvent = extras.getBoolean(SUBSCRIBE_JVM_EXIT_EVENT, false);
             final String javaArgs = extras.getString("javaArgs");
             Uri modUri = null;
 
@@ -192,6 +199,25 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
                 MainActivity.dialogForceClose(JavaGUILauncherActivity.this);
             }
         });
+    }
+
+    @Subscribe()
+    public void event(JvmExitEvent event) {
+        if (mSubscribeJvmExitEvent) {
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     private void startModInstallerWithUri(Uri uri) {
