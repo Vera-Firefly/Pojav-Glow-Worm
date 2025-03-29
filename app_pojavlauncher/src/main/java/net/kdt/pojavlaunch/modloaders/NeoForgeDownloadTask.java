@@ -52,6 +52,7 @@ public class NeoForgeDownloadTask implements Runnable, Tools.DownloaderFeedback 
                 throw new RuntimeException(e);
             }
         }
+        ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
     }
 
     @Override
