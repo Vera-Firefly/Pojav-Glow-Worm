@@ -199,4 +199,29 @@
 
     <string name="pgw_settings_choose_download_source">選擇下載源</string>
 
+    <!-- MG Renderer Settings-->
+    <string name="preference_renderer_mobileglues_settings">MobileGlues 渲染器設定</string>
+
+    <string name="mg_option_glsl_cache">GLSL 快取大小上限</string>
+    <string name="mg_option_glsl_cache_hint">輸入 -1 以停用此功能</string>
+    <string name="mg_option_glsl_cache_helper">單位：百萬位元組 (MB)</string>
+    <string name="mg_option_glsl_cache_error_invalid">錯誤：無效的數字</string>
+    <string name="mg_option_glsl_cache_error_unexpected">錯誤：發生未預期的錯誤</string>
+    <string name="mg_option_glsl_cache_error_range">錯誤：數值不可為 0 或小於 -1</string>
+
+    <string name="mg_option_angle">使用 ANGLE 作為 OpenGL ES 驅動程式</string>
+    <string name="mg_option_angle_disable_if_possible">建議停用</string>
+    <string name="mg_option_angle_enable_if_possible">建議啟用</string>
+    <string name="mg_option_angle_disable">強制停用</string>
+    <string name="mg_option_angle_enable">強制啟用</string>
+
+    <string name="mg_option_no_error">錯誤處理模式</string>
+    <string name="mg_option_no_error_auto">自動判斷</string>
+    <string name="mg_option_no_error_enable">顯示所有錯誤</string>
+    <string name="mg_option_no_error_disable_pri">忽略著色器/程式錯誤</string>
+    <string name="mg_option_no_error_disable_sec">忽略著色器/程式/幀緩衝錯誤</string>
+
+    <string name="mg_option_ext_gl43">啟用實驗性 OpenGL43 延伸功能</string>
+    <string name="mg_option_ext_cs">啟用實驗性 ARB_compute_shader 延伸功能</string>
+
 </resources>

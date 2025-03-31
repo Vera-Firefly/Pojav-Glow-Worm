@@ -271,6 +271,16 @@ public class JREUtils {
             envMap.put("LIBGL_NORMALIZE", "1");
         }
 
+        if (LOCAL_RENDERER.equals("opengles3_mges"))
+        {
+            envMap.put("MG_DIR_PATH", Tools.DIR_CACHE.getAbsolutePath());
+            envMap.put("MG_maxGlslCacheSize", MG_GLSL_CACHE_SIZE);
+            envMap.put("MG_enableANGLE", MG_ANGLE_OPTION);
+            envMap.put("MG_enableNoError", MG_NOERROR_OPTION);
+            envMap.put("MG_enableExtGL43", MG_EXT_GL43);
+            envMap.put("MG_enableExtComputeShader", MG_EXT_CS);
+        }
+
         RendererPlugin.Renderer customRenderer = RendererPlugin.getSelectedRenderer();
         if (customRenderer != null && LOCAL_RENDERER.equals(customRenderer.getIdName())) {
             customRenderer.getEnv().forEach(envPair -> {
@@ -278,6 +288,11 @@ public class JREUtils {
                 String envValue = envPair.getSecond();
                 if (envKey.equals("DLOPEN")) return;
                 if (envKey.equals("POJAV_RENDERER")) {
+                    if (envValue.startsWith("opengles")) {
+                        checkLIBGLESVersion(envMap);
+                    } else {
+                        envMap.put("LIBGL_ES", "3");
+                    }
                     if (!RendererUtils.isGalliumRenderer(envValue)) {
                         JREUtils.initRendererTag(envValue);
                     } else {
@@ -423,12 +438,20 @@ public class JREUtils {
                 // fallback to 2 since it's the minimum for the entire app
                 envMap.put("LIBGL_ES", "2");
             } else if (LOCAL_RENDERER.startsWith("opengles")) {
-                envMap.put("LIBGL_ES", LOCAL_RENDERER.replace("opengles", "").replace("_5", ""));
+                checkLIBGLESVersion(envMap);
             } else {
                 // TODO if can: other backends such as Vulkan.
                 // Sure, they should provide GLES 3 support.
                 envMap.put("LIBGL_ES", "3");
             }
+        }
+    }
+
+    private static void checkLIBGLESVersion(Map<String, String> envMap) {
+        if (LOCAL_RENDERER.startsWith("opengles3")) {
+            envMap.put("LIBGL_ES", "3");
+        } else {
+            envMap.put("LIBGL_ES", "2");
         }
     }
 
@@ -472,7 +495,7 @@ public class JREUtils {
         envMap.put("DRIVER_PATH", folder);
     }
 
-    private static void setEnv(String jreHome, final Runtime runtime, VersionInfo versionInfo, boolean renderer) throws Throwable {
+    private static void loadEnv(String jreHome, final Runtime runtime, VersionInfo versionInfo, boolean renderer) throws Throwable {
         PGWTools.onAppendToLog("Env Map");
         Map<String, String> envMap = new LinkedHashMap<>();
 
@@ -525,6 +548,12 @@ public class JREUtils {
                     }
                 }
             });
+        }
+
+        if (LOCAL_RENDERER.equals("opengles3_mges"))
+        {
+            dlopen(NATIVE_LIB_DIR + "/libspirv-cross-c-shared.so");
+            dlopen(NATIVE_LIB_DIR + "/libshaderconv.so");
         }
 
         if (!dlopen(rendererLib) && !dlopen(findInLdLibPath(rendererLib))) {
@@ -597,7 +626,7 @@ public class JREUtils {
             // Initialize Load Dlopen Library Path.
             initLdLibraryPath(runtimeHome);
             // Set running environment.
-            setEnv(runtimeHome, runtime, versionInfo, gameDirectory != null);
+            loadEnv(runtimeHome, runtime, versionInfo, gameDirectory != null);
             // Initialize JVM library files.
             initJavaRuntime(runtimeHome);
             // Initialize renderer library files.
@@ -778,6 +807,9 @@ public class JREUtils {
                     break;
                 case "opengles2_vgpu_1":
                     renderLibrary = "libvgpu_1368.so";
+                    break;
+                case "opengles3_mges":
+                    renderLibrary = "libmobileglues.so";
                     break;
                 case "vulkan_zink":
                 case "gallium_freedreno":
