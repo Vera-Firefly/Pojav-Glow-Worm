@@ -105,6 +105,7 @@ public class LauncherPreferences {
     public static String MG_NOERROR_OPTION = "0";
     public static String MG_EXT_GL43 = "0";
     public static String MG_EXT_CS = "0";
+    public static String MG_MULTIDRAWMODE_OPTION = "0";
 
     public static void loadPreferences(Context ctx) {
         //Required for CTRLDEF_FILE and MultiRT
@@ -185,6 +186,7 @@ public class LauncherPreferences {
         MG_NOERROR_OPTION = DEFAULT_PREF.getString("mg_noerror_option", "0");
         MG_EXT_GL43 = DEFAULT_PREF.getString("mg_ext_gl43", "0");
         MG_EXT_CS = DEFAULT_PREF.getString("mg_ext_compute_shader", "0");
+        MG_MULTIDRAWMODE_OPTION = DEFAULT_PREF.getString("mg_multidraw_mode", "0");
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {

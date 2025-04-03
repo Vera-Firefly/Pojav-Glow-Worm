@@ -221,6 +221,13 @@
     <string name="mg_option_no_error_disable_pri">忽略着色器/程序错误</string>
     <string name="mg_option_no_error_disable_sec">忽略着色器/程序/帧缓冲区错误</string>
 
+    <string name="mg_option_multidraw_mode">多重绘制模拟</string>
+    <string name="mg_option_multidraw_mode_auto">自动</string>
+    <string name="mg_option_multidraw_mode_indirect">优先间接模式</string>
+    <string name="mg_option_multidraw_mode_basevertex">优先BaseVertex</string>
+    <string name="mg_option_multidraw_mode_multidraw_indirect">优先MultiDraw Indirect</string>
+    <string name="mg_option_multidraw_mode_drawelements">强制绘制元素模式</string>
+
     <string name="mg_option_ext_gl43">启用不完整的 OpenGL43 扩展</string>
     <string name="mg_option_ext_cs">启用不完整的 ARB_compute_shader 扩展</string>
 

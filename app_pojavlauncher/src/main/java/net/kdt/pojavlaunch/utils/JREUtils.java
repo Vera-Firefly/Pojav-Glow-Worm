@@ -277,6 +277,7 @@ public class JREUtils {
             envMap.put("MG_maxGlslCacheSize", MG_GLSL_CACHE_SIZE);
             envMap.put("MG_enableANGLE", MG_ANGLE_OPTION);
             envMap.put("MG_enableNoError", MG_NOERROR_OPTION);
+            envMap.put("MG_multidrawMode", MG_MULTIDRAWMODE_OPTION);
             envMap.put("MG_enableExtGL43", MG_EXT_GL43);
             envMap.put("MG_enableExtComputeShader", MG_EXT_CS);
         }
