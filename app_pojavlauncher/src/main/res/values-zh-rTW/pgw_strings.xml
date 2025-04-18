@@ -221,12 +221,12 @@
     <string name="mg_option_no_error_disable_pri">忽略著色器/程式錯誤</string>
     <string name="mg_option_no_error_disable_sec">忽略著色器/程式/幀緩衝錯誤</string>
 
-    <string name="mg_option_multidraw_mode">多重繪製模擬</string>
+    <string name="mg_option_multidraw_mode">MultiDraw 模擬方案</string>
     <string name="mg_option_multidraw_mode_auto">自動</string>
-    <string name="mg_option_multidraw_mode_indirect">優先間接模式</string>
-    <string name="mg_option_multidraw_mode_basevertex">優先BaseVertex</string>
-    <string name="mg_option_multidraw_mode_multidraw_indirect">優先MultiDraw Indirect</string>
-    <string name="mg_option_multidraw_mode_drawelements">強制繪圖元素模式</string>
+    <string name="mg_option_multidraw_mode_indirect">儘量使用 Indirect 方案模擬</string>
+    <string name="mg_option_multidraw_mode_basevertex">儘量使用 BaseVertex 方案模擬</string>
+    <string name="mg_option_multidraw_mode_multidraw_indirect">儘量使用 MultiDraw Indirect 方案模擬</string>
+    <string name="mg_option_multidraw_mode_drawelements">強制使用 DrawElements 方案模擬</string>
 
     <string name="mg_option_ext_gl43">啟用實驗性 OpenGL43 延伸功能</string>
     <string name="mg_option_ext_cs">啟用實驗性 ARB_compute_shader 延伸功能</string>
