@@ -247,8 +247,11 @@ public class JREUtils {
             envMap.put("ALLOW_VSYNC_IN_ZINK", "1");
         if (PREF_EXP_SETUP)
             envMap.put("ALLOW_GL_EXP", "1");
-        if (PREF_INITIAL_FRAMEBUFFER && !BRIDGE_CONFIG.equals("default") && !BRIDGE_CONFIG.equals("xxx3"))
-            envMap.put("OSM_INITIAL_FRAMEBUFFER", "1");
+        if (BRIDGE_CONFIG != null)
+        {
+            if (PREF_INITIAL_FRAMEBUFFER && !BRIDGE_CONFIG.equals("default") && !BRIDGE_CONFIG.equals("xxx3"))
+                envMap.put("OSM_INITIAL_FRAMEBUFFER", "1");
+        }
         if (PREF_INITIAL_FRAMEBUFFER && PREF_GL_INITIAL_FRAMEBUFFER)
             envMap.put("GL_WORKAROUND_FRAMEBUFFER", "1");
         if (FIX_Q3_BEHAVIOR)
