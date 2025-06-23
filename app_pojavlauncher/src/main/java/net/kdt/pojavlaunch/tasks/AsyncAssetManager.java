@@ -4,6 +4,7 @@ import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.util.Log;
 
 import com.kdt.mcgui.ProgressLayout;
@@ -35,6 +36,10 @@ public class AsyncAssetManager {
 
                 Tools.copyAssetFile(ctx, "launcher_profiles.json", ProfilePathHome.getGameHome(), false);
                 Tools.copyAssetFile(ctx, "resolv.conf", Tools.DIR_DATA, false);
+
+                String abi = Build.SUPPORTED_ABIS[0];
+                Tools.copyAssetFolder(ctx, "renderer/mobileglues/" + abi, Tools.MOBILEGLES_DIR, false);
+                Tools.copyAssetFolder(ctx, "renderer/mobilegl/" + abi, Tools.MOBILEGL_DIR, false);
 
                 File path = new File(Tools.DIR_GAME_HOME + "/login/version");
                 Tools.copyAssetFile(ctx, "login/version", path.getParent(), false);

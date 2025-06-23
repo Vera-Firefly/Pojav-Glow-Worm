@@ -324,7 +324,7 @@ public class JREUtils {
         if (eglName != null) envMap.put("POJAVEXEC_EGL", eglName);
 
         if (!LOCAL_RENDERER.startsWith("opengles")) {
-            envMap.put("MESA_GLSL_CACHE_DIR", Tools.DIR_CACHE.getAbsolutePath());
+            envMap.put("MESA_GLSL_CACHE_DIR", Tools.MOBILEGLES_DIR);
             envMap.put("force_glsl_extensions_warn", "true");
             envMap.put("allow_higher_compat_version", "true");
             envMap.put("allow_glsl_extension_directive_midshader", "true");
@@ -556,8 +556,13 @@ public class JREUtils {
 
         if (LOCAL_RENDERER.equals("opengles3_mges"))
         {
-            dlopen(NATIVE_LIB_DIR + "/libspirv-cross-c-shared.so");
-            dlopen(NATIVE_LIB_DIR + "/libshaderconv.so");
+            dlopen(Tools.MOBILEGLES_DIR + "/libspirv-cross-c-shared.so");
+            dlopen(Tools.MOBILEGLES_DIR + "/libshaderconv.so");
+        }
+
+        if (LOCAL_RENDERER.equals("opengles3_mggl"))
+        {
+            dlopen(Tools.MOBILEGL_DIR + "/libspirv-cross-c-shared.so");
         }
 
         if (!dlopen(rendererLib) && !dlopen(findInLdLibPath(rendererLib))) {
@@ -813,7 +818,10 @@ public class JREUtils {
                     renderLibrary = "libvgpu_1368.so";
                     break;
                 case "opengles3_mges":
-                    renderLibrary = "libmobileglues.so";
+                    renderLibrary = Tools.MOBILEGLES_DIR + "/libmobileglues.so";
+                    break;
+                case "opengles3_mggl":
+                    renderLibrary = Tools.MOBILEGL_DIR + "/libMobileGL.so";
                     break;
                 case "vulkan_zink":
                 case "gallium_freedreno":

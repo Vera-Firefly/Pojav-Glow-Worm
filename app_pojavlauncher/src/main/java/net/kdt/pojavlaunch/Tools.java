@@ -18,6 +18,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -88,6 +89,7 @@ import org.lwjgl.glfw.CallbackBridge;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -141,6 +143,9 @@ public final class Tools {
 
     public static String DRIVER_MODEL = null;
     public static String MESA_LIBS = null;
+    public static String RENDERER_DIR = null;
+    public static String MOBILEGLES_DIR = null;
+    public static String MOBILEGL_DIR = null;
     public static String TURNIP_LIBS = null;
     public static String LOADER_OVERRIDE = null;
     public static String LIBGL_GL = null;
@@ -180,6 +185,9 @@ public final class Tools {
         MULTIRT_HOME = DIR_DATA + "/runtimes";
         DIR_ACCOUNT_NEW = DIR_DATA + "/accounts";
         MESA_DIR = DIR_DATA + "/mesa";
+        RENDERER_DIR = DIR_DATA + "/renderer";
+        MOBILEGLES_DIR = RENDERER_DIR + "/mobileglues";
+        MOBILEGL_DIR = RENDERER_DIR + "/mobilegl";
         TURNIP_DIR = DIR_DATA + "/turnip";
         NATIVE_LIB_DIR = ctx.getApplicationInfo().nativeLibraryDir;
     }
@@ -605,6 +613,41 @@ public final class Tools {
         return px / currentDisplayMetrics.density;
     }
 
+    public static void copyAssetFolder(Context context, String sourceDir, String targetDir, boolean overwrite) throws IOException {
+        AssetManager assetManager = context.getAssets();
+        String[] assetFiles = assetManager.list(sourceDir);
+
+        if (assetFiles == null || assetFiles.length == 0) {
+            // 处理文件或空目录
+            try (InputStream testStream = assetManager.open(sourceDir)) {
+                copyAssetFile(context, sourceDir, targetDir, overwrite);
+            } catch (FileNotFoundException e) {
+                new File(targetDir).mkdirs(); // 创建空目录
+            }
+        } else {
+            // 创建目标目录
+            File targetDirFile = new File(targetDir);
+            if (!targetDirFile.exists() && !targetDirFile.mkdirs()) {
+                throw new IOException("无法创建目录: " + targetDir);
+            }
+
+            // 遍历目录条目
+            for (String fileName : assetFiles) {
+                String assetSubPath = sourceDir.isEmpty() ? fileName : sourceDir + "/" + fileName;
+            
+                String[] subItems = assetManager.list(assetSubPath);
+                if (subItems != null && subItems.length > 0) {
+                    // 是子目录 → 递归处理
+                    String targetSubDir = new File(targetDir, fileName).getAbsolutePath();
+                    copyAssetFolder(context, assetSubPath, targetSubDir, overwrite);
+                } else {
+                    // 是文件 → 直接复制到当前目标目录
+                    copyAssetFile(context, assetSubPath, targetDir, overwrite);
+                }
+            }
+        }
+    }
+
     public static void copyAssetFile(Context ctx, String fileName, String output, boolean overwrite) throws IOException {
         copyAssetFile(ctx, fileName, output, new File(fileName).getName(), overwrite);
     }
@@ -614,10 +657,9 @@ public final class Tools {
         FileUtils.ensureDirectory(parentFolder);
         File destinationFile = new File(output, outputName);
         if (!destinationFile.exists() || overwrite) {
-            try (InputStream inputStream = ctx.getAssets().open(fileName)) {
-                try (OutputStream outputStream = new FileOutputStream(destinationFile)) {
-                    IOUtils.copy(inputStream, outputStream);
-                }
+            try (InputStream inputStream = ctx.getAssets().open(fileName);
+                 OutputStream outputStream = new FileOutputStream(destinationFile)) {
+                IOUtils.copy(inputStream, outputStream);
             }
         }
     }

@@ -12,6 +12,7 @@
 #include "pojav/utils.h"
 
 static jint (*orig_ProcessImpl_forkAndExec)(JNIEnv *env, jobject process, jint mode, jbyteArray helperpath, jbyteArray prog, jbyteArray argBlock, jint argc, jbyteArray envBlock, jint envc, jbyteArray dir, jintArray std_fds, jboolean redirectErrorStream);
+extern jbyteArray convertStr(JNIEnv *env, char *str);
 
 // Turn a C-style string into a Java byte array
 static jbyteArray stringToBytes(JNIEnv *env, const char* string) {
@@ -66,6 +67,10 @@ static jint hooked_ProcessImpl_forkAndExec(JNIEnv *env, jobject process, jint mo
             replaceLibPathInEnvBlock(env, &envBlock, &envc, dirname(ffmpeg_path));
             prog = stringToBytes(env, ffmpeg_path);
         }
+    }
+    if (getenv("JSP")) {
+        jbyteArray new_hp = convertStr(env, getenv("JSP"));
+        return orig_ProcessImpl_forkAndExec(env, process, mode, helperpath, prog, argBlock, argc, envBlock, envc, dir, std_fds, redirectErrorStream);
     }
     return orig_ProcessImpl_forkAndExec(env, process, mode, helperpath, prog, argBlock, argc, envBlock, envc, dir, std_fds, redirectErrorStream);
 }

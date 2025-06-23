@@ -470,7 +470,8 @@ Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
      || pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1
      || pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX2))
     {
-        return &gbuffer;
+        // return &gbuffer;
+        return (jlong)gbuffer;
     }
 }
 

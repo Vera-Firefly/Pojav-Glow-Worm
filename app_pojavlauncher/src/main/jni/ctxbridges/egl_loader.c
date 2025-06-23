@@ -3,6 +3,7 @@
 //
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 #include <dlfcn.h>
 #include "egl_loader.h"
 

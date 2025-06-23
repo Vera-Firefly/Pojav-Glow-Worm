@@ -11,6 +11,7 @@
         <item name="7">@string/mcl_setting_renderer_freedreno</item>
         <item name="8">@string/mcl_setting_renderer_panfrost</item>
         <item name="9">MobileGlues (OpenGL 4.0, 1.17+)</item>
+        <item name="10">MobileGL</item>
     </string-array>
 
     <string-array name="renderer_values">
@@ -24,6 +25,7 @@
         <item>gallium_freedreno</item> <!-- Gallium Freedreno with Adreno GPU -->
         <item>gallium_panfrost</item> <!-- Gallium Panfrost with Mali GPU -->
         <item>opengles3_mges</item> <!-- Mobile GL 4.0 with OpenGL ES 3 -->
+        <item>opengles3_mggl</item>
     </string-array>
 
     <string-array name="menu_customcontrol">
