@@ -4,9 +4,11 @@
 #include <EGL/egl.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <android/dlext.h>
+#include "mesainfo/mesa_info.h"
 #include "nsbypass.h"
 #include "GL/gl.h"
 
@@ -64,12 +66,23 @@ void* loadTurnipVulkan() {
 
     const char* native_dir = getenv("DRIVER_PATH");
     const char* cache_dir = getenv("TMPDIR");
+    char* info = getenv("OUTPUT_MESA_INFO");
+    char* tu_path = NULL;
 
     if (!native_dir) 
         native_dir = getenv("POJAV_NATIVEDIR");
 
     if (!linker_ns_load(native_dir))
         return NULL;
+
+    if (info) {
+        printf("OSMesaInfo: Check info ...\n");
+        if (asprintf(&tu_path, "%s/%s", native_dir, "libvulkan_freedreno.so") == -1) {
+            printf("OSMesaInfo: Vulkan File get failed ...\n");
+        } else {
+            getMesaInfoFromPath(tu_path);
+        }
+    }
 
     void* linkerhook = linker_ns_dlopen("liblinkerhook.so", RTLD_LOCAL | RTLD_NOW);
     if (!linkerhook)
@@ -79,6 +92,8 @@ void* loadTurnipVulkan() {
     if (!turnip_driver_handle) {
         dlclose(linkerhook);
         return NULL;
+    } else if (info) {
+        getMesaInfoFromHandle(turnip_driver_handle);
     }
 
     void* dl_android = linker_ns_dlopen("libdl_android.so", RTLD_LOCAL | RTLD_LAZY);
