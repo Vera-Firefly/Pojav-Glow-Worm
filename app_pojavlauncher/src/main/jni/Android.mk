@@ -55,7 +55,8 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_LDLIBS := -ldl -llog -landroid
-LOCAL_MODULE := driver_helper OSMesaInfo
+LOCAL_MODULE := driver_helper
+LOCAL_SHARED_LIBRARIES := OSMesaInfo
 LOCAL_SRC_FILES := \
     driver_helper/driver_helper.c \
     driver_helper/nsbypass.c
