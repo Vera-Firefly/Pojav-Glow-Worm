@@ -24,7 +24,6 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_MODULE := OSMesaInfo
 LOCAL_SRC_FILES := mesainfo/mesa_info.cpp
-LOCAL_C_INCLUDES := $(LOCAL_PATH)
 LOCAL_CPP_FEATURES := rtti exceptions
 LOCAL_CPPFLAGS := -std=c++11 -Wall -Werror
 LOCAL_LDLIBS := -ldl -llog
