@@ -98,6 +98,7 @@ public class LauncherPreferences {
     public static boolean PREF_AUTOMATICALLY_SET_GAME_LANGUAGE = true;
     public static boolean PREF_GAME_LANGUAGE_OVERRIDDEN = false;
     public static String PREF_GAME_LANGUAGE = ZHTools.getSystemLanguage();
+    public static boolean PREF_MESA_INFO = false;
 
     // MobileGlues Settings
     public static String MG_GLSL_CACHE_SIZE = "30";
@@ -157,6 +158,7 @@ public class LauncherPreferences {
         PREF_BRIDGE_CONFIG = DEFAULT_PREF.getString("configBridge", "default");
         PREF_INITIAL_FRAMEBUFFER = DEFAULT_PREF.getBoolean("InitialFrameBuffer", false);
         PREF_GL_INITIAL_FRAMEBUFFER = DEFAULT_PREF.getBoolean("glInitialFrameBuffer", false);
+        PREF_MESA_INFO = DEFAULT_PREF.getBoolean("osmesaInfo", false);
         PREF_EXP_ENABLE_SYSTEM = DEFAULT_PREF.getBoolean("ebSystem", true);
         PREF_EXP_ENABLE_SPECIFIC = DEFAULT_PREF.getBoolean("ebSpecific", false);
         PREF_EXP_ENABLE_CUSTOM = DEFAULT_PREF.getBoolean("ebCustom", false);

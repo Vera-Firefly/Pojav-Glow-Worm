@@ -170,6 +170,13 @@
             app2:iconSpaceReserved="false"
             />
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="osmesaInfo"
+            android:title="OSMesa Info"
+            app2:iconSpaceReserved="false"
+            />
+
     </PreferenceCategory>
 
     <PreferenceCategory

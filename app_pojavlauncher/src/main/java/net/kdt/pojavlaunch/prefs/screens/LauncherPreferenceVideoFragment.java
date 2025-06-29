@@ -249,6 +249,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         requirePreference("MesaRendererChoose").setVisible(PREF_EXP_SETUP);
         requirePreference("customMesaVersionPref").setVisible(PREF_EXP_SETUP);
         requirePreference("customMesaLoaderDriverOverride").setVisible(PREF_EXP_SETUP);
+        requirePreference("osmesaInfo").setVisible(PREF_EXP_SETUP);
         requirePreference("glInitialFrameBuffer").setVisible(PREF_INITIAL_FRAMEBUFFER);
         requirePreference("ebChooseMldo").setVisible(PGWTools.isAdrenoGPU());
         requirePreference("ChooseMldo").setVisible(PREF_LOADER_OVERRIDE);

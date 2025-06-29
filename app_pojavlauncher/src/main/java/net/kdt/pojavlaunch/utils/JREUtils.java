@@ -256,6 +256,8 @@ public class JREUtils {
             envMap.put("GL_WORKAROUND_FRAMEBUFFER", "1");
         if (FIX_Q3_BEHAVIOR)
             envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1");
+        if (PREF_MESA_INFO)
+            envMap.put("OUTPUT_MESA_INFO", "1");
         if (Tools.deviceHasHangingLinker())
             envMap.put("POJAV_EMUI_ITERATOR_MITIGATE", "1");
         if (FFmpegPlugin.isAvailable)

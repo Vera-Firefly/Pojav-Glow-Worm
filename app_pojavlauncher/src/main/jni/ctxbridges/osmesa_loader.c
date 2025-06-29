@@ -6,6 +6,7 @@
 #include <dlfcn.h>
 #include <string.h>
 #include "environ/environ.h"
+#include "mesainfo/mesa_info.h"
 #include "osmesa_loader.h"
 #include "renderer_config.h"
 
@@ -50,6 +51,7 @@ void dlsym_OSMesa() {
 
     char* mesa_name = getenv("LIB_MESA_NAME");
     char* pojav_native_dir = getenv("POJAV_NATIVEDIR");
+    char* info = getenv("OUTPUT_MESA_INFO");
 
     char* main_path = construct_main_path(mesa_name, pojav_native_dir);
     if (!main_path) {
@@ -57,7 +59,13 @@ void dlsym_OSMesa() {
         abort();
     }
 
+    if (info) getMesaInfoFromPath(main_path);
+
     void* dl_handle = dlopen(main_path, RTLD_LOCAL | RTLD_LAZY);
+    if (dl_handle && info) {
+        getMesaInfoFromHandle(dl_handle);
+    }
+
     free(main_path);
     if (!dl_handle) {
         fprintf(stderr, "Error: Failed to open library: %s\n", dlerror());
