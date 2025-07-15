@@ -278,11 +278,12 @@ public class JREUtils {
 
         if (LOCAL_RENDERER.equals("opengles3_mges"))
         {
-            envMap.put("MG_DIR_PATH", Tools.DIR_CACHE.getAbsolutePath());
+            envMap.put("MG_DIR_PATH", Tools.MOBILEGLES_DIR);
             envMap.put("MG_maxGlslCacheSize", MG_GLSL_CACHE_SIZE);
             envMap.put("MG_enableANGLE", MG_ANGLE_OPTION);
             envMap.put("MG_enableNoError", MG_NOERROR_OPTION);
             envMap.put("MG_multidrawMode", MG_MULTIDRAWMODE_OPTION);
+            envMap.put("MG_angleDepthClearFixMode", MG_ANGLECLEARWORKAROUND_OPTION);
             envMap.put("MG_enableExtGL43", MG_EXT_GL43);
             envMap.put("MG_enableExtComputeShader", MG_EXT_CS);
         }
@@ -326,7 +327,7 @@ public class JREUtils {
         if (eglName != null) envMap.put("POJAVEXEC_EGL", eglName);
 
         if (!LOCAL_RENDERER.startsWith("opengles")) {
-            envMap.put("MESA_GLSL_CACHE_DIR", Tools.MOBILEGLES_DIR);
+            envMap.put("MESA_GLSL_CACHE_DIR", Tools.DIR_CACHE.getAbsolutePath());
             envMap.put("force_glsl_extensions_warn", "true");
             envMap.put("allow_higher_compat_version", "true");
             envMap.put("allow_glsl_extension_directive_midshader", "true");

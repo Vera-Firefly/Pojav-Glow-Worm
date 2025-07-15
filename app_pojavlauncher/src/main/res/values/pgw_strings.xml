@@ -202,6 +202,10 @@
     <string name="mg_option_multidraw_mode_multidraw_indirect">Prefer MultiDraw Indirect</string>
     <string name="mg_option_multidraw_mode_drawelements">Forcing DrawElements</string>
 
+    <string name="mg_option_angle_clear_workaround">ANGLE depth clear workaround</string>
+    <string name="mg_option_angle_clear_workaround_disable">Disable</string>
+    <string name="mg_option_angle_clear_workaround_enable_1">Enable workaround #1</string>
+
     <string name="mg_option_ext_gl43">Enable incomplete OpenGL43 extension</string>
     <string name="mg_option_ext_cs">Enable incomplete ARB_compute_shader extension</string>
 </resources>

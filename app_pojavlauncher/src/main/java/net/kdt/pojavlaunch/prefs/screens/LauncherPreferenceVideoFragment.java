@@ -315,6 +315,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         Spinner enableANGLE = view.findViewById(R.id.mg_spinner_angle);
         Spinner enableNoError = view.findViewById(R.id.mg_spinner_no_error);
         Spinner enableCompatibleMode = view.findViewById(R.id.mg_spinner_multidraw_mode);
+        Spinner angleClearWorkaround = view.findViewById(R.id.mg_spinner_angle_clear_workaround);
         Switch enableExtGL43 = view.findViewById(R.id.mg_switch_ext_gl43);
         Switch enableExtComputeShader = view.findViewById(R.id.mg_switch_ext_cs);
         FrameLayout container = view.findViewById(R.id.mg_view_container);
@@ -354,6 +355,14 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         enableCompatibleMode.setAdapter(multidrawModeAdapter);
         enableCompatibleMode.setSelection(Integer.parseInt(LauncherPreferences.MG_MULTIDRAWMODE_OPTION));
 
+        // Angle Clear Workaround Options
+        ArrayList<String> angleClearWorkaroundOptions = new ArrayList<>();
+        angleClearWorkaroundOptions.add(getString(R.string.mg_option_angle_clear_workaround_disable));
+        angleClearWorkaroundOptions.add(getString(R.string.mg_option_angle_clear_workaround_enable_1));
+        ArrayAdapter<String> angleClearWorkaroundAdapter = new ArrayAdapter<>(this, R.layout.spinner, angleClearWorkaroundOptions);
+        angleClearWorkaround.setAdapter(angleClearWorkaroundAdapter);
+        angleClearWorkaround.setSelection(Integer.parseInt(LauncherPreferences.MG_ANGLECLEARWORKAROUND_OPTION));
+
         enableExtGL43.setChecked(LauncherPreferences.MG_EXT_GL43.equals("1"));
         enableExtComputeShader.setChecked(LauncherPreferences.MG_EXT_CS.equals("1"));
 
@@ -387,6 +396,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                     LauncherPreferences.MG_ANGLE_OPTION = Integer.toString(enableANGLE.getSelectedItemPosition());
                     LauncherPreferences.MG_NOERROR_OPTION = Integer.toString(enableNoError.getSelectedItemPosition());
                     LauncherPreferences.MG_MULTIDRAWMODE_OPTION = Integer.toString(enableCompatibleMode.getSelectedItemPosition());
+                    LauncherPreferences.MG_ANGLECLEARWORKAROUND_OPTION = Integer.toString(angleClearWorkaround.getSelectedItemPosition());
                     LauncherPreferences.MG_EXT_GL43 = enableExtGL43.isChecked() ? "1" : "0";
                     LauncherPreferences.MG_EXT_CS = enableExtComputeShader.isChecked() ? "1" : "0";
                     LauncherPreferences.DEFAULT_PREF.edit()
@@ -394,6 +404,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                             .putString("mg_angle_option", LauncherPreferences.MG_ANGLE_OPTION)
                             .putString("mg_noerror_option", LauncherPreferences.MG_NOERROR_OPTION)
                             .putString("mg_multidraw_mode", LauncherPreferences.MG_MULTIDRAWMODE_OPTION)
+                            .putString("mg_angle_clear_workaround", LauncherPreferences.MG_ANGLECLEARWORKAROUND_OPTION)
                             .putString("mg_ext_gl43", LauncherPreferences.MG_EXT_GL43)
                             .putString("mg_ext_compute_shader", LauncherPreferences.MG_EXT_CS)
                             .apply();
