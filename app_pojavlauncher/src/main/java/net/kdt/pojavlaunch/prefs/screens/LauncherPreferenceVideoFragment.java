@@ -359,7 +359,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         ArrayList<String> angleClearWorkaroundOptions = new ArrayList<>();
         angleClearWorkaroundOptions.add(getString(R.string.mg_option_angle_clear_workaround_disable));
         angleClearWorkaroundOptions.add(getString(R.string.mg_option_angle_clear_workaround_enable_1));
-        ArrayAdapter<String> angleClearWorkaroundAdapter = new ArrayAdapter<>(this, R.layout.spinner, angleClearWorkaroundOptions);
+        ArrayAdapter<String> angleClearWorkaroundAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner, angleClearWorkaroundOptions);
         angleClearWorkaround.setAdapter(angleClearWorkaroundAdapter);
         angleClearWorkaround.setSelection(Integer.parseInt(LauncherPreferences.MG_ANGLECLEARWORKAROUND_OPTION));
 
