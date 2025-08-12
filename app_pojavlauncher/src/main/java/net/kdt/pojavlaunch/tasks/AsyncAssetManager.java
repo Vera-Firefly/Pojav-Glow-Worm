@@ -10,6 +10,7 @@ import android.util.Log;
 import com.kdt.mcgui.ProgressLayout;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 
+import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 
 import org.apache.commons.io.FileUtils;
@@ -37,28 +38,67 @@ public class AsyncAssetManager {
                 Tools.copyAssetFile(ctx, "launcher_profiles.json", ProfilePathHome.getGameHome(), false);
                 Tools.copyAssetFile(ctx, "resolv.conf", Tools.DIR_DATA, false);
 
-                String abi = Build.SUPPORTED_ABIS[0];
-                Tools.copyAssetFolder(ctx, "renderer/mobileglues/" + abi, Tools.MOBILEGLES_DIR, false);
-                Tools.copyAssetFolder(ctx, "renderer/mobilegl/" + abi, Tools.MOBILEGL_DIR, false);
-
-                File path = new File(Tools.DIR_GAME_HOME + "/login/version");
-                Tools.copyAssetFile(ctx, "login/version", path.getParent(), false);
-                InputStream in = ctx.getAssets().open("login/version");
-                byte[] b = new byte[in.available()];
-                in.read(b);
-                int newVersion = Integer.parseInt(new String(b));
-                in.close();
-                path.getParentFile().mkdirs();
-                int oldVersion = Integer.parseInt(Tools.read(Tools.DIR_GAME_HOME + "/login/version"));
-                boolean overwrite = newVersion > oldVersion;
-                Tools.copyAssetFile(ctx, "login/version", path.getParent(), overwrite);
-                Tools.copyAssetFile(ctx, "login/nide8auth.jar", path.getParent(), overwrite);
-                Tools.copyAssetFile(ctx, "login/authlib-injector.jar", path.getParent(), overwrite);
+                unpackRendererFiles(ctx);
+                unpackOtherLoginFiles(ctx);
             } catch (IOException e) {
                 Log.e("AsyncAssetManager", "Failed to unpack critical components !");
             }
             ProgressLayout.clearProgress(ProgressLayout.EXTRACT_SINGLE_FILES);
         });
+    }
+
+    private static void  unpackRendererFiles(Context ctx) {
+        try {
+            String abi = "/" + Build.SUPPORTED_ABIS[0];
+            String MGES_PATH = "renderer/mobileglues";
+            String MGGL_PATH = "renderer/mobilegl";
+
+            Tools.copyAssetFile(ctx, MGES_PATH + abi, Tools.MOBILEGLES_DIR, getRendererVersionFromAssets(ctx, Tools.MOBILEGLES_DIR, MGES_PATH));
+            Tools.copyAssetFile(ctx, MGGL_PATH + abi, Tools.MOBILEGL_DIR, getRendererVersionFromAssets(ctx, Tools.MOBILEGL_DIR, MGGL_PATH));
+        } catch (IOException ignored) {
+
+        }
+    }
+
+    private static boolean getRendererVersionFromAssets(Context ctx, String DIR, String RendererPath) {
+        try {
+            String assetsVersionFile = RendererPath + "/version";
+            String outVersionFile = DIR + "/version";
+            File versionFile = new File(DIR + "/version");
+            Tools.copyAssetFile(ctx, assetsVersionFile, versionFile.getParent(), false);
+            InputStream in = ctx.getAssets().open(assetsVersionFile);
+            byte[] b = new byte[in.available()];
+            in.read(b);
+            int newVersion = Integer.parseInt(new String(b));
+            in.close();
+            versionFile.getParentFile().mkdirs();
+            int oldVersion = Integer.parseInt(Tools.read(outVersionFile));
+            boolean overwrite = newVersion > oldVersion;
+            return overwrite;
+        } catch (IOException e) {
+            Log.e("AsyncAssetManager", "Failed to read VersionFile !");
+            return false;
+        }
+    }
+
+    private static void unpackOtherLoginFiles(Context ctx) {
+        try {
+            File path = new File(Tools.DIR_GAME_HOME + "/login/version");
+            Tools.copyAssetFile(ctx, "login/version", path.getParent(), false);
+            InputStream in = ctx.getAssets().open("login/version");
+            byte[] b = new byte[in.available()];
+            in.read(b);
+            int newVersion = Integer.parseInt(new String(b));
+            in.close();
+            path.getParentFile().mkdirs();
+            int oldVersion = Integer.parseInt(Tools.read(Tools.DIR_GAME_HOME + "/login/version"));
+            boolean overwrite = newVersion > oldVersion;
+            Tools.copyAssetFile(ctx, "login/version", path.getParent(), overwrite);
+            Tools.copyAssetFile(ctx, "login/nide8auth.jar", path.getParent(), overwrite);
+            Tools.copyAssetFile(ctx, "login/authlib-injector.jar", path.getParent(), overwrite);
+        } catch (IOException e) {
+            Log.e("AsyncAssetManager", "Failed to unpack critical components !");
+        }
     }
 
     public static void unpackComponents(Context ctx) {
