@@ -48,19 +48,21 @@ public class AsyncAssetManager {
     }
 
     private static void  unpackRendererFiles(Context ctx) {
+        String abi = "/" + Build.SUPPORTED_ABIS[0];
+        String MGES_PATH = "renderer/mobileglues";
+        String MGGL_PATH = "renderer/mobilegl";
+        boolean mgesVersion = getRendererVersionFromAssets(ctx, Tools.MOBILEGLES_DIR, MGES_PATH);
+        boolean mgglVersion = getRendererVersionFromAssets(ctx, Tools.MOBILEGL_DIR, MGGL_PATH);
         try {
-            String abi = "/" + Build.SUPPORTED_ABIS[0];
-            String MGES_PATH = "renderer/mobileglues";
-            String MGGL_PATH = "renderer/mobilegl";
-
-            Tools.copyAssetFile(ctx, MGES_PATH + abi, Tools.MOBILEGLES_DIR, getRendererVersionFromAssets(ctx, Tools.MOBILEGLES_DIR, MGES_PATH));
-            Tools.copyAssetFile(ctx, MGGL_PATH + abi, Tools.MOBILEGL_DIR, getRendererVersionFromAssets(ctx, Tools.MOBILEGL_DIR, MGGL_PATH));
+            Tools.copyAssetFolder(ctx, MGES_PATH + abi, Tools.MOBILEGLES_DIR, mgesVersion);
+            Tools.copyAssetFolder(ctx, MGGL_PATH + abi, Tools.MOBILEGL_DIR, mgglVersion);
         } catch (IOException ignored) {
 
         }
     }
 
     private static boolean getRendererVersionFromAssets(Context ctx, String DIR, String RendererPath) {
+        boolean overwrite = false;
         try {
             String assetsVersionFile = RendererPath + "/version";
             String outVersionFile = DIR + "/version";
@@ -72,13 +74,14 @@ public class AsyncAssetManager {
             int newVersion = Integer.parseInt(new String(b));
             in.close();
             versionFile.getParentFile().mkdirs();
-            int oldVersion = Integer.parseInt(Tools.read(outVersionFile));
-            boolean overwrite = newVersion > oldVersion;
-            return overwrite;
+            int oldVersion = Integer.parseInt(Tools.read(outVersionFile).trim());
+            overwrite = newVersion > oldVersion;
+            Tools.copyAssetFile(ctx, assetsVersionFile, versionFile.getParent(), overwrite);
         } catch (IOException e) {
+            overwrite = true;
             Log.e("AsyncAssetManager", "Failed to read VersionFile !");
-            return false;
         }
+        return overwrite;
     }
 
     private static void unpackOtherLoginFiles(Context ctx) {
@@ -91,7 +94,7 @@ public class AsyncAssetManager {
             int newVersion = Integer.parseInt(new String(b));
             in.close();
             path.getParentFile().mkdirs();
-            int oldVersion = Integer.parseInt(Tools.read(Tools.DIR_GAME_HOME + "/login/version"));
+            int oldVersion = Integer.parseInt(Tools.read(Tools.DIR_GAME_HOME + "/login/version").trim());
             boolean overwrite = newVersion > oldVersion;
             Tools.copyAssetFile(ctx, "login/version", path.getParent(), overwrite);
             Tools.copyAssetFile(ctx, "login/nide8auth.jar", path.getParent(), overwrite);
