@@ -1,11 +1,13 @@
 package com.firefly.utils;
 
+import android.content.Context;
 import android.opengl.EGL14;
 import android.opengl.EGLConfig;
 import android.opengl.EGLContext;
 import android.opengl.EGLDisplay;
 import android.opengl.GLES20;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -15,9 +17,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import net.kdt.pojavlaunch.Logger;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class PGWTools {
 
@@ -218,6 +217,24 @@ public class PGWTools {
             }
         }
         return fileOrDir.delete();
+    }
+
+    public static class MG_GLVersionSetting {
+        // value -> index
+        public static int getIndexByValue(Map<String, Integer> glVersionMap, int value) {
+            ArrayList<Integer> values = new ArrayList<>(glVersionMap.values());
+            return values.indexOf(value);
+        }
+
+        // index -> value
+        public static int getValueByIndex(Map<String, Integer> glVersionMap, int index) {
+            ArrayList<Integer> values = new ArrayList<>(glVersionMap.values());
+            if (index >= 0 && index < values.size()) {
+                return values.get(index);
+            }
+            return -1; // 无效索引
+        }
+
     }
 
 }

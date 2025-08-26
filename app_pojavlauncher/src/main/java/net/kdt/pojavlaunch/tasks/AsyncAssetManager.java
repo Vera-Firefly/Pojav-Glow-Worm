@@ -10,7 +10,6 @@ import android.util.Log;
 import com.kdt.mcgui.ProgressLayout;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 
-import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 
 import org.apache.commons.io.FileUtils;

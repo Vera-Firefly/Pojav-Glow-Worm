@@ -37,7 +37,7 @@ void dlsym_EGL() {
 
     if (gles && !strncmp(gles, "libGLESv2_angle.so", 18))
     {
-        if (getenv("MG_DIR_PATH")) {
+        if (getenv("MG_DIR_PATH") != NULL) {
             if (asprintf(&eglName, "%s/%s", getenv("MG_DIR_PATH"), "libEGL_angle.so") == -1)
             {
                 eglName = "libEGL_angle.so";
@@ -46,7 +46,8 @@ void dlsym_EGL() {
             eglName = "libEGL_angle.so";
         }
     } else {
-        eglName = getenv("POJAVEXEC_EGL");
+        char* execEgl = getenv("POJAVEXEC_EGL");
+        eglName = gles ? gles : (execEgl ? execEgl: "libEGL.so");
     }
 
     if (eglName)
@@ -54,8 +55,6 @@ void dlsym_EGL() {
 
     if (dl_handle == NULL)
         dl_handle = dlopen("libEGL.so", RTLD_LOCAL | RTLD_LAZY);
-
-    free(eglName);
 
     if (dl_handle == NULL) abort();
 

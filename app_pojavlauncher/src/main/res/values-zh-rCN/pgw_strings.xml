@@ -232,7 +232,12 @@
     <string name="mg_option_angle_clear_workaround_disable">不启用</string>
     <string name="mg_option_angle_clear_workaround_enable_1">启用方案 #1</string>
 
+    <string name="mg_option_gl_version">自定义目标 OpenGL 版本</string>"
+    
     <string name="mg_option_ext_gl43">启用不完整的 OpenGL43 扩展</string>
     <string name="mg_option_ext_cs">启用不完整的 ARB_compute_shader 扩展</string>
+    <string name="mg_option_ext_timer_query">禁用推荐的 timer_query 扩展</string>
+    <string name="mg_option_ext_direct_state_access">启用高级的 direct_state_access 扩展</string>
+    <string name="mg_option_enable_fsr1">(实验性) 启用内置的 FSR1</string>
 
 </resources>

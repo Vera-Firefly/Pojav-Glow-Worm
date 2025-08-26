@@ -5,7 +5,6 @@ import static android.os.Build.VERSION_CODES.P;
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
-import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_EXP_SETUP;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,7 +19,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -49,12 +47,9 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.fifthLight.touchController.ControllerProxy;
 import com.firefly.utils.ListUtils;
-import com.firefly.utils.MesaUtils;
-import com.firefly.utils.TurnipUtils;
 
 import com.movtery.feature.version.VersionInfo;
 import com.movtery.feature.version.utils.VersionInfoUtils;
-import com.movtery.plugins.renderer.RendererPlugin;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

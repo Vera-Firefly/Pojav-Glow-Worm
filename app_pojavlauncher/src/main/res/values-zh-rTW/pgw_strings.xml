@@ -230,5 +230,6 @@
 
     <string name="mg_option_ext_gl43">啟用實驗性 OpenGL43 延伸功能</string>
     <string name="mg_option_ext_cs">啟用實驗性 ARB_compute_shader 延伸功能</string>
+    <string name="mg_option_ext_timer_query">禁用推荐的 timer_query 扩展</string>
 
 </resources>
