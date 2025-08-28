@@ -294,6 +294,11 @@ public class JREUtils {
 
         }
 
+        if (LOCAL_RENDERER.equals("mesa_3d_egl_no_surface"))
+        {
+            eglName = Tools.MESA_EGL_DIR + "/libEGL.so";
+        }
+
         RendererPlugin.Renderer customRenderer = RendererPlugin.getSelectedRenderer();
         if (customRenderer != null && LOCAL_RENDERER.equals(customRenderer.getIdName())) {
             customRenderer.getEnv().forEach(envPair -> {
@@ -374,7 +379,7 @@ public class JREUtils {
                 }
                 break;
                 default:
-                    // Nothing to do here
+                    JREUtils.initRendererTag(LOCAL_RENDERER);
                     break;
             }
             envMap.put("LIB_MESA_NAME", loadGraphicsLibrary());
@@ -441,6 +446,8 @@ public class JREUtils {
             envMap.put("LIB_MESA_NAME", loadGraphicsLibrary());
             envMap.put("LOCAL_DRIVER_MODEL", DRIVER_MODEL);
             JREUtils.initRendererTag("mesa_3d");
+        } else {
+            JREUtils.initRendererTag(LOCAL_RENDERER);
         }
 
         if (!envMap.containsKey("LIBGL_ES")) {
@@ -572,6 +579,28 @@ public class JREUtils {
         if (LOCAL_RENDERER.equals("opengles3_mggl"))
         {
             dlopen(Tools.MOBILEGL_DIR + "/libspirv-cross-c-shared.so");
+        }
+
+        if (LOCAL_RENDERER.equals("mesa_3d_egl_no_surface"))
+        {
+            dlopen(Tools.MESA_EGL_DIR + "/libgallium_dri.so");
+            dlopen(Tools.MESA_EGL_DIR + "/libGLESv1_CM.so");
+            dlopen(Tools.MESA_EGL_DIR + "/libGLESv2.so");
+
+            String[] libs = {
+                    "liblog.so",
+                    "libnativewindow.so",
+                    "libsync.so"
+            };
+
+            for (String lib : libs) {
+                boolean result = dlopen(lib);
+                if (result) {
+                    System.out.println("Loaded " + lib);
+                } else {
+                    System.err.println("Failed to load " + lib);
+                }
+            }
         }
 
         if (!dlopen(rendererLib) && !dlopen(findInLdLibPath(rendererLib))) {
@@ -841,6 +870,9 @@ public class JREUtils {
                     break;
                 case "gallium_panfrost":
                     renderLibrary = "libOSMesa_2300d.so";
+                    break;
+                case "mesa_3d_egl_no_surface":
+                    renderLibrary = Tools.MESA_EGL_DIR + "/libEGL.so";
                     break;
                 default:
                     Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");

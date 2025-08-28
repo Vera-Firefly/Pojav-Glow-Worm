@@ -235,13 +235,23 @@ int pojavInitOpenGL() {
     const char *ldrivermodel = getenv("LOCAL_DRIVER_MODEL");
     const char *mldo = getenv("LOCAL_LOADER_OVERRIDE");
 
-    if (mldo) printf("OSMDroid: MESA_LOADER_DRIVER_OVERRIDE = %s\n", mldo);
+    if (mldo != NULL) printf("OSMDroid: MESA_LOADER_DRIVER_OVERRIDE = %s\n", mldo);
 
     if (!strncmp("opengles", renderer, 8))
     {
         ConfigBridgeTbl();
         pojav_environ->config_renderer = RENDERER_GL4ES;
         if (pojav_environ->bridge_config == 0) set_gl_bridge_tbl();
+    }
+
+    if (!strcmp("mesa_3d_egl_no_surface", renderer)) {
+        setenv("GALLIUM_DRIVER", "zink", 1);
+        setenv("MESA_LOADER_DRIVER_OVERRIDE", "zink", 1);
+        setenv("mesa_glthread", "true", 1);
+        load_vulkan();
+        ConfigBridgeTbl();
+        pojav_environ->config_renderer = RENDERER_MESA_EGL;
+        set_mesa_gl_bridge_tbl();
     }
 
     if (!strcmp(renderer, "custom_gallium"))
@@ -284,7 +294,7 @@ int pojavInitOpenGL() {
         if (!strcmp(ldrivermodel, "gallium_freedreno"))
         {
             setenv("GALLIUM_DRIVER", "freedreno", 1);
-            if (mldo) setenv("MESA_LOADER_DRIVER_OVERRIDE", mldo, 1);
+            if (mldo != NULL) setenv("MESA_LOADER_DRIVER_OVERRIDE", mldo, 1);
             else setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
             renderer_load_config();
         }
@@ -317,6 +327,9 @@ int pojavInitOpenGL() {
             if (br_init()) br_setup_window();
         }
     }
+
+    if (pojav_environ->config_renderer == RENDERER_MESA_EGL)
+        if (br_init()) br_setup_window();
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1)
         if (br_init()) br_setup_window();
@@ -369,6 +382,9 @@ EXTERNAL_API void pojavSwapBuffers() {
         else br_swap_buffers();
     }
 
+    if (pojav_environ->config_renderer == RENDERER_MESA_EGL)
+        br_swap_buffers();
+
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
         virglSwapBuffers();
 
@@ -393,6 +409,9 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
         else br_make_current((basic_render_window_t*)window);
     }
 
+    if (pojav_environ->config_renderer == RENDERER_MESA_EGL)
+        br_make_current((basic_render_window_t*)window);
+
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX1)
         br_make_current((basic_render_window_t*)window);
 
@@ -413,6 +432,9 @@ EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
 
     if (pojav_environ->bridge_config != 0 && pojav_environ->config_renderer == RENDERER_GL4ES)
         return gl_init_context(contextSrc);
+
+    if (pojav_environ->config_renderer == RENDERER_MESA_EGL)
+        return br_init_context((basic_render_window_t*)contextSrc);
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
         return virglCreateContext(contextSrc);
@@ -496,6 +518,9 @@ EXTERNAL_API void pojavSwapInterval(int interval) {
             gl_swap_interval(interval);
         else br_swap_interval(interval);
     }
+
+    if (pojav_environ->config_renderer == RENDERER_MESA_EGL)
+        br_swap_interval(interval);
 
     if (pojav_environ->config_renderer == RENDERER_VIRGL)
         virglSwapInterval(interval);

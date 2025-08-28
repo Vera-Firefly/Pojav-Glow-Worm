@@ -141,6 +141,7 @@ public final class Tools {
     public static String RENDERER_DIR = null;
     public static String MOBILEGLES_DIR = null;
     public static String MOBILEGL_DIR = null;
+    public static String MESA_EGL_DIR = null;
     public static String TURNIP_LIBS = null;
     public static String LOADER_OVERRIDE = null;
     public static String LIBGL_GL = null;
@@ -183,6 +184,7 @@ public final class Tools {
         RENDERER_DIR = DIR_DATA + "/renderer";
         MOBILEGLES_DIR = RENDERER_DIR + "/mobileglues";
         MOBILEGL_DIR = RENDERER_DIR + "/mobilegl";
+        MESA_EGL_DIR = RENDERER_DIR + "/mesa2520";
         TURNIP_DIR = DIR_DATA + "/turnip";
         NATIVE_LIB_DIR = ctx.getApplicationInfo().nativeLibraryDir;
     }
