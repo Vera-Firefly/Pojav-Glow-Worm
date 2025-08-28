@@ -46,6 +46,49 @@ bool bridge_init()
     return true;
 }
 
+bool bridge_create_external_ahb(bridge_wrapper_t *bundle)
+{
+    if (!bundle) return false;
+
+    if (bundle->ahb_fbo)
+    {
+        LOGE("ahb_fbo already exists");
+        return false;
+    }
+
+    bundle->ahb_fbo = mesa_gl_create_ahb_fbo(bundle->width, bundle->height);
+    if (!bundle->ahb_fbo)
+    {
+        LOGE("mesa_gl_create_ahb_fbo failed");
+        mesa_gl_destroy_ahb_fbo(bundle->ahb_fbo);
+        return false;
+    }
+
+    return true;
+}
+
+bool bridge_wrap_external_ahb(bridge_wrapper_t *bundle, AHardwareBuffer *ahb, int width, int height)
+{
+    if (!bundle) return false;
+
+    if (bundle->ahb_fbo)
+    {
+        mesa_gl_destroy_ahb_fbo(bundle->ahb_fbo);
+        bundle->ahb_fbo = NULL;
+    }
+
+    bundle->ahb_fbo = mesa_gl_wrap_ahb_as_fbo(ahb, width, height);
+    if (!bundle->ahb_fbo)
+    {
+        LOGE("mesa_gl_wrap_ahb_as_fbo failed");
+        return false;
+    }
+
+    LOGI("bridge_wrap_external_ahb: wrapped external AHB %p as FBO", (void*)ahb);
+    return true;
+}
+
+
 /* 创建 window，返回 p */
 bridge_wrapper_t* bridge_init_context(bridge_wrapper_t * share)
 {
@@ -55,14 +98,16 @@ bridge_wrapper_t* bridge_init_context(bridge_wrapper_t * share)
     if (share) share_ctx = share->ctx;
 
     EGLContext ctx = mesa_gl_create_context(share_ctx, 3, &cfg, &native_vis);
-    if (ctx == EGL_NO_CONTEXT) {
+    if (ctx == EGL_NO_CONTEXT)
+    {
         LOGE("mesa_gl_create_context failed");
         return NULL;
     }
 
     bridge_wrapper_t* bundle = malloc(sizeof(bridge_wrapper_t));
     memset(bundle, 0, sizeof(bridge_wrapper_t));
-    if (!bundle) {
+    if (!bundle)
+    {
         LOGE("calloc failed");
         mesa_gl_destroy_context(ctx);
         return NULL;
@@ -72,6 +117,15 @@ bridge_wrapper_t* bridge_init_context(bridge_wrapper_t * share)
     bundle->cfg = cfg;
     bundle->format = native_vis;
     bundle->tmp_pbuffer = EGL_NO_SURFACE;
+    bundle->width = pojav_environ->savedWidth;
+    bundle->height = pojav_environ->savedHeight;
+
+    if (bridge_create_external_ahb(bundle))
+    {
+        LOGI("bridge_init_context created bundle %p (ctx %p) with external AHB-FBO", (void*)bundle, (void*)ctx);
+        if (!bridge_wrap_external_ahb(bundle, bundle->ahb_fbo->ahb, bundle->width, bundle->height))
+            mesa_gl_destroy_ahb_fbo(bundle->ahb_fbo);
+    }
 
     LOGI("bridge_init_context created bundle %p (ctx %p)", (void*)bundle, (void*)ctx);
     return bundle;
@@ -106,11 +160,13 @@ void bridge_make_current(bridge_wrapper_t* bundle)
 {
     if (!bundle) {
         /* 解绑 */
-        if (g_current_bundle) {
+        if (g_current_bundle)
+        {
             mesa_gl_release_tmp_pbuffer(g_current_bundle->tmp_pbuffer);
             g_current_bundle->tmp_pbuffer = EGL_NO_SURFACE;
         }
-        if (eglMakeCurrent_p && g_current_bundle) {
+        if (eglMakeCurrent_p && g_current_bundle)
+        {
             eglMakeCurrent_p(mesa_gl_create_context(EGL_NO_CONTEXT, 3, NULL, &bundle->format) /* noop? */, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         }
         g_current_bundle = NULL;

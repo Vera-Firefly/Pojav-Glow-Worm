@@ -193,7 +193,8 @@ mesa_ahb_fbo* mesa_gl_create_ahb_fbo(int width, int height)
         return NULL;
     }
 
-    mesa_ahb_fbo* o = (mesa_ahb_fbo*) calloc(1, sizeof(mesa_ahb_fbo));
+    mesa_ahb_fbo* o = malloc(sizeof(mesa_ahb_fbo));
+    memset(o, 0, sizeof(mesa_ahb_fbo));
     if (!o) return NULL;
     o->width = width; o->height = height; o->own_ahb = 1;
 
