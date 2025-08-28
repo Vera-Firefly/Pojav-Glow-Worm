@@ -21,8 +21,9 @@
 
 #define LOGI(fmt,...) fprintf(stdout, "[MESA_BRIDGE] " fmt "\n", ##__VA_ARGS__)
 #define LOGE(fmt,...) fprintf(stderr, "[MESA_BRIDGE] " fmt "\n", ##__VA_ARGS__)
+#define LOGW(fmt,...) fprintf(stderr, "[MESA_BRIDGE] " fmt "\n", ##__VA_ARGS__)
 
-static EGLDisplay g_display = ((EGLDisplay)(0));
+static EGLDisplay g_display = EGL_NO_DISPLAY;
 
 static PFNEGLGETNATIVECLIENTBUFFERANDROIDPROC p_eglGetNativeClientBufferANDROID = NULL;
 static PFNEGLCREATEIMAGEKHRPROC p_eglCreateImageKHR = NULL;
@@ -31,7 +32,11 @@ static PFNGLEGLIMAGETARGETTEXTURE2DOESPROC p_glEGLImageTargetTexture2DOES = NULL
 
 static void setup_ext_procs_once(void)
 {
-    if (p_eglGetNativeClientBufferANDROID) return;
+    if (p_eglGetNativeClientBufferANDROID)
+    {
+        LOGI("setup_ext_procs_once OK");
+        return;
+    }
     p_eglGetNativeClientBufferANDROID = (PFNEGLGETNATIVECLIENTBUFFERANDROIDPROC)eglGetProcAddress_p("eglGetNativeClientBufferANDROID");
     p_eglCreateImageKHR = (PFNEGLCREATEIMAGEKHRPROC)eglGetProcAddress_p("eglCreateImageKHR");
     p_eglDestroyImageKHR = (PFNEGLDESTROYIMAGEKHRPROC)eglGetProcAddress_p("eglDestroyImageKHR");
@@ -86,27 +91,50 @@ void mesa_gl_deinit(void)
 static int choose_config(EGLConfig *out_cfg, EGLint *out_native_vis)
 {
     if (g_display == EGL_NO_DISPLAY) return -1;
+    EGLConfig cfg;
+    EGLint num = 0;
     const EGLint attrs[] = {
             EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
-            EGL_RED_SIZE,8, EGL_GREEN_SIZE,8, EGL_BLUE_SIZE,8, EGL_ALPHA_SIZE,8,
-            EGL_DEPTH_SIZE,24,
-            EGL_SURFACE_TYPE, EGL_PBUFFER_BIT | EGL_WINDOW_BIT,
+            EGL_SURFACE_TYPE, EGL_PBUFFER_BIT,
+            EGL_RED_SIZE, 8,
+            EGL_GREEN_SIZE, 8,
+            EGL_BLUE_SIZE, 8,
+            EGL_ALPHA_SIZE, 8,
+            EGL_DEPTH_SIZE, 24,
             EGL_NONE
     };
-    EGLint num = 0;
-    if (!eglChooseConfig_p(g_display, attrs, NULL, 0, &num) || num == 0) return -1;
-    if (!eglChooseConfig_p(g_display, attrs, out_cfg, 1, &num) || num == 0) return -1;
-    if (out_native_vis) eglGetConfigAttrib_p(g_display, *out_cfg, EGL_NATIVE_VISUAL_ID, out_native_vis);
+    if (!eglChooseConfig_p(g_display, attrs, &cfg, 1, &num) || num == 0) {
+        LOGW("No exact match for RGBA8+DEPTH24, trying fallback");
+
+        /* 兼容低版本设备，降低要求 */
+        const EGLint fallback_attrs[] = {
+                EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+                EGL_SURFACE_TYPE, EGL_PBUFFER_BIT,
+                EGL_NONE
+        };
+        if (!eglChooseConfig_p(g_display, fallback_attrs, &cfg, 1, &num) || num == 0) {
+            LOGE("mesa_gl_choose_config failed: no configs available");
+            return -1;
+        }
+    }
+    if (out_cfg) *out_cfg = cfg;
+    if (out_native_vis) *out_native_vis = eglGetConfigAttrib_p(g_display, cfg, EGL_NATIVE_VISUAL_ID, out_native_vis);
+
+    {
+        EGLBoolean bindResult;
+        bindResult = eglBindAPI_p(EGL_OPENGL_ES_API);
+        if (!bindResult) printf("EGLBridge: bind failed: %p\n", eglGetError_p());
+    }
+
     return 0;
 }
 
 /* create context (no surface) */
-EGLContext mesa_gl_create_context(EGLContext share_ctx, int gles_version, EGLConfig *out_cfg)
+EGLContext mesa_gl_create_context(EGLContext share_ctx, int gles_version, EGLConfig *out_cfg, EGLint *out_vis)
 {
     if (g_display == EGL_NO_DISPLAY) return EGL_NO_CONTEXT;
     EGLConfig cfg;
-    EGLint native_vis = 0;
-    if (choose_config(&cfg, &native_vis) != 0) {
+    if (choose_config(&cfg, &out_vis) != 0) {
         LOGE("choose_config failed");
         return EGL_NO_CONTEXT;
     }
@@ -219,7 +247,8 @@ mesa_ahb_fbo* mesa_gl_wrap_ahb_as_fbo(AHardwareBuffer *ahb, int width, int heigh
         LOGE("required EGL/GL extensions missing");
         return NULL;
     }
-    mesa_ahb_fbo *o = (mesa_ahb_fbo*) calloc(1, sizeof(mesa_ahb_fbo));
+    mesa_ahb_fbo *o = malloc(sizeof(mesa_ahb_fbo));
+    memset(o, 0, sizeof(mesa_ahb_fbo));
     if (!o) return NULL;
     o->ahb = ahb;
     o->width = width; o->height = height;

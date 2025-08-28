@@ -21,7 +21,7 @@ bool mesa_gl_init();   /* return 0 on success */
 void mesa_gl_deinit(void);
 
 /* Context 管理 */
-EGLContext mesa_gl_create_context(EGLContext share_ctx, int gles_version, EGLConfig *out_cfg);
+EGLContext mesa_gl_create_context(EGLContext share_ctx, int gles_version, EGLConfig *out_cfg, EGLint *out_vis);
 void mesa_gl_destroy_context(EGLContext ctx);
 
 /* make current 无 window（优先 surfaceless，否则 pbuffer 回退） */

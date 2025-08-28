@@ -20,9 +20,11 @@ typedef struct mesa_ahb_fbo mesa_ahb_fbo;
 typedef struct bridge_wrapper_t {
     EGLContext ctx;           /* EGLContext created for this bundle */
     EGLConfig  cfg;           /* EGLConfig selected at creation time */
+    EGLint format;
     EGLSurface tmp_pbuffer;   /* 临时 1x1 pbuffer（如果需要回退） */
     mesa_ahb_fbo *ahb_fbo;    /* 可选：如果 bridge 为渲染创建并管理 AHB-FBO，则挂在这里 */
-    ANativeWindow *window;    /* optional ANativeWindow（不持有强引用，需由 caller 管理生命周期） */
+    struct ANativeWindow *nativeSurface;    /* optional ANativeWindow（不持有强引用，需由 caller 管理生命周期） */
+    struct ANativeWindow *newNativeSurface;
     int width;
     int height;
 } bridge_wrapper_t;
