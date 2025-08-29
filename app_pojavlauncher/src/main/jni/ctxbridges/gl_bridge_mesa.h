@@ -39,10 +39,10 @@ typedef struct mesa_ahb_fbo {
 } mesa_ahb_fbo;
 
 /* 创建 AHB->EGLImage->GL texture->FBO（当前 context 必须已 current） */
-mesa_ahb_fbo* mesa_gl_create_ahb_fbo(int width, int height);
+mesa_ahb_fbo* mesa_gl_create_ahb_fbo(EGLContext ctx, int width, int height);
 
 /* 如果你已有 AHardwareBuffer（比如 Mesa 分配的），将其包装为 mesa_ahb_fbo（不会重新 allocate） */
-mesa_ahb_fbo* mesa_gl_wrap_ahb_as_fbo(AHardwareBuffer *ahb, int width, int height);
+mesa_ahb_fbo* mesa_gl_wrap_ahb_as_fbo(EGLContext ctx , AHardwareBuffer *ahb, int width, int height);
 
 /* 销毁 */
 void mesa_gl_destroy_ahb_fbo(mesa_ahb_fbo *obj);

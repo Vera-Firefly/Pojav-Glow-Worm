@@ -25,24 +25,6 @@
 
 static EGLDisplay g_display = EGL_NO_DISPLAY;
 
-static PFNEGLGETNATIVECLIENTBUFFERANDROIDPROC p_eglGetNativeClientBufferANDROID = NULL;
-static PFNEGLCREATEIMAGEKHRPROC p_eglCreateImageKHR = NULL;
-static PFNEGLDESTROYIMAGEKHRPROC p_eglDestroyImageKHR = NULL;
-static PFNGLEGLIMAGETARGETTEXTURE2DOESPROC p_glEGLImageTargetTexture2DOES = NULL;
-
-static void setup_ext_procs_once(void)
-{
-    if (p_eglGetNativeClientBufferANDROID)
-    {
-        LOGI("setup_ext_procs_once OK");
-        return;
-    }
-    p_eglGetNativeClientBufferANDROID = (PFNEGLGETNATIVECLIENTBUFFERANDROIDPROC)eglGetProcAddress_p("eglGetNativeClientBufferANDROID");
-    p_eglCreateImageKHR = (PFNEGLCREATEIMAGEKHRPROC)eglGetProcAddress_p("eglCreateImageKHR");
-    p_eglDestroyImageKHR = (PFNEGLDESTROYIMAGEKHRPROC)eglGetProcAddress_p("eglDestroyImageKHR");
-    p_glEGLImageTargetTexture2DOES = (PFNGLEGLIMAGETARGETTEXTURE2DOESPROC)eglGetProcAddress_p("glEGLImageTargetTexture2DOES");
-}
-
 /* get display prefer surfaceless fallback default */
 static EGLDisplay get_display_fallback(void)
 {
@@ -74,7 +56,6 @@ bool mesa_gl_init()
         LOGI("eglBindAPI failed (non-fatal): 0x%04x", eglGetError_p());
     }
 
-    setup_ext_procs_once();
     LOGI("mesa_gl_init OK");
     return true;
 }
@@ -185,10 +166,10 @@ void mesa_gl_release_tmp_pbuffer(EGLSurface tmp_pb)
 
 /* ---------- AHB-FBO helpers (context must be current) ---------- */
 
-mesa_ahb_fbo* mesa_gl_create_ahb_fbo(int width, int height)
+mesa_ahb_fbo* mesa_gl_create_ahb_fbo(EGLContext ctx, int width, int height)
 {
     if (g_display == EGL_NO_DISPLAY) { LOGE("display not init"); return NULL; }
-    if (!p_eglGetNativeClientBufferANDROID || !p_eglCreateImageKHR || !p_glEGLImageTargetTexture2DOES) {
+    if (!eglCreateImageKHR_p || !glEGLImageTargetTexture2DOES_p) {
         LOGE("required EGL/GL extensions missing");
         return NULL;
     }
@@ -208,15 +189,15 @@ mesa_ahb_fbo* mesa_gl_create_ahb_fbo(int width, int height)
         free(o); return NULL;
     }
 
-    EGLClientBuffer client = p_eglGetNativeClientBufferANDROID(o->ahb);
+    EGLClientBuffer client = (EGLClientBuffer)(uintptr_t)o->ahb;
     if (!client) { LOGE("eglGetNativeClientBufferANDROID returned NULL"); AHardwareBuffer_release(o->ahb); free(o); return NULL; }
 
-    o->image = p_eglCreateImageKHR(g_display, EGL_NO_CONTEXT, EGL_NATIVE_BUFFER_ANDROID, client, NULL);
+    o->image = eglCreateImageKHR_p(g_display, ctx, EGL_NATIVE_BUFFER_ANDROID, client, NULL);
     if (o->image == EGL_NO_IMAGE_KHR) { LOGE("eglCreateImageKHR failed: 0x%04x", eglGetError_p()); AHardwareBuffer_release(o->ahb); free(o); return NULL; }
 
     glGenTextures(1, &o->tex);
     glBindTexture(GL_TEXTURE_2D, o->tex);
-    p_glEGLImageTargetTexture2DOES(GL_TEXTURE_2D, (GLeglImageOES)o->image);
+    glEGLImageTargetTexture2DOES_p(GL_TEXTURE_2D, (GLeglImageOES)o->image);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -230,7 +211,7 @@ mesa_ahb_fbo* mesa_gl_create_ahb_fbo(int width, int height)
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glDeleteFramebuffers(1, &o->fbo);
         glDeleteTextures(1, &o->tex);
-        p_eglDestroyImageKHR(g_display, o->image);
+        eglDestroyImageKHR_p(g_display, o->image);
         AHardwareBuffer_release(o->ahb);
         free(o); return NULL;
     }
@@ -241,10 +222,10 @@ mesa_ahb_fbo* mesa_gl_create_ahb_fbo(int width, int height)
     return o;
 }
 
-mesa_ahb_fbo* mesa_gl_wrap_ahb_as_fbo(AHardwareBuffer *ahb, int width, int height)
+mesa_ahb_fbo* mesa_gl_wrap_ahb_as_fbo(EGLContext ctx, AHardwareBuffer *ahb, int width, int height)
 {
     if (!ahb) return NULL;
-    if (!p_eglGetNativeClientBufferANDROID || !p_eglCreateImageKHR || !p_glEGLImageTargetTexture2DOES) {
+    if (!eglCreateImageKHR_p || !glEGLImageTargetTexture2DOES_p) {
         LOGE("required EGL/GL extensions missing");
         return NULL;
     }
@@ -255,15 +236,15 @@ mesa_ahb_fbo* mesa_gl_wrap_ahb_as_fbo(AHardwareBuffer *ahb, int width, int heigh
     o->width = width; o->height = height;
     o->own_ahb = 0;
 
-    EGLClientBuffer client = p_eglGetNativeClientBufferANDROID(ahb);
+    EGLClientBuffer client = (EGLClientBuffer)(uintptr_t)o->ahb;
     if (!client) { LOGE("eglGetNativeClientBufferANDROID returned NULL"); free(o); return NULL; }
 
-    o->image = p_eglCreateImageKHR(g_display, EGL_NO_CONTEXT, EGL_NATIVE_BUFFER_ANDROID, client, NULL);
+    o->image = eglCreateImageKHR_p(g_display, ctx, EGL_NATIVE_BUFFER_ANDROID, client, NULL);
     if (o->image == EGL_NO_IMAGE_KHR) { LOGE("eglCreateImageKHR failed: 0x%04x", eglGetError_p()); free(o); return NULL; }
 
     glGenTextures(1, &o->tex);
     glBindTexture(GL_TEXTURE_2D, o->tex);
-    p_glEGLImageTargetTexture2DOES(GL_TEXTURE_2D, (GLeglImageOES)o->image);
+    glEGLImageTargetTexture2DOES_p(GL_TEXTURE_2D, (GLeglImageOES)o->image);
 
     glGenFramebuffers(1, &o->fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, o->fbo);
@@ -274,7 +255,7 @@ mesa_ahb_fbo* mesa_gl_wrap_ahb_as_fbo(AHardwareBuffer *ahb, int width, int heigh
         LOGE("glCheckFramebufferStatus failed: 0x%x", status);
         glDeleteFramebuffers(1, &o->fbo);
         glDeleteTextures(1, &o->tex);
-        p_eglDestroyImageKHR(g_display, o->image);
+        eglDestroyImageKHR_p(g_display, o->image);
         free(o); return NULL;
     }
 
@@ -288,7 +269,7 @@ void mesa_gl_destroy_ahb_fbo(mesa_ahb_fbo *o)
     if (!o) return;
     if (o->fbo) glDeleteFramebuffers(1, &o->fbo);
     if (o->tex) glDeleteTextures(1, &o->tex);
-    if (o->image) p_eglDestroyImageKHR(g_display, o->image);
+    if (o->image) eglDestroyImageKHR_p(g_display, o->image);
     if (o->ahb && o->own_ahb) AHardwareBuffer_release(o->ahb);
     free(o);
 }

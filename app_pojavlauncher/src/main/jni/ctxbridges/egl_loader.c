@@ -9,6 +9,7 @@
 
 #define BR_LOADER
 #include "br_loader.h"
+#include "environ/environ.h"
 
 EGLBoolean (*eglMakeCurrent_p) (EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx);
 EGLBoolean (*eglDestroyContext_p) (EGLDisplay dpy, EGLContext ctx);
@@ -29,6 +30,11 @@ EGLContext (*eglCreateContext_p) (EGLDisplay dpy, EGLConfig config, EGLContext s
 EGLBoolean (*eglSwapInterval_p) (EGLDisplay dpy, EGLint interval);
 EGLSurface (*eglGetCurrentSurface_p) (EGLint readdraw);
 EGLBoolean (*eglQuerySurface_p)(EGLDisplay display, EGLSurface surface, EGLint attribute, EGLint * value);
+
+/* Mesa egl loader */
+EGLImageKHR (*eglCreateImageKHR_p)(EGLDisplay dpy, EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint *attrib_list);
+EGLBoolean (*eglDestroyImageKHR_p)(EGLDisplay dpy, EGLImageKHR image);
+void (*glEGLImageTargetTexture2DOES_p)(GLenum target, GLeglImageOES image);
 
 void dlsym_EGL() {
     void* dl_handle = NULL;
@@ -77,4 +83,11 @@ void dlsym_EGL() {
     eglTerminate_p = GLGetProcAddress(dl_handle, "eglTerminate");
     eglGetCurrentSurface_p = GLGetProcAddress(dl_handle,"eglGetCurrentSurface");
     eglQuerySurface_p = GLGetProcAddress(dl_handle, "eglQuerySurface");
+
+    if (!strcmp("mesa_3d_egl_no_surface", pojav_environ->rendererTag))
+    {
+        eglCreateImageKHR_p = GLGetProcAddress(dl_handle, "eglCreateImage");
+        eglDestroyImageKHR_p = GLGetProcAddress(dl_handle, "eglDestroyImage");
+        glEGLImageTargetTexture2DOES_p = GLGetProcAddress(dl_handle, "glEGLImageTargetTexture2DOES");
+    }
 }

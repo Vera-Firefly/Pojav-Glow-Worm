@@ -56,7 +56,7 @@ bool bridge_create_external_ahb(bridge_wrapper_t *bundle)
         return false;
     }
 
-    bundle->ahb_fbo = mesa_gl_create_ahb_fbo(bundle->width, bundle->height);
+    bundle->ahb_fbo = mesa_gl_create_ahb_fbo(bundle->ctx, bundle->width, bundle->height);
     if (!bundle->ahb_fbo)
     {
         LOGE("mesa_gl_create_ahb_fbo failed");
@@ -77,7 +77,7 @@ bool bridge_wrap_external_ahb(bridge_wrapper_t *bundle, AHardwareBuffer *ahb, in
         bundle->ahb_fbo = NULL;
     }
 
-    bundle->ahb_fbo = mesa_gl_wrap_ahb_as_fbo(ahb, width, height);
+    bundle->ahb_fbo = mesa_gl_wrap_ahb_as_fbo(bundle->ctx, ahb, width, height);
     if (!bundle->ahb_fbo)
     {
         LOGE("mesa_gl_wrap_ahb_as_fbo failed");
@@ -122,7 +122,7 @@ bridge_wrapper_t* bridge_init_context(bridge_wrapper_t * share)
 
     if (bridge_create_external_ahb(bundle))
     {
-        LOGI("bridge_init_context created bundle %p (ctx %p) with external AHB-FBO", (void*)bundle, (void*)ctx);
+        LOGI("bridge_init_context created bundle %p (ctx %p) with external AHB-FBO", (void*)bundle, (void*)bundle->ctx);
         if (!bridge_wrap_external_ahb(bundle, bundle->ahb_fbo->ahb, bundle->width, bundle->height))
             mesa_gl_destroy_ahb_fbo(bundle->ahb_fbo);
     }
@@ -133,26 +133,23 @@ bridge_wrapper_t* bridge_init_context(bridge_wrapper_t * share)
 
 void bridge_swap_surface(bridge_wrapper_t* bundle)
 {
-    if (bundle->nativeSurface != NULL)
-        ANativeWindow_release(bundle->nativeSurface);
-
     if (bundle->tmp_pbuffer != EGL_NO_SURFACE)
         eglDestroySurface_p(bundle->ctx, bundle->tmp_pbuffer);
 
-    if (bundle->newNativeSurface != NULL)
-    {
-        LOGI("Switching to new native surface");
-        bundle->nativeSurface = bundle->newNativeSurface;
-        bundle->newNativeSurface = NULL;
-        ANativeWindow_acquire(bundle->nativeSurface);
-        ANativeWindow_setBuffersGeometry(bundle->nativeSurface, 0, 0, bundle->format);
-        // bundle->tmp_pbuffer = eglCreateWindowSurface_p(bundle->ctx, bundle->cfg, bundle->window, NULL);
-    } else {
-        LOGI("No new native surface, switching to 1x1 pbuffer");
-        bundle->nativeSurface = NULL;
-        const EGLint pbuffer_attrs[] = {EGL_WIDTH, 1 , EGL_HEIGHT, 1, EGL_NONE};
-        bundle->tmp_pbuffer = eglCreatePbufferSurface_p(bundle->ctx, bundle->cfg, pbuffer_attrs);
+    if (g_current_bundle && g_current_bundle != bundle) {
+        mesa_gl_release_tmp_pbuffer(g_current_bundle->tmp_pbuffer);
+        g_current_bundle->tmp_pbuffer = EGL_NO_SURFACE;
+        LOGI("bridge_swap_surface: unset current");
     }
+
+    /* 让 mesa_gl 尝试在当前线程上 make current（优先 EGL_NO_SURFACE; 若回退则创建 pbuffer） */
+    int ok = mesa_gl_make_current_nosurface(bundle->ctx, bundle->cfg, &bundle->tmp_pbuffer);
+    if (ok != 0) {
+        LOGE("mesa_gl_make_current_nosurface failed for ctx %p", (void*)bundle->ctx);
+        g_current_bundle = NULL;
+        return;
+    }
+    g_current_bundle = bundle;
 }
 
 /* 指定 bundle 的 context */
@@ -174,31 +171,22 @@ void bridge_make_current(bridge_wrapper_t* bundle)
         return;
     }
 
-    if (pojav_environ->mainWindowBundle == NULL)
+    if (bundle->nativeSurface == NULL)
     {
         pojav_environ->mainWindowBundle = (basic_render_window_t *)bundle;
         LOGI("Main window bundle is now %p", pojav_environ->mainWindowBundle);
-        pojav_environ->mainWindowBundle->newNativeSurface = pojav_environ->pojavWindow;
+        pojav_environ->mainWindowBundle->nativeSurface = pojav_environ->pojavWindow;
+        bundle->nativeSurface = pojav_environ->pojavWindow;
+        ANativeWindow_acquire(bundle->nativeSurface);
+        ANativeWindow_setBuffersGeometry(bundle->nativeSurface, 0, 0, bundle->format);
     }
 
     if (bundle->tmp_pbuffer == EGL_NO_SURFACE)
         bridge_swap_surface(bundle);
 
-    if (g_current_bundle && g_current_bundle != bundle) {
-        mesa_gl_release_tmp_pbuffer(g_current_bundle->tmp_pbuffer);
-        g_current_bundle->tmp_pbuffer = EGL_NO_SURFACE;
-    }
+    if (mesa_gl_post_fbo_to_window(bundle->ahb_fbo, bundle->nativeSurface) != 0)
+        LOGE("bridge_make_current: post_fbo_to_window failed");
 
-    /* 让 mesa_gl 尝试在当前线程上 make current（优先 EGL_NO_SURFACE; 若回退则创建 pbuffer） */
-    EGLSurface tmp_pb = EGL_NO_SURFACE;
-    int ok = mesa_gl_make_current_nosurface(bundle->ctx, bundle->cfg, &tmp_pb);
-    if (ok != 0) {
-        LOGE("mesa_gl_make_current_nosurface failed for ctx %p", (void*)bundle->ctx);
-        g_current_bundle = NULL;
-        return;
-    }
-    g_current_bundle = bundle;
-    bundle->tmp_pbuffer = tmp_pb;
     LOGI("bridge_make_current: bundle %p is now current (tmp_pb %p)", (void*)bundle, (void*)bundle->tmp_pbuffer);
 }
 
