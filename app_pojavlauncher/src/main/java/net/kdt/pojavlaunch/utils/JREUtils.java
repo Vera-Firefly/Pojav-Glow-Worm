@@ -297,6 +297,7 @@ public class JREUtils {
         if (LOCAL_RENDERER.equals("mesa3d_egl_no_surface"))
         {
             eglName = Tools.MESA_EGL_DIR + "/libEGL.so";
+            envMap.put("LIBGL_ES", "4");
             envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
             envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
         }
