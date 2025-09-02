@@ -586,26 +586,7 @@ public class JREUtils {
 
         if (LOCAL_RENDERER.equals("mesa3d_egl_no_surface"))
         {
-            String[] libs = {
-                    "liblog.so",
-                    "libnativewindow.so",
-                    "libsync.so"
-            };
-
-            for (String lib : libs) {
-                boolean result = dlopen(lib);
-                if (result) {
-                    System.out.println("Loaded " + lib);
-                } else {
-                    System.err.println("Failed to load " + lib);
-                }
-            }
-
-            dlopen(Tools.MESA_EGL_DIR + "/libcutils.so");
-            dlopen(Tools.MESA_EGL_DIR + "/libhardware.so");
             dlopen(Tools.MESA_EGL_DIR + "/libgallium_dri.so");
-            dlopen(Tools.MESA_EGL_DIR + "/libGLESv1_CM.so");
-            dlopen(Tools.MESA_EGL_DIR + "/libGLESv2.so");
             dlopen(Tools.MESA_EGL_DIR + "/libEGL.so");
         }
 
