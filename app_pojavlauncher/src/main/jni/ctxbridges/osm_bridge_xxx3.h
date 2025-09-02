@@ -21,7 +21,7 @@ bool xxx3OsmloadSymbols();
 int xxx3OsmInit();
 void* xxx3OsmCreateContext(void* contextSrc);
 void* xxx3OsmGetCurrentContext();
-void xxx3OsmMakeCurrent(void* window);
+void xxx3OsmMakeCurrent();
 void xxx3OsmSwapBuffers();
 void xxx3OsmSwapInterval(int interval);
 

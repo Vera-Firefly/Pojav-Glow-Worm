@@ -9,6 +9,7 @@
 
 #define BR_LOADER
 #include "br_loader.h"
+#include "environ/environ.h"
 
 EGLBoolean (*eglMakeCurrent_p) (EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx);
 EGLBoolean (*eglDestroyContext_p) (EGLDisplay dpy, EGLContext ctx);
@@ -29,6 +30,11 @@ EGLContext (*eglCreateContext_p) (EGLDisplay dpy, EGLConfig config, EGLContext s
 EGLBoolean (*eglSwapInterval_p) (EGLDisplay dpy, EGLint interval);
 EGLSurface (*eglGetCurrentSurface_p) (EGLint readdraw);
 EGLBoolean (*eglQuerySurface_p)(EGLDisplay display, EGLSurface surface, EGLint attribute, EGLint * value);
+
+/* Mesa egl loader */
+EGLImageKHR (*eglCreateImageKHR_p)(EGLDisplay dpy, EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint *attrib_list);
+EGLBoolean (*eglDestroyImageKHR_p)(EGLDisplay dpy, EGLImageKHR image);
+void (*glEGLImageTargetTexture2DOES_p)(GLenum target, GLeglImageOES image);
 
 void dlsym_EGL() {
     void* dl_handle = NULL;

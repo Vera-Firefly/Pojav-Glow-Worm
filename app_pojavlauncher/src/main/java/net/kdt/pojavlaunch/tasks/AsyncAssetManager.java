@@ -50,11 +50,14 @@ public class AsyncAssetManager {
         String abi = "/" + Build.SUPPORTED_ABIS[0];
         String MGES_PATH = "renderer/mobileglues";
         String MGGL_PATH = "renderer/mobilegl";
+        String MESA_PATH = "renderer/mesa2520";
         boolean mgesVersion = getRendererVersionFromAssets(ctx, Tools.MOBILEGLES_DIR, MGES_PATH);
         boolean mgglVersion = getRendererVersionFromAssets(ctx, Tools.MOBILEGL_DIR, MGGL_PATH);
+        boolean mesaVersion = getRendererVersionFromAssets(ctx, Tools.MESA_EGL_DIR, MESA_PATH);
         try {
             Tools.copyAssetFolder(ctx, MGES_PATH + abi, Tools.MOBILEGLES_DIR, mgesVersion);
             Tools.copyAssetFolder(ctx, MGGL_PATH + abi, Tools.MOBILEGL_DIR, mgglVersion);
+            Tools.copyAssetFolder(ctx, MESA_PATH + abi, Tools.MESA_EGL_DIR, mesaVersion);
         } catch (IOException ignored) {
 
         }

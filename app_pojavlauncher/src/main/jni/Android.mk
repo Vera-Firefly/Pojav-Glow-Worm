@@ -32,7 +32,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 
 include $(CLEAR_VARS)
-LOCAL_LDLIBS := -ldl -llog -landroid
+LOCAL_LDLIBS := -ldl -llog -landroid -lGLESv2 -lEGL
 LOCAL_MODULE := bridge_config
 LOCAL_SHARED_LIBRARIES := br_common OSMesaInfo
 LOCAL_CFLAGS += -g -rdynamic

@@ -73,7 +73,8 @@ gl_render_window_t* gl_init_context(gl_render_window_t *share) {
 
     {
         EGLBoolean bindResult;
-        if (!strncmp(pojav_environ->rendererTag, "opengles3_desktopgl", 19))
+        if (!strncmp(pojav_environ->rendererTag, "opengles3_desktopgl", 19)
+         || !strcmp(pojav_environ->rendererTag, "mesa3d_egl_no_surface"))
         {
             printf("EGLBridge: Binding to OpenGL\n");
             bindResult = eglBindAPI_p(EGL_OPENGL_API);

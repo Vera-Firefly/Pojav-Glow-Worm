@@ -2,6 +2,9 @@
 // Created by maks on 21.09.2022.
 //
 #include <EGL/egl.h>
+#include <EGL/eglext.h>
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
 #ifndef POJAVLAUNCHER_EGL_LOADER_H
 #define POJAVLAUNCHER_EGL_LOADER_H
 
@@ -25,6 +28,11 @@ extern EGLBoolean (*eglSwapInterval_p) (EGLDisplay dpy, EGLint interval);
 extern EGLSurface (*eglGetCurrentSurface_p) (EGLint readdraw);
 extern EGLBoolean (*eglQuerySurface_p)(EGLDisplay display, EGLSurface surface, EGLint attribute, EGLint * value);
 extern __eglMustCastToProperFunctionPointerType (*eglGetProcAddress_p) (const char *procname);
+
+/* Mesa egl loader */
+extern EGLImageKHR (*eglCreateImageKHR_p)(EGLDisplay dpy, EGLContext ctx, EGLenum target, EGLClientBuffer buffer, const EGLint *attrib_list);
+extern EGLBoolean (*eglDestroyImageKHR_p)(EGLDisplay dpy, EGLImageKHR image);
+extern void (*glEGLImageTargetTexture2DOES_p)(GLenum target, GLeglImageOES image);
 
 void dlsym_EGL();
 

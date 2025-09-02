@@ -234,8 +234,9 @@ int pojavInitOpenGL() {
     const char *renderer = pojav_environ->rendererTag;
     const char *ldrivermodel = getenv("LOCAL_DRIVER_MODEL");
     const char *mldo = getenv("LOCAL_LOADER_OVERRIDE");
+    load_vulkan();
 
-    if (mldo) printf("OSMDroid: MESA_LOADER_DRIVER_OVERRIDE = %s\n", mldo);
+    if (mldo != NULL) printf("OSMDroid: MESA_LOADER_DRIVER_OVERRIDE = %s\n", mldo);
 
     if (!strncmp("opengles", renderer, 8))
     {
@@ -244,10 +245,17 @@ int pojavInitOpenGL() {
         if (pojav_environ->bridge_config == 0) set_gl_bridge_tbl();
     }
 
+    if (!strcmp("mesa3d_egl_no_surface", renderer)) {
+        setenv("GALLIUM_DRIVER", "zink", 1);
+        setenv("MESA_LOADER_DRIVER_OVERRIDE", "zink", 1);
+        ConfigBridgeTbl();
+        pojav_environ->config_renderer = RENDERER_GL4ES;
+        set_gl_bridge_tbl();
+    }
+
     if (!strcmp(renderer, "custom_gallium"))
     {
         renderer_load_config();
-        load_vulkan();
     }
 
     if (!strcmp(renderer, "mesa_3d"))
@@ -259,7 +267,6 @@ int pojavInitOpenGL() {
             setenv("MESA_LOADER_DRIVER_OVERRIDE", "zink", 1);
             setenv("mesa_glthread", "true", 1);
             renderer_load_config();
-            load_vulkan();
         }
 
         if (!strcmp(ldrivermodel, "gallium_virgl"))
@@ -284,7 +291,7 @@ int pojavInitOpenGL() {
         if (!strcmp(ldrivermodel, "gallium_freedreno"))
         {
             setenv("GALLIUM_DRIVER", "freedreno", 1);
-            if (mldo) setenv("MESA_LOADER_DRIVER_OVERRIDE", mldo, 1);
+            if (mldo != NULL) setenv("MESA_LOADER_DRIVER_OVERRIDE", mldo, 1);
             else setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
             renderer_load_config();
         }
@@ -403,7 +410,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
         xxx2OsmMakeCurrent(window);
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK_XXX3)
-        xxx3OsmMakeCurrent(window);
+        xxx3OsmMakeCurrent();
 
 }
 
