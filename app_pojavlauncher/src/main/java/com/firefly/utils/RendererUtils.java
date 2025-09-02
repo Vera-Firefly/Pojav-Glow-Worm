@@ -44,4 +44,11 @@ public class RendererUtils {
         return GALLIUM_RENDERERS.stream().anyMatch(envValue::contains);
     }
 
+    public static String getGalliumRenderer(String envValue) {
+        return GALLIUM_RENDERERS.stream()
+                .filter(envValue::contains)
+                .findFirst()
+                .orElse("zink");
+    }
+
 }

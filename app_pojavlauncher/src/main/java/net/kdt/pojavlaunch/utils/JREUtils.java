@@ -311,14 +311,15 @@ public class JREUtils {
                 if (envKey.equals("POJAV_RENDERER")) {
                     if (envValue.startsWith("opengles")) {
                         checkLIBGLESVersion(envMap);
-                    } else {
-                        envMap.put("LIBGL_ES", "3");
-                    }
-                    if (!RendererUtils.isGalliumRenderer(envValue)) {
                         JREUtils.initRendererTag(envValue);
                     } else {
-                        JREUtils.initRendererTag("mesa_3d");
-                        envMap.put("LOCAL_DRIVER_MODEL", envValue);
+                        envMap.put("LIBGL_ES", "3");
+                        if (!RendererUtils.isGalliumRenderer(envValue)) {
+                            JREUtils.initRendererTag(envValue);
+                        } else {
+                            JREUtils.initRendererTag("mesa_3d");
+                            envMap.put("LOCAL_DRIVER_MODEL", "gallium_" + RendererUtils.getGalliumRenderer(envValue));
+                        }
                     }
                 } else if (envKey.equals("LIB_MESA_NAME")) {
                     envMap.put(envKey, customRenderer.getPath() + "/" + envValue);
