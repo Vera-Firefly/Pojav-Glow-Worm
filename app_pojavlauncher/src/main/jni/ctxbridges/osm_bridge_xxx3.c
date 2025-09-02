@@ -77,7 +77,7 @@ void xxx3_osm_apply_current(ANativeWindow_Buffer* buf) {
     xxx3_osm->last_stride = buf->stride;
 }
 
-void xxx3OsmMakeCurrent(void* window) {
+void xxx3OsmMakeCurrent() {
     if (!hasCleaned)
     {
         printf("%s making current\n", osm_LogTag);

@@ -22,7 +22,9 @@ void* load_symbol(void* handle, const char* symbol_name) {
 }
 
 void* OSMGetProcAddress(void* handle, const char* symbol_name) {
-    OSMesaGetProcAddress_p = load_symbol(handle, "OSMesaGetProcAddress");
+    if (OSMesaGetProcAddress_p == NULL)
+        OSMesaGetProcAddress_p = load_symbol(handle, "OSMesaGetProcAddress");
+
     if (OSMesaGetProcAddress_p)
     {
         void* symbol = OSMesaGetProcAddress_p(symbol_name);
@@ -36,8 +38,10 @@ void* OSMGetProcAddress(void* handle, const char* symbol_name) {
 }
 
 void* GLGetProcAddress(void* handle, const char* symbol_name) {
-    eglGetProcAddress_p = load_symbol(handle, "eglGetProcAddress");
-    if(eglGetProcAddress_p)
+    if (eglGetProcAddress_p == NULL)
+        eglGetProcAddress_p = load_symbol(handle, "eglGetProcAddress");
+
+    if (eglGetProcAddress_p)
     {
         void* symbol = (void*) eglGetProcAddress_p(symbol_name);
         if (symbol)

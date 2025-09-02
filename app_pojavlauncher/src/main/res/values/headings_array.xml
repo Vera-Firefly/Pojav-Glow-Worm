@@ -27,7 +27,7 @@
         <item>gallium_panfrost</item> <!-- Gallium Panfrost with Mali GPU -->
         <item>opengles3_mges</item> <!-- Mobile GL 4.0 with OpenGL ES 3 -->
         <item>opengles3_mggl</item>
-        <item>mesa_3d_egl_no_surface</item>
+        <item>mesa3d_egl_no_surface</item>
     </string-array>
 
     <string-array name="menu_customcontrol">

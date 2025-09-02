@@ -294,9 +294,11 @@ public class JREUtils {
 
         }
 
-        if (LOCAL_RENDERER.equals("mesa_3d_egl_no_surface"))
+        if (LOCAL_RENDERER.equals("mesa3d_egl_no_surface"))
         {
             eglName = Tools.MESA_EGL_DIR + "/libEGL.so";
+            envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
+            envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
         }
 
         RendererPlugin.Renderer customRenderer = RendererPlugin.getSelectedRenderer();
@@ -581,12 +583,8 @@ public class JREUtils {
             dlopen(Tools.MOBILEGL_DIR + "/libspirv-cross-c-shared.so");
         }
 
-        if (LOCAL_RENDERER.equals("mesa_3d_egl_no_surface"))
+        if (LOCAL_RENDERER.equals("mesa3d_egl_no_surface"))
         {
-            dlopen(Tools.MESA_EGL_DIR + "/libgallium_dri.so");
-            dlopen(Tools.MESA_EGL_DIR + "/libGLESv1_CM.so");
-            dlopen(Tools.MESA_EGL_DIR + "/libGLESv2.so");
-
             String[] libs = {
                     "liblog.so",
                     "libnativewindow.so",
@@ -601,6 +599,13 @@ public class JREUtils {
                     System.err.println("Failed to load " + lib);
                 }
             }
+
+            dlopen(Tools.MESA_EGL_DIR + "/libcutils.so");
+            dlopen(Tools.MESA_EGL_DIR + "/libhardware.so");
+            dlopen(Tools.MESA_EGL_DIR + "/libgallium_dri.so");
+            dlopen(Tools.MESA_EGL_DIR + "/libGLESv1_CM.so");
+            dlopen(Tools.MESA_EGL_DIR + "/libGLESv2.so");
+            dlopen(Tools.MESA_EGL_DIR + "/libEGL.so");
         }
 
         if (!dlopen(rendererLib) && !dlopen(findInLdLibPath(rendererLib))) {
@@ -871,8 +876,8 @@ public class JREUtils {
                 case "gallium_panfrost":
                     renderLibrary = "libOSMesa_2300d.so";
                     break;
-                case "mesa_3d_egl_no_surface":
-                    renderLibrary = Tools.MESA_EGL_DIR + "/libEGL.so";
+                case "mesa3d_egl_no_surface":
+                    renderLibrary = Tools.MESA_EGL_DIR + "/libglxshim.so";
                     break;
                 default:
                     Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");

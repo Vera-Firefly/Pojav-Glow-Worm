@@ -83,11 +83,4 @@ void dlsym_EGL() {
     eglTerminate_p = GLGetProcAddress(dl_handle, "eglTerminate");
     eglGetCurrentSurface_p = GLGetProcAddress(dl_handle,"eglGetCurrentSurface");
     eglQuerySurface_p = GLGetProcAddress(dl_handle, "eglQuerySurface");
-
-    if (!strcmp("mesa_3d_egl_no_surface", pojav_environ->rendererTag))
-    {
-        eglCreateImageKHR_p = GLGetProcAddress(dl_handle, "eglCreateImage");
-        eglDestroyImageKHR_p = GLGetProcAddress(dl_handle, "eglDestroyImage");
-        glEGLImageTargetTexture2DOES_p = GLGetProcAddress(dl_handle, "glEGLImageTargetTexture2DOES");
-    }
 }
