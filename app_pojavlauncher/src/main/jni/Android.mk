@@ -22,6 +22,13 @@ include $(BUILD_SHARED_LIBRARY)
 
 
 include $(CLEAR_VARS)
+LOCAL_LDLIBS := -ldl -llog -landroid
+LOCAL_MODULE := glxshim
+LOCAL_SRC_FILES := glxshim/glxshim.cpp
+include $(BUILD_SHARED_LIBRARY)
+
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := OSMesaInfo
 LOCAL_SRC_FILES := mesainfo/mesa_info.cpp
 LOCAL_CPP_FEATURES := rtti exceptions

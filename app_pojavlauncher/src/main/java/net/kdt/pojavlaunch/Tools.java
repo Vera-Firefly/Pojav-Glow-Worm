@@ -184,7 +184,7 @@ public final class Tools {
         RENDERER_DIR = DIR_DATA + "/renderer";
         MOBILEGLES_DIR = RENDERER_DIR + "/mobileglues";
         MOBILEGL_DIR = RENDERER_DIR + "/mobilegl";
-        MESA_EGL_DIR = RENDERER_DIR + "/mesa2520";
+        MESA_EGL_DIR = RENDERER_DIR + "/mesa";
         TURNIP_DIR = DIR_DATA + "/turnip";
         NATIVE_LIB_DIR = ctx.getApplicationInfo().nativeLibraryDir;
     }

@@ -245,14 +245,6 @@ int pojavInitOpenGL() {
         if (pojav_environ->bridge_config == 0) set_gl_bridge_tbl();
     }
 
-    if (!strcmp("mesa3d_egl_no_surface", renderer)) {
-        setenv("GALLIUM_DRIVER", "zink", 1);
-        setenv("MESA_LOADER_DRIVER_OVERRIDE", "zink", 1);
-        ConfigBridgeTbl();
-        pojav_environ->config_renderer = RENDERER_GL4ES;
-        set_gl_bridge_tbl();
-    }
-
     if (!strcmp(renderer, "custom_gallium"))
     {
         renderer_load_config();

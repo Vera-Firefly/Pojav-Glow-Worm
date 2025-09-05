@@ -12,7 +12,8 @@
         <item name="8">@string/mcl_setting_renderer_panfrost</item>
         <item name="9">MobileGlues (OpenGL 4.0, 1.17+)</item>
         <item name="10">MobileGL</item>
-        <item name="11">Mesa 25.2.0 EGL_NO_SURFACE</item>
+        <item name="11">Mesa 23.0.4 EGL_NO_SURFACE</item>
+        <item name="12">Mesa 25.2.0 EGL_NO_SURFACE</item>
     </string-array>
 
     <string-array name="renderer_values">
@@ -27,7 +28,8 @@
         <item>gallium_panfrost</item> <!-- Gallium Panfrost with Mali GPU -->
         <item>opengles3_mges</item> <!-- Mobile GL 4.0 with OpenGL ES 3 -->
         <item>opengles3_mggl</item>
-        <item>mesa3d_egl_no_surface</item>
+        <item>opengles3_desktopgl_mesa2304</item>
+        <item>opengles3_desktopgl_mesa2520</item>
     </string-array>
 
     <string-array name="menu_customcontrol">
