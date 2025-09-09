@@ -279,6 +279,7 @@ dependencies {
     implementation 'com.github.Mathias-Boulay:ExtendedView:1.0.0'
     implementation 'com.github.Mathias-Boulay:android_gamepad_remapper:2.0.3'
     implementation 'com.github.Mathias-Boulay:virtual-joystick-android:1.14'
+    implementation 'top.fifthlight.touchcontroller:proxy-client-android:0.0.3'
 
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
     implementation 'org.greenrobot:eventbus:3.3.1'

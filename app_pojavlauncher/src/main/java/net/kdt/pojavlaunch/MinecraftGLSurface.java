@@ -26,6 +26,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.fifthlight.touchcontroller.TouchControllerUtils;
+
 import net.kdt.pojavlaunch.customcontrols.ControlLayout;
 import net.kdt.pojavlaunch.customcontrols.gamepad.DefaultDataProvider;
 import net.kdt.pojavlaunch.customcontrols.gamepad.Gamepad;
@@ -216,6 +218,7 @@ public class MinecraftGLSurface extends View implements GrabListener {
             return true; //mouse event handled successfully
         }
         if (mIngameProcessor == null || mInGUIProcessor == null) return true;
+        TouchControllerUtils.processTouchEvent(e, this);
         return mCurrentTouchProcessor.processTouchEvent(e);
     }
 

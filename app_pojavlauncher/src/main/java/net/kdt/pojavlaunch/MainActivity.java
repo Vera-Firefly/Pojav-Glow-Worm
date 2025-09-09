@@ -46,6 +46,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.fifthlight.touchcontroller.TouchControllerUtils;
 import com.firefly.utils.ListUtils;
 import com.firefly.utils.PGWTools;
 import com.firefly.utils.ResolutionAdjuster;
@@ -111,6 +112,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (LauncherPreferences.PREF_ENABLE_TOUCHCONTROLLER)
+            TouchControllerUtils.initialize(this);
+
         minecraftProfile = LauncherProfiles.getCurrentProfile();
         MCOptionUtils.load(Tools.getGameDirPath(minecraftProfile).getAbsolutePath());
         if (LauncherPreferences.PREF_AUTOMATICALLY_SET_GAME_LANGUAGE)

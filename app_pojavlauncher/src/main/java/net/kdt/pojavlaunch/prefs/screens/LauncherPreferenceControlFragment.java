@@ -99,6 +99,11 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
         deadzoneSeek.setValue((int) (joystickDeadzone * 100f));
         deadzoneSeek.setSuffix(" %");
 
+        CustomSeekBarPreference touchControllerVibrateLength = requirePreference("touchControllerVibrateLength",
+                CustomSeekBarPreference.class);
+        touchControllerVibrateLength.setRange(10, 1000);
+        touchControllerVibrateLength.setValue(LauncherPreferences.PREF_TOUCHCONTROLLER_VIBRATE_LENGTH);
+        touchControllerVibrateLength.setSuffix(" ms");
 
         Context context = getContext();
         if (context != null) {

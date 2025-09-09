@@ -173,6 +173,13 @@
     <string name="generic_unknown">Unknown</string>
     <string name="setting_renderer_from_plugins">From %s Plugin</string>
 
+    <!-- TouchController Settings -->
+    <string name="preference_category_touchcontroller_settings">TouchController Settings</string>
+    <string name="preference_enable_touchcontroller_title">Enable TouchController</string>
+    <string name="preference_enable_touchcontroller_description">Enable TouchController integration.</string>
+    <string name="preference_touchcontroller_vibrate_length_title">TouchController vibrate length</string>
+    <string name="preference_touchcontroller_vibrate_length_description">Set the length of the vibration when using TouchController.</string>
+
     <!-- MG Renderer Settings-->
     <string name="preference_renderer_mobileglues_settings">MobileGlues Renderer Settings</string>
 

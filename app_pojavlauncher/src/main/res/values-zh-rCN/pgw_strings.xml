@@ -199,6 +199,13 @@
 
     <string name="pgw_settings_choose_download_source">选择下载源</string>
 
+    <!-- TouchController Settings -->
+    <string name="preference_category_touchcontroller_settings">TouchController 设置</string>
+    <string name="preference_enable_touchcontroller_title">启用 TouchController</string>
+    <string name="preference_enable_touchcontroller_description">启用 TouchController 集成。</string>
+    <string name="preference_touchcontroller_vibrate_length_title">TouchController 震动长度</string>
+    <string name="preference_touchcontroller_vibrate_length_description">设置使用 TouchController 时的震动长度。</string>
+
     <!-- MG Renderer Settings-->
     <string name="preference_renderer_mobileglues_settings">MobileGlues 渲染器设置</string>
 
