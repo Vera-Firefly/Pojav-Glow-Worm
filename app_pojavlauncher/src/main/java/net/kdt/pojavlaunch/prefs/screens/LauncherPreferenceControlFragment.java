@@ -62,6 +62,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
         int prefButtonSize = (int) LauncherPreferences.PREF_BUTTONSIZE;
         int mouseScale = (int) LauncherPreferences.PREF_MOUSESCALE;
         int gyroSampleRate = LauncherPreferences.PREF_GYRO_SAMPLE_RATE;
+        int touchControllerVibrateLength = LauncherPreferences.PREF_TOUCHCONTROLLER_VIBRATE_LENGTH;
         float mouseSpeed = LauncherPreferences.PREF_MOUSESPEED;
         float gyroSpeed = LauncherPreferences.PREF_GYRO_SENSITIVITY;
         float joystickDeadzone = LauncherPreferences.PREF_DEADZONE_SCALE;
@@ -99,11 +100,11 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
         deadzoneSeek.setValue((int) (joystickDeadzone * 100f));
         deadzoneSeek.setSuffix(" %");
 
-        CustomSeekBarPreference touchControllerVibrateLength = requirePreference("touchControllerVibrateLength",
+        CustomSeekBarPreference touchControllerVibrateLengthSeek = requirePreference("touchControllerVibrateLength",
                 CustomSeekBarPreference.class);
-        touchControllerVibrateLength.setRange(10, 1000);
-        touchControllerVibrateLength.setValue(LauncherPreferences.PREF_TOUCHCONTROLLER_VIBRATE_LENGTH);
-        touchControllerVibrateLength.setSuffix(" ms");
+        touchControllerVibrateLengthSeek.setRange(10, 1000);
+        touchControllerVibrateLengthSeek.setValue(touchControllerVibrateLength);
+        touchControllerVibrateLengthSeek.setSuffix(" ms");
 
         Context context = getContext();
         if (context != null) {

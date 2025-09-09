@@ -217,8 +217,8 @@ public class MinecraftGLSurface extends View implements GrabListener {
             CallbackBridge.sendCursorPos(e.getX(i) * mScaleFactor, e.getY(i) * mScaleFactor);
             return true; //mouse event handled successfully
         }
-        if (mIngameProcessor == null || mInGUIProcessor == null) return true;
         TouchControllerUtils.processTouchEvent(e, this);
+        if (mIngameProcessor == null || mInGUIProcessor == null) return true;
         return mCurrentTouchProcessor.processTouchEvent(e);
     }
 

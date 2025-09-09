@@ -201,6 +201,27 @@ public final class Tools {
         CTRLDEF_FILE = DIR_GAME_HOME + "/controlmap/default.json";
     }
 
+    /**
+     * Search for TouchController mod to automatically enable TouchController mod support.
+     *
+     * @param gameDir current game directory
+     * @return whether TouchController is found
+     */
+    public static boolean hasTouchController(File gameDir) {
+        File modsDir = new File(gameDir, "mods");
+        File[] mods = modsDir.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
+        if (mods == null) {
+            return false;
+        }
+        for (File file : mods) {
+            String name = file.getName().toLowerCase(Locale.ROOT);
+            if (name.contains("touchcontroller")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void launchMinecraft(final AppCompatActivity activity, MinecraftAccount minecraftAccount,
                                        MinecraftProfile minecraftProfile, String versionId, int versionJavaRequirement) throws Throwable {
         int freeDeviceMemory = getFreeDeviceMemory(activity);

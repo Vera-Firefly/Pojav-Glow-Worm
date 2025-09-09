@@ -201,8 +201,8 @@
 
     <!-- TouchController Settings -->
     <string name="preference_category_touchcontroller_settings">TouchController 设置</string>
-    <string name="preference_enable_touchcontroller_title">启用 TouchController</string>
-    <string name="preference_enable_touchcontroller_description">启用 TouchController 集成。</string>
+    <string name="preference_force_enable_touchcontroller_title">强制启用 TouchController</string>
+    <string name="preference_force_enable_touchcontroller_description">启用 TouchController 集成，即使没有找到模组文件。</string>
     <string name="preference_touchcontroller_vibrate_length_title">TouchController 震动长度</string>
     <string name="preference_touchcontroller_vibrate_length_description">设置使用 TouchController 时的震动长度。</string>
 

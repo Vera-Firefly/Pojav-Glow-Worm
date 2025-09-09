@@ -175,8 +175,8 @@
 
     <!-- TouchController Settings -->
     <string name="preference_category_touchcontroller_settings">TouchController Settings</string>
-    <string name="preference_enable_touchcontroller_title">Enable TouchController</string>
-    <string name="preference_enable_touchcontroller_description">Enable TouchController integration.</string>
+    <string name="preference_force_enable_touchcontroller_title">Force enable TouchController</string>
+    <string name="preference_force_enable_touchcontroller_description">Force enable TouchController integration, even if mod file is not found.</string>
     <string name="preference_touchcontroller_vibrate_length_title">TouchController vibrate length</string>
     <string name="preference_touchcontroller_vibrate_length_description">Set the length of the vibration when using TouchController.</string>
 

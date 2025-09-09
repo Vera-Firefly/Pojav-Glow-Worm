@@ -46,6 +46,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.fifthlight.touchcontroller.TouchControllerInputView;
 import com.fifthlight.touchcontroller.TouchControllerUtils;
 import com.firefly.utils.ListUtils;
 import com.firefly.utils.PGWTools;
@@ -90,6 +91,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     volatile public static boolean isInputStackCall;
 
     public static TouchCharInput touchCharInput;
+    private TouchControllerInputView touchControllerInputView;
     private MinecraftGLSurface minecraftGLView;
     private static Touchpad touchpad;
     private LoggerView loggerView;
@@ -113,11 +115,11 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (LauncherPreferences.PREF_ENABLE_TOUCHCONTROLLER)
-            TouchControllerUtils.initialize(this);
-
         minecraftProfile = LauncherProfiles.getCurrentProfile();
-        MCOptionUtils.load(Tools.getGameDirPath(minecraftProfile).getAbsolutePath());
+
+        String gameDirPath = Tools.getGameDirPath(minecraftProfile).getAbsolutePath();
+        MCOptionUtils.load(gameDirPath);
+
         if (LauncherPreferences.PREF_AUTOMATICALLY_SET_GAME_LANGUAGE)
             ProfileLanguageSelector.setGameLanguage(minecraftProfile, LauncherPreferences.PREF_GAME_LANGUAGE_OVERRIDDEN);
 
@@ -127,6 +129,11 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         initLayout(R.layout.activity_basemain);
         CallbackBridge.addGrabListener(touchpad);
         CallbackBridge.addGrabListener(minecraftGLView);
+
+        if (Tools.hasTouchController(new File(gameDirPath)) || LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {
+            TouchControllerUtils.initialize(this, touchControllerInputView);
+        }
+
         if (LauncherPreferences.PREF_ENABLE_GYRO) mGyroControl = new GyroControl(this);
 
         // Enabling this on TextureView results in a broken white result
@@ -191,6 +198,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             touchCharInput.setCharacterSender(new LwjglCharSender());
+
+            touchControllerInputView.setSize(minecraftGLView.getWidth(), minecraftGLView.getHeight());
 
             if (minecraftProfile.pojavRendererName != null) {
                 Log.i("RdrDebug", "__P_renderer=" + minecraftProfile.pojavRendererName);
@@ -310,6 +319,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         loggerView = findViewById(R.id.mainLoggerView);
         mControlLayout = findViewById(R.id.main_control_layout);
         touchCharInput = findViewById(R.id.mainTouchCharInput);
+        touchControllerInputView = findViewById(R.id.touch_controller_input);
         mDrawerPullButton = findViewById(R.id.drawer_button);
         mHotbarView = findViewById(R.id.hotbar_view);
     }
@@ -358,7 +368,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         if (mGyroControl != null) mGyroControl.updateOrientation();
         Tools.updateWindowSize(this);
         minecraftGLView.refreshSize();
-        runOnUiThread(() -> mControlLayout.refreshControlButtonPositions());
+        runOnUiThread(() -> {
+            mControlLayout.refreshControlButtonPositions();
+            touchControllerInputView.setSize(minecraftGLView.getWidth(), minecraftGLView.getHeight());
+        });
     }
 
     @Override

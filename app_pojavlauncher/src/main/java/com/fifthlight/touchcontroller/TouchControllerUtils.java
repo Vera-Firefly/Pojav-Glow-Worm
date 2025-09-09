@@ -5,6 +5,7 @@ import android.os.Vibrator;
 
 import top.fifthlight.touchcontroller.proxy.client.LauncherProxyClient;
 import top.fifthlight.touchcontroller.proxy.client.MessageTransport;
+import top.fifthlight.touchcontroller.proxy.client.PlatformCapability;
 import top.fifthlight.touchcontroller.proxy.client.android.transport.UnixSocketTransportKt;
 import top.fifthlight.touchcontroller.proxy.message.VibrateMessage;
 
@@ -20,12 +21,14 @@ import androidx.core.content.ContextCompat;
 
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
+import java.util.Set;
+
 public class TouchControllerUtils {
     private TouchControllerUtils() {
     }
 
     public static LauncherProxyClient proxyClient;
-    private static final String socketName = "Amethyst";
+    private static final String socketName = "Pojav Glow·Worm";
 
     private static class VibrationHandler implements LauncherProxyClient.VibrationHandler {
         private final Vibrator vibrator;
@@ -93,7 +96,7 @@ public class TouchControllerUtils {
         }
     }
 
-    public static void initialize(Context context) {
+    public static void initialize(Context context, TouchControllerInputView touchControllerInputView) {
         if (proxyClient != null) {
             return;
         }
@@ -103,7 +106,9 @@ public class TouchControllerUtils {
             Log.w("TouchController", "Failed to set TouchController environment variable", e);
         }
         MessageTransport transport = UnixSocketTransportKt.UnixSocketTransport(socketName);
-        proxyClient = new LauncherProxyClient(transport);
+        proxyClient = new LauncherProxyClient(transport, Set.of(PlatformCapability.TEXT_STATUS));
+        proxyClient.run();
+        touchControllerInputView.setClient(proxyClient);
         Vibrator vibrator = ContextCompat.getSystemService(context, Vibrator.class);
         if (vibrator != null) {
             LauncherProxyClient.VibrationHandler vibrationHandler = new VibrationHandler(vibrator);
