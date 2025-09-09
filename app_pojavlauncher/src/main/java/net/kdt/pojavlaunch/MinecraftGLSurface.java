@@ -216,7 +216,7 @@ public class MinecraftGLSurface extends View implements GrabListener {
             return true; //mouse event handled successfully
         }
         if (mIngameProcessor == null || mInGUIProcessor == null) return true;
-        return mCurrentTouchProcessor.processTouchEvent(e, this);
+        return mCurrentTouchProcessor.processTouchEvent(e);
     }
 
     private void createGamepad(View contextView, InputDevice inputDevice) {

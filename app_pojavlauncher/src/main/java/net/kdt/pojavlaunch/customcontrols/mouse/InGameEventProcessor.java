@@ -3,11 +3,8 @@ package net.kdt.pojavlaunch.customcontrols.mouse;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
-import android.view.View;
 
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
-
-import com.fifthLight.touchController.ContactHandler;
 
 import org.lwjgl.glfw.CallbackBridge;
 
@@ -18,15 +15,13 @@ public class InGameEventProcessor implements TouchEventProcessor {
     private final PointerTracker mTracker = new PointerTracker();
     private final LeftClickGesture mLeftClickGesture = new LeftClickGesture(mGestureHandler);
     private final RightClickGesture mRightClickGesture = new RightClickGesture(mGestureHandler);
-    private final ContactHandler mContactHandler = new ContactHandler();
 
     public InGameEventProcessor(double sensitivity) {
         mSensitivity = sensitivity;
     }
 
     @Override
-    public boolean processTouchEvent(MotionEvent motionEvent, View view) {
-        mContactHandler.progressEvent(motionEvent, view);
+    public boolean processTouchEvent(MotionEvent motionEvent) {
         switch (motionEvent.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 mTracker.startTracking(motionEvent);
@@ -57,7 +52,6 @@ public class InGameEventProcessor implements TouchEventProcessor {
 
     @Override
     public void cancelPendingActions() {
-        mContactHandler.clearPointer();
         cancelGestures(true);
     }
 
