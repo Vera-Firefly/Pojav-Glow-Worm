@@ -380,6 +380,40 @@ public class MinecraftDownloader {
             this.mSkipIfFailed = skipIfFailed;
         }
 
+        private String downloadSha1() throws IOException {
+            String downloadedHash = DownloadMirror.downloadStringMirrored(
+                    mDownloadClass, mTargetUrl + ".sha1"
+            );
+            if(!Tools.isValidString(downloadedHash)) return null;
+            // Ensure that we don't have leading/trailing whitespaces before checking hash length
+            downloadedHash = downloadedHash.trim();
+            // SHA1 is made up of 20 bytes, which means 40 hexadecimal digits, which means 40 chars
+            if(downloadedHash.length() != 40) return null;
+            return downloadedHash;
+        }
+
+        /*
+         * Maven repositories usually have the hash of a library near it, like:
+         * .../libraryName-1.0.jar
+         * .../libraryName.1.0.jar.sha1
+         * Since Minecraft libraries are stored in maven repositories, try to use
+         * this when downloading libraries without hashes in the json.
+         */
+        private void tryGetLibrarySha1() {
+            String resultHash = null;
+            try {
+                resultHash = downloadSha1();
+                // The hash is a 40-byte download.
+                mInternetUsageCounter.getAndAdd(40);
+            }catch (IOException e) {
+                Log.i("MinecraftDownloader", "Failed to download hash", e);
+            }
+            if(resultHash != null) {
+                Log.i("MinecraftDownloader", "Got hash: "+resultHash+ " for "+FileUtils.getFileName(mTargetUrl));
+                mTargetSha1 = resultHash;
+            }
+        }
+
         @Override
         public void run() {
             try {
@@ -390,6 +424,10 @@ public class MinecraftDownloader {
         }
 
         private void runCatching() throws Exception {
+            if(mDownloadClass == DownloadMirror.DOWNLOAD_CLASS_LIBRARIES && !Tools.isValidString(mTargetSha1)) {
+                // If we're downloading a library, try to get sha1 since it might be available as a file
+                tryGetLibrarySha1();
+            }
             if (Tools.isValidString(mTargetSha1)) {
                 verifyFileSha1();
             } else {

@@ -238,14 +238,14 @@ public class LauncherPreferences {
      */
     private static int findBestRAMAllocation(Context ctx) {
         int deviceRam = Tools.getTotalDeviceMemory(ctx);
-        if (deviceRam < 1024) return 300;
-        if (deviceRam < 1536) return 450;
-        if (deviceRam < 2048) return 600;
+        if (deviceRam < 1024) return 296;
+        if (deviceRam < 1536) return 448;
+        if (deviceRam < 2048) return 656;
         // Limit the max for 32 bits devices more harshly
-        if (is32BitsDevice()) return 700;
+        if (is32BitsDevice()) return 696;
 
         if (deviceRam < 3064) return 936;
-        if (deviceRam < 4096) return 1148;
+        if (deviceRam < 4096) return 1144;
         if (deviceRam < 6144) return 1536;
         return 2048; //Default RAM allocation for 64 bits
     }

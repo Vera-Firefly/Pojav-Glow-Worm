@@ -89,6 +89,29 @@ public class DownloadMirror {
     }
 
     /**
+     * Download a file as a string from the current mirror. If the file does not exist on the mirror
+     * or the mirror returns an invalid string, request the file from the original source
+     * @param downloadClass Class of the download. Can either be DOWNLOAD_CLASS_LIBRARIES,
+     *                      DOWNLOAD_CLASS_METADATA or DOWNLOAD_CLASS_ASSETS
+     * @param urlInput The original (Mojang) URL for the download
+     * @return the contents of the downloaded file as a String.
+     */
+    public static String downloadStringMirrored(int downloadClass, String urlInput) throws IOException{
+        String resultString = null;
+        try {
+            resultString = DownloadUtils.downloadString(getMirrorMapping(downloadClass,urlInput));
+        }catch (FileNotFoundException e) {
+            Log.w("DownloadMirror", "Failed to download string from mirror", e);
+        }
+        if(Tools.isValidString(resultString)) {
+            return resultString;
+        }else {
+            Log.w("DownloadMirror", "Downloaded string is invalid, falling back to default");
+        }
+        return DownloadUtils.downloadString(urlInput);
+    }
+
+    /**
      * Check if the current download source is a mirror and not an official source.
      *
      * @return true if the source is a mirror, false otherwise

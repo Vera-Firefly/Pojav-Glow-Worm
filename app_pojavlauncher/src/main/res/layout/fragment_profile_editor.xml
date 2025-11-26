@@ -178,6 +178,8 @@
                 android:layout_marginEnd="@dimen/padding_medium"
                 android:background="@drawable/background_line"
                 android:ems="10"
+                android:maxLines="2"
+                android:ellipsize="end"
 
                 android:hint=".minecraft"
                 android:paddingHorizontal="@dimen/padding_heavy"

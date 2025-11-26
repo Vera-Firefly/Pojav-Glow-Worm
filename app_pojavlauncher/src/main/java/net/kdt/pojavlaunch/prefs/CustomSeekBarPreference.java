@@ -29,6 +29,7 @@ public class CustomSeekBarPreference extends SeekBarPreference {
      * The textview associated by default to the preference
      */
     private TextView mTextView;
+    private final int mIncrement;
     private boolean isUserSeeking = false;
 
 
@@ -38,6 +39,7 @@ public class CustomSeekBarPreference extends SeekBarPreference {
         TypedArray a = context.obtainStyledAttributes(
                 attrs, R.styleable.SeekBarPreference, defStyleAttr, defStyleRes);
         mMin = a.getInt(R.styleable.SeekBarPreference_min, 0);
+        mIncrement = a.getInt(R.styleable.SeekBarPreference_seekBarIncrement, 0);
         a.recycle();
     }
 
@@ -124,7 +126,12 @@ public class CustomSeekBarPreference extends SeekBarPreference {
      */
     public void setRange(int min, int max) {
         setMin(min);
-        setMax(max);
+        setMaxKeepIncrement(max);
+    }
+
+    public void setMaxKeepIncrement(int max) {
+        super.setMax(max);
+        setSeekBarIncrement(mIncrement);
     }
 
     public boolean isUserSeeking() {
