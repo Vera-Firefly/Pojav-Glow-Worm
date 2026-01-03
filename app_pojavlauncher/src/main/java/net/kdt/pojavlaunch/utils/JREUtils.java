@@ -276,6 +276,17 @@ public class JREUtils {
             envMap.put("LIBGL_NORMALIZE", "1");
         }
 
+        if (LOCAL_RENDERER.equals("opengles3_nggl4es"))
+        {
+            envMap.put("LIBGL_USE_MC_COLOR", "1");
+            envMap.put("DLOPEN", "libspirv-cross-c-shared.so");
+            envMap.put("LIBGL_GL", "31");
+            envMap.put("LIBGL_ES", "3");
+            envMap.put("LIBGL_NORMALIZE", "1");
+            envMap.put("LIBGL_NOINTOVLHACK", "1");
+            envMap.put("LIBGL_NOERROR", "1");
+        }
+
         if (LOCAL_RENDERER.equals("opengles3_mges"))
         {
             envMap.put("MG_DIR_PATH", Tools.MOBILEGLES_DIR);
@@ -862,6 +873,9 @@ public class JREUtils {
                     break;
                 case "opengles2_vgpu_1":
                     renderLibrary = "libvgpu_1368.so";
+                    break;
+                case "opengles3_nggl4es":
+                    renderLibrary = Tools.NG_GL4ES_DIR + "/libng_gl4es.so";
                     break;
                 case "opengles3_mges":
                     renderLibrary = Tools.MOBILEGLES_DIR + "/libmobileglues.so";

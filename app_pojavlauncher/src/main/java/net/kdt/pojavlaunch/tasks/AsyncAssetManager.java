@@ -48,17 +48,20 @@ public class AsyncAssetManager {
 
     private static void  unpackRendererFiles(Context ctx) {
         String abi = "/" + Build.SUPPORTED_ABIS[0];
+        String NGGL_PATH = "renderer/nggl4es";
         String MGES_PATH = "renderer/mobileglues";
         String MGGL_PATH = "renderer/mobilegl";
 
         String mesa2304_suffix = "2304";
         String mesa2520_suffix = "2520";
         String MESA_PATH = "renderer/mesa";
+        boolean ngglVersion = getRendererVersionFromAssets(ctx, Tools.NG_GL4ES_DIR, NGGL_PATH);
         boolean mgesVersion = getRendererVersionFromAssets(ctx, Tools.MOBILEGLES_DIR, MGES_PATH);
         boolean mgglVersion = getRendererVersionFromAssets(ctx, Tools.MOBILEGL_DIR, MGGL_PATH);
         boolean mesa2304Version = getRendererVersionFromAssets(ctx, Tools.MESA_EGL_DIR + mesa2304_suffix, MESA_PATH + mesa2304_suffix);
         boolean mesa2520Version = getRendererVersionFromAssets(ctx, Tools.MESA_EGL_DIR + mesa2520_suffix, MESA_PATH + mesa2520_suffix);
         try {
+            Tools.copyAssetFolder(ctx, NGGL_PATH + abi, Tools.NG_GL4ES_DIR, ngglVersion);
             Tools.copyAssetFolder(ctx, MGES_PATH + abi, Tools.MOBILEGLES_DIR, mgesVersion);
             Tools.copyAssetFolder(ctx, MGGL_PATH + abi, Tools.MOBILEGL_DIR, mgglVersion);
             Tools.copyAssetFolder(ctx, MESA_PATH + mesa2304_suffix + abi, Tools.MESA_EGL_DIR + mesa2304_suffix, mesa2304Version);

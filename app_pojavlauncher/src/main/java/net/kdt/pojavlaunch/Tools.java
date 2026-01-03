@@ -138,6 +138,7 @@ public final class Tools {
     public static String DRIVER_MODEL = null;
     public static String MESA_LIBS = null;
     public static String RENDERER_DIR = null;
+    public static String NG_GL4ES_DIR = null;
     public static String MOBILEGLES_DIR = null;
     public static String MOBILEGL_DIR = null;
     public static String MESA_EGL_DIR = null;
@@ -183,6 +184,7 @@ public final class Tools {
         RENDERER_DIR = DIR_DATA + "/renderer";
         MOBILEGLES_DIR = RENDERER_DIR + "/mobileglues";
         MOBILEGL_DIR = RENDERER_DIR + "/mobilegl";
+        NG_GL4ES_DIR = RENDERER_DIR + "/nggl4es";
         MESA_EGL_DIR = RENDERER_DIR + "/mesa";
         TURNIP_DIR = DIR_DATA + "/turnip";
         NATIVE_LIB_DIR = ctx.getApplicationInfo().nativeLibraryDir;
