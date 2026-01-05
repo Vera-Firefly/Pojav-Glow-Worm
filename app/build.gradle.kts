@@ -1,0 +1,304 @@
+import com.android.build.api.variant.FilterConfiguration.FilterType.ABI
+import com.android.build.gradle.tasks.MergeSourceSetFolders
+import com.github.megatronking.stringfog.plugin.StringFogExtension
+import com.github.megatronking.stringfog.plugin.StringFogMode
+import com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator
+import java.util.Date
+import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android") version "2.0.21"
+}
+apply(plugin = "stringfog")
+
+val appPackageName = "net.kdt.pojavlaunch.firefly"
+
+configure<StringFogExtension> {
+    implementation = "com.github.megatronking.stringfog.xor.StringFogImpl"
+    fogPackages = arrayOf("$appPackageName")
+    kg = RandomKeyGenerator()
+    mode = StringFogMode.bytes
+}
+
+fun getDate(): String {
+    val dateFormat = SimpleDateFormat("yyyyMMdd")
+    return dateFormat.format(Date())
+}
+
+fun getVersionName(): String {
+    val tag = ByteArrayOutputStream()
+    val branch = ByteArrayOutputStream()
+    val tagPartCommit = ByteArrayOutputStream()
+    var tagString: String
+
+    try {
+        exec {
+            commandLine("git", "describe", "--tags")
+            isIgnoreExitValue = true
+            standardOutput = tag
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
+    if (tag.toString() == "") {
+        try {
+            exec {
+                commandLine("git", "describe", "--always", "--tags")
+                isIgnoreExitValue = true
+                standardOutput = tagPartCommit
+            }
+        } catch (e: Exception) {
+        }
+    }
+
+    tagString = if (tag.toString() != "") {
+        tag.toString()
+    } else {
+        if (tagPartCommit.toString().trim() == "") {
+            "mume-${getDate()}"
+        } else {
+            "mume-${getDate()}-${tagPartCommit.toString().trim()}"
+        }
+    }
+
+    try {
+        exec {
+            commandLine("git", "branch", "--show-current")
+            isIgnoreExitValue = true
+            standardOutput = branch
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
+    return tagString.trim().replace("-g", "-") + "-" + branch.toString().trim()
+}
+
+fun getBaseVersionCode(): Int {
+    val isofficial = System.getenv("IS_OFFICIAL") == "true"
+    val baseVersionCode = 100000000
+    return if (isofficial) {
+        baseVersionCode + (System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 0)
+    } else {
+        val baseVersionCodeFile = file("./base_version_code.txt")
+        if (baseVersionCodeFile.canRead() && baseVersionCodeFile.isFile) {
+            val fileContent = baseVersionCodeFile.readText().trim()
+            try {
+                fileContent.toInt()
+            } catch (e: NumberFormatException) {
+                println("Invalid version code in base_version_code.txt: $fileContent")
+                baseVersionCode
+            }
+        } else {
+            baseVersionCode
+        }
+    }
+}
+
+fun getCFApiKey(): String {
+    val key = System.getenv("CURSEFORGE_API_KEY")
+    if (key != null) return key
+    val curseforgeKeyFile = file("./curseforge_key.txt")
+    if (curseforgeKeyFile.canRead() && curseforgeKeyFile.isFile) {
+        return curseforgeKeyFile.readText()
+    }
+    logger.warn("BUILD: You have no CurseForge key, the curseforge api will get disabled !")
+    return "DUMMY"
+}
+
+configurations {
+    create("instrumentedClasspath") {
+        isCanBeConsumed = false
+        isCanBeResolved = true
+    }
+}
+
+android {
+    namespace = appPackageName
+
+    compileSdk = 35
+
+    lint {
+        abortOnError = false
+    }
+
+    signingConfigs {
+        create("releaseBuild") {
+            val pwd = System.getenv("VERA_KEYSTORE_PASSWORD")
+            storeFile = file("key-store.jks")
+            storePassword = pwd
+            keyAlias = "Firefly"
+            keyPassword = pwd
+        }
+        create("customDebug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
+    defaultConfig {
+        applicationId = appPackageName
+        minSdk = 26
+        targetSdk = 28
+        versionCode = 9999999
+        versionName = getVersionName()
+        multiDexEnabled = true
+        resValue("string", "curseforge_api_key", getCFApiKey())
+        resValue("string", "base_version_code", getBaseVersionCode().toString())
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("customDebug")
+            resValue("string", "application_package", "net.kdt.pojavlaunch.firefly.debug")
+            resValue("string", "storageProviderAuthorities", "net.kdt.pojavlaunch.firefly.scoped.gamefolder.firefly.debug")
+            resValue("string", "fileProviderAuthorities", "net.kdt.pojavlaunch.firefly.scoped.FileFileProvider.debug")
+        }
+        release {
+            isDebuggable = false
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("releaseBuild")
+            resValue("string", "application_package", "net.kdt.pojavlaunch.firefly")
+            resValue("string", "storageProviderAuthorities", "net.kdt.pojavlaunch.firefly.scoped.gamefolder.firefly")
+            resValue("string", "fileProviderAuthorities", "net.kdt.pojavlaunch.firefly.scoped.FileFileProvider")
+        }
+    }
+
+    androidComponents {
+        onVariants { variant ->
+            variant.outputs.forEach { output ->
+                if (output is com.android.build.api.variant.impl.VariantOutputImpl) {
+                    (output.getFilter(ABI)?.identifier ?: "all").let { abi ->
+                        val baseVersionName = getDate()
+                        val baseName = "Pojav-Glow-Worm-${if (variant.buildType == "release") baseVersionName else "Debug-${baseVersionName}"}"
+                        output.outputFileName = "${baseName}-${abi}.apk"
+
+                    }
+                }
+                val variantName = variant.name.replaceFirstChar { it.uppercaseChar() }
+                afterEvaluate {
+                    val task =
+                        tasks.named("merge${variantName}Assets").get() as MergeSourceSetFolders
+                    task.doLast {
+                        val arch = System.getProperty("arch", "all")
+                        val assetsDir = task.outputDir.get().asFile
+                        val jreList = listOf("jre-8", "jre-11", "jre-17", "jre-21")
+                        jreList.forEach { jre ->
+                            val runtimeDir = File("${assetsDir}/components/$jre")
+                            if (!runtimeDir.exists()) {
+                                println("Directory does not exist: $runtimeDir")
+                                return@forEach
+                            }
+
+                            if (!runtimeDir.isDirectory) {
+                                println("Not a directory: $runtimeDir")
+                                return@forEach
+                            }
+
+                            val files = runtimeDir.listFiles()
+
+                            if (files == null || files.isEmpty()) {
+                                println("No files found in directory: $runtimeDir")
+                                return@forEach
+                            }
+                            files.forEach {
+                                if (arch != "all" && it.name != "version" && !it.name.contains("universal") && it.name != "bin-${arch}.tar.xz") {
+                                    println("delete:${it} : ${it.delete()}")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    splits {
+        val arch = System.getProperty("arch", "all")
+        if (arch != "all") {
+            abi {
+                isEnable = true
+                reset()
+                when (arch) {
+                    "arm" -> include("armeabi-v7a")
+                    "arm64" -> include("arm64-v8a")
+                    "x86" -> include("x86")
+                    "x86_64" -> include("x86_64")
+                }
+            }
+        }
+    }
+
+    ndkVersion = "25.2.9519653"
+
+    externalNativeBuild {
+        ndkBuild {
+            path = file("src/main/jni/Android.mk")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+            pickFirsts += listOf("**/libbytehook.so")
+        }
+    }
+
+    buildFeatures {
+        prefab = true
+        buildConfig = true
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+
+}
+
+dependencies {
+    implementation("javax.annotation:javax.annotation-api:1.3.2")
+    implementation("commons-codec:commons-codec:1.15")
+    implementation("androidx.preference:preference:1.2.0")
+    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+    implementation("androidx.viewpager2:viewpager2:1.1.0-beta01")
+    implementation("androidx.annotation:annotation:1.5.0")
+    implementation("androidx.documentfile:documentfile:1.0.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.github.duanhong169:checkerboarddrawable:1.0.2")
+    implementation("com.github.PojavLauncherTeam:portrait-sdp:ed33e89cbc")
+    implementation("com.github.PojavLauncherTeam:portrait-ssp:6c02fd739b")
+    implementation("com.github.Mathias-Boulay:ExtendedView:1.0.0")
+    implementation("com.github.Mathias-Boulay:android_gamepad_remapper:2.0.3")
+    implementation("com.github.Mathias-Boulay:virtual-joystick-android:1.14")
+    implementation("top.fifthlight.touchcontroller:proxy-client-android:0.0.4")
+    implementation("com.github.megatronking.stringfog:xor:5.0.0")
+    implementation("org.greenrobot:eventbus:3.3.1")
+    implementation("org.tukaani:xz:1.8")
+    implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.6.1")
+    implementation("com.bytedance:bytehook:1.0.10")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
+    implementation("com.squareup.okhttp3:okhttp:3.9.1")
+}

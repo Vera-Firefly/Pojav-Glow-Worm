@@ -16,7 +16,7 @@ dependencyResolutionManagement {
 
 rootProject.name='Pojav-Glow-Worm'
 //include ':jre_lwjgl3glfw'
-include ':app_pojavlauncher'
+include ':app'
 
 //include ':arc_dns_injector'
 //include ':forge_installer'

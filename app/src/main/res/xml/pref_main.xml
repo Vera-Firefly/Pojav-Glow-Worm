@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:key=""
+    >
+
+    <net.kdt.pojavlaunch.firefly.prefs.BackButtonPreference />
+
+    <PreferenceCategory
+        android:title="@string/preference_category_main_categories"
+        app2:iconSpaceReserved="false"
+        >
+
+        <Preference
+            android:key="launcher_screen_setting"
+            android:title="@string/preference_launcher_title"
+            android:summary="@string/preference_launcher_desc"
+            android:fragment="net.kdt.pojavlaunch.firefly.prefs.screens.LauncherPreferenceLauncherFragment"
+            android:icon="@drawable/ic_setting_launcher"
+            />
+
+        <Preference
+            android:key="video_screen_setting"
+            android:title="@string/preference_video_title"
+            android:summary="@string/preference_video_description"
+            android:fragment="net.kdt.pojavlaunch.firefly.prefs.screens.LauncherPreferenceVideoFragment"
+            android:icon="@drawable/ic_setting_video"
+            />
+
+        <Preference
+            android:key="control_screen_setting"
+            android:title="@string/preference_control_title"
+            android:summary="@string/preference_control_description"
+            android:fragment="net.kdt.pojavlaunch.firefly.prefs.screens.LauncherPreferenceControlFragment"
+            android:icon="@drawable/ic_menu_custom_controls"
+            />
+
+        <Preference
+            android:key="java_screen_setting"
+            android:title="@string/preference_java_title"
+            android:summary="@string/preference_java_description"
+            android:fragment="net.kdt.pojavlaunch.firefly.prefs.screens.LauncherPreferenceJavaFragment"
+            android:icon="@drawable/ic_setting_java_runtime"
+            />
+
+        <Preference
+            android:key="misc_screen_setting"
+            android:title="@string/preference_misc_title"
+            android:summary="@string/preference_misc_description"
+            android:fragment="net.kdt.pojavlaunch.firefly.prefs.screens.LauncherPreferenceMiscellaneousFragment"
+            android:icon="@drawable/ic_setting_misc"
+            />
+
+    </PreferenceCategory>
+
+    <Preference
+        android:title="@string/preference_ask_for_notification_title"
+        android:summary="@string/preference_ask_for_notification_description"
+        android:key="notification_permission_request"
+        />
+
+</PreferenceScreen>

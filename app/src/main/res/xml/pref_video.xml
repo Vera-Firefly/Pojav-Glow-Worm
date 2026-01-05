@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app2="http://schemas.android.com/apk/res-auto">
+
+    <net.kdt.pojavlaunch.firefly.prefs.BackButtonPreference />
+
+    <PreferenceCategory
+        android:title="@string/preference_category_video"
+        app2:iconSpaceReserved="false"
+        >
+
+        <androidx.preference.ListPreference
+            android:title="@string/mcl_setting_category_renderer"
+            android:key="renderer"
+            android:defaultValue="opengles2"
+            android:icon="@drawable/ic_setting_engine"
+            app2:useSimpleSummaryProvider="true"
+            />
+
+        <Preference
+            android:key="renderer_mobileglues_settings"
+            android:title="@string/preference_renderer_mobileglues_settings"
+            android:icon="@drawable/ic_renderer_mg"
+            />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="ignoreNotch"
+            android:summary="@string/mcl_setting_subtitle_ignore_notch"
+            android:title="@string/mcl_setting_title_ignore_notch"
+            android:icon="@drawable/ic_setting_hide_notch"
+            />
+
+        <net.kdt.pojavlaunch.firefly.prefs.CustomSeekBarPreference
+            android:key="resolutionRatio"
+            android:summary="@string/mcl_setting_subtitle_resolution_scaler"
+            android:title="@string/mcl_setting_title_resolution_scaler"
+            app2:showSeekBarValue="true"
+            app2:seekBarIncrement="5"
+            android:icon="@drawable/ic_setting_screen_resolution"
+            />
+
+        <SwitchPreference
+            android:title="@string/preference_sustained_performance_title"
+            android:summary="@string/preference_sustained_performance_description"
+            android:key="sustainedPerformance"
+            android:defaultValue="false"
+            app2:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="alternate_surface"
+            android:summary="@string/mcl_setting_subtitle_use_surface_view"
+            android:title="@string/mcl_setting_title_use_surface_view"
+            app2:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="force_vsync"
+            android:summary="@string/preference_force_vsync_description"
+            android:title="@string/preference_force_vsync_title"
+            app2:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="vsync_in_zink"
+            android:summary="@string/preference_vsync_in_zink_description"
+            android:title="@string/preference_vsync_in_zink_title"
+            app2:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preference_category_experimental_settings"
+        app2:iconSpaceReserved="false"
+        >
+
+        <SwitchPreferenceCompat
+            android:key="dump_shaders"
+            android:title="@string/preference_shader_dump_title"
+            android:summary="@string/preference_shader_dump_description"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="bigCoreAffinity"
+            android:title="@string/preference_force_big_core_title"
+            android:summary="@string/preference_force_big_core_desc"
+            app2:iconSpaceReserved="false"
+            />
+
+        <com.firefly.ui.prefs.ChooseTurnipListPref
+            android:defaultValue="default"
+            android:key="chooseTurnipDriver"
+            android:entries="@array/turnip_files"
+            android:entryValues="@array/turnip_values"
+            android:title="@string/pgw_settings_ctu"
+            android:dialogTitle="@string/pgw_settings_ctu_dia"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="zinkPreferSystemDriver"
+            android:summary="@string/preference_vulkan_driver_system_description"
+            android:title="@string/preference_vulkan_driver_system_title"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="q3behavior"
+            android:title="@string/preference_fix_q3_behavior_title"
+            android:summary="@string/preference_fix_q3_behavior_desc"
+            app2:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preference_category_renderer_experimental_settings"
+        app2:iconSpaceReserved="false"
+        >
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ExperimentalSetup"
+            android:title="@string/preference_renderer_setup_title"
+            android:summary="@string/preference_renderer_setup"
+            app2:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.ListPreference
+            android:defaultValue="default"
+            android:key="CLibglGL"
+            android:entries="@array/libgl_gl"
+            android:entryValues="@array/libgl_gl_values"
+            android:title="LIBGL_GL"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.ListPreference
+            android:defaultValue="default"
+            android:key="configBridge"
+            android:entries="@array/bridge_config_names"
+            android:entryValues="@array/bridge_config_values"
+            android:title="@string/preference_bridge_config_title"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="InitialFrameBuffer"
+            android:title="@string/preference_osm_initial_framebuffer_title"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="glInitialFrameBuffer"
+            android:title="@string/preference_gl_initial_framebuffer_title"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="osmesaInfo"
+            android:title="OSMesa Info"
+            app2:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="MesaRendererChoose"
+        android:title="@string/preference_renderer_setup_extra"
+        app2:iconSpaceReserved="false"
+        >
+
+        <com.firefly.ui.prefs.ChooseMesaListPref
+            android:defaultValue="default"
+            android:key="CMesaLibrary"
+            android:entries="@array/osmesa_library"
+            android:entryValues="@array/osmesa_values"
+            android:title="@string/preference_extra_mesa_version"
+            android:dialogTitle="@string/preference_rendererexp_mesa_dialogtitle"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.ListPreference
+            android:defaultValue="gallium_zink"
+            android:key="CDriverModels"
+            android:entries="@array/driver_model"
+            android:entryValues="@array/driver_model_values"
+            android:title="@string/preference_extra_driver_model"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="customMesaVersionPref"
+        android:title="@string/preference_exp_custommv"
+        app2:iconSpaceReserved="false"
+        >
+
+        <SwitchPreference
+            android:key="ebSystem"
+            android:title="@string/preference_exp_ebsystem"
+            android:defaultValue="true"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:key="ebSpecific"
+            android:title="@string/preference_exp_ebspecific"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:key="ebCustom"
+            android:title="@string/preference_rendererexp_custom_glversion_title"
+            android:summary="@string/preference_rendererexp_custom_glversion"
+            app2:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="customMesaLoaderDriverOverride"
+        android:title="@string/preference_extra_osm_cmldo_categ"
+        app2:iconSpaceReserved="false"
+        >
+
+        <SwitchPreference
+            android:key="ebDrmShim"
+            android:title="@string/osm_enable_drm_shim"
+            android:summary="@string/osm_enable_drm_shim_desc"
+            android:defaultValue="false"
+            app2:iconSpaceReserved="false"
+            />
+
+        <SwitchPreference
+            android:key="ebChooseMldo"
+            android:title="@string/osm_enable_cmldo"
+            android:summary="@string/osm_enable_cmldo_desc"
+            android:defaultValue="false"
+            app2:iconSpaceReserved="false"
+            />
+
+        <androidx.preference.ListPreference
+            android:defaultValue="kgsl"
+            android:key="ChooseMldo"
+            android:entries="@array/osmesa_mldo"
+            android:entryValues="@array/osmesa_mldo_values"
+            android:title="@string/osm_choose_cmldo"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
