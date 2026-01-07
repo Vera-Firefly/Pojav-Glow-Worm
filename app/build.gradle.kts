@@ -1,4 +1,7 @@
 import com.android.build.api.variant.FilterConfiguration.FilterType.ABI
+import com.android.build.api.variant.Variant
+import com.android.build.api.variant.VariantOutput
+import com.android.build.api.variant.impl.VariantOutputImpl
 import com.android.build.gradle.tasks.MergeSourceSetFolders
 import com.github.megatronking.stringfog.plugin.StringFogExtension
 import com.github.megatronking.stringfog.plugin.StringFogMode
@@ -15,7 +18,7 @@ plugins {
 apply(plugin = "stringfog")
 
 val appPackageName = "net.kdt.pojavlaunch.firefly"
-val currentVersion = "mume"
+val currentVersion = "snowdrop"
 
 var localProperty: Properties? = null
 if (file("${rootDir}/local.properties").exists()) {
@@ -43,7 +46,6 @@ fun versionName(): String {
     val tag = ByteArrayOutputStream()
     val branch = ByteArrayOutputStream()
     val tagPartCommit = ByteArrayOutputStream()
-    var tagString: String
 
     try {
         exec {
@@ -52,7 +54,6 @@ fun versionName(): String {
             standardOutput = tag
         }
     } catch (e: Exception) {
-        e.printStackTrace()
     }
 
     if (tag.toString() == "") {
@@ -66,8 +67,8 @@ fun versionName(): String {
         }
     }
 
-    tagString = if (tag.toString() != "") {
-        tag.toString()
+    val tagString: String = if (tag.toString() != "") {
+        "${currentVersion}-${tag}"
     } else {
         if (tagPartCommit.toString().trim() == "") {
             "${currentVersion}-${currentDate()}"
@@ -87,6 +88,70 @@ fun versionName(): String {
     }
 
     return tagString.trim().replace("-g", "-") + "-" + branch.toString().trim()
+}
+
+fun processOutput(variant: Variant, output: VariantOutput) {
+    if (output !is VariantOutputImpl) return
+
+    setOutputFileName(variant, output)
+    configureAssetsTask(variant)
+}
+
+fun setOutputFileName(variant: Variant, output: VariantOutputImpl) {
+    val abi = output.getFilter(ABI)?.identifier ?: "all"
+    val baseVersionName = currentDate()
+    val buildTypeSuffix = if (variant.buildType == "release") baseVersionName else "Debug-${baseVersionName}"
+    val baseName = "Pojav-Glow-Worm-${buildTypeSuffix}"
+
+    output.outputFileName = "${baseName}-${abi}.apk"
+}
+
+fun configureAssetsTask(variant: Variant) {
+    val variantName = variant.name.replaceFirstChar { it.uppercaseChar() }
+
+    afterEvaluate {
+        val task = tasks.named("merge${variantName}Assets").get() as MergeSourceSetFolders
+        task.doLast {
+            cleanRuntimeAssets(task.outputDir.get().asFile)
+        }
+    }
+}
+
+fun cleanRuntimeAssets(assetsDir: File) {
+    val arch = System.getProperty("arch", "all")
+    if (arch == "all") return
+
+    val jreList = listOf("jre-8", "jre-11", "jre-17", "jre-21")
+
+    jreList.forEach { jre ->
+        val runtimeDir = File("${assetsDir}/components/$jre")
+        cleanRuntimeDirectory(runtimeDir, arch)
+    }
+}
+
+fun cleanRuntimeDirectory(runtimeDir: File, arch: String) {
+    if (!runtimeDir.exists() || !runtimeDir.isDirectory) {
+        println("Directory does not exist or is not a directory: $runtimeDir")
+        return
+    }
+
+    val files = runtimeDir.listFiles() ?: emptyArray()
+    if (files.isEmpty()) {
+        println("No files found in directory: $runtimeDir")
+        return
+    }
+
+    files.forEach { file ->
+        if (shouldDeleteJreFile(file, arch)) {
+            println("delete:${file} : ${file.delete()}")
+        }
+    }
+}
+
+fun shouldDeleteJreFile(file: File, arch: String): Boolean {
+    return file.name != "version" &&
+            !file.name.contains("universal") &&
+            file.name != "bin-${arch}.tar.xz"
 }
 
 android {
@@ -157,48 +222,7 @@ android {
     androidComponents {
         onVariants { variant ->
             variant.outputs.forEach { output ->
-                if (output is com.android.build.api.variant.impl.VariantOutputImpl) {
-                    (output.getFilter(ABI)?.identifier ?: "all").let { abi ->
-                        val baseVersionName = currentDate()
-                        val baseName = "Pojav-Glow-Worm-${if (variant.buildType == "release") baseVersionName else "Debug-${baseVersionName}"}"
-                        output.outputFileName = "${baseName}-${abi}.apk"
-
-                    }
-                }
-                val variantName = variant.name.replaceFirstChar { it.uppercaseChar() }
-                afterEvaluate {
-                    val task =
-                        tasks.named("merge${variantName}Assets").get() as MergeSourceSetFolders
-                    task.doLast {
-                        val arch = System.getProperty("arch", "all")
-                        val assetsDir = task.outputDir.get().asFile
-                        val jreList = listOf("jre-8", "jre-11", "jre-17", "jre-21")
-                        jreList.forEach { jre ->
-                            val runtimeDir = File("${assetsDir}/components/$jre")
-                            if (!runtimeDir.exists()) {
-                                println("Directory does not exist: $runtimeDir")
-                                return@forEach
-                            }
-
-                            if (!runtimeDir.isDirectory) {
-                                println("Not a directory: $runtimeDir")
-                                return@forEach
-                            }
-
-                            val files = runtimeDir.listFiles()
-
-                            if (files == null || files.isEmpty()) {
-                                println("No files found in directory: $runtimeDir")
-                                return@forEach
-                            }
-                            files.forEach {
-                                if (arch != "all" && it.name != "version" && !it.name.contains("universal") && it.name != "bin-${arch}.tar.xz") {
-                                    println("delete:${it} : ${it.delete()}")
-                                }
-                            }
-                        }
-                    }
-                }
+                processOutput(variant, output)
             }
         }
     }
