@@ -39,22 +39,32 @@ static struct android_namespace_t* driver_namespace = NULL;
 bool patch_elf_soname(int patchfd, int realfd, uint16_t patchid);
 
 static struct android_namespace_t* create_namespace_local(
-    const char* name, const char* ld_library_path, const char* default_library_path, uint64_t type,
-    const char* permitted_when_isolated_path, struct android_namespace_t* parent) {
+    const char* name,
+    const char* ld_library_path,
+    const char* default_library_path,
+    uint64_t type,
+    const char* permitted_when_isolated_path,
+    struct android_namespace_t* parent)
+{
     void* caller = __builtin_return_address(0);
-    return android_create_namespace(name, ld_library_path, default_library_path, type,
-                                     permitted_when_isolated_path, parent, caller);
+    return android_create_namespace(
+            name,
+            ld_library_path,
+            default_library_path,
+            type,
+            permitted_when_isolated_path,
+            parent,
+            caller);
 }
 
-static void* find_branch_label(void* func_start) {
+static void* find_branch_label(void* func_start)
+{
     void* func_page_start = (void*)(((uintptr_t)func_start) & ~(PAGE_SIZE - 1));
     mprotect(func_page_start, PAGE_SIZE, PROT_READ | PROT_EXEC);
     uint32_t* bl_addr = func_start;
 
-    while ((*bl_addr & OP_MS) != BL_OP)
-    {
-        bl_addr++;
-    }
+    while ((*bl_addr & OP_MS) != BL_OP) bl_addr++;
+    
     return ((char*)bl_addr) + (*bl_addr & BL_IM) * 4;
 }
 
@@ -78,8 +88,14 @@ bool linker_ns_load(const char* lib_search_path) {
     char full_path[strlen(SEARCH_PATH) + strlen(lib_search_path) + 2];
     snprintf(full_path, sizeof(full_path), "%s:%s", SEARCH_PATH, lib_search_path);
 
-    driver_namespace = create_namespace_local("driver_namespace", full_path, full_path, 3, 
-                                              "/system/:/data/:/vendor/:/apex/", NULL);
+    driver_namespace = create_namespace_local(
+                "driver_namespace",
+                full_path,
+                full_path,
+                3,
+                "/system/:/system_ext/:/data/:/vendor/:/apex/",
+                NULL
+            );
 
     android_link_namespaces(driver_namespace, NULL, "ld-android.so");
     android_link_namespaces(driver_namespace, NULL, "libnativeloader.so");
@@ -94,10 +110,9 @@ bool linker_ns_load(const char* lib_search_path) {
 
 void* linker_ns_dlopen(const char* name, int flag) {
 #ifdef ADRENO_POSSIBLE
-    android_dlextinfo dlextinfo = {
-        .flags = ANDROID_DLEXT_USE_NAMESPACE,
-        .library_namespace = driver_namespace
-    };
+    android_dlextinfo dlextinfo;
+    dlextinfo.flags = ANDROID_DLEXT_USE_NAMESPACE;
+    dlextinfo.library_namespace = driver_namespace;
     return android_dlopen_ext(name, flag, &dlextinfo);
 #else
     return NULL;
@@ -126,11 +141,11 @@ void* linker_ns_dlopen_unique(const char* tmpdir, const char* name, int flags) {
         return NULL;
     }
 
-    android_dlextinfo extinfo = {
-        .flags = ANDROID_DLEXT_USE_NAMESPACE | ANDROID_DLEXT_USE_LIBRARY_FD,
-        .library_fd = patch_fd,
-        .library_namespace = driver_namespace
-    };
+    android_dlextinfo extinfo;
+    extinfo.flags = ANDROID_DLEXT_USE_NAMESPACE | ANDROID_DLEXT_USE_LIBRARY_FD;
+    extinfo.library_fd = patch_fd;
+    extinfo.library_namespace = driver_namespace;
+
     snprintf(pathbuf, PATH_MAX, "/proc/self/fd/%d", patch_fd);
     return android_dlopen_ext(pathbuf, flags, &extinfo);
 #else
@@ -162,7 +177,8 @@ bool patch_elf_soname(int patchfd, int realfd, uint16_t patchid) {
     for (ELF_HALF i = 0; i < ehdr->e_shnum; i++)
     {
         ELF_SHDR *hdr = &shdr[i];
-        if (hdr->sh_type == SHT_DYNAMIC) {
+        if (hdr->sh_type == SHT_DYNAMIC)
+        {
             char* strtab = target + shdr[hdr->sh_link].sh_offset;
             ELF_DYN *dynEntries = (ELF_DYN*)(target + hdr->sh_offset);
             for (ELF_XWORD k = 0; k < (hdr->sh_size / hdr->sh_entsize);k++)

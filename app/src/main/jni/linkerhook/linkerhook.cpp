@@ -16,14 +16,17 @@ static std::atomic<void*> global_ready_handle{nullptr};
 
 static const char* supported_namespaces[] = {"sphal", "vendor", "default"};
 
-void set_handles(void* handle, void* dlopen_ext, void* get_namespace) {
+__attribute__((visibility("default"), used))
+void linker_hook_set_handles(void* handle, void* dlopen_ext, void* get_namespace)
+{
     ready_handle = handle;
     global_ready_handle.store(handle);
     dlopen_ext_impl = (decltype(dlopen_ext_impl))dlopen_ext;
     get_exported_namespace_impl = (decltype(get_exported_namespace_impl))get_namespace;
 }
 
-static void* checkIfGlobalReadyHandle() {
+static void* checkIfGlobalReadyHandle()
+{
     void* handle = global_ready_handle.load();
     if (handle == nullptr)
     {
@@ -33,14 +36,18 @@ static void* checkIfGlobalReadyHandle() {
     return handle;
 }
 
-void* dlopen_ext(const char* filename, int flags, const android_dlextinfo* extinfo) {
+__attribute__((visibility("default"), used))
+void* android_dlopen_ext(const char* filename, int flags, const android_dlextinfo* extinfo)
+{
     if (strstr(filename, "vulkan."))
         return checkIfGlobalReadyHandle();
 
-    return dlopen_ext_impl(filename, flags, extinfo, reinterpret_cast<const void*>(&dlopen_ext));
+    return dlopen_ext_impl(filename, flags, extinfo, reinterpret_cast<const void*>(&android_dlopen_ext));
 }
 
-void* load_sphal_library(const char* filename, int flags) {
+__attribute__((visibility("default"), used))
+void* android_load_sphal_library(const char* filename, int flags)
+{
     if (strstr(filename, "vulkan."))
         return checkIfGlobalReadyHandle();
 
@@ -51,14 +58,15 @@ void* load_sphal_library(const char* filename, int flags) {
         if (androidNamespace != NULL) break;
     }
 
-    android_dlextinfo extinfo = {
-        .flags = ANDROID_DLEXT_USE_NAMESPACE,
-        .library_namespace = androidNamespace
-    };
+    android_dlextinfo extinfo;
+    extinfo.flags = ANDROID_DLEXT_USE_NAMESPACE;
+    extinfo.library_namespace = androidNamespace;
 
-    return dlopen_ext_impl(filename, flags, &extinfo, reinterpret_cast<const void*>(&dlopen_ext));
+    return dlopen_ext_impl(filename, flags, &extinfo, reinterpret_cast<const void*>(&android_dlopen_ext));
 }
 
-uint64_t hook_atrace_get_enabled_tags() {
+__attribute__((visibility("default"), used))
+uint64_t atrace_get_enabled_tags()
+{
     return 0;
 }

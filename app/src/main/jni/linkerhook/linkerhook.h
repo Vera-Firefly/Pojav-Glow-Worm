@@ -12,10 +12,10 @@
 extern "C" {
 #endif
 
-void set_handles(void* handle, void* dlopen_ext, void* get_namespace);
-void* dlopen_ext(const char* filename, int flags, const android_dlextinfo* extinfo);
-void* load_sphal_library(const char* filename, int flags);
-uint64_t hook_atrace_get_enabled_tags();
+void linker_hook_set_handles(void* handle, void* dlopen_ext, void* get_namespace);
+void* android_dlopen_ext(const char* filename, int flags, const android_dlextinfo* extinfo);
+void* android_load_sphal_library(const char* filename, int flags);
+uint64_t atrace_get_enabled_tags();
 
 #ifdef __cplusplus
 }

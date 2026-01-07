@@ -103,8 +103,7 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_MODULE := linkerhook
 LOCAL_SRC_FILES := \
-    linkerhook/linkerhook.cpp \
-    linkerhook/linkerns.c
+    linkerhook/linkerhook.cpp
 LOCAL_LDFLAGS := -z global
 include $(BUILD_SHARED_LIBRARY)
 
