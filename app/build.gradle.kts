@@ -6,6 +6,7 @@ import com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator
 import java.util.Date
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -14,6 +15,17 @@ plugins {
 apply(plugin = "stringfog")
 
 val appPackageName = "net.kdt.pojavlaunch.firefly"
+val currentVersion = "mume"
+
+var localProperty: Properties? = null
+if (file("${rootDir}/local.properties").exists()) {
+    localProperty = Properties()
+    file("${rootDir}/local.properties").inputStream().use { localProperty?.load(it) }
+}
+
+val pwd = System.getenv("VERA_KEYSTORE_PASSWORD") ?: localProperty?.getProperty("pwd")
+val baseVersionCode = 100000000 + (System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: localProperty?.getProperty("BASE_VERSION_CODE")?.toIntOrNull() ?: 0)
+val curseForgeApiKey = System.getenv("CURSEFORGE_API_KEY") ?: localProperty?.getProperty("CURSEFORGE_API_KEY")
 
 configure<StringFogExtension> {
     implementation = "com.github.megatronking.stringfog.xor.StringFogImpl"
@@ -22,12 +34,12 @@ configure<StringFogExtension> {
     mode = StringFogMode.bytes
 }
 
-fun getDate(): String {
+fun currentDate(): String {
     val dateFormat = SimpleDateFormat("yyyyMMdd")
     return dateFormat.format(Date())
 }
 
-fun getVersionName(): String {
+fun versionName(): String {
     val tag = ByteArrayOutputStream()
     val branch = ByteArrayOutputStream()
     val tagPartCommit = ByteArrayOutputStream()
@@ -58,9 +70,9 @@ fun getVersionName(): String {
         tag.toString()
     } else {
         if (tagPartCommit.toString().trim() == "") {
-            "mume-${getDate()}"
+            "${currentVersion}-${currentDate()}"
         } else {
-            "mume-${getDate()}-${tagPartCommit.toString().trim()}"
+            "${currentVersion}-${currentDate()}-${tagPartCommit.toString().trim()}"
         }
     }
 
@@ -77,45 +89,6 @@ fun getVersionName(): String {
     return tagString.trim().replace("-g", "-") + "-" + branch.toString().trim()
 }
 
-fun getBaseVersionCode(): Int {
-    val isofficial = System.getenv("IS_OFFICIAL") == "true"
-    val baseVersionCode = 100000000
-    return if (isofficial) {
-        baseVersionCode + (System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 0)
-    } else {
-        val baseVersionCodeFile = file("./base_version_code.txt")
-        if (baseVersionCodeFile.canRead() && baseVersionCodeFile.isFile) {
-            val fileContent = baseVersionCodeFile.readText().trim()
-            try {
-                fileContent.toInt()
-            } catch (e: NumberFormatException) {
-                println("Invalid version code in base_version_code.txt: $fileContent")
-                baseVersionCode
-            }
-        } else {
-            baseVersionCode
-        }
-    }
-}
-
-fun getCFApiKey(): String {
-    val key = System.getenv("CURSEFORGE_API_KEY")
-    if (key != null) return key
-    val curseforgeKeyFile = file("./curseforge_key.txt")
-    if (curseforgeKeyFile.canRead() && curseforgeKeyFile.isFile) {
-        return curseforgeKeyFile.readText()
-    }
-    logger.warn("BUILD: You have no CurseForge key, the curseforge api will get disabled !")
-    return "DUMMY"
-}
-
-configurations {
-    create("instrumentedClasspath") {
-        isCanBeConsumed = false
-        isCanBeResolved = true
-    }
-}
-
 android {
     namespace = appPackageName
 
@@ -127,7 +100,6 @@ android {
 
     signingConfigs {
         create("releaseBuild") {
-            val pwd = System.getenv("VERA_KEYSTORE_PASSWORD")
             storeFile = file("key-store.jks")
             storePassword = pwd
             keyAlias = "Firefly"
@@ -146,10 +118,7 @@ android {
         minSdk = 26
         targetSdk = 28
         versionCode = 9999999
-        versionName = getVersionName()
-        multiDexEnabled = true
-        resValue("string", "curseforge_api_key", getCFApiKey())
-        resValue("string", "base_version_code", getBaseVersionCode().toString())
+        versionName = versionName()
     }
 
     buildTypes {
@@ -163,9 +132,9 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("customDebug")
-            resValue("string", "application_package", "net.kdt.pojavlaunch.firefly.debug")
-            resValue("string", "storageProviderAuthorities", "net.kdt.pojavlaunch.firefly.scoped.gamefolder.firefly.debug")
-            resValue("string", "fileProviderAuthorities", "net.kdt.pojavlaunch.firefly.scoped.FileFileProvider.debug")
+            resValue("string", "application_package", "${appPackageName}.debug")
+            resValue("string", "storageProviderAuthorities", "${appPackageName}.scoped.gamefolder.debug")
+            resValue("string", "fileProviderAuthorities", "${appPackageName}.scoped.FileFileProvider.debug")
         }
         release {
             isDebuggable = false
@@ -175,9 +144,13 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("releaseBuild")
-            resValue("string", "application_package", "net.kdt.pojavlaunch.firefly")
-            resValue("string", "storageProviderAuthorities", "net.kdt.pojavlaunch.firefly.scoped.gamefolder.firefly")
-            resValue("string", "fileProviderAuthorities", "net.kdt.pojavlaunch.firefly.scoped.FileFileProvider")
+            resValue("string", "application_package", appPackageName)
+            resValue("string", "storageProviderAuthorities", "${appPackageName}.scoped.gamefolder")
+            resValue("string", "fileProviderAuthorities", "${appPackageName}.scoped.FileFileProvider")
+        }
+        configureEach {
+            resValue("string", "curseforge_api_key", curseForgeApiKey.toString())
+            resValue("string", "base_version_code", baseVersionCode.toString())
         }
     }
 
@@ -186,7 +159,7 @@ android {
             variant.outputs.forEach { output ->
                 if (output is com.android.build.api.variant.impl.VariantOutputImpl) {
                     (output.getFilter(ABI)?.identifier ?: "all").let { abi ->
-                        val baseVersionName = getDate()
+                        val baseVersionName = currentDate()
                         val baseName = "Pojav-Glow-Worm-${if (variant.buildType == "release") baseVersionName else "Debug-${baseVersionName}"}"
                         output.outputFileName = "${baseName}-${abi}.apk"
 
@@ -248,17 +221,6 @@ android {
 
     ndkVersion = "25.2.9519653"
 
-    externalNativeBuild {
-        ndkBuild {
-            path = file("src/main/jni/Android.mk")
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
     packaging {
         jniLibs {
             useLegacyPackaging = true
@@ -266,15 +228,25 @@ android {
         }
     }
 
-    buildFeatures {
-        prefab = true
-        buildConfig = true
+    externalNativeBuild {
+        ndkBuild {
+            path = file("src/main/jni/Android.mk")
+        }
     }
 
     kotlinOptions {
         jvmTarget = "11"
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        prefab = true
+        buildConfig = true
+    }
 }
 
 dependencies {
