@@ -35,6 +35,7 @@ import net.kdt.pojavlaunch.firefly.extra.ExtraConstants;
 import net.kdt.pojavlaunch.firefly.extra.ExtraCore;
 import net.kdt.pojavlaunch.firefly.value.MinecraftAccount;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -59,6 +60,7 @@ public class OtherLoginFragment extends Fragment {
     private String currentRegisterUrl;
     private ArrayAdapter<String> serverSpinnerAdapter;
 
+    private String[] serverType;
 
     public OtherLoginFragment() {
         super(R.layout.fragment_other_login);
@@ -67,6 +69,11 @@ public class OtherLoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        serverType = new String[] {
+                getString(R.string.other_login_external),
+                getString(R.string.other_login_pass)
+        };
 
         serversFile = new File(Tools.DIR_GAME_HOME, "servers.json");
         progressDialog = new ProgressDialog(requireContext());
@@ -101,75 +108,9 @@ public class OtherLoginFragment extends Fragment {
 
             }
         });
-        addServer.setOnClickListener(v -> {
-            CustomDialog dialog = new CustomDialog.Builder(requireContext())
-                    .setTitle(getString(R.string.other_login_aut))
-                    .setCancelable(false)
-                    .setItems(new String[]{getString(R.string.other_login_external), getString(R.string.other_login_pass)}, (selectedSource, i) -> {
-                        EditText editText = new EditText(requireContext());
-                        editText.setMaxLines(1);
-                        editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                        CustomDialog dialog1 = new CustomDialog.Builder(requireContext())
-                                .setTitle(getString(R.string.other_login_tip))
-                                .setCustomView(editText)
-                                .setCancelable(false)
-                                .setConfirmListener(R.string.other_login_confirm, customView -> {
-                                    PojavApplication.sExecutorService.execute(() -> {
-                                        String data = OtherLoginApi.getINSTANCE().getServeInfo(
-                                            selectedSource.equals(getString(R.string.other_login_pass))
-                                            ? editText.getText().toString() : "https://auth.mc-user.com:233/" + editText.getText().toString()
-                                        );
-                                        if (!Objects.isNull(data)) {
-                                            requireActivity().runOnUiThread(() -> {
-                                                progressDialog.show();
-                                                try {
-                                                    Servers.Server server = new Servers.Server();
-                                                    JSONObject jsonObject = new JSONObject(data);
-                                                    JSONObject meta = jsonObject.optJSONObject("meta");
-                                                    server.setServerName(meta.optString("serverName"));
-                                                    server.setBaseUrl(editText.getText().toString());
-                                                    if (selectedSource.equals(getString(R.string.other_login_pass))) {
-                                                        JSONObject links = meta.optJSONObject("links");
-                                                        server.setRegister(links.optString("register"));
-                                                    } else {
-                                                        server.setBaseUrl("https://auth.mc-user.com:233/" + editText.getText().toString());
-                                                        server.setRegister("https://login.mc-user.com:233/" + editText.getText().toString() + "/loginreg");
-                                                    }
-                                                    if (Objects.isNull(servers)) {
-                                                        servers = new Servers();
-                                                        servers.setServer(new ArrayList<>());
-                                                    }
-                                                    servers.getServer().add(server);
-                                                    Tools.write(serversFile.getAbsolutePath(), Tools.GLOBAL_GSON.toJson(servers, Servers.class));
-                                                    refreshServer();
-                                                    currentBaseUrl = server.getBaseUrl();
-                                                    currentRegisterUrl = server.getRegister();
-                                                } catch (Exception e) {
-                                                    Log.e("OtherLogin: ", Log.getStackTraceString(e));
-                                                } finally {
-                                                    progressDialog.dismiss();
-                                                }
-                                            });
-                                        } else {
-                                        }
-                                    });
-                                    return true;
-                                })
-                                .setCancelListener(R.string.other_login_cancel, customView -> true)
-                                .setDraggable(true)
-                                .build();
-                        if (selectedSource.equals(getString(R.string.other_login_external))) {
-                            editText.setHint(R.string.other_login_address);
-                        } else {
-                            editText.setHint(R.string.other_login_setid);
-                        }
-                        dialog1.show();
-                    })
-                    .setConfirmListener(R.string.other_login_cancel, customView -> true)
-                    .setDraggable(true)
-                    .build();
-            dialog.show();
-        });
+
+        addServer.setOnClickListener(v -> showServerTypeDialog());
+
         register.setOnClickListener(v -> {
             if (!Objects.isNull(currentRegisterUrl)) {
                 Intent intent = new Intent();
@@ -180,77 +121,238 @@ public class OtherLoginFragment extends Fragment {
             }
         });
 
-        loginButton.setOnClickListener(v -> PojavApplication.sExecutorService.execute(() -> {
-            String user = userEditText.getText().toString();
-            String pass = passEditText.getText().toString();
-            String baseUrl = currentBaseUrl;
+        loginButton.setOnClickListener(v -> handleLogin());
+    }
 
-            if (!checkAccountInformation(user, pass)) return;
+    private void showServerTypeDialog() {
+        CustomDialog dialog = new CustomDialog.Builder(requireContext())
+                .setTitle(getString(R.string.other_login_aut))
+                .setCancelable(false)
+                .setItems(serverType, (selectedSource, i) -> showServerInputDialog(selectedSource))
+                .setConfirmListener(R.string.other_login_cancel, customView -> true)
+                .setDraggable(true)
+                .build();
+        dialog.show();
+    }
 
-            if (!(baseUrl == null || baseUrl.isEmpty())) {
-                requireActivity().runOnUiThread(() -> progressDialog.show());
-                try {
-                    OtherLoginApi.getINSTANCE().setBaseUrl(currentBaseUrl);
-                    OtherLoginApi.getINSTANCE().login(user, pass, new OtherLoginApi.Listener() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            requireActivity().runOnUiThread(() -> {
-                                progressDialog.dismiss();
-                                MinecraftAccount account = new MinecraftAccount();
-                                account.accessToken = authResult.getAccessToken();
-                                account.clientToken = authResult.getClientToken();
-                                account.baseUrl = currentBaseUrl;
-                                account.account = userEditText.getText().toString();
-                                if (!Objects.isNull(authResult.getSelectedProfile())) {
-                                    account.username = authResult.getSelectedProfile().getName();
-                                    account.profileId = authResult.getSelectedProfile().getId();
-                                    ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
-                                    Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
-                                } else {
-                                    List<String> list = new ArrayList<>();
-                                    for (AuthResult.AvailableProfiles profiles : authResult.getAvailableProfiles()) {
-                                        list.add(profiles.getName());
-                                    }
-                                    String[] items = list.toArray(new String[0]);
-                                    AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                                            .setTitle(R.string.other_login_role)
-                                            .setItems(items, (d, i) -> {
-                                                for (AuthResult.AvailableProfiles profiles : authResult.getAvailableProfiles()) {
-                                                    if (profiles.getName().equals(items[i])) {
-                                                        account.profileId = profiles.getId();
-                                                        account.username = profiles.getName();
-                                                        refresh(account);
-                                                    }
-                                                }
-                                            })
-                                            .setNegativeButton(R.string.other_login_cancel, null)
-                                            .create();
-                                    dialog.show();
-                                }
-                            });
-                        }
+    private void showServerInputDialog(String selectedSource) {
+        EditText editText = createServerInputEditText(selectedSource);
 
-                        @Override
-                        public void onFailed(String error) {
-                            requireActivity().runOnUiThread(() -> {
-                                progressDialog.dismiss();
-                                AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                                        .setTitle(R.string.other_login_warning)
-                                        .setTitle("An error occurred while logging in：\n" + error)
-                                        .setPositiveButton(R.string.other_login_confirm, null)
-                                        .create();
-                                dialog.show();
-                            });
-                        }
-                    });
-                } catch (IOException e) {
-                    requireActivity().runOnUiThread(() -> progressDialog.dismiss());
-                    Log.e("login", e.toString());
+        CustomDialog dialog1 = new CustomDialog.Builder(requireContext())
+                .setTitle(getString(R.string.other_login_tip))
+                .setCustomView(editText)
+                .setCancelable(false)
+                .setConfirmListener(R.string.other_login_confirm, customView -> {
+                    handleServerInput(selectedSource, editText.getText().toString());
+                    return true;
+                })
+                .setCancelListener(R.string.other_login_cancel, customView -> true)
+                .setDraggable(true)
+                .build();
+
+        dialog1.show();
+    }
+
+    private EditText createServerInputEditText(String selectedSource) {
+        EditText editText = new EditText(requireContext());
+        editText.setMaxLines(1);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        int hintResId = selectedSource.equals(getString(R.string.other_login_external))
+                ? R.string.other_login_address
+                : R.string.other_login_setid;
+        editText.setHint(hintResId);
+
+        return editText;
+    }
+
+    private void handleServerInput(String selectedSource, String inputText) {
+        PojavApplication.sExecutorService.execute(() -> {
+            String serverUrl = buildServerUrl(selectedSource, inputText);
+            String data = OtherLoginApi.getINSTANCE().getServeInfo(serverUrl);
+
+            requireActivity().runOnUiThread(() -> {
+                if (data != null) {
+                    processServerData(selectedSource, inputText, data);
                 }
+            });
+        });
+    }
+
+    private String buildServerUrl(String selectedSource, String inputText) {
+        if (selectedSource.equals(serverType[0])) {
+            return inputText;
+        } else {
+            return "https://auth.mc-user.com:233/" + inputText;
+        }
+    }
+
+    private void processServerData(String selectedSource, String inputText, String data) {
+        progressDialog.show();
+
+        try {
+            Servers.Server server = createServerFromData(selectedSource, inputText, data);
+            addServerToConfig(server);
+
+            currentBaseUrl = server.getBaseUrl();
+            currentRegisterUrl = server.getRegister();
+            refreshServer();
+
+        } catch (Exception e) {
+            Log.e("OtherLogin: ", Log.getStackTraceString(e));
+        } finally {
+            progressDialog.dismiss();
+        }
+    }
+
+    private Servers.Server createServerFromData(String selectedSource, String inputText, String data) throws JSONException {
+        Servers.Server server = new Servers.Server();
+        JSONObject jsonObject = new JSONObject(data);
+        JSONObject meta = jsonObject.optJSONObject("meta");
+
+        server.setServerName(meta.optString("serverName"));
+        server.setBaseUrl(inputText);
+
+        if (selectedSource.equals(serverType[0])) {
+            JSONObject links = meta.optJSONObject("links");
+            server.setRegister(links.optString("register"));
+        } else {
+            server.setBaseUrl("https://auth.mc-user.com:233/" + inputText);
+            server.setRegister("https://login.mc-user.com:233/" + inputText + "/loginreg");
+        }
+
+        return server;
+    }
+
+    private void addServerToConfig(Servers.Server server) throws IOException {
+        if (Objects.isNull(servers)) {
+            servers = new Servers();
+            servers.setServer(new ArrayList<>());
+        }
+
+        servers.getServer().add(server);
+        String json = Tools.GLOBAL_GSON.toJson(servers, Servers.class);
+        Tools.write(serversFile.getAbsolutePath(), json);
+    }
+
+    private void handleLogin() {
+        PojavApplication.sExecutorService.execute(this::performLogin);
+    }
+
+    private void performLogin() {
+        String user = userEditText.getText().toString();
+        String pass = passEditText.getText().toString();
+        String baseUrl = currentBaseUrl;
+
+        if (!checkAccountInformation(user, pass)) return;
+
+        if (baseUrl == null || baseUrl.isEmpty()) {
+            return;
+        }
+
+        requireActivity().runOnUiThread(() -> progressDialog.show());
+
+        try {
+            OtherLoginApi.getINSTANCE().setBaseUrl(baseUrl);
+            OtherLoginApi.getINSTANCE().login(user, pass, new OtherLoginApi.Listener() {
+                @Override
+                public void onSuccess(AuthResult authResult) {
+                    handleLoginSuccess(authResult, user);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    handleLoginError(error);
+                }
+            });
+        } catch (IOException e) {
+            handleLoginException(e);
+        }
+    }
+
+    private void handleLoginSuccess(AuthResult authResult, String username) {
+        requireActivity().runOnUiThread(() -> {
+            progressDialog.dismiss();
+
+            if (authResult.getSelectedProfile() != null) {
+                handleSingleProfileLogin(authResult, username);
             } else {
-                // error
+                handleMultipleProfileSelection(authResult, username);
             }
-        }));
+        });
+    }
+
+    private void handleSingleProfileLogin(AuthResult authResult, String username) {
+        MinecraftAccount account = createAccountFromAuthResult(authResult, username);
+        account.username = authResult.getSelectedProfile().getName();
+        account.profileId = authResult.getSelectedProfile().getId();
+
+        ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
+        Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
+    }
+
+    private void handleMultipleProfileSelection(AuthResult authResult, String username) {
+        List<String> profileNames = extractProfileNames(authResult.getAvailableProfiles());
+        String[] items = profileNames.toArray(new String[0]);
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.other_login_role)
+                .setItems(items, (d, i) -> {
+                    handleProfileSelection(authResult, username, items[i]);
+                })
+                .setNegativeButton(R.string.other_login_cancel, null)
+                .create();
+        dialog.show();
+    }
+
+    private void handleProfileSelection(AuthResult authResult, String username, String selectedProfileName) {
+        for (AuthResult.AvailableProfiles profile : authResult.getAvailableProfiles()) {
+            if (profile.getName().equals(selectedProfileName)) {
+                MinecraftAccount account = createAccountFromAuthResult(authResult, username);
+                account.profileId = profile.getId();
+                account.username = profile.getName();
+                refresh(account);
+                break;
+            }
+        }
+    }
+
+    private List<String> extractProfileNames(List<AuthResult.AvailableProfiles> profiles) {
+        List<String> names = new ArrayList<>();
+        for (AuthResult.AvailableProfiles profile : profiles) {
+            names.add(profile.getName());
+        }
+        return names;
+    }
+
+    private MinecraftAccount createAccountFromAuthResult(AuthResult authResult, String username) {
+        MinecraftAccount account = new MinecraftAccount();
+        account.accessToken = authResult.getAccessToken();
+        account.clientToken = authResult.getClientToken();
+        account.baseUrl = currentBaseUrl;
+        account.account = username;
+        return account;
+    }
+
+    private void handleLoginError(String error) {
+        requireActivity().runOnUiThread(() -> {
+            progressDialog.dismiss();
+            showErrorDialog(error);
+        });
+    }
+
+    private void showErrorDialog(String error) {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.other_login_warning)
+                .setMessage(error)
+                .setPositiveButton(R.string.other_login_confirm, null)
+                .create();
+        dialog.show();
+    }
+
+    private void handleLoginException(IOException e) {
+        requireActivity().runOnUiThread(() -> progressDialog.dismiss());
+        Log.e("login", "Login exception", e);
     }
 
     private void refresh(MinecraftAccount account) {

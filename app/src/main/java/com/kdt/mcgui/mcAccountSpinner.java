@@ -329,7 +329,6 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
                 new MicrosoftBackgroundLogin(true, minecraftAccount.msaRefreshToken)
                         .performLogin(mProgressListener, mDoneListener, mErrorListener);
             }
-            return;
         }
     }
 
