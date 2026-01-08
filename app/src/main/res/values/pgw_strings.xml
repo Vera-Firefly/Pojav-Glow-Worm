@@ -61,7 +61,7 @@
     <string name="preference_osm_initial_framebuffer_title">OSM initial frame buffer</string>
     <string name="preference_gl_initial_framebuffer_title">GL initial frame buffer</string>
     <string name="preference_renderer_setup_extra">Renderer (Extra)</string>
-    <string name="preference_renderer_extra_default">Mesa25.0.1 (Default)</string>
+    <string name="preference_renderer_extra_default">Mesa25.1.4 (Default)</string>
     <string name="preference_extra_mesa_version">Mesa Version</string>
     <string name="preference_extra_driver_model">Gallium Driver Override</string>
     <!-- Dialog -->
