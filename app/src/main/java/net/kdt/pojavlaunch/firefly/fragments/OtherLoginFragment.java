@@ -158,9 +158,7 @@ public class OtherLoginFragment extends Fragment {
         editText.setMaxLines(1);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
 
-        int hintResId = selectedSource.equals(getString(R.string.other_login_external))
-                ? R.string.other_login_address
-                : R.string.other_login_setid;
+        int hintResId = selectedSource.equals(serverType[0]) ? R.string.other_login_address : R.string.other_login_setid;
         editText.setHint(hintResId);
 
         return editText;
