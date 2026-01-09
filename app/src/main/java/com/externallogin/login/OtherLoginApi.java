@@ -36,7 +36,6 @@ public class OtherLoginApi {
             baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
         this.baseUrl = baseUrl;
-        System.out.println(this.baseUrl);
     }
 
     public void login(String userName, String password, Listener listener) throws IOException {
@@ -54,7 +53,6 @@ public class OtherLoginApi {
         authRequest.setRequestUser(true);
         authRequest.setClientToken(UUID.randomUUID().toString().toLowerCase(Locale.ROOT));
         String data = new Gson().toJson(authRequest);
-        System.out.println(data);
         baseLogin(data, "/authserver/authenticate", listener);
     }
 
@@ -73,7 +71,6 @@ public class OtherLoginApi {
             refresh.setSelectedProfile(selectedProfile);
         }
         String data = new Gson().toJson(refresh);
-        System.out.println(data);
         baseLogin(data, "/authserver/refresh", listener);
     }
 
@@ -90,7 +87,6 @@ public class OtherLoginApi {
     private void callLogin(Call call, Listener listener) throws IOException {
         Response response = call.execute();
         String res = response.body().string();
-        System.out.println(res);
         if (response.code() == 200) {
             AuthResult result = new Gson().fromJson(res, AuthResult.class);
             listener.onSuccess(result);
@@ -108,7 +104,6 @@ public class OtherLoginApi {
             Call call = client.newCall(request);
             Response response = call.execute();
             String res = response.body().string();
-            System.out.println(res);
             if (response.code() == 200) {
                 return res;
             }

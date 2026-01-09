@@ -125,20 +125,20 @@ public class OtherLoginFragment extends Fragment {
     }
 
     private void showServerTypeDialog() {
-        CustomDialog dialog = new CustomDialog.Builder(requireContext())
+        new CustomDialog.Builder(requireContext())
                 .setTitle(getString(R.string.other_login_aut))
                 .setCancelable(false)
                 .setItems(serverType, (selectedSource, i) -> showServerInputDialog(selectedSource))
                 .setConfirmListener(R.string.other_login_cancel, customView -> true)
                 .setDraggable(true)
-                .build();
-        dialog.show();
+                .build()
+                .show();
     }
 
     private void showServerInputDialog(String selectedSource) {
         EditText editText = createServerInputEditText(selectedSource);
 
-        CustomDialog dialog1 = new CustomDialog.Builder(requireContext())
+        new CustomDialog.Builder(requireContext())
                 .setTitle(getString(R.string.other_login_tip))
                 .setCustomView(editText)
                 .setCancelable(false)
@@ -148,9 +148,8 @@ public class OtherLoginFragment extends Fragment {
                 })
                 .setCancelListener(R.string.other_login_cancel, customView -> true)
                 .setDraggable(true)
-                .build();
-
-        dialog1.show();
+                .build()
+                .show();
     }
 
     private EditText createServerInputEditText(String selectedSource) {
@@ -285,22 +284,21 @@ public class OtherLoginFragment extends Fragment {
         account.username = authResult.getSelectedProfile().getName();
         account.profileId = authResult.getSelectedProfile().getId();
 
-        ExtraCore.setValue(ExtraConstants.OTHER_LOGIN_TODO, account);
-        Tools.swapFragment(requireActivity(), MainMenuFragment.class, MainMenuFragment.TAG, null);
+        refresh(account);
     }
 
     private void handleMultipleProfileSelection(AuthResult authResult, String username) {
         List<String> profileNames = extractProfileNames(authResult.getAvailableProfiles());
         String[] items = profileNames.toArray(new String[0]);
 
-        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+        new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.other_login_role)
                 .setItems(items, (d, i) -> {
                     handleProfileSelection(authResult, username, items[i]);
                 })
                 .setNegativeButton(R.string.other_login_cancel, null)
-                .create();
-        dialog.show();
+                .create()
+            .show();
     }
 
     private void handleProfileSelection(AuthResult authResult, String username, String selectedProfileName) {
@@ -340,12 +338,12 @@ public class OtherLoginFragment extends Fragment {
     }
 
     private void showErrorDialog(String error) {
-        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+        new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.other_login_warning)
                 .setMessage(error)
                 .setPositiveButton(R.string.other_login_confirm, null)
-                .create();
-        dialog.show();
+                .create()
+                .show();
     }
 
     private void handleLoginException(IOException e) {
@@ -371,12 +369,12 @@ public class OtherLoginFragment extends Fragment {
                     public void onFailed(String error) {
                         requireActivity().runOnUiThread(() -> {
                             progressDialog.dismiss();
-                            AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                            new AlertDialog.Builder(requireContext())
                                     .setTitle(R.string.other_login_warning)
                                     .setTitle("An error occurred while logging in：\n" + error)
                                     .setPositiveButton(R.string.other_login_confirm, null)
-                                    .create();
-                            dialog.show();
+                                    .create()
+                                    .show();
                         });
                     }
                 });

@@ -188,8 +188,7 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
         }
 
         pickAccount(position);
-        if (mSelectecAccount != null)
-            performLogin(mSelectecAccount);
+        // if (mSelectecAccount != null) performLogin(mSelectecAccount);
     }
 
     @Override
@@ -297,7 +296,6 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
 
     private void performLogin(MinecraftAccount minecraftAccount) {
         if (minecraftAccount.isLocal()) return;
-        //&&System.currentTimeMillis() > minecraftAccount.expiresAt
         if (!Objects.isNull(minecraftAccount.baseUrl) && !minecraftAccount.baseUrl.equals("0")) {
             OtherLoginApi.getINSTANCE().setBaseUrl(minecraftAccount.baseUrl);
             PojavApplication.sExecutorService.execute(() -> {
