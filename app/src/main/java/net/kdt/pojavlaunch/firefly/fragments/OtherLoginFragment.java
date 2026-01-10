@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,6 +62,7 @@ public class OtherLoginFragment extends Fragment {
     private ArrayAdapter<String> serverSpinnerAdapter;
 
     private String[] serverType;
+    private String[] serverTypeHint;
 
     public OtherLoginFragment() {
         super(R.layout.fragment_other_login);
@@ -73,6 +75,11 @@ public class OtherLoginFragment extends Fragment {
         serverType = new String[] {
                 getString(R.string.other_login_external),
                 getString(R.string.other_login_pass)
+        };
+
+        serverTypeHint = new String[] {
+                getString(R.string.other_login_address),
+                getString(R.string.other_login_setid)
         };
 
         serversFile = new File(Tools.DIR_GAME_HOME, "servers.json");
@@ -139,7 +146,7 @@ public class OtherLoginFragment extends Fragment {
         EditText editText = createServerInputEditText(selectedSource);
 
         new CustomDialog.Builder(requireContext())
-                .setTitle(getString(R.string.other_login_tip))
+                .setTitle(selectedSource)
                 .setCustomView(editText)
                 .setCancelable(false)
                 .setConfirmListener(R.string.other_login_confirm, customView -> {
@@ -157,7 +164,7 @@ public class OtherLoginFragment extends Fragment {
         editText.setMaxLines(1);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
 
-        int hintResId = selectedSource.equals(serverType[0]) ? R.string.other_login_address : R.string.other_login_setid;
+        String hintResId = selectedSource.equals(serverType[0]) ? serverTypeHint[0] : serverTypeHint[1];
         editText.setHint(hintResId);
 
         return editText;
@@ -170,7 +177,9 @@ public class OtherLoginFragment extends Fragment {
 
             requireActivity().runOnUiThread(() -> {
                 if (data != null) {
-                    processServerData(selectedSource, inputText, data);
+                    processServerData(selectedSource, serverUrl, data);
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.other_login_server_connect_error), Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -178,17 +187,30 @@ public class OtherLoginFragment extends Fragment {
 
     private String buildServerUrl(String selectedSource, String inputText) {
         if (selectedSource.equals(serverType[0])) {
-            return inputText;
+            String url = inputText.trim();
+            while (url.endsWith("/")) {
+                url = url.substring(0, url.length() - 1);
+            }
+
+            if (!url.matches("^https?://.*")) {
+                url = "https://" + url;
+            }
+
+            if (!url.matches(".*/api/(?:yggdrasil|authlib-injector)$")) {
+                url = url.replaceAll("/api/(?:yggdrasil|authlib-injector).*$", "");
+                url += "/api/yggdrasil";
+            }
+            return url;
         } else {
             return "https://auth.mc-user.com:233/" + inputText;
         }
     }
 
-    private void processServerData(String selectedSource, String inputText, String data) {
+    private void processServerData(String selectedSource, String serverUrl, String data) {
         progressDialog.show();
 
         try {
-            Servers.Server server = createServerFromData(selectedSource, inputText, data);
+            Servers.Server server = createServerFromData(selectedSource, serverUrl, data);
             addServerToConfig(server);
 
             currentBaseUrl = server.getBaseUrl();
@@ -202,20 +224,20 @@ public class OtherLoginFragment extends Fragment {
         }
     }
 
-    private Servers.Server createServerFromData(String selectedSource, String inputText, String data) throws JSONException {
+    private Servers.Server createServerFromData(String selectedSource, String serverUrl, String data) throws JSONException {
         Servers.Server server = new Servers.Server();
         JSONObject jsonObject = new JSONObject(data);
         JSONObject meta = jsonObject.optJSONObject("meta");
 
         server.setServerName(meta.optString("serverName"));
-        server.setBaseUrl(inputText);
+        server.setBaseUrl(serverUrl);
 
         if (selectedSource.equals(serverType[0])) {
             JSONObject links = meta.optJSONObject("links");
             server.setRegister(links.optString("register"));
         } else {
-            server.setBaseUrl("https://auth.mc-user.com:233/" + inputText);
-            server.setRegister("https://login.mc-user.com:233/" + inputText + "/loginreg");
+            server.setBaseUrl("https://auth.mc-user.com:233/" + serverUrl);
+            server.setRegister("https://login.mc-user.com:233/" + serverUrl + "/loginreg");
         }
 
         return server;

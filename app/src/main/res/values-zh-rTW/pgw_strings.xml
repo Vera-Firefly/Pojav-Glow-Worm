@@ -33,7 +33,7 @@
     <string name="mcn_signal_title">應用/遊戲 因致命訊號 %d 中止, 請查看 latestlog.txt 以取得更多詳細資訊</string>
     <string name="local_login_bad_username_title">使用者名稱不符合要求</string>
     <string name="local_login_bad_username_text">使用者名稱長度必須在 3 到 16 個字元之間，且只能包含拉丁字母、阿拉伯數字和底線。</string>
-    <!-- Pojav GlowWorm -->
+    <!-- Pojav Glow Worm -->
     <string name="preference_enable_log_output_desc">在應用程式正式開始運行遊戲時啟用日誌輸出介面</string>
     <string name="preference_enable_log_output_title">在遊戲啟動時啟用日誌輸出</string>
     <string name="preference_category_custom_path">自定義路徑</string>
@@ -79,6 +79,7 @@
     <string name="other_login_pass">統一通行證</string>
     <string name="other_login_external">外部登陸</string>
     <string name="other_login_server_error">無驗證服務器</string>
+    <string name="other_login_server_connect_error">無法連接認證伺服器，請檢查網路並確認你輸入了正確的地址。</string>
     <!-- Renderer Experimental Setup -->
     <string name="preference_exp_title">實驗性設置</string>
     <string name="preference_exp_description">非專業人士不建議使用</string>

@@ -108,7 +108,7 @@ public class OtherLoginApi {
                 return res;
             }
         } catch (Exception e) {
-            Log.e("test", "" + e.toString());
+            Log.e("OtherLoginApi[ServerInfo]", e.toString());
         }
         return null;
     }

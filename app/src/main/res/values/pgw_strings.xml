@@ -51,6 +51,7 @@
     <string name="other_login_pass">Uniform Pass</string>
     <string name="other_login_external">External Landing</string>
     <string name="other_login_server_error">No authentication server</string>
+    <string name="other_login_server_connect_error">Unable to connect to the authentication server. Please check your network and make sure you have entered the correct address.</string>
     <!-- Renderer Experimental Setup -->
     <string name="preference_exp_title">Experimental Settings</string>
     <string name="preference_exp_description">Non-professionals should not use it</string>

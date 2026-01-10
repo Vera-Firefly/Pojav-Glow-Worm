@@ -188,7 +188,7 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
         }
 
         pickAccount(position);
-        // if (mSelectecAccount != null) performLogin(mSelectecAccount);
+        if (mSelectecAccount != null) performLogin(mSelectecAccount);
     }
 
     @Override
@@ -286,8 +286,7 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
 
         // Pick what's available, might just be the the add account "button"
         pickAccount(overridePosition == 0 ? -1 : overridePosition);
-        if (mSelectecAccount != null)
-            performLogin(mSelectecAccount);
+        // if (mSelectecAccount != null) performLogin(mSelectecAccount);
 
         // Remove or add the behavior if needed
         setNoAccountBehavior();
