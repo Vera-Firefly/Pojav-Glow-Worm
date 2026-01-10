@@ -121,7 +121,7 @@ fun cleanRuntimeAssets(assetsDir: File) {
     val arch = System.getProperty("arch", "all")
     if (arch == "all") return
 
-    val jreList = listOf("jre-8", "jre-11", "jre-17", "jre-21")
+    val jreList = listOf("jre-8", "jre-11", "jre-17", "jre-21", "jre-25")
 
     jreList.forEach { jre ->
         val runtimeDir = File("${assetsDir}/components/$jre")

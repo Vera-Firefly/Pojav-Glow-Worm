@@ -32,5 +32,8 @@ google-services.json
 .gradle/
 build/
 
+# Launcher Jre Runtime
+app/src/main/assets/jre-*
+
 # Local configuration file (sdk path, etc)
 local.properties

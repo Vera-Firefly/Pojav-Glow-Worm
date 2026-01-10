@@ -72,7 +72,7 @@ public class TestStorageActivity extends Activity {
         LauncherPreferences.loadPreferences(this);
         AsyncAssetManager.unpackComponents(this);
         AsyncAssetManager.unpackSingleFiles(this);
-        UnpackJRE.unpackAllJre(getAssets());
+        UnpackJRE.INSTANCE.unpackAllJre(getAssets());
 
         Intent intent = new Intent(this, LauncherActivity.class);
         startActivity(intent);

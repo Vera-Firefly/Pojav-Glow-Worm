@@ -221,7 +221,7 @@ public class LauncherPreferences {
         if (DEFAULT_PREF.contains("defaultRuntime")) {
             PREF_DEFAULT_RUNTIME = DEFAULT_PREF.getString("defaultRuntime", "");
         } else if (!MultiRTUtils.getRuntimes().isEmpty()) {
-            PREF_DEFAULT_RUNTIME = UnpackJRE.InternalRuntime.JRE_8.name;
+            PREF_DEFAULT_RUNTIME = UnpackJRE.InternalRuntime.JRE_8.getRuntimeName();
             LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime", PREF_DEFAULT_RUNTIME).apply();
         }
     }
