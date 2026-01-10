@@ -9,6 +9,8 @@ import net.kdt.pojavlaunch.firefly.utils.*;
 
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 
+import com.firefly.feature.MarkdownRenderer;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
@@ -20,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LocaleUtils.setLocale(this);
+        MarkdownRenderer.INSTANCE.init(this);
         Tools.setFullscreen(this, setFullscreen());
         Tools.updateWindowSize(this);
     }

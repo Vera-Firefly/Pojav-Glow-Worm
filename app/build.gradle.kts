@@ -282,19 +282,36 @@ dependencies {
     implementation("androidx.annotation:annotation:1.5.0")
     implementation("androidx.documentfile:documentfile:1.0.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    implementation("com.bytedance:bytehook:1.0.10")
     implementation("com.github.duanhong169:checkerboarddrawable:1.0.2")
     implementation("com.github.PojavLauncherTeam:portrait-sdp:ed33e89cbc")
     implementation("com.github.PojavLauncherTeam:portrait-ssp:6c02fd739b")
     implementation("com.github.Mathias-Boulay:ExtendedView:1.0.0")
     implementation("com.github.Mathias-Boulay:android_gamepad_remapper:2.0.3")
     implementation("com.github.Mathias-Boulay:virtual-joystick-android:1.14")
-    implementation("top.fifthlight.touchcontroller:proxy-client-android:0.0.4")
     implementation("com.github.megatronking.stringfog:xor:5.0.0")
+    implementation("com.squareup.okhttp3:okhttp:3.9.1")
+
+    implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.6.1")
+
+    implementation("org.commonmark:commonmark:0.18.2")
+    implementation("org.commonmark:commonmark-ext-gfm-tables:0.18.2")
     implementation("org.greenrobot:eventbus:3.3.1")
     implementation("org.tukaani:xz:1.8")
-    implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.6.1")
-    implementation("com.bytedance:bytehook:1.0.10")
+
+    implementation("top.fifthlight.touchcontroller:proxy-client-android:0.0.4")
+
+    implementation("io.noties.markwon:core:4.6.2") {
+        exclude(group = "com.atlassian.commonmark", module = "commonmark")
+    }
+    implementation("io.noties.markwon:image:4.6.2") {
+        exclude(group = "com.atlassian.commonmark", module = "commonmark")
+    }
+    implementation("io.noties.markwon:image-glide:4.6.2") {
+        exclude(group = "com.atlassian.commonmark", module = "commonmark")
+    }
+
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
-    implementation("com.squareup.okhttp3:okhttp:3.9.1")
 }

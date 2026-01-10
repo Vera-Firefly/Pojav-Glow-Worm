@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.firefly.feature.MarkdownRenderer;
 import com.movtery.ui.dialog.DraggableDialog;
 
 import net.kdt.pojavlaunch.firefly.R;
@@ -64,7 +65,13 @@ public class CustomDialog implements DraggableDialog.DialogInitializationListene
         }
 
         if (scrollmessage != null && !scrollmessage.isEmpty()) {
-            scrollmessageTextView.setText(scrollmessage);
+            try {
+                MarkdownRenderer.INSTANCE.render(scrollmessageTextView, scrollmessage.replace("\n", "  \n"));
+            } catch (IllegalStateException e) {
+                scrollmessageTextView.setText(scrollmessage);
+            } catch (Exception e) {
+                scrollmessageTextView.setText(scrollmessage);
+            }
             scrollmessageTextView.setVisibility(View.VISIBLE);
             messageScrollView.setVisibility(View.VISIBLE);
         }
