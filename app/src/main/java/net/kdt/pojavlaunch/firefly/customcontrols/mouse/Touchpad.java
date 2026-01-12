@@ -106,36 +106,91 @@ public class Touchpad extends View implements GrabListener, AbstractTouchpad {
     }
 
     private void init() {
-        // Setup mouse pointer
-        File file = new File(Tools.DIR_GAME_HOME, "mouse");
-        if (file.exists()) {
-            try {
-                InputStream stream1 = new FileInputStream(file);
-                Bitmap bitmap = BitmapFactory.decodeStream(stream1);
-                mMousePointerDrawable = new BitmapDrawable(getResources(), bitmap);
-                stream1.close();
-            } catch (Exception e) {
-
-            }
-        } else {
-            mMousePointerDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_mouse_pointer, getContext().getTheme());
-        }
-        // For some reason it's annotated as Nullable even though it doesn't seem to actually
-        // ever return null
-        assert mMousePointerDrawable != null;
-        mMousePointerDrawable.setBounds(
-                0, 0,
-                (int) (36 / 100f * LauncherPreferences.PREF_MOUSESCALE),
-                (int) (54 / 100f * LauncherPreferences.PREF_MOUSESCALE)
-        );
+        loadMousePointer();
         setFocusable(false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            setDefaultFocusHighlightEnabled(false);
-        }
-
-        // When the game is grabbing, we should not display the mouse
+        setDefaultFocusHighlightEnabled(false);
         disable();
         mDisplayState = false;
+    }
+    private void loadMousePointer() {
+        mMousePointerDrawable = loadCustomMousePointer()
+                ? mMousePointerDrawable
+                : loadDefaultMousePointerDrawable();
+    }
+
+    private boolean loadCustomMousePointer() {
+        File mouseFile = new File(Tools.DIR_GAME_HOME, "mouse");
+
+        if (!mouseFile.exists() || !mouseFile.isFile()) {
+            return false;
+        }
+
+        try (InputStream stream = new FileInputStream(mouseFile)) {
+            Bitmap bitmap = BitmapFactory.decodeStream(stream);
+            if (bitmap == null) {
+                return false;
+            }
+
+            mMousePointerDrawable = createScaledMouseDrawable(bitmap);
+            return mMousePointerDrawable != null;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private BitmapDrawable createScaledMouseDrawable(Bitmap original) {
+        int originalWidth = original.getWidth();
+        int originalHeight = original.getHeight();
+
+        if (originalWidth <= 0 || originalHeight <= 0) {
+            return null;
+        }
+
+        float scale = LauncherPreferences.PREF_MOUSESCALE / 100f;
+        int[] dimensions = calculateScaledDimensions(originalWidth, originalHeight, scale);
+
+        Bitmap scaled = Bitmap.createScaledBitmap(original, dimensions[0], dimensions[1], true);
+
+        BitmapDrawable drawable = new BitmapDrawable(getResources(), scaled);
+        drawable.setBounds(0, 0, dimensions[0], dimensions[1]);
+        return drawable;
+    }
+
+    private int[] calculateScaledDimensions(int width, int height, float scale) {
+        float aspectRatio = (float) width / height;
+        int targetWidth = (int) (36 * scale);
+        int targetHeight = (int) (targetWidth / aspectRatio);
+        int maxSize = (int) (200 * scale);
+
+        if (targetWidth > maxSize || targetHeight > maxSize) {
+            if (width > height) {
+                targetWidth = maxSize;
+                targetHeight = (int) (maxSize / aspectRatio);
+            } else {
+                targetHeight = maxSize;
+                targetWidth = (int) (maxSize * aspectRatio);
+            }
+        }
+
+        return new int[]{Math.max(1, targetWidth), Math.max(1, targetHeight)};
+    }
+
+    private Drawable loadDefaultMousePointerDrawable() {
+        Drawable drawable = ResourcesCompat.getDrawable(
+                getResources(),
+                R.drawable.ic_mouse_pointer,
+                getContext().getTheme()
+        );
+
+        if (drawable != null) {
+            float scale = LauncherPreferences.PREF_MOUSESCALE / 100f;
+            int width = Math.max(1, (int) (36 * scale));
+            int height = Math.max(1, (int) (54 * scale));
+            drawable.setBounds(0, 0, width, height);
+        }
+
+        return drawable;
     }
 
     @Override
