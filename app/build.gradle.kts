@@ -302,6 +302,10 @@ dependencies {
 
     implementation("top.fifthlight.touchcontroller:proxy-client-android:0.0.4")
 
+    implementation("com.moandjiezana.toml:toml4j:0.7.2") {
+        exclude(group = "com.google.code.gson", module = "gson")
+    }
+
     implementation("io.noties.markwon:core:4.6.2") {
         exclude(group = "com.atlassian.commonmark", module = "commonmark")
     }

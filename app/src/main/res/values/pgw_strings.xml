@@ -220,5 +220,19 @@
     <string name="mg_option_ext_cs">Enable incomplete ARB_compute_shader extension</string>
     <string name="mg_option_ext_timer_query">Disable Recommended \'timer_query\' Extension</string>
     <string name="mg_option_ext_direct_state_access">Enable Advanced \'direct_state_access\' Extension</string>
-    <string name="mg_option_enable_fsr1">(Experimental) Enable built-in FSR1</string>"
+    <string name="mg_option_enable_fsr1">(Experimental) Enable built-in FSR1</string>
+
+    <!-- Mod Parser -->
+    <string name="mod_check_dialog_title">Mod Check Report</string>
+    <string name="generic_no_more_reminders">No more reminders</string>
+    <string name="mod_check_progress_message">Checking mods (%d / %d)</string>
+    <string name="mod_check_touch_controller">Detected that Touch Controller mod (%s) is installed, the launcher is ready to enable control proxy to adapt to the mod.</string>
+    <string name="mod_check_sodium_or_embeddium">Detected installed Sodium or Embeddium mod (%s). The launcher will disable this mod\'s warnings or prevent it from intentionally crashing on Android devices. However, please note that the mod\'s community has explicitly stated that they will no longer accept any issues related to Android devices. Therefore, if you encounter any problems while using this mod, do not report them to the mod\'s community!</string>
+    <string name="mod_check_physics">The currently used physics mod (%s) is unpatched (replacing libPhysXJniBindings_64.so from x86_64 architecture to arm64), will crash on launch.</string>
+    <string name="mod_check_mcef">MCEF (%s) cannot run on Android. It is usually used as a prerequisite dependency for WebDisplays/In-game Browser (browser).</string>
+    <string name="mod_check_valkyrien_skies">Valkyrien Skies/Valkyrien Warfare (%s) cannot run directly in single-player mode. You must run it on a server (Termux can be used), otherwise the game will crash.</string>
+    <string name="mod_check_yes_steve_model">Yes, Steve Model (%s) 2.2.2–2.5.1 cannot run on the Android system.</string>
+    <string name="mod_check_imblocker">IMBlocker/In-GameIME (%s) is not compatible with Android and will cause the game to crash during startup.</string>
+    <string name="mod_check_replay_mod">ReplayMod (%s) requires FFmpeg to render videos. Please install the FFmpeg plugin separately\n%s\n%s</string>
+    <string name="mod_check_borderlesswindow">Borderless Window (%s) is not compatible with Android and will cause the game to crash during startup.</string>
 </resources>

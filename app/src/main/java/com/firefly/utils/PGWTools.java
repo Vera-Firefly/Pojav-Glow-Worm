@@ -7,6 +7,8 @@ import android.opengl.EGLDisplay;
 import android.opengl.GLES20;
 import android.util.Log;
 
+import com.movtery.feature.mod.parser.ModChecker;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -31,6 +33,8 @@ public class PGWTools {
     public static boolean onCancelled() {
         return isCancelled;
     }
+
+    public static ModChecker.ModCheckResult modCheckResult = null;
 
     public static void onAppendToLog(String message) {
         Logger.appendToLog("==================== " + message + " ====================");

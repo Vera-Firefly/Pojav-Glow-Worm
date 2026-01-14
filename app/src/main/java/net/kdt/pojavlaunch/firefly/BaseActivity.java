@@ -10,6 +10,7 @@ import net.kdt.pojavlaunch.firefly.utils.*;
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 
 import com.firefly.feature.MarkdownRenderer;
+import com.movtery.context.ContextExecutor;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -37,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ContextExecutor.setActivity(this);
         Tools.checkStorageInteractive(this);
     }
 

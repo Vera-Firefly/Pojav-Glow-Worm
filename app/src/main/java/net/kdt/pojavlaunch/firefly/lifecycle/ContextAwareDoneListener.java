@@ -7,12 +7,27 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
+import com.firefly.utils.PGWTools;
+import com.kdt.mcgui.ProgressLayout;
+import com.movtery.context.ContextExecutor;
+import com.movtery.feature.mod.parser.ModChecker;
+import com.movtery.feature.mod.parser.ModInfo;
+import com.movtery.feature.mod.parser.ModParser;
+import com.movtery.feature.mod.parser.ModParserListener;
+
 import net.kdt.pojavlaunch.firefly.MainActivity;
 import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.Tools;
 import net.kdt.pojavlaunch.firefly.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.firefly.tasks.AsyncMinecraftDownloader;
 import net.kdt.pojavlaunch.firefly.utils.NotificationUtils;
+import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
+
+import java.io.File;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneListener, ContextExecutorTask {
     private final String mErrorString;
@@ -39,9 +54,35 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
         }
     }
 
+    private void executeTask() {
+        ProgressKeeper.waitUntilDone(() -> ContextExecutor.executeTask(this));
+    }
+
     @Override
     public void onDownloadDone() {
-        ProgressKeeper.waitUntilDone(() -> ContextExecutor.execute(this));
+        AtomicInteger progressCount = new AtomicInteger(0);
+        ModParser.checkAllMods(Tools.getGameDirPath(LauncherProfiles.getCurrentProfile()), new ModParserListener() {
+            @Override
+            public void onProgress(@NonNull ModInfo recentlyParsedModInfo, int totalFileCount) {
+                int i = progressCount.incrementAndGet();
+                ProgressLayout.setProgress(ProgressLayout.INSTALL_MODPACK, i * 100 / totalFileCount,
+                        R.string.mod_check_progress_message, i, totalFileCount);
+            }
+
+            @Override
+            public void onParseEnded(@NonNull List<? extends ModInfo> modInfoList) {
+                ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
+                if (modInfoList.isEmpty()) executeTask();
+                else {
+                    ContextExecutor.executeTaskWithAllContext(context -> new ModChecker().check(context, modInfoList, modCheckResult -> {
+                        PGWTools.modCheckResult = modCheckResult;
+                        // mVersion.setModCheckResult(modCheckResult);
+                        executeTask();
+                        return null;
+                    }));
+                }
+            }
+        });
     }
 
     @Override

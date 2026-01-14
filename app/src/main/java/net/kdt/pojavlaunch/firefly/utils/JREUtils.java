@@ -2,6 +2,7 @@ package net.kdt.pojavlaunch.firefly.utils;
 
 import static net.kdt.pojavlaunch.firefly.Architecture.ARCH_X86;
 import static net.kdt.pojavlaunch.firefly.Architecture.is64BitsDevice;
+import static net.kdt.pojavlaunch.firefly.Tools.MOD_RUNTIME_DIR;
 import static net.kdt.pojavlaunch.firefly.Tools.PGW_VERSION_CODE;
 import static net.kdt.pojavlaunch.firefly.Tools.BRIDGE_CONFIG;
 import static net.kdt.pojavlaunch.firefly.Tools.DRIVER_MODEL;
@@ -228,6 +229,7 @@ public class JREUtils {
         envMap.put("FORCE_VSYNC", String.valueOf(LauncherPreferences.PREF_FORCE_VSYNC));
         envMap.put("AWTSTUB_WIDTH", Integer.toString(CallbackBridge.windowWidth > 0 ? CallbackBridge.windowWidth : CallbackBridge.physicalWidth));
         envMap.put("AWTSTUB_HEIGHT", Integer.toString(CallbackBridge.windowHeight > 0 ? CallbackBridge.windowHeight : CallbackBridge.physicalHeight));
+        envMap.put("MOD_ANDROID_RUNTIME", MOD_RUNTIME_DIR);
 
         if (PGW_VERSION_CODE != null)
             envMap.put("PGW_VERSION_CODE", PGW_VERSION_CODE);

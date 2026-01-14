@@ -47,6 +47,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.firefly.utils.ListUtils;
 
+import com.firefly.utils.PGWTools;
 import com.movtery.feature.version.VersionInfo;
 import com.movtery.feature.version.utils.VersionInfoUtils;
 
@@ -136,6 +137,8 @@ public final class Tools {
     public static String CTRLMAP_PATH;
     public static String CTRLDEF_FILE;
 
+    public static String MOD_RUNTIME_DIR = null;
+
     public static String DRIVER_MODEL = null;
     public static String MESA_LIBS = null;
     public static String RENDERER_DIR = null;
@@ -151,7 +154,7 @@ public final class Tools {
         if (SDK_INT >= 29) {
             return ctx.getExternalFilesDir(null);
         } else {
-            return new File(Environment.getExternalStorageDirectory(), "games/PojavLauncher");
+            return new File(Environment.getExternalStorageDirectory(), "games/Pojav-Glow-Worm");
         }
     }
 
@@ -172,7 +175,6 @@ public final class Tools {
      */
     public static boolean checkStorageRoot(Context context) {
         File externalFilesDir = DIR_GAME_HOME == null ? Tools.getPojavStorageRoot(context) : new File(DIR_GAME_HOME);
-        //externalFilesDir == null when the storage is not mounted if it was obtained with the context call
         return externalFilesDir != null && Environment.getExternalStorageState(externalFilesDir).equals(Environment.MEDIA_MOUNTED);
     }
 
@@ -180,6 +182,7 @@ public final class Tools {
         DIR_CACHE = ctx.getCacheDir();
         DIR_DATA = ctx.getFilesDir().getParent();
         MULTIRT_HOME = DIR_DATA + "/runtimes";
+        MOD_RUNTIME_DIR = DIR_DATA + "/runtime_mod";
         DIR_ACCOUNT_NEW = DIR_DATA + "/accounts";
         MESA_DIR = DIR_DATA + "/mesa";
         RENDERER_DIR = DIR_DATA + "/renderer";
@@ -303,6 +306,15 @@ public final class Tools {
         PGW_VERSION_CODE = activity.getString(R.string.base_version_code);
         if (Tools.isValidString(minecraftProfile.javaArgs)) args = minecraftProfile.javaArgs;
         FFmpegPlugin.discover(activity);
+        if (PGWTools.modCheckResult != null) {
+            if (PGWTools.modCheckResult.getHasTouchController()) {
+                Logger.appendToLog("Mod Perception: TouchController Mod found, attempting to automatically enable control proxy!");
+            }
+
+            if (PGWTools.modCheckResult.getHasSodiumOrEmbeddium()) {
+                Logger.appendToLog("Mod Perception: Sodium or Embeddium Mod found, attempting to load the disable warning tool later!");
+            }
+        }
         JREUtils.launchWithUtils(activity, runtime, versionInfo1, gamedir, javaArgList, args);
         // If we returned, this means that the JVM exit dialog has been shown and we don't need to be active anymore.
         // We never return otherwise. The process will be killed anyway, and thus we will become inactive

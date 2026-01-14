@@ -233,4 +233,17 @@
     <string name="mg_option_ext_cs">啟用實驗性 ARB_compute_shader 延伸功能</string>
     <string name="mg_option_ext_timer_query">禁用推荐的 timer_query 扩展</string>
 
+    <!-- Mod Parser -->
+    <string name="mod_check_dialog_title">模組檢查報告</string>
+    <string name="generic_no_more_reminders">不再提醒</string>
+    <string name="mod_check_progress_message">正在檢查模組中 (%d / %d)</string>
+    <string name="mod_check_touch_controller">檢查到已安裝 Touch Controller 模組 (%s)，啟動器已準備好啟用控制代理，以適配該模組。</string>
+    <string name="mod_check_sodium_or_embeddium">檢測到已安裝 Sodium 或 Embeddium 模組 (%s)。啟動器將會停用該模組的警告，或防止其在 Android 設備上刻意導致崩潰。但請注意，該模組的社群已明確表態不再受理任何與 Android 設備相關的問題。因此，如果你在使用該模組時遇到任何問題，請勿向該模組的社群回報！</string>
+    <string name="mod_check_physics">當前使用的物理模組 (%s) 未經修補 (將 libPhysXJniBindings_64.so 從 x86_64 架構替換到 arm64)，啟動後將會崩潰。</string>
+    <string name="mod_check_mcef">MCEF (%s) 無法在 Android 上運行。它通常被用來作為 WebDisplays/In-game Browser（瀏覽器）的前置依賴。</string>
+    <string name="mod_check_valkyrien_skies">Valkyrien Skies/Valkyrien Warfare (%s) 無法直接在單人模式下運行。你必須使用伺服器運行（可以使用 Termux），否則遊戲會崩潰.</string>
+    <string name="mod_check_yes_steve_model">Yes Steve Model (%s) 2.2.2–2.5.1 無法在 Android 系統上運行.</string>
+    <string name="mod_check_imblocker">IMBlocker/In-GameIME (%s) 不適用於 Android，會導致遊戲在啟動時崩潰。</string>
+    <string name="mod_check_replay_mod">ReplayMod (%s) 需要 FFmpeg 來渲染影片，請另外安裝 FFmpeg 插件\n%s\n%s</string>
+    <string name="mod_check_borderlesswindow">Borderless Window (%s) 不適用於 Android，會導致遊戲在啟動時崩潰。</string>
 </resources>
