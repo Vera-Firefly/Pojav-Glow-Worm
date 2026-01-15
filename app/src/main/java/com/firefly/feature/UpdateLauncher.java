@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileOutputStream;	
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -140,10 +141,11 @@ public class UpdateLauncher {
 
     private void showUpdateDialog(String tagName, String versionName, String releaseNotes) {
         String archModel = getArchModel();
+        String processedNotes = extractReleaseNotesByLocale(releaseNotes);
 
         new CustomDialog.Builder(context)
             .setTitle(context.getString(R.string.pgw_settings_updatelauncher_new_version, versionName))
-            .setScrollMessage(releaseNotes)
+            .setScrollMessage(processedNotes)
             .setConfirmListener(R.string.pgw_settings_updatelauncher_update, customView -> {
                 showDownloadSourceDialog(tagName, versionName, archModel);
                 return true;
@@ -155,6 +157,58 @@ public class UpdateLauncher {
             .setCancelListener(R.string.alertdialog_cancel, customView -> true)
             .build()
             .show();
+    }
+
+    private String extractReleaseNotesByLocale(String releaseNotes) {
+        // 获取当前系统语言
+        String systemLang = Locale.getDefault().getLanguage();
+        String systemCountry = Locale.getDefault().getCountry();
+
+        // 检查是否为中文（中国）
+        boolean isChineseCN = "zh".equals(systemLang) && "CN".equals(systemCountry);
+
+        // 判断使用哪种语言的内容
+        String targetTag = isChineseCN ? "[CN]" : "[EN]";
+        String endTag = isChineseCN ? "[CN]" : "[EN]";
+
+        // 尝试提取目标语言的内容
+        String extractedContent = extractContentByTags(releaseNotes, targetTag, endTag);
+
+        // 如果提取失败或内容为空，尝试另一种语言作为备选
+        if (extractedContent == null || extractedContent.trim().isEmpty()) {
+            String fallbackTag = isChineseCN ? "[EN]" : "[CN]";
+            String fallbackEndTag = isChineseCN ? "[EN]" : "[CN]";
+            extractedContent = extractContentByTags(releaseNotes, fallbackTag, fallbackEndTag);
+        }
+
+        // 如果都没有提取到，返回原始内容
+        return extractedContent != null ? extractedContent : releaseNotes;
+    }
+
+    /**
+     * 根据标签提取内容
+     */
+    private String extractContentByTags(String content, String startTag, String endTag) {
+        if (content == null || content.isEmpty()) {
+            return null;
+        }
+
+        // 查找第一个开始标签的位置
+        int startIndex = content.indexOf(startTag);
+        if (startIndex == -1) {
+            return null;
+        }
+
+        // 查找开始标签后的第一个结束标签
+        int endIndex = content.indexOf(endTag, startIndex + startTag.length());
+        if (endIndex == -1) {
+            return null;
+        }
+
+        // 提取开始标签和结束标签之间的内容
+        String extracted = content.substring(startIndex + startTag.length(), endIndex).trim();
+
+        return extracted;
     }
 
     private void showDownloadSourceDialog(String tagName, String versionName, String archModel) {
