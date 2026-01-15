@@ -18,6 +18,7 @@ public class MinecraftProfile {
     public String logConfig;
     public boolean logConfigIsXML;
     public String pojavRendererName;
+    public boolean enableModsCheck;
     public String controlFile;
     public MinecraftResolution[] resolution;
 
@@ -27,6 +28,7 @@ public class MinecraftProfile {
         TEMPLATE.name = "New";
         TEMPLATE.language = 0;
         TEMPLATE.lastVersionId = "latest-release";
+        TEMPLATE.enableModsCheck = true;
         return TEMPLATE;
     }
 
@@ -35,6 +37,7 @@ public class MinecraftProfile {
         defaultProfile.name = "Default";
         defaultProfile.language = 0;
         defaultProfile.lastVersionId = "1.7.10";
+        defaultProfile.enableModsCheck = true;
         return defaultProfile;
     }
 
@@ -55,6 +58,7 @@ public class MinecraftProfile {
         logConfig = profile.logConfig;
         logConfigIsXML = profile.logConfigIsXML;
         pojavRendererName = profile.pojavRendererName;
+        enableModsCheck = profile.enableModsCheck;
         controlFile = profile.controlFile;
         resolution = profile.resolution;
     }

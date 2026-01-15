@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -54,6 +55,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private MinecraftProfile mTempProfile = null;
     private String mValueToConsume = "";
     private Button mSaveButton, mDeleteButton, mControlSelectButton, mGameDirButton, mVersionSelectButton;
+    private CheckBox mEnableModsCheck;
     private Spinner mDefaultRuntime, mDefaultRenderer;
     private EditText mDefaultName, mDefaultJvmArgument;
     private TextView mDefaultPath, mDefaultVersion, mDefaultControl;
@@ -191,6 +193,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         }
         mDefaultRenderer.setSelection(rendererIndex);
 
+        mEnableModsCheck.setChecked(mTempProfile.enableModsCheck);
+
         mDefaultVersion.setText(mTempProfile.lastVersionId);
         mDefaultJvmArgument.setText(mTempProfile.javaArgs == null ? "" : mTempProfile.javaArgs);
         mDefaultName.setText(mTempProfile.name);
@@ -229,6 +233,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mVersionSelectButton = view.findViewById(R.id.vprof_editor_version_button);
         mGameDirButton = view.findViewById(R.id.vprof_editor_path_button);
         mProfileIcon = view.findViewById(R.id.vprof_editor_profile_icon);
+        mEnableModsCheck = view.findViewById(R.id.vprof_settings_enable_mods_check);
     }
 
     private void save() {
@@ -238,6 +243,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.name = mDefaultName.getText().toString();
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
+        mTempProfile.enableModsCheck = mEnableModsCheck.isChecked();
 
         if (mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
         if (mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;

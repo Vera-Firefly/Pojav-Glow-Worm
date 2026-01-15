@@ -150,6 +150,8 @@ public final class Tools {
     public static String LOADER_OVERRIDE = null;
     public static String LIBGL_GL = null;
 
+    public static boolean ENABLE_MODS_CHECK = true;
+
     private static File getPojavStorageRoot(Context ctx) {
         if (SDK_INT >= 29) {
             return ctx.getExternalFilesDir(null);

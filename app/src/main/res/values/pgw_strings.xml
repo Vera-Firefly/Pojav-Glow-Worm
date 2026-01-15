@@ -235,4 +235,7 @@
     <string name="mod_check_imblocker">IMBlocker/In-GameIME (%s) is not compatible with Android and will cause the game to crash during startup.</string>
     <string name="mod_check_replay_mod">ReplayMod (%s) requires FFmpeg to render videos. Please install the FFmpeg plugin separately\n%s\n%s</string>
     <string name="mod_check_borderlesswindow">Borderless Window (%s) is not compatible with Android and will cause the game to crash during startup.</string>
+    <!-- Mods Check -->
+    <string name="enable_mod_check_title">Mods Check</string>
+    <string name="enable_mod_check_enable">Enable Mods Check</string>
 </resources>

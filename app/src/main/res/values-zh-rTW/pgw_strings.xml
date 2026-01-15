@@ -246,4 +246,7 @@
     <string name="mod_check_imblocker">IMBlocker/In-GameIME (%s) 不適用於 Android，會導致遊戲在啟動時崩潰。</string>
     <string name="mod_check_replay_mod">ReplayMod (%s) 需要 FFmpeg 來渲染影片，請另外安裝 FFmpeg 插件\n%s\n%s</string>
     <string name="mod_check_borderlesswindow">Borderless Window (%s) 不適用於 Android，會導致遊戲在啟動時崩潰。</string>
+    <!-- Mods Check -->
+    <string name="enable_mod_check_title">模組檢查</string>
+    <string name="enable_mod_check_enable">啟用模組檢查</string>
 </resources>

@@ -47,11 +47,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
     }
 
     private void onQuitLauncher() {
-        if (PREF_QUIT_LAUNCHER) {
-            shouldQuitLauncher = false;
-        } else {
-            shouldQuitLauncher = true;
-        }
+        shouldQuitLauncher = !PREF_QUIT_LAUNCHER;
     }
 
     private void executeTask() {
@@ -60,27 +56,57 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
 
     @Override
     public void onDownloadDone() {
+        if (!Tools.ENABLE_MODS_CHECK) {
+            executeTask();
+            return;
+        }
+
         AtomicInteger progressCount = new AtomicInteger(0);
-        ModParser.checkAllMods(Tools.getGameDirPath(LauncherProfiles.getCurrentProfile()), new ModParserListener() {
+        ModParserListener listener = createModParserListener(progressCount);
+        File gameDir = Tools.getGameDirPath(LauncherProfiles.getCurrentProfile());
+
+        ModParser.checkAllMods(gameDir, listener);
+    }
+
+    private ModParserListener createModParserListener(AtomicInteger progressCount) {
+        return new ModParserListener() {
             @Override
             public void onProgress(@NonNull ModInfo recentlyParsedModInfo, int totalFileCount) {
-                int i = progressCount.incrementAndGet();
-                ProgressLayout.setProgress(ProgressLayout.INSTALL_MODPACK, i * 100 / totalFileCount,
-                        R.string.mod_check_progress_message, i, totalFileCount);
+                updateProgress(progressCount, totalFileCount);
             }
 
             @Override
             public void onParseEnded(@NonNull List<? extends ModInfo> modInfoList) {
-                ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
-                ContextExecutor.executeTaskWithAllContext(context -> {
-                    ModCheckResult.clear(context);
-                    if (modInfoList.isEmpty()) executeTask();
-                    else new ModChecker().check(context, modInfoList, result -> {
-                        executeTask();
-                        return null;
-                    });
-                });
+                handleParseResult(modInfoList);
             }
+        };
+    }
+
+    private void updateProgress(AtomicInteger progressCount, int totalFileCount) {
+        int i = progressCount.incrementAndGet();
+        ProgressLayout.setProgress(
+                ProgressLayout.INSTALL_MODPACK,
+                i * 100 / totalFileCount,
+                R.string.mod_check_progress_message,
+                i,
+                totalFileCount
+        );
+    }
+
+    private void handleParseResult(List<? extends ModInfo> modInfoList) {
+        ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
+
+        if (modInfoList.isEmpty()) {
+            executeTask();
+            return;
+        }
+
+        ContextExecutor.executeTaskWithAllContext(context -> {
+            ModCheckResult.clear(context);
+            new ModChecker().check(context, modInfoList, result -> {
+                executeTask();
+                return null;
+            });
         });
     }
 

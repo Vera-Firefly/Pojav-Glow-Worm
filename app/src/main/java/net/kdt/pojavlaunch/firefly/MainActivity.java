@@ -56,7 +56,6 @@ import com.firefly.utils.ResolutionAdjuster;
 import com.kdt.LoggerView;
 import com.movtery.feature.ProfileLanguageSelector;
 import com.movtery.feature.mod.parser.ModCheckResult;
-import com.movtery.feature.mod.parser.ModChecker;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 
 import net.kdt.pojavlaunch.firefly.customcontrols.ControlButtonMenuListener;
@@ -210,6 +209,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 Tools.LOCAL_RENDERER = minecraftProfile.pojavRendererName;
             }
 
+            Tools.ENABLE_MODS_CHECK = minecraftProfile.enableModsCheck;
+
             setTitle("Minecraft " + minecraftProfile.lastVersionId);
 
             // Minecraft 1.13+
@@ -224,7 +225,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             Tools.getDisplayMetrics(this);
             windowWidth = Tools.getDisplayFriendlyRes(currentDisplayMetrics.widthPixels, 1f);
             windowHeight = Tools.getDisplayFriendlyRes(currentDisplayMetrics.heightPixels, 1f);
-
 
             // Menu
             gameActionArrayAdapter = new ArrayAdapter<>(this,
@@ -261,7 +261,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             navDrawer.setAdapter(gameActionArrayAdapter);
             navDrawer.setOnItemClickListener(gameActionClickListener);
             drawerLayout.closeDrawers();
-
 
             final String finalVersion = version;
             minecraftGLView.setSurfaceReadyListener(() -> {
@@ -433,7 +432,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         if (Tools.LIBGL_GL == null)
             Tools.LIBGL_GL = LauncherPreferences.PREF_LIBGL_GL;
 
-        ModCheckResult result = ModCheckResult.loadFrom(this);
+        ModCheckResult result = Tools.ENABLE_MODS_CHECK ? ModCheckResult.loadFrom(this) : null;
 
         if (result != null) {
             if (result.hasTouchController && !LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {

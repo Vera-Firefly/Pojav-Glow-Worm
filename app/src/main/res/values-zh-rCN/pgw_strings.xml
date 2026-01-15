@@ -261,4 +261,7 @@
     <string name="mod_check_imblocker">输入法冲突修复/游戏内输入法 (%s) 不适用于 Android ，它会使游戏在启动阶段崩溃。</string>
     <string name="mod_check_replay_mod">ReplayMod (%s) 需要 FFmpeg 渲染视频，请单独安装 FFmpeg 插件\n%s\n%s</string>
     <string name="mod_check_borderlesswindow">Borderless Window (%s) 不适用于安卓。它会使游戏在启动阶段崩溃。</string>
+    <!-- Mods Check -->
+    <string name="enable_mod_check_title">模组检查</string>
+    <string name="enable_mod_check_enable">启用模组检查</string>
 </resources>
