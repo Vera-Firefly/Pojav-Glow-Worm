@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.customcontrols;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static net.kdt.pojavlaunch.firefly.Tools.currentDisplayMetrics;
 import static org.lwjgl.glfw.CallbackBridge.isGrabbing;
@@ -511,7 +513,7 @@ public class ControlLayout extends FrameLayout {
             }
             try {
                 String jsonPath = saveToDirectory(mEditText.getText().toString());
-                Toast.makeText(context, context.getString(R.string.global_save) + ": " + jsonPath, Toast.LENGTH_SHORT).show();
+                Toast(context, context.getString(R.string.global_save) + ": " + jsonPath);
                 mDialog.dismiss();
                 if (mListener != null) mListener.exitEditor();
             } catch (Throwable th) {

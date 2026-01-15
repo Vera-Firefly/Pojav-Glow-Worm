@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.fragments;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,7 +97,7 @@ public abstract class FabriclikeInstallFragment extends Fragment implements Modl
 
     private void onClickStart(View v) {
         if (ProgressKeeper.hasOngoingTasks()) {
-            Toast.makeText(v.getContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
+            Toast(v.getContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG);
             return;
         }
         ModloaderListenerProxy proxy = new ModloaderListenerProxy();

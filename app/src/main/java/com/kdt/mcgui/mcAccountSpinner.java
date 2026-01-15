@@ -1,5 +1,7 @@
 package com.kdt.mcgui;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -96,7 +98,7 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
     };
 
     private final DoneListener mDoneListener = account -> {
-        Toast.makeText(getContext(), R.string.main_login_done, Toast.LENGTH_SHORT).show();
+        Toast(getContext(), R.string.main_login_done);
 
         // Check if the account being added is not one that is already existing
         // Like login twice on the same mc account...

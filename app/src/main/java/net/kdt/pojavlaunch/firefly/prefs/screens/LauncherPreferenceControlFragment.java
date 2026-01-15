@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.prefs.screens;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
@@ -49,7 +51,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
                         IOUtils.copy(stream1, stream);
                         stream.close();
                         stream1.close();
-                        Toast.makeText(getContext(), R.string.notif_mouse, Toast.LENGTH_SHORT).show();
+                        Toast(getContext(), R.string.notif_mouse);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -139,7 +141,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
             if (file.exists()) {
                 file.delete();
             }
-            Toast.makeText(getContext(), R.string.notif_mouse1, Toast.LENGTH_SHORT).show();
+            Toast(getContext(), R.string.notif_mouse1);
             return true;
         });
 

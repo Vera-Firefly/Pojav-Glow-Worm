@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch.firefly.prefs.screens;
 
+import static com.firefly.utils.ToastUtils.Toast;
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_RENDERER;
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_EXP_SETUP;
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_INITIAL_FRAMEBUFFER;
@@ -700,12 +701,10 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 if (data) {
                     boolean success = MesaDownloader.saveMesaFile(version);
                     if (success) {
-                        Toast.makeText(requireContext(), R.string.preference_rendererexp_mesa_downloaded, Toast.LENGTH_SHORT)
-                                .show();
+                        Toast(requireContext(), R.string.preference_rendererexp_mesa_downloaded);
                     setListPreference(requirePreference("CMesaLibrary", ChooseMesaListPref.class), "CMesaLibrary");
                     } else {
-                        Toast.makeText(requireContext(), R.string.preference_rendererexp_mesa_download_fail, Toast.LENGTH_SHORT)
-                                .show();
+                        Toast(requireContext(), R.string.preference_rendererexp_mesa_download_fail);
                     }
                 } else {
                     CustomDialog Dialog1 = new CustomDialog.Builder(requireActivity())
@@ -790,12 +789,10 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 if (data) {
                     boolean success = TurnipDownloader.saveTurnipFile(version);
                     if (success) {
-                        Toast.makeText(requireContext(), R.string.pgw_settings_ctu_saved, Toast.LENGTH_SHORT)
-                                .show();
+                        Toast(requireContext(), R.string.pgw_settings_ctu_saved);
                         setListPreference(requirePreference("chooseTurnipDriver", ChooseTurnipListPref.class), "chooseTurnipDriver");
                     } else {
-                        Toast.makeText(requireContext(), R.string.pgw_settings_ctu_save_fail, Toast.LENGTH_SHORT)
-                                .show();
+                        Toast(requireContext(), R.string.pgw_settings_ctu_save_fail);
                     }
                 } else {
                     CustomDialog Dialog1 = new CustomDialog.Builder(requireActivity())
@@ -879,7 +876,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 }
                 boolean success = MesaUtils.INSTANCE.saveMesaVersion(getActivity(), fileUri, folderName);
                 String message = getString(success ? R.string.pgw_settings_cml_saved : R.string.pgw_settings_cml_save_fail);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                Toast(getActivity(), message);
                 if (success) {
                     setListPreference(requirePreference("CMesaLibrary", ChooseMesaListPref.class), "CMesaLibrary");
                 }
@@ -915,7 +912,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 }
                 boolean success = TurnipUtils.INSTANCE.saveTurnipDriver(getActivity(), fileUri, folderName);
                 String message = getString(success ? R.string.pgw_settings_ctu_saved : R.string.pgw_settings_ctu_save_fail);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                Toast(getActivity(), message);
                 if (success) {
                     setListPreference(requirePreference("chooseTurnipDriver", ChooseTurnipListPref.class), "chooseTurnipDriver");
                 }

@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ClipboardManager;
@@ -381,9 +383,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
     public void toggleVirtualMouse(View v) {
         mIsVirtualMouseEnabled = !mIsVirtualMouseEnabled;
         mTouchPad.setVisibility(mIsVirtualMouseEnabled ? View.VISIBLE : View.GONE);
-        Toast.makeText(this,
-                mIsVirtualMouseEnabled ? R.string.control_mouseon : R.string.control_mouseoff,
-                Toast.LENGTH_SHORT).show();
+        Toast(this, mIsVirtualMouseEnabled ? R.string.control_mouseon : R.string.control_mouseoff);
     }
 
     public void launchJavaRuntime(Runtime runtime, File modFile, List<String> javaArgs) {

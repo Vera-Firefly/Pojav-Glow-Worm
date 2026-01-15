@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.fragments;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -179,7 +181,7 @@ public class OtherLoginFragment extends Fragment {
                 if (data != null) {
                     processServerData(selectedSource, serverUrl, data);
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.other_login_server_connect_error), Toast.LENGTH_SHORT).show();
+                    Toast(getContext(), R.string.other_login_server_connect_error);
                 }
             });
         });

@@ -1,6 +1,9 @@
 package net.kdt.pojavlaunch.firefly;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -91,10 +94,7 @@ public class ImportControlActivity extends Activity {
 
             if (verify()) mIsFileVerified = true;
             else runOnUiThread(() -> {
-                Toast.makeText(
-                        ImportControlActivity.this,
-                        getText(R.string.import_control_invalid_file),
-                        Toast.LENGTH_SHORT).show();
+                Toast(ImportControlActivity.this, R.string.import_control_invalid_file);
                 finishAndRemoveTask();
             });
         }).start();
@@ -116,16 +116,16 @@ public class ImportControlActivity extends Activity {
         String fileName = trimFileName(mEditText.getText().toString());
         //Step 1 check for suffixes.
         if (!isFileNameValid(fileName)) {
-            Toast.makeText(this, getText(R.string.import_control_invalid_name), Toast.LENGTH_SHORT).show();
+            Toast(this, R.string.import_control_invalid_name);
             return;
         }
         if (!mIsFileVerified) {
-            Toast.makeText(this, getText(R.string.import_control_verifying_file), Toast.LENGTH_LONG).show();
+            Toast(this, R.string.import_control_verifying_file);
             return;
         }
 
         new File(Tools.CTRLMAP_PATH + "/TMP_IMPORT_FILE.json").renameTo(new File(Tools.CTRLMAP_PATH + "/" + fileName + ".json"));
-        Toast.makeText(getApplicationContext(), getText(R.string.import_control_done), Toast.LENGTH_SHORT).show();
+        Toast(getApplicationContext(), R.string.import_control_done);
         finishAndRemoveTask();
     }
 

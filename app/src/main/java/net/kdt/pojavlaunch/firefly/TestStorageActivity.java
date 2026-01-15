@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -16,7 +18,6 @@ import androidx.core.content.ContextCompat;
 
 import com.movtery.utils.UnpackJRE;
 
-import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.firefly.tasks.AsyncAssetManager;
 
@@ -26,8 +27,6 @@ public class TestStorageActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owe);
-        Toast.makeText(this, R.string.app_start_toast, Toast.LENGTH_SHORT).show();
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 29 && !isStorageAllowed(this))
             requestStoragePermission();
         else exit();
@@ -40,7 +39,7 @@ public class TestStorageActivity extends Activity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 exit();
             } else {
-                Toast.makeText(this, R.string.toast_permission_denied, Toast.LENGTH_LONG).show();
+                Toast(this, R.string.toast_permission_denied);
                 requestStoragePermission();
             }
         }

@@ -1,5 +1,7 @@
 package com.firefly.ui.prefs;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -110,7 +112,7 @@ public class ChooseTurnipListPref extends ListPreference {
         listView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             String selectedVersion = getEntryValues()[position].toString();
             if (defaultLibs.contains(selectedVersion)) {
-                Toast.makeText(getContext(), R.string.preference_rendererexp_mesa_delete_defaultlib, Toast.LENGTH_SHORT).show();
+                Toast(getContext(), getContext().getString(R.string.preference_rendererexp_mesa_delete_defaultlib));
             } else {
                 showDeleteConfirmationDialog(selectedVersion);
             }
@@ -140,10 +142,10 @@ public class ChooseTurnipListPref extends ListPreference {
                 .setConfirmListener(android.R.string.ok, customView -> {
                     boolean success = TurnipUtils.INSTANCE.deleteTurnipDriver(version);
                     if (success) {
-                        Toast.makeText(getContext(), R.string.preference_rendererexp_mesa_deleted, Toast.LENGTH_SHORT).show();
+                        Toast(getContext(), R.string.preference_rendererexp_mesa_deleted);
                         setEntriesAndValues();
                     } else {
-                        Toast.makeText(getContext(), R.string.preference_rendererexp_mesa_delete_fail, Toast.LENGTH_SHORT).show();
+                        Toast(getContext(), R.string.preference_rendererexp_mesa_delete_fail);
                     }
                     return true;
                 })

@@ -1,11 +1,12 @@
 package com.kdt.pickafile;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.content.Context;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -157,7 +158,7 @@ public class FileListView extends LinearLayout {
                     fileSelectedListener.onFileSelected(path, path.getAbsolutePath());
                 }
             } else {
-                Toast.makeText(context, "This folder (or file) doesn't exist", Toast.LENGTH_SHORT).show();
+                Toast(context, "This folder (or file) doesn't exist");
                 refreshPath();
             }
         } catch (Exception e) {

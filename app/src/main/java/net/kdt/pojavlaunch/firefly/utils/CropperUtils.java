@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.utils;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -35,7 +37,7 @@ public class CropperUtils {
             Context context = fragment.getContext();
             if (context == null) return;
             if (result == null) {
-                Toast.makeText(context, R.string.cropper_select_cancelled, Toast.LENGTH_SHORT).show();
+                Toast(context, R.string.cropper_select_cancelled);
                 return;
             }
             openCropperDialog(context, result, cropperListener);

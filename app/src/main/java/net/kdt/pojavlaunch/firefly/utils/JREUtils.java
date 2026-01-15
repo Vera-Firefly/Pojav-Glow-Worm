@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.utils;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import static net.kdt.pojavlaunch.firefly.Architecture.ARCH_X86;
 import static net.kdt.pojavlaunch.firefly.Architecture.is64BitsDevice;
 import static net.kdt.pojavlaunch.firefly.Tools.MOD_RUNTIME_DIR;
@@ -657,7 +659,7 @@ public class JREUtils {
         userArgs.add("-Dorg.lwjgl.freetype.libname=" + NATIVE_LIB_DIR + "/libfreetype.so");
 
         userArgs.addAll(JVMArgs);
-        activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.autoram_info_msg, LauncherPreferences.PREF_RAM_ALLOCATION), Toast.LENGTH_SHORT).show());
+        activity.runOnUiThread(() -> Toast(activity, activity.getString(R.string.autoram_info_msg, LauncherPreferences.PREF_RAM_ALLOCATION)));
         System.out.println(JVMArgs);
 
         JREUtils.setupExitMethod(activity.getApplication());

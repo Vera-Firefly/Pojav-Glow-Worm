@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.widget.Toast
+import com.firefly.utils.ToastUtils.ShowToast
 import com.movtery.task.TaskExecutors
 import net.kdt.pojavlaunch.firefly.Tools
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutorTask
@@ -111,7 +112,7 @@ class ContextExecutor {
          */
         @JvmStatic
         fun showToast(resId: Int, duration: Int) {
-            executeTaskWithAllContext { context -> Toast.makeText(context, context.getString(resId), duration).show() }
+            executeTaskWithAllContext { context -> context.ShowToast(context.getString(resId), duration) }
         }
 
         /**
@@ -122,7 +123,7 @@ class ContextExecutor {
          */
         @JvmStatic
         fun showToast(string: String, duration: Int) {
-            executeTaskWithAllContext { context -> Toast.makeText(context, string, duration).show() }
+            executeTaskWithAllContext { context -> context.ShowToast(string, duration) }
         }
 
         /**

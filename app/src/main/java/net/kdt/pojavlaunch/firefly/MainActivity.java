@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import static net.kdt.pojavlaunch.firefly.Tools.currentDisplayMetrics;
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_ENABLE_LOG_OUTPUT;
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_SUSTAINED_PERFORMANCE;
@@ -531,9 +533,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public static void toggleMouse(Context ctx) {
         if (CallbackBridge.isGrabbing()) return;
 
-        Toast.makeText(ctx, touchpad.switchState()
-                        ? R.string.control_mouseon : R.string.control_mouseoff,
-                Toast.LENGTH_SHORT).show();
+        Toast(ctx, touchpad.switchState() ? R.string.control_mouseon : R.string.control_mouseoff);
     }
 
     public static void dialogForceClose(Context ctx) {
@@ -619,7 +619,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
     public void adjustGyroSensitivityLive() {
         if (!LauncherPreferences.PREF_ENABLE_GYRO) {
-            Toast.makeText(this, R.string.toast_turn_on_gyro, Toast.LENGTH_LONG).show();
+            Toast(this, R.string.toast_turn_on_gyro, Toast.LENGTH_LONG);
             return;
         }
         AlertDialog.Builder b = new AlertDialog.Builder(this);

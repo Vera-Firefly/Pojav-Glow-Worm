@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.fragments;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -97,7 +99,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
     @Override
     public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
         if (ProgressKeeper.hasOngoingTasks()) {
-            Toast.makeText(expandableListView.getContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
+            Toast(expandableListView.getContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG);
             return true;
         }
         Object forgeVersion = expandableListView.getExpandableListAdapter().getChild(i, i1);

@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.firefly;
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+import static com.firefly.utils.ToastUtils.Toast;
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 
 import android.Manifest;
@@ -27,7 +28,6 @@ import com.firefly.feature.UpdateLauncher;
 import com.kdt.mcgui.ProgressLayout;
 import com.kdt.mcgui.mcAccountSpinner;
 
-import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.contracts.OpenDocumentWithExtension;
 import net.kdt.pojavlaunch.firefly.extra.ExtraConstants;
 import net.kdt.pojavlaunch.firefly.extra.ExtraCore;
@@ -117,23 +117,23 @@ public class LauncherActivity extends BaseActivity {
 
     private void mLaunchGame(boolean downloader) {
         if (mProgressLayout.hasProcesses()) {
-            Toast.makeText(this, R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
+            Toast(this, R.string.tasks_ongoing);
             return;
         }
 
         String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, "");
         if (LauncherProfiles.mainProfileJson == null || !LauncherProfiles.mainProfileJson.profiles.containsKey(selectedProfile)) {
-            Toast.makeText(this, R.string.error_no_version, Toast.LENGTH_LONG).show();
+            Toast(this, R.string.error_no_version, Toast.LENGTH_LONG);
             return;
         }
         MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
         if (prof == null || prof.lastVersionId == null || "Unknown".equals(prof.lastVersionId)) {
-            Toast.makeText(this, R.string.error_no_version, Toast.LENGTH_LONG).show();
+            Toast(this, R.string.error_no_version, Toast.LENGTH_LONG);
             return;
         }
 
         if (mAccountSpinner.getSelectedAccount() == null) {
-            Toast.makeText(this, R.string.no_saved_accounts, Toast.LENGTH_LONG).show();
+            Toast(this, R.string.no_saved_accounts, Toast.LENGTH_LONG);
             ExtraCore.setValue(ExtraConstants.SELECT_AUTH_METHOD, true);
             return;
         }
@@ -170,6 +170,7 @@ public class LauncherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pojav_launcher);
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Toast(this, R.string.app_start_toast);
         // If we don't have a back stack root yet...
         if (fragmentManager.getBackStackEntryCount() < 1) {
             // Manually add the first fragment to the backstack to get easily back to it
@@ -333,7 +334,7 @@ public class LauncherActivity extends BaseActivity {
         LauncherPreferences.DEFAULT_PREF.edit()
                 .putBoolean(LauncherPreferences.PREF_KEY_SKIP_NOTIFICATION_CHECK, true)
                 .apply();
-        Toast.makeText(this, R.string.notification_permission_toast, Toast.LENGTH_LONG).show();
+        Toast(this, R.string.notification_permission_toast, Toast.LENGTH_LONG);
     }
 
     public boolean checkForNotificationPermission() {

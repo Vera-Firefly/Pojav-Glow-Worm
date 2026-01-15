@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.prefs;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Toast;
@@ -27,7 +29,7 @@ public class GamepadRemapPreference extends Preference {
     private void init() {
         setOnPreferenceClickListener(preference -> {
             Remapper.wipePreferences(getContext());
-            Toast.makeText(getContext(), R.string.preference_controller_map_wiped, Toast.LENGTH_SHORT).show();
+            Toast(getContext(), R.string.preference_controller_map_wiped);
             return true;
         });
     }

@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.P;
 import static net.kdt.pojavlaunch.firefly.PojavApplication.sExecutorService;
@@ -1115,7 +1117,7 @@ public final class Tools {
 
     public static void installMod(Activity activity, boolean customJavaArgs) {
         if (MultiRTUtils.getExactJreName(8) == null) {
-            Toast.makeText(activity, R.string.multirt_nojava8rt, Toast.LENGTH_LONG).show();
+            Toast(activity, R.string.multirt_nojava8rt, Toast.LENGTH_LONG);
             return;
         }
 

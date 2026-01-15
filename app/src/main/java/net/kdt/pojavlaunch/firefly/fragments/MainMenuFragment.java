@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.fragments;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import static net.kdt.pojavlaunch.firefly.Tools.runOnUiThread;
 import static net.kdt.pojavlaunch.firefly.Tools.shareLog;
 
@@ -77,7 +79,7 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
             if (!mTasksRunning) {
                 checkPermissions(() -> Tools.swapFragment(requireActivity(), ProfilePathManagerFragment.class, ProfilePathManagerFragment.TAG, null));
             } else {
-                runOnUiThread(() -> Toast.makeText(requireContext(), R.string.profiles_path_task_in_progress, Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast(requireContext(), R.string.profiles_path_task_in_progress));
             }
         });
 
@@ -103,7 +105,7 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
         if (ProgressKeeper.getTaskCount() == 0)
             Tools.installMod(requireActivity(), isCustomArgs);
         else
-            Toast.makeText(requireContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
+            Toast(requireContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG);
     }
 
     @Override

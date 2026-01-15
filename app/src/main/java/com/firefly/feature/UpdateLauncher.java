@@ -1,5 +1,7 @@
 package com.firefly.feature;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import static net.kdt.pojavlaunch.firefly.Architecture.ARCH_ARM;
 import static net.kdt.pojavlaunch.firefly.Architecture.ARCH_ARM64;
 import static net.kdt.pojavlaunch.firefly.Architecture.ARCH_X86;
@@ -340,18 +342,18 @@ public class UpdateLauncher {
 
     private void handleException(Exception e) {
         new Handler(Looper.getMainLooper()).post(() ->
-            Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show());
+            Toast(context, "Error: " + e.getMessage(), Toast.LENGTH_LONG));
     }
 
     private void showToast(int messageResId) {
         new Handler(Looper.getMainLooper()).post(() ->
-            Toast.makeText(context, context.getString(messageResId), Toast.LENGTH_SHORT).show());
+            Toast(context, messageResId));
     }
 
     private void showToast(int messageResId, Object... formatArgs) {
         new Handler(Looper.getMainLooper()).post(() -> {
             String message = context.getString(messageResId, formatArgs);
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            Toast(context, message);
         });
     }
 
