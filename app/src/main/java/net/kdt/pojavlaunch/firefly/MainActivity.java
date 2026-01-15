@@ -53,10 +53,10 @@ import com.firefly.utils.PGWTools;
 import com.firefly.utils.ResolutionAdjuster;
 import com.kdt.LoggerView;
 import com.movtery.feature.ProfileLanguageSelector;
+import com.movtery.feature.mod.parser.ModCheckResult;
+import com.movtery.feature.mod.parser.ModChecker;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 
-import net.kdt.pojavlaunch.firefly.BuildConfig;
-import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.customcontrols.ControlButtonMenuListener;
 import net.kdt.pojavlaunch.firefly.customcontrols.ControlData;
 import net.kdt.pojavlaunch.firefly.customcontrols.ControlDrawerData;
@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         CallbackBridge.addGrabListener(touchpad);
         CallbackBridge.addGrabListener(minecraftGLView);
 
-        if (Tools.hasTouchController(new File(gameDirPath)) || LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {
+        if (LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {
             TouchControllerUtils.initialize(this, touchControllerInputView);
         }
 
@@ -430,6 +430,21 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
         if (Tools.LIBGL_GL == null)
             Tools.LIBGL_GL = LauncherPreferences.PREF_LIBGL_GL;
+
+        ModCheckResult result = ModCheckResult.loadFrom(this);
+
+        if (result != null) {
+            if (result.hasTouchController && !LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {
+                TouchControllerUtils.initialize(this, touchControllerInputView);
+                Logger.appendToLog("Mod Perception: TouchController Mod found, attempting to automatically enable control proxy!");
+            }
+
+            if (result.hasSodiumOrEmbeddium) {
+                Logger.appendToLog("Mod Perception: Sodium or Embeddium Mod found, attempting to load the disable warning tool later!");
+            }
+        } else {
+            Logger.appendToLog("Failed To Load Current Mod Checker Config");
+        }
 
         if (!Tools.checkRendererCompatible(this, Tools.LOCAL_RENDERER)) {
             ListUtils.RenderersList renderersList = ListUtils.getCompatibleRenderers(this);

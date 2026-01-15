@@ -9,9 +9,9 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.firefly.utils.PGWTools;
 import com.kdt.mcgui.ProgressLayout;
 import com.movtery.context.ContextExecutor;
+import com.movtery.feature.mod.parser.ModCheckResult;
 import com.movtery.feature.mod.parser.ModChecker;
 import com.movtery.feature.mod.parser.ModInfo;
 import com.movtery.feature.mod.parser.ModParser;
@@ -72,15 +72,14 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
             @Override
             public void onParseEnded(@NonNull List<? extends ModInfo> modInfoList) {
                 ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
-                if (modInfoList.isEmpty()) executeTask();
-                else {
-                    ContextExecutor.executeTaskWithAllContext(context -> new ModChecker().check(context, modInfoList, modCheckResult -> {
-                        PGWTools.modCheckResult = modCheckResult;
-                        // mVersion.setModCheckResult(modCheckResult);
+                ContextExecutor.executeTaskWithAllContext(context -> {
+                    ModCheckResult.clear(context);
+                    if (modInfoList.isEmpty()) executeTask();
+                    else new ModChecker().check(context, modInfoList, result -> {
                         executeTask();
                         return null;
-                    }));
-                }
+                    });
+                });
             }
         });
     }

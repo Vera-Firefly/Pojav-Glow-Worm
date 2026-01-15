@@ -18,6 +18,8 @@ import java.util.zip.ZipInputStream;
 
 import net.kdt.pojavlaunch.firefly.Logger;
 
+import org.jetbrains.annotations.Nullable;
+
 public class PGWTools {
 
     private static volatile boolean isCancelled = false;
@@ -33,8 +35,6 @@ public class PGWTools {
     public static boolean onCancelled() {
         return isCancelled;
     }
-
-    public static ModChecker.ModCheckResult modCheckResult = null;
 
     public static void onAppendToLog(String message) {
         Logger.appendToLog("==================== " + message + " ====================");

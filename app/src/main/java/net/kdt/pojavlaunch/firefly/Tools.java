@@ -47,7 +47,6 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.firefly.utils.ListUtils;
 
-import com.firefly.utils.PGWTools;
 import com.movtery.feature.version.VersionInfo;
 import com.movtery.feature.version.utils.VersionInfoUtils;
 
@@ -56,7 +55,6 @@ import com.google.gson.GsonBuilder;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 
-import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutorTask;
 import net.kdt.pojavlaunch.firefly.lifecycle.LifecycleAwareAlertDialog;
@@ -207,27 +205,6 @@ public final class Tools {
         CTRLDEF_FILE = DIR_GAME_HOME + "/controlmap/default.json";
     }
 
-    /**
-     * Search for TouchController mod to automatically enable TouchController mod support.
-     *
-     * @param gameDir current game directory
-     * @return whether TouchController is found
-     */
-    public static boolean hasTouchController(File gameDir) {
-        File modsDir = new File(gameDir, "mods");
-        File[] mods = modsDir.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
-        if (mods == null) {
-            return false;
-        }
-        for (File file : mods) {
-            String name = file.getName().toLowerCase(Locale.ROOT);
-            if (name.contains("touchcontroller")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static void launchMinecraft(final AppCompatActivity activity, MinecraftAccount minecraftAccount,
                                        MinecraftProfile minecraftProfile, String versionId, int versionJavaRequirement) throws Throwable {
         int freeDeviceMemory = getFreeDeviceMemory(activity);
@@ -306,15 +283,6 @@ public final class Tools {
         PGW_VERSION_CODE = activity.getString(R.string.base_version_code);
         if (Tools.isValidString(minecraftProfile.javaArgs)) args = minecraftProfile.javaArgs;
         FFmpegPlugin.discover(activity);
-        if (PGWTools.modCheckResult != null) {
-            if (PGWTools.modCheckResult.getHasTouchController()) {
-                Logger.appendToLog("Mod Perception: TouchController Mod found, attempting to automatically enable control proxy!");
-            }
-
-            if (PGWTools.modCheckResult.getHasSodiumOrEmbeddium()) {
-                Logger.appendToLog("Mod Perception: Sodium or Embeddium Mod found, attempting to load the disable warning tool later!");
-            }
-        }
         JREUtils.launchWithUtils(activity, runtime, versionInfo1, gamedir, javaArgList, args);
         // If we returned, this means that the JVM exit dialog has been shown and we don't need to be active anymore.
         // We never return otherwise. The process will be killed anyway, and thus we will become inactive
