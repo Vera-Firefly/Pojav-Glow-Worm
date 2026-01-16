@@ -96,17 +96,17 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
     private void handleParseResult(List<? extends ModInfo> modInfoList) {
         ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
 
-        if (modInfoList.isEmpty()) {
-            executeTask();
-            return;
-        }
-
         ContextExecutor.executeTaskWithAllContext(context -> {
-            ModCheckResult.clear(context);
-            new ModChecker().check(context, modInfoList, result -> {
-                executeTask();
-                return null;
-            });
+            clearAndProcessModCheck(context, modInfoList);
+        });
+    }
+
+    private void clearAndProcessModCheck(Context context, List<? extends ModInfo> modInfoList) {
+        ModCheckResult.clear(context);
+        if (modInfoList.isEmpty()) executeTask();
+        else new ModChecker().check(context, modInfoList, result -> {
+            executeTask();
+            return null;
         });
     }
 
