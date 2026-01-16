@@ -121,6 +121,7 @@ public final class ExtraKeysView extends GridLayout {
     /**
      * @deprecated call readSpecialButton(SpecialButton.CTRL);
      */
+    @Deprecated
     public boolean readControlButton() {
         return readSpecialButton(SpecialButton.CTRL);
     }
@@ -128,6 +129,7 @@ public final class ExtraKeysView extends GridLayout {
     /**
      * @deprecated call readSpecialButton(SpecialButton.ALT);
      */
+    @Deprecated
     public boolean readAltButton() {
         return readSpecialButton(SpecialButton.ALT);
     }

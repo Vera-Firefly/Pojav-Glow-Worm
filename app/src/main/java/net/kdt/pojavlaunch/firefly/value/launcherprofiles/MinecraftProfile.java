@@ -18,7 +18,8 @@ public class MinecraftProfile {
     public String logConfig;
     public boolean logConfigIsXML;
     public String pojavRendererName;
-    public boolean enableModsCheck;
+    public boolean enableModsCheck = true;
+    public boolean disableDownloader;
     public String controlFile;
     public MinecraftResolution[] resolution;
 
@@ -59,6 +60,7 @@ public class MinecraftProfile {
         logConfigIsXML = profile.logConfigIsXML;
         pojavRendererName = profile.pojavRendererName;
         enableModsCheck = profile.enableModsCheck;
+        disableDownloader = profile.disableDownloader;
         controlFile = profile.controlFile;
         resolution = profile.resolution;
     }

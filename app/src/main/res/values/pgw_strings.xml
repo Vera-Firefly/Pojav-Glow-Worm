@@ -238,4 +238,7 @@
     <!-- Mods Check -->
     <string name="enable_mod_check_title">Mods Check</string>
     <string name="enable_mod_check_enable">Enable Mods Check</string>
+    <!-- Disable Downloader -->
+    <string name="vprof_disable_downloader_title">Disable Downloader</string>
+    <string name="vprof_enable_disable_downloader">Disable Download Check, Launch Directly</string>
 </resources>

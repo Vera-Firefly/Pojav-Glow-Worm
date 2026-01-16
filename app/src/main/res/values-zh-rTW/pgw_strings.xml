@@ -249,4 +249,7 @@
     <!-- Mods Check -->
     <string name="enable_mod_check_title">模組檢查</string>
     <string name="enable_mod_check_enable">啟用模組檢查</string>
+    <!-- Disable Downloader -->
+    <string name="vprof_disable_downloader_title">禁用下載器</string>
+    <string name="vprof_enable_disable_downloader">禁用下載檢查，直接啟動</string>
 </resources>

@@ -55,7 +55,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private MinecraftProfile mTempProfile = null;
     private String mValueToConsume = "";
     private Button mSaveButton, mDeleteButton, mControlSelectButton, mGameDirButton, mVersionSelectButton;
-    private CheckBox mEnableModsCheck;
+    private CheckBox mEnableModsCheck, mDisableDownloader;
     private Spinner mDefaultRuntime, mDefaultRenderer;
     private EditText mDefaultName, mDefaultJvmArgument;
     private TextView mDefaultPath, mDefaultVersion, mDefaultControl;
@@ -194,6 +194,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultRenderer.setSelection(rendererIndex);
 
         mEnableModsCheck.setChecked(mTempProfile.enableModsCheck);
+        mDisableDownloader.setChecked(mTempProfile.disableDownloader);
 
         mDefaultVersion.setText(mTempProfile.lastVersionId);
         mDefaultJvmArgument.setText(mTempProfile.javaArgs == null ? "" : mTempProfile.javaArgs);
@@ -234,6 +235,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mGameDirButton = view.findViewById(R.id.vprof_editor_path_button);
         mProfileIcon = view.findViewById(R.id.vprof_editor_profile_icon);
         mEnableModsCheck = view.findViewById(R.id.vprof_settings_enable_mods_check);
+        mDisableDownloader = view.findViewById(R.id.vprof_settings_disable_downloader);
     }
 
     private void save() {
@@ -244,6 +246,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
         mTempProfile.enableModsCheck = mEnableModsCheck.isChecked();
+        mTempProfile.disableDownloader = mDisableDownloader.isChecked();
 
         if (mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
         if (mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
