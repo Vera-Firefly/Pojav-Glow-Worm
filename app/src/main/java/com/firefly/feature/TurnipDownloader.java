@@ -146,8 +146,11 @@ public class TurnipDownloader {
     // Resolve the URL to fetch the version.json file
     private static String resolveVersionUrl(int sourceType) {
         String[] sources = {
-            "https://",
-            "https://mirror.ghproxy.com/"
+                "https://",
+                "https://gh-proxy.org/",
+                "https://hk.gh-proxy.org/",
+                "https://cdn.gh-proxy.org/",
+                "https://edgeone.gh-proxy.org/"
         };
         if (sourceType > 0 && sourceType <= sources.length) {
             DLS = sources[sourceType - 1];

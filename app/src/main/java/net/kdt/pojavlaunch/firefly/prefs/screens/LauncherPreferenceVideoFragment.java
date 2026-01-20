@@ -630,7 +630,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
     }
 
     private void isDownloadMesa() {
-        String[] sources = {"Auto", "GitHub", "GHPROXY"};
+        String[] sources = {"Auto", "GitHub", "GHPROXY(CloudFlare)", "GHPROXY(TW)", "GHPROXY(Fastly CDN)", "GHPROXY(EdgeOne)"};
         new ListViewDialog.Builder(requireContext())
             .setTitle(R.string.pgw_settings_choose_download_source)
             .setCancelable(false)
@@ -718,7 +718,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
     }
 
     private void isDownloadTurnip() {
-        String[] sources = {"Auto", "GitHub", "GHPROXY"};
+        String[] sources = {"Auto", "GitHub", "GHPROXY(CloudFlare)", "GHPROXY(TW)", "GHPROXY(Fastly CDN)", "GHPROXY(EdgeOne)"};
         new ListViewDialog.Builder(requireContext())
             .setTitle(R.string.pgw_settings_choose_download_source)
             .setCancelable(false)

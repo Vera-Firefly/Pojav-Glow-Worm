@@ -215,14 +215,21 @@ public class UpdateLauncher {
 
     private void showDownloadSourceDialog(String tagName, String versionName, String archModel) {
         String githubUrl = String.format(GITHUB_RELEASE_URL, tagName, versionName, archModel);
+        // Note: gh-proxy accepts "github.com/..." format (without https:// prefix)
+        // It will automatically prepend "https://" internally
+        String[] sources = {
+                "https://",
+                "https://gh-proxy.org/",
+                "https://hk.gh-proxy.org/",
+                "https://cdn.gh-proxy.org/",
+                "https://edgeone.gh-proxy.org/"
+        };
 
         new CustomDialog.Builder(context)
             .setTitle(context.getString(R.string.pgw_settings_updatelauncher_source))
             .setCancelable(false)
-            .setItems(new String[]{"GitHub", "GHPROXY"}, (selectedSource, i) -> {
-                String apkUrl = selectedSource.equals("GitHub") ?
-                        "https://" + githubUrl :
-                        "https://mirror.ghproxy.com/" + githubUrl;
+            .setItems(new String[]{"GitHub", "GHPROXY(CloudFlare)", "GHPROXY(TW)", "GHPROXY(Fastly CDN)", "GHPROXY(EdgeOne)"}, (selectedSource, i) -> {
+                String apkUrl = sources[i] + githubUrl;
                 startDownload(apkUrl, tagName);
                 isCancelled = false;
             })
