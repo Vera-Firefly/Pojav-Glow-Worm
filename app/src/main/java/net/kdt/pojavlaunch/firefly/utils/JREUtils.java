@@ -25,7 +25,6 @@ import android.os.Build;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.firefly.utils.MesaUtils;
 import com.firefly.utils.PGWTools;
@@ -74,8 +73,8 @@ public class JREUtils {
 
     public static String LD_LIBRARY_PATH;
     public static String jvmLibraryPath;
-    private static String glVersion = PREF_MESA_GL_VERSION;
-    private static String glslVersion = PREF_MESA_GLSL_VERSION;
+    private static final String glVersion = PREF_MESA_GL_VERSION;
+    private static final String glslVersion = PREF_MESA_GLSL_VERSION;
 
     public static String findInLdLibPath(String libName) {
         if (Os.getenv("LD_LIBRARY_PATH") == null) {
@@ -84,7 +83,7 @@ public class JREUtils {
                     Os.setenv("LD_LIBRARY_PATH", LD_LIBRARY_PATH, true);
                 }
             } catch (ErrnoException e) {
-                e.printStackTrace();
+                Log.e("JREUtils", "Error", e);
             }
             return libName;
         }
@@ -331,34 +330,34 @@ public class JREUtils {
             customRenderer.getEnv().forEach(envPair -> {
                 String envKey = envPair.getFirst();
                 String envValue = envPair.getSecond();
-                if (envKey.equals("DLOPEN")) return;
-                if (envKey.equals("POJAV_RENDERER")) {
-                    if (envValue.startsWith("opengles")) {
-                        checkLIBGLESVersion(envMap);
-                        JREUtils.initRendererTag(envValue);
-                    } else {
-                        envMap.put("LIBGL_ES", "3");
-                        if (!RendererUtils.isGalliumRenderer(envValue)) {
+                switch(envKey) {
+                    case "DLOPEN":
+                        return;
+                    case "POJAV_RENDERER":
+                        if (envValue.startsWith("opengles")) {
+                            checkLIBGLESVersion(envMap);
                             JREUtils.initRendererTag(envValue);
                         } else {
-                            JREUtils.initRendererTag("mesa_3d");
-                            envMap.put("LOCAL_DRIVER_MODEL", "gallium_" + RendererUtils.getGalliumRenderer(envValue));
+                            envMap.put("LIBGL_ES", "3");
+                            if (!RendererUtils.isGalliumRenderer(envValue)) {
+                                JREUtils.initRendererTag(envValue);
+                            } else {
+                                JREUtils.initRendererTag("mesa_3d");
+                                envMap.put("LOCAL_DRIVER_MODEL", "gallium_" + RendererUtils.getGalliumRenderer(envValue));
+                            }
                         }
-                    }
-                } else if (envKey.equals("LIB_MESA_NAME")) {
-                    envMap.put(envKey, customRenderer.getPath() + "/" + envValue);
-                } else if (envKey.equals("MESA_LIBRARY")) {
-                    envMap.put(envKey, customRenderer.getPath() + "/" + envValue);
-                } else {
-                    envMap.put(envKey, envValue);
+                        break;
+                    case "LIB_MESA_NAME":
+                    case "MESA_LIBRARY":
+                        envMap.put(envKey, customRenderer.getPath() + "/" + envValue);
+                        break;
+                    default:
+                        envMap.put(envKey, envValue);
+                        break;
                 }
             });
             String customEglName = customRenderer.getEglName();
-            if (customEglName.startsWith("/")) {
-                eglName = customRenderer.getPath() + customEglName;
-            } else {
-                eglName = customEglName;
-            }
+            eglName = (customEglName.startsWith("/")) ? customRenderer.getPath() + customEglName : customEglName;
             envMap.put("POJAVEXEC_EGL", eglName);
             return;
         }
@@ -378,33 +377,28 @@ public class JREUtils {
 
         if (!LOCAL_RENDERER.startsWith("opengles") && !PREF_EXP_SETUP) {
             switch (LOCAL_RENDERER) {
-                case "vulkan_zink": {
+                case "vulkan_zink":
                     JREUtils.initRendererTag("mesa_3d");
                     envMap.put("LOCAL_DRIVER_MODEL", "gallium_zink");
                     envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                     envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
-                }
                 break;
-                case "gallium_virgl": {
+                case "gallium_virgl":
                     JREUtils.initRendererTag("mesa_3d");
                     envMap.put("LOCAL_DRIVER_MODEL", "gallium_virgl");
                     envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
                     envMap.put("MESA_GLSL_VERSION_OVERRIDE", "430");
                     envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
-                }
                 break;
-                case "gallium_freedreno": {
+                case "gallium_freedreno":
                     JREUtils.initRendererTag("mesa_3d");
                     envMap.put("LOCAL_DRIVER_MODEL", "gallium_freedreno");
                     envMap.put("LOCAL_LOADER_OVERRIDE", "kgsl");
-                }
                 break;
-                case "gallium_panfrost": {
+                case "gallium_panfrost":
                     JREUtils.initRendererTag("mesa_3d");
                     envMap.put("LOCAL_DRIVER_MODEL", "gallium_panfrost");
-                    envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "1");
                     envMap.put("MESA_DISK_CACHE_SINGLE_FILE", "true");
-                }
                 break;
                 default:
                     JREUtils.initRendererTag(LOCAL_RENDERER);
@@ -419,10 +413,9 @@ public class JREUtils {
                     case "gallium_zink":
                     case "gallium_freedreno":
                     case "gallium_softpipe":
-                    case "gallium_llvmpipe": {
+                    case "gallium_llvmpipe":
                         envMap.put("MESA_GL_VERSION_OVERRIDE", "4.6");
                         envMap.put("MESA_GLSL_VERSION_OVERRIDE", "460");
-                    }
                     break;
                     case "gallium_virgl": {
                         envMap.put("MESA_GL_VERSION_OVERRIDE", "4.3");
@@ -629,9 +622,9 @@ public class JREUtils {
         }
     }
 
-    private static int launchJavaVM(final Activity activity, String runtimeHome, File gameDirectory, final List<String> JVMArgs, final String userArgsString) throws Throwable {
+    private static void launchJavaVM(final Activity activity, String runtimeHome, File gameDirectory, final List<String> JVMArgs, final String userArgsString) {
         PGWTools.onAppendToLog("Launch JVM");
-        List<String> userArgs = getJavaArgs(activity, runtimeHome, userArgsString);
+        List<String> userArgs = getJavaArgs(runtimeHome, userArgsString);
 
         //Remove arguments that can interfere with the good working of the launcher
         purgeArg(userArgs, "-Xms");
@@ -682,7 +675,6 @@ public class JREUtils {
             });
         }
         EventBus.getDefault().post(new JvmExitEvent(exitCode));
-        return exitCode;
     }
 
     public static void launchWithUtils(final Activity activity, final Runtime runtime, VersionInfo versionInfo, File gameDirectory, final List<String> JVMArgs, final String userArgsString) throws Throwable {
@@ -710,10 +702,9 @@ public class JREUtils {
      * Gives an argument list filled with both the user args
      * and the auto-generated ones (eg. the window resolution).
      *
-     * @param ctx The application context
      * @return A list filled with args.
      */
-    public static List<String> getJavaArgs(Context ctx, String runtimeHome, String userArgumentsString) {
+    public static List<String> getJavaArgs(String runtimeHome, String userArgumentsString) {
         List<String> userArguments = parseJavaArguments(userArgumentsString);
         String resolvFile;
         resolvFile = new File(Tools.DIR_DATA, "resolv.conf").getAbsolutePath();
@@ -825,6 +816,144 @@ public class JREUtils {
         }
         return parsedArguments;
     }
+
+    /*
+    public static ArrayList<String> parseJavaArguments(String args) {
+        ArrayList<String> parsedArguments = new ArrayList<>();
+        if (args == null || args.trim().isEmpty()) return parsedArguments;
+
+        String[] separators = {
+                "-javaagent:",
+                "-XX:-",
+                "-XX:+",
+                "-verbose:",
+                "-XX:",
+                "-D",
+                "-X",
+                "--"
+        };
+
+        String processedArgs = args.trim();
+
+        int currentPos = 0;
+        int length = processedArgs.length();
+
+        while (currentPos < length) {
+            if (Character.isWhitespace(processedArgs.charAt(currentPos))) {
+                currentPos++;
+                continue;
+            }
+
+            int argStart = -1;
+            String matchedPrefix = null;
+
+            for (String prefix : separators) {
+                if (processedArgs.startsWith(prefix, currentPos)) {
+                    argStart = currentPos;
+                    matchedPrefix = prefix;
+                    break;
+                }
+            }
+
+            if (argStart == -1) {
+                Log.w("JAVA_ARGS_PARSER", "Skipping invalid character at position " + currentPos + ": " + processedArgs.charAt(currentPos));
+                currentPos++;
+                continue;
+            }
+
+            int argEnd = findArgumentEnd(processedArgs, argStart + matchedPrefix.length(), separators);
+
+            String argument = processedArgs.substring(argStart, argEnd);
+            parsedArguments.add(argument);
+
+            currentPos = argEnd;
+        }
+
+        return mergeContinuationArguments(parsedArguments);
+    }
+
+    private static int findArgumentEnd(String args, int startPos, String[] separators) {
+        int length = args.length();
+
+        for (int i = startPos; i < length; i++) {
+            for (String prefix : separators) {
+                if (args.startsWith(prefix, i)) {
+                    boolean isActualSeparator = true;
+                    for (String otherPrefix : separators) {
+                        if (otherPrefix.length() > prefix.length() &&
+                                args.startsWith(otherPrefix, i)) {
+                            isActualSeparator = false;
+                            break;
+                        }
+                    }
+
+                    if (isActualSeparator) return i;
+                }
+            }
+
+            if (Character.isWhitespace(args.charAt(i))) {
+                boolean inQuotes = false;
+
+                for (int j = startPos; j < i; j++) inQuotes = args.charAt(j) == '"' || args.charAt(j) == '\'';
+
+                if (!inQuotes && !args.substring(startPos, i).contains(",")) return i;
+            }
+        }
+
+        return length;
+    }
+
+    private static ArrayList<String> mergeContinuationArguments(ArrayList<String> arguments) {
+        if (arguments.isEmpty()) return arguments;
+
+        ArrayList<String> merged = new ArrayList<>();
+        StringBuilder currentArg = new StringBuilder(arguments.get(0));
+
+        for (int i = 1; i < arguments.size(); i++) {
+            String arg = arguments.get(i);
+            String prevArg = arguments.get(i - 1);
+
+            if (prevArg.endsWith(",") || arg.startsWith(",")) {
+                if (prevArg.endsWith(",") && arg.startsWith(",")) currentArg.append(arg.substring(1));
+                else currentArg.append(arg);
+            } else {
+                merged.add(currentArg.toString());
+                currentArg = new StringBuilder(arg);
+            }
+        }
+
+        merged.add(currentArg.toString());
+
+        for (int i = merged.size() - 1; i >= 0; i--) {
+            String arg = merged.get(i);
+            if (!isValidJavaArgument(arg)) {
+                Log.w("JAVA_ARGS_PARSER", "Removed improper argument: " + arg);
+                merged.remove(i);
+            }
+        }
+
+        return merged;
+    }
+
+    private static boolean isValidJavaArgument(String arg) {
+        if (arg == null || arg.trim().isEmpty()) return false;
+
+        String[] validPrefixes = {"-javaagent:", "-XX:", "-D", "-X", "--", "-verbose"};
+
+        for (String prefix : validPrefixes) {
+            if (arg.startsWith(prefix)) {
+                if (arg.startsWith("-D") || arg.startsWith("-javaagent:")) return true;
+
+                int firstEquals = arg.indexOf('=');
+                if (firstEquals == -1) return true;
+
+                return arg.indexOf('=', firstEquals + 1) == -1;
+            }
+        }
+
+        return false;
+    }
+     */
 
     /**
      * Open the render library in accordance to the settings.
