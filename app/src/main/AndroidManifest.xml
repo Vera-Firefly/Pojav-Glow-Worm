@@ -61,6 +61,11 @@
         </activity>
         <activity
             android:name=".LauncherActivity"
+            android:screenOrientation="sensorLandscape"
+            android:label="@string/app_short_name"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.firefly.ui.NewLauncherActivity"
+            android:screenOrientation="sensorLandscape"
             android:label="@string/app_short_name"
             android:windowSoftInputMode="adjustResize"/>
         <activity

@@ -2,7 +2,9 @@
   "profiles": {
     "(Default)": {
       "name": "(Default)",
-      "lastVersionId": "1.7.10"
+      "lastVersionId": "1.7.10",
+      "disableDownloader": false,
+      "enableModsCheck": true
     }
   },
   "selectedProfile": "(Default)"

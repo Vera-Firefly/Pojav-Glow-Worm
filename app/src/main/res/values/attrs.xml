@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="themeColorPrimary" format="reference|color" />
+    <attr name="themeColorSecondary" format="reference|color" />
+    <attr name="themeColorPrimaryLight" format="reference|color" />
+    <attr name="themeColorSecondaryLight" format="reference|color" />
+    <attr name="themeColorBackground" format="reference|color" />
+</resources>

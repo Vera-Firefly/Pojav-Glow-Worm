@@ -291,6 +291,7 @@ dependencies {
     implementation("com.github.Mathias-Boulay:android_gamepad_remapper:2.0.3")
     implementation("com.github.Mathias-Boulay:virtual-joystick-android:1.14")
     implementation("com.github.megatronking.stringfog:xor:5.0.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("com.squareup.okhttp3:okhttp:3.9.1")
 
     implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.6.1")

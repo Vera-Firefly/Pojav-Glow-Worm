@@ -12,4 +12,11 @@
 
     <color name="primary_text">#FFFFFF</color>
     <color name="secondary_text">#B2B2B2</color>
+
+    <color name="theme_color_primary">#8DB799</color>
+    <color name="theme_color_primary_light">#E1EBE4</color>
+    <color name="theme_color_primary_light_light">#E7EAE8</color>
+    <color name="theme_color_secondary">#E6755F</color>
+    <color name="theme_color_secondary_light">#EFE7E6</color>
+    <color name="theme_color_background">#F9F9F9</color>
 </resources>
