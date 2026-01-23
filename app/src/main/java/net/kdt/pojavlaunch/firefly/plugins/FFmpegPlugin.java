@@ -15,7 +15,7 @@ public class FFmpegPlugin {
     public static void discover(Context context) {
         PackageManager manager = context.getPackageManager();
         try {
-            PackageInfo ffmpegPluginInfo = manager.getPackageInfo("net.kdt.pojavlaunch.firefly.ffmpeg", PackageManager.GET_SHARED_LIBRARY_FILES);
+            PackageInfo ffmpegPluginInfo = manager.getPackageInfo("net.kdt.pojavlaunch.ffmpeg", PackageManager.GET_SHARED_LIBRARY_FILES);
             libraryPath = ffmpegPluginInfo.applicationInfo.nativeLibraryDir;
             File ffmpegExecutable = new File(libraryPath, "libffmpeg.so");
             executablePath = ffmpegExecutable.getAbsolutePath();
