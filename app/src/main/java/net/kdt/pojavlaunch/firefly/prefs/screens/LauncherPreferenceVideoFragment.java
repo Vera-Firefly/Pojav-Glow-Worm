@@ -19,16 +19,14 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 
-import com.firefly.feature.TurnipDownloader;
 import com.firefly.feature.MesaDownloader;
 import com.firefly.utils.ListUtils;
 import com.firefly.utils.MesaUtils;
 import com.firefly.utils.PGWTools;
-import com.firefly.utils.TurnipUtils;
+import com.movtery.plugins.driver.DriverPlugin;
 import com.firefly.ui.dialog.CustomDialog;
 import com.firefly.ui.dialog.ListViewDialog;
 import com.firefly.ui.prefs.ChooseMesaListPref;
-import com.firefly.ui.prefs.ChooseTurnipListPref;
 
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -124,7 +122,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         final ListPreference rendererListPref = requirePreference("renderer", ListPreference.class);
         final ListPreference configBridgePref = requirePreference("configBridge", ListPreference.class);
         final ChooseMesaListPref CMesaLibP = requirePreference("CMesaLibrary", ChooseMesaListPref.class);
-        final ChooseTurnipListPref CTurnipP = requirePreference("chooseTurnipDriver", ChooseTurnipListPref.class);
+        final ListPreference externalDriverP = requirePreference("externalDriverPlugin", ListPreference.class);
         final ListPreference CDriverModelP = requirePreference("CDriverModels", ListPreference.class);
         final ListPreference CMesaLDOP = requirePreference("ChooseMldo", ListPreference.class);
         final ListPreference CLibGLGLP =  requirePreference("CLibglGL", ListPreference.class);
@@ -132,7 +130,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         setListPreference(rendererListPref, "renderer");
         setListPreference(configBridgePref, "configBridge");
         setListPreference(CMesaLibP, "CMesaLibrary");
-        setListPreference(CTurnipP, "chooseTurnipDriver");
+        setExternalDriverPreference(externalDriverP);
         setListPreference(CDriverModelP, "CDriverModels");
         setListPreference(CMesaLDOP, "ChooseMldo");
         setListPreference(CLibGLGLP, "CLibglGL");
@@ -155,15 +153,13 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
             CDriverModelP.setValueIndex(0);
             return true;
         });
-        CMesaLibP.setImportButton(getString(R.string.pgw_settings_custom_turnip_creat), view -> handleFileSelection("ADD_MESA"));
+        CMesaLibP.setImportButton(getString(R.string.pgw_settings_cml_add), view -> handleFileSelection("ADD_MESA"));
         CMesaLibP.setDownloadButton(getString(R.string.preference_extra_mesa_download), view -> isDownloadMesa());
 
-        CTurnipP.setOnPreferenceChangeListener((pre, obj) -> {
-            Tools.TURNIP_LIBS = (String) obj;
+        externalDriverP.setOnPreferenceChangeListener((pre, obj) -> {
+            LauncherPreferences.PREF_EXTERNAL_DRIVER = (String) obj;
             return true;
         });
-        CTurnipP.setImportButton(getString(R.string.pgw_settings_custom_turnip_creat), view -> handleFileSelection("ADD_TURNIP"));
-        CTurnipP.setDownloadButton(getString(R.string.pgw_settings_ctu_download), view -> isDownloadTurnip());
 
         CDriverModelP.setOnPreferenceChangeListener((pre, obj) -> {
             Tools.DRIVER_MODEL = (String) obj;
@@ -239,7 +235,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
 
     private void computeVisibility() {
         requirePreference("force_vsync").setVisible(PREF_USE_ALTERNATE_SURFACE);
-        requirePreference("chooseTurnipDriver").setVisible(PGWTools.isAdrenoGPU() && !PREF_ZINK_PREFER_SYSTEM_DRIVER);
+        requirePreference("externalDriverPlugin").setVisible(PGWTools.isAdrenoGPU() && !PREF_ZINK_PREFER_SYSTEM_DRIVER);
         requirePreference("InitialFrameBuffer").setVisible(PREF_EXP_SETUP);
         requirePreference("MesaRendererChoose").setVisible(PREF_EXP_SETUP);
         requirePreference("customMesaVersionPref").setVisible(PREF_EXP_SETUP);
@@ -491,11 +487,6 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
             Tools.LOADER_OVERRIDE = value;
         }
 
-        if (preferenceKey.equals("chooseTurnipDriver")) {
-            array = ListUtils.getCompatibleCTurnipDriver(getContext());
-            Tools.TURNIP_LIBS = value;
-        }
-
         if (preferenceKey.equals("CLibglGL")) {
             array = ListUtils.getCompatibleLibGLGL(getContext());
             Tools.LIBGL_GL = value;
@@ -503,6 +494,22 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
 
         listPreference.setEntries(array.getArray());
         listPreference.setEntryValues(array.getList().toArray(new String[0]));
+    }
+
+    private void setExternalDriverPreference(ListPreference preference) {
+        DriverPlugin.initDrivers(requireContext());
+        List<DriverPlugin.Driver> drivers = DriverPlugin.getDrivers();
+        List<String> entries = new ArrayList<>();
+        List<String> values = new ArrayList<>();
+        entries.add(getString(R.string.global_default));
+        values.add("default");
+        for (DriverPlugin.Driver driver : drivers) {
+            entries.add(driver.getName());
+            values.add(driver.getPackageName());
+        }
+        if (!values.contains(preference.getValue())) preference.setValue("default");
+        preference.setEntries(entries.toArray(new String[0]));
+        preference.setEntryValues(values.toArray(new String[0]));
     }
 
     private void closeOtherCustomMesaPref(PreferenceCategory customMesaVersionPref) {
@@ -717,94 +724,6 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         });
     }
 
-    private void isDownloadTurnip() {
-        String[] sources = {"Auto", "GitHub", "GHPROXY(CloudFlare)", "GHPROXY(TW)", "GHPROXY(Fastly CDN)", "GHPROXY(EdgeOne)"};
-        new ListViewDialog.Builder(requireContext())
-            .setTitle(R.string.pgw_settings_choose_download_source)
-            .setCancelable(false)
-            .setItems(sources, (s, i) -> loadTurnipList(i))
-            .setCancelListener(R.string.alertdialog_cancel, v -> true)
-            .build()
-            .show();
-    }
-
-    private void loadTurnipList(int dls) {
-        CustomDialog dialog = new CustomDialog.Builder(requireContext())
-                .setTitle(getString(R.string.pgw_settings_ctu_dl_load))
-                .setCancelable(false)
-                .setConfirmListener(R.string.alertdialog_cancel, customView -> {
-                    TurnipDownloader.cancelDownload();
-                    return true;
-                })
-                .build();
-        dialog.show();
-        TurnipDownloader.initialize(requireContext());
-        PojavApplication.sExecutorService.execute(() -> {
-            List<String> list = TurnipDownloader.getTurnipList(dls);
-            boolean isCancelled = TurnipDownloader.isDownloadCancelled();
-            if (isCancelled) return;
-            requireActivity().runOnUiThread(() -> {
-                dialog.dismiss();
-
-                if (list == null) {
-                    CustomDialog Dialog1 = new CustomDialog.Builder(requireActivity())
-                            .setTitle(getString(R.string.pgw_settings_ctu_dl_loadfail))
-                            .setConfirmListener(R.string.alertdialog_done, customView -> true)
-                            .build();
-                    Dialog1.show();
-                } else {
-                    final String[] items = list.toArray(new String[0]);
-                    ListViewDialog Dialog2 = new ListViewDialog.Builder(requireActivity())
-                            .setTitle(R.string.pgw_settings_ctu_dl_ms)
-                            .setItems(items, (item, i) -> {
-                                if (i == null || i < 0 || i >= items.length)
-                                    return;
-                                downloadTurnip(items[i]);
-                            })
-                            .setCancelListener(R.string.alertdialog_cancel, v -> true)
-                            .build();
-                    Dialog2.show();
-                }
-            });
-        });
-    }
-
-    private void downloadTurnip(String version) {
-        CustomDialog dialog = new CustomDialog.Builder(requireContext())
-                .setTitle(getString(R.string.pgw_settings_ctu_dl_downloading))
-                .setCancelable(false)
-                .setConfirmListener(R.string.alertdialog_cancel, customView -> {
-                    TurnipDownloader.cancelDownload();
-                    return true;
-                })
-                .build();
-        dialog.show();    
-        TurnipDownloader.initialize(requireContext());
-        PojavApplication.sExecutorService.execute(() -> {
-            boolean data = TurnipDownloader.downloadTurnipFile(version);
-            boolean isCancelled = TurnipDownloader.isDownloadCancelled();
-            if (isCancelled) return;
-            requireActivity().runOnUiThread(() -> {
-                dialog.dismiss();
-                if (data) {
-                    boolean success = TurnipDownloader.saveTurnipFile(version);
-                    if (success) {
-                        Toast(requireContext(), R.string.pgw_settings_ctu_saved);
-                        setListPreference(requirePreference("chooseTurnipDriver", ChooseTurnipListPref.class), "chooseTurnipDriver");
-                    } else {
-                        Toast(requireContext(), R.string.pgw_settings_ctu_save_fail);
-                    }
-                } else {
-                    CustomDialog Dialog1 = new CustomDialog.Builder(requireActivity())
-                            .setTitle(getString(R.string.pgw_settings_ctu_dl_failed))
-                            .setConfirmListener(R.string.alertdialog_done, customView -> true)
-                            .build();
-                    Dialog1.show();
-                }
-            });
-        });
-    }
-
     private void showUseDRMShimDialog(SwitchPreference pre) {
         new CustomDialog.Builder(getContext())
                 .setMessage(getString(R.string.drm_shim_warning))
@@ -841,9 +760,6 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 case "ADD_MESA":
                     setMesaNameDialog(fileUri);
                     break;
-                case "ADD_TURNIP":
-                    setTurnipNameDialog(fileUri);
-                    break;
                 default:
                     // Nothing to do here
                     break;
@@ -863,7 +779,7 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
             return null;
         }});
         new CustomDialog.Builder(getActivity())
-            .setTitle(getString(R.string.pgw_settings_ctu_version_name))
+            .setTitle(getString(R.string.pgw_settings_cml_version_name))
             .setCustomView(input)
             .setConfirmListener(android.R.string.ok, customView -> {
                 String folderName = input.getText().toString().trim();
@@ -879,42 +795,6 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 Toast(getActivity(), message);
                 if (success) {
                     setListPreference(requirePreference("CMesaLibrary", ChooseMesaListPref.class), "CMesaLibrary");
-                }
-                return true;
-            })
-            .setCancelListener(android.R.string.cancel, customView -> true)
-            .setCancelable(false)
-            .build()
-            .show();
-    }
-
-    private void setTurnipNameDialog(Uri fileUri) {
-        EditText input = new EditText(getActivity());
-        input.setFilters(new InputFilter[]{(source, start, end, dest, dstart, dend) -> {
-            String currentText = dest.toString();
-            char lastChar = currentText.isEmpty() ? ' ' : currentText.charAt(currentText.length() - 1);
-            for (int i = start; i < end; i++) {
-                char c = source.charAt(i);
-                if (!Character.isLetterOrDigit(c) && c != '.' && c!= '-') return "";
-                if (c == '.' && lastChar == '.') return "";
-                lastChar = c;
-            }
-            return null;
-        }});
-        new CustomDialog.Builder(getActivity())
-            .setTitle(getString(R.string.pgw_settings_ctu_version_name))
-            .setCustomView(input)
-            .setConfirmListener(android.R.string.ok, customView -> {
-                String folderName = input.getText().toString().trim();
-                if (folderName.isEmpty()) {
-                    input.setError(getString(R.string.global_error_field_empty));
-                    return false;
-                }
-                boolean success = TurnipUtils.INSTANCE.saveTurnipDriver(getActivity(), fileUri, folderName);
-                String message = getString(success ? R.string.pgw_settings_ctu_saved : R.string.pgw_settings_ctu_save_fail);
-                Toast(getActivity(), message);
-                if (success) {
-                    setListPreference(requirePreference("chooseTurnipDriver", ChooseTurnipListPref.class), "chooseTurnipDriver");
                 }
                 return true;
             })

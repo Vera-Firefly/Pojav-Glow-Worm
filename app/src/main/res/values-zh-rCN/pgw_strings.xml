@@ -156,6 +156,8 @@
     <string name="pgw_settings_cml_save_fail">保存 Mesa 库失败,文件已损坏或不可执行</string>
     <string name="pgw_settings_cml_Illegitimate">格式错误,预期格式为 XX.X.X</string>
     <string name="pgw_settings_cml_format">请输入 XX.X.X 格式的文本</string>
+    <string name="pgw_settings_cml_version_name">输入 Mesa 版本</string>
+    <string name="pgw_settings_cml_add">添加 Mesa 库</string>
     <!-- Custom Mesa Loader Driver Override -->
     <string name="preference_extra_osm_cmldo_categ">自定义Mesa图形驱动程序</string>
     <string name="osm_enable_drm_shim">使用 DRM Shim</string>  
@@ -182,21 +184,8 @@
     <string name="pgw_settings_updatelauncher_install_prompt_title">安装更新</string>
     <string name="pgw_settings_updatelauncher_install_prompt_message">有新的版本已经下载到 %s. 你要安装它吗？</string>
     <string name="pgw_settings_updatelauncher_re_download">重新下载</string>
-    <!-- 自定义 Turnip 驱动 -->
-    <string name="pgw_settings_custom_turnip_creat">添加</string>
-    <string name="pgw_settings_ctu_version_name">输入版本名称</string>
-    <string name="pgw_settings_ctu_saved">驱动已成功保存</string>
-    <string name="pgw_settings_ctu_save_fail">驱动保存失败, 选择的文件损坏或不是可执行文件</string>
-    <string name="pgw_settings_ctu_delete_title">删除 Turnip 驱动</string>
-    <string name="pgw_settings_ctu_delete_message">确定要删除 %s 吗？</string>
-    <string name="pgw_settings_ctu">自定义 Turnip 驱动</string>
-    <string name="pgw_settings_ctu_dia">选择 Turnip 驱动（长按删除）</string>
-    <string name="pgw_settings_ctu_download">下载 Turnip 驱动</string>  
-    <string name="pgw_settings_ctu_dl_load">正在加载 Turnip 驱动列表</string>  
-    <string name="pgw_settings_ctu_dl_loadfail">获取 Turnip 驱动列表失败</string>  
-    <string name="pgw_settings_ctu_dl_ms">选择一个版本进行下载</string>  
-    <string name="pgw_settings_ctu_dl_failed">Turnip 驱动下载失败</string>  
-    <string name="pgw_settings_ctu_dl_downloading">正在下载 Turnip 驱动</string>
+    <string name="external_driver_plugin_title">外置驱动插件</string>
+    <string name="external_driver_plugin_summary">使用已安装的 FCL 兼容 Vulkan 驱动插件</string>
 
     <string name="pgw_settings_choose_download_source">选择下载源</string>
 

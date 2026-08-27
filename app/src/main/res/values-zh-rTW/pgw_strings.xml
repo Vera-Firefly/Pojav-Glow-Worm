@@ -156,6 +156,8 @@
     <string name="pgw_settings_cml_save_fail">儲存 Mesa 庫失敗，檔案已損毀或不可執行</string>
     <string name="pgw_settings_cml_Illegitimate">格式錯誤，預期格式為 XX.X.X</string>
     <string name="pgw_settings_cml_format">請輸入 XX.X.X 格式的文字</string>
+    <string name="pgw_settings_cml_version_name">輸入 Mesa 版本</string>
+    <string name="pgw_settings_cml_add">新增 Mesa 庫</string>
     <!-- Custom Mesa Loader Driver Override -->
     <string name="preference_extra_osm_cmldo_categ">自訂Mesa圖形驅動程序</string>
     <string name="osm_enable_drm_shim">使用 DRM Shim</string>  
@@ -182,21 +184,8 @@
     <string name="pgw_settings_updatelauncher_install_prompt_title">安裝更新</string>
     <string name="pgw_settings_updatelauncher_install_prompt_message">新版本已下載到 %s。你要安裝它嗎？</string>
     <string name="pgw_settings_updatelauncher_re_download">重新下載</string>
-    <!-- 自訂 Turnip 驅動 -->
-    <string name="pgw_settings_custom_turnip_creat">新增</string>
-    <string name="pgw_settings_ctu_version_name">輸入版本名稱</string>
-    <string name="pgw_settings_ctu_saved">驅動已成功儲存</string>
-    <string name="pgw_settings_ctu_save_fail">驅動儲存失敗, 選擇的文檔破損或不是可執行的文檔</string>
-    <string name="pgw_settings_ctu_delete_title">刪除 Turnip 驅動</string>
-    <string name="pgw_settings_ctu_delete_message">確定要刪除 %s 嗎？</string>
-    <string name="pgw_settings_ctu">自訂 Turnip 驅動</string>
-    <string name="pgw_settings_ctu_dia">選擇 Turnip 驅動（長按可刪除）</string>
-    <string name="pgw_settings_ctu_download">下載 Turnip 驅動</string>  
-    <string name="pgw_settings_ctu_dl_load">正在加載 Turnip 驅動列表</string>  
-    <string name="pgw_settings_ctu_dl_loadfail">獲取 Turnip 驅動列表失敗</string>  
-    <string name="pgw_settings_ctu_dl_ms">選擇一個版本進行下載</string>  
-    <string name="pgw_settings_ctu_dl_failed">Turnip 驅動下載失敗</string>  
-    <string name="pgw_settings_ctu_dl_downloading">正在下載 Turnip 驅動</string>
+    <string name="external_driver_plugin_title">外置驅動插件</string>
+    <string name="external_driver_plugin_summary">使用已安裝的 FCL 相容 Vulkan 驅動插件</string>
 
     <string name="pgw_settings_choose_download_source">選擇下載源</string>
 

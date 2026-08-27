@@ -17,7 +17,6 @@ public class ListUtils {
     private static CDriverModelList sCompatibleCDriverModel;
     private static CMesaLibList sCompatibleCMesaLibs;
     private static CMesaLDOList sCompatibleCMesaLDO;
-    private static CTurnipDriverList sCompatibleCTurnipDriver;
     private static RenderersList sCompatibleRenderers;
     private static ConfigBridgeList sCompatibleConfigBridge;
     private static LibGLGLList sCompatibleLibGLGL;
@@ -255,45 +254,6 @@ public class ListUtils {
         sCompatibleCMesaLDO = new CMesaLDOList(CMesaLDOIds,
                 CMesaLDONames.toArray(new String[0]));
         return sCompatibleCMesaLDO;
-    }
-
-    public static class CTurnipDriverList implements ListAndArray {
-        public final List<String> CTurnipDriverIds;
-        public final String[] CTurnipDriver;
-
-        public CTurnipDriverList(List<String> CTurnipDriverIds, String[] CTurnipDriver) {
-            this.CTurnipDriverIds = CTurnipDriverIds;
-            this.CTurnipDriver = CTurnipDriver;
-        }
-
-        @Override
-        public List<String> getList() {
-            return CTurnipDriverIds;
-        }
-
-        @Override
-        public String[] getArray() {
-            return CTurnipDriver;
-        }
-    }
-
-    public static CTurnipDriverList getCompatibleCTurnipDriver(Context context) {
-        Resources resources = context.getResources();
-        String[] defaultCTurnipDriver = resources.getStringArray(R.array.turnip_values);
-        String[] defaultCTurnipDriverNames = resources.getStringArray(R.array.turnip_files);
-        List<String> CTurnipDriverIds = new ArrayList<>(defaultCTurnipDriver.length);
-        List<String> CTurnipDriverNames = new ArrayList<>(defaultCTurnipDriverNames.length);
-        for (int i = 0; i < defaultCTurnipDriver.length; i++) {
-            CTurnipDriverIds.add(defaultCTurnipDriver[i]);
-            CTurnipDriverNames.add(defaultCTurnipDriverNames[i]);
-        }
-        List<String> addTurnipList = TurnipUtils.INSTANCE.getTurnipDriverList();
-        for (String item : addTurnipList) {
-            CTurnipDriverIds.add(item);
-            CTurnipDriverNames.add(item);
-        }
-        sCompatibleCTurnipDriver = new CTurnipDriverList(CTurnipDriverIds, CTurnipDriverNames.toArray(new String[0]));
-        return sCompatibleCTurnipDriver;
     }
 
     public static class LibGLGLList implements ListAndArray {

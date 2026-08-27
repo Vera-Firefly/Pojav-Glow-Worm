@@ -66,7 +66,7 @@ public class ChooseMesaListPref extends ListPreference {
         buttonLayout.setGravity(android.view.Gravity.CENTER);
 
         Button importButton = new Button(getContext());
-        importButton.setText(R.string.pgw_settings_custom_turnip_creat);
+        importButton.setText(R.string.pgw_settings_cml_add);
 
         Button downloadButton = new Button(getContext());
         downloadButton.setText(R.string.preference_extra_mesa_download);

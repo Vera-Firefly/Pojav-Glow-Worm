@@ -128,6 +128,8 @@
     <string name="pgw_settings_cml_save_fail">Failed to save Mesa lib, file is corrupt or not executable</string>
     <string name="pgw_settings_cml_Illegitimate">Bad format, expected format is XX.X.X</string>
     <string name="pgw_settings_cml_format">Please enter text in XX.X.X format</string>
+    <string name="pgw_settings_cml_version_name">Enter Mesa version</string>
+    <string name="pgw_settings_cml_add">Add Mesa library</string>
     <!-- Custom Mesa Loader Driver Override -->
     <string name="preference_extra_osm_cmldo_categ">Custom Mesa Loader Driver Override</string>
     <string name="osm_enable_drm_shim">Using DRM Shim</string>
@@ -154,21 +156,8 @@
     <string name="pgw_settings_updatelauncher_install_prompt_title">Install Update</string>
     <string name="pgw_settings_updatelauncher_install_prompt_message">A new version has been downloaded at %s. Do you want to install it?</string>
     <string name="pgw_settings_updatelauncher_re_download">Re-download</string>
-    <!-- Custom Turnip Driver -->
-    <string name="pgw_settings_custom_turnip_creat">Add</string>
-    <string name="pgw_settings_ctu_version_name">Enter Version Name</string>
-    <string name="pgw_settings_ctu_saved">Driver saved successfully</string>
-    <string name="pgw_settings_ctu_save_fail">Failed to save driver, file is corrupt or not executable</string>
-    <string name="pgw_settings_ctu_delete_title">Delete Turnip Driver</string>
-    <string name="pgw_settings_ctu_delete_message">Are you sure you want to delete %s ?</string>
-    <string name="pgw_settings_ctu">Custom Turnip Driver</string>
-    <string name="pgw_settings_ctu_dia">Choose Turnip Driver (Long press to delete)</string>
-    <string name="pgw_settings_ctu_download">Download Turnip Driver</string>
-    <string name="pgw_settings_ctu_dl_load">Loading Turnip Driver List</string>
-    <string name="pgw_settings_ctu_dl_loadfail">Turnip Driver list get fail</string>
-    <string name="pgw_settings_ctu_dl_ms">Select a version to download</string>
-    <string name="pgw_settings_ctu_dl_failed">Turnip Driver download fail</string>
-    <string name="pgw_settings_ctu_dl_downloading">Downloading Turnip Driver</string>
+    <string name="external_driver_plugin_title">External Driver Plugin</string>
+    <string name="external_driver_plugin_summary">Use an installed FCL-compatible Vulkan driver plugin</string>
 
     <string name="pgw_settings_choose_download_source">Choose Download Source</string>
     <string name="generic_unknown">Unknown</string>

@@ -94,16 +94,13 @@
             app2:iconSpaceReserved="false"
             />
 
-        <com.firefly.ui.prefs.ChooseTurnipListPref
+        <androidx.preference.ListPreference
+            android:key="externalDriverPlugin"
             android:defaultValue="default"
-            android:key="chooseTurnipDriver"
-            android:entries="@array/turnip_files"
-            android:entryValues="@array/turnip_values"
-            android:title="@string/pgw_settings_ctu"
-            android:dialogTitle="@string/pgw_settings_ctu_dia"
+            android:title="@string/external_driver_plugin_title"
+            android:summary="@string/external_driver_plugin_summary"
             app2:useSimpleSummaryProvider="true"
-            app2:iconSpaceReserved="false"
-            />
+            app2:iconSpaceReserved="false" />
 
         <SwitchPreference
             android:defaultValue="false"

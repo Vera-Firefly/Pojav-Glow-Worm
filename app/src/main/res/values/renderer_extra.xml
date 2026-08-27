@@ -64,13 +64,5 @@
         <item>virtio_gpu</item>
     </string-array>
 
-    <string-array name="turnip_files">
-        <item name="1">@string/global_default</item>
-    </string-array>
-
-    <string-array name="turnip_values">
-        <item>default</item>
-    </string-array>
-
 </resources>
 

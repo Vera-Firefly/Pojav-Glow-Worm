@@ -274,7 +274,7 @@
     <string name="create_profile_optifine">創建OptiFine設定檔</string>
     <string name="hint_search_modpack">蒐索綜合包</string>
     <string name="preference_vulkan_driver_system_title">使用系統Vulkan驅動</string>
-    <string name="preference_vulkan_driver_system_description">強制啟動器在驍龍Adreno GPU上使用系統Vulkan驅動而非Turnip驅動。 僅影響調用Vulkan的Zink和模組</string>
+    <string name="preference_vulkan_driver_system_description">強制啟動器在驍龍 Adreno GPU 上使用系統 Vulkan 驅動而非外置驅動插件。僅影響調用 Vulkan 的 Zink 和模組。</string>
     <string name="generic_install">安裝</string>
     <string name="generic_apply">應用設定</string>
     <string name="search_modpack_no_result">未找到綜合包</string>

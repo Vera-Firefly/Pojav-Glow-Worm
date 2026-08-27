@@ -11,7 +11,6 @@ import static net.kdt.pojavlaunch.firefly.Tools.DRIVER_MODEL;
 import static net.kdt.pojavlaunch.firefly.Tools.LOADER_OVERRIDE;
 import static net.kdt.pojavlaunch.firefly.Tools.LOCAL_RENDERER;
 import static net.kdt.pojavlaunch.firefly.Tools.MESA_LIBS;
-import static net.kdt.pojavlaunch.firefly.Tools.TURNIP_LIBS;
 import static net.kdt.pojavlaunch.firefly.Tools.LIBGL_GL;
 import static net.kdt.pojavlaunch.firefly.Tools.NATIVE_LIB_DIR;
 import static net.kdt.pojavlaunch.firefly.Tools.currentDisplayMetrics;
@@ -29,10 +28,10 @@ import android.util.Log;
 import com.firefly.utils.MesaUtils;
 import com.firefly.utils.PGWTools;
 import com.firefly.utils.RendererUtils;
-import com.firefly.utils.TurnipUtils;
 
 import com.movtery.feature.version.VersionInfo;
 import com.movtery.plugins.renderer.RendererPlugin;
+import com.movtery.plugins.driver.DriverPlugin;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 import com.movtery.event.value.JvmExitEvent;
@@ -234,8 +233,6 @@ public class JREUtils {
 
         if (PGW_VERSION_CODE != null)
             envMap.put("PGW_VERSION_CODE", PGW_VERSION_CODE);
-        if (TURNIP_LIBS == null)
-            envMap.put("DRIVER_PATH", NATIVE_LIB_DIR);
         if (Tools.BRIDGE_CONFIG != null)
             envMap.put("BRIDGE_CONFIG", BRIDGE_CONFIG);
         if (PREF_BIG_CORE_AFFINITY)
@@ -525,17 +522,6 @@ public class JREUtils {
         }
     }
 
-    private static void loadCustomTurnip(Map<String, String> envMap) {
-        if (PREF_ZINK_PREFER_SYSTEM_DRIVER) return;
-        if (TURNIP_LIBS.equals("default")) {
-            envMap.put("DRIVER_PATH", NATIVE_LIB_DIR);
-            return;
-        }
-        String folder = TurnipUtils.INSTANCE.getTurnipDriver(TURNIP_LIBS);
-        if (folder == null) return;
-        envMap.put("DRIVER_PATH", folder);
-    }
-
     private static void loadEnv(String jreHome, final Runtime runtime, VersionInfo versionInfo, boolean renderer) throws Throwable {
         PGWTools.onAppendToLog("Env Map");
         Map<String, String> envMap = new LinkedHashMap<>();
@@ -554,8 +540,14 @@ public class JREUtils {
                 }
             }
 
-            if (PGWTools.isAdrenoGPU() && TURNIP_LIBS != null)
-                loadCustomTurnip(envMap);
+            if (PGWTools.isAdrenoGPU() && !PREF_ZINK_PREFER_SYSTEM_DRIVER) {
+                DriverPlugin.Driver externalDriver = DriverPlugin.getSelectedDriver(PREF_EXTERNAL_DRIVER);
+                if (externalDriver != null) {
+                    envMap.put("DRIVER_PATH", externalDriver.getLibraryPath());
+                } else {
+                    envMap.put("DRIVER_PATH", NATIVE_LIB_DIR);
+                }
+            }
             if (LOCAL_RENDERER != null)
                 setRendererEnv(envMap);
         }

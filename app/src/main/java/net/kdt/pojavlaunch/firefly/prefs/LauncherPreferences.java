@@ -15,6 +15,7 @@ import android.util.Log;
 import com.movtery.utils.UnpackJRE;
 import com.movtery.utils.ZHTools;
 import com.movtery.plugins.renderer.RendererPlugin;
+import com.movtery.plugins.driver.DriverPlugin;
 
 import net.kdt.pojavlaunch.firefly.Tools;
 import net.kdt.pojavlaunch.firefly.multirt.MultiRTUtils;
@@ -27,7 +28,7 @@ public class LauncherPreferences {
     public static SharedPreferences DEFAULT_PREF;
     public static String PREF_RENDERER = "opengles2";
     public static String PREF_MESA_LIB = "default";
-    public static String PREF_TURNIP_LIBS = "default";
+    public static String PREF_EXTERNAL_DRIVER = "default";
     public static String PREF_DRIVER_MODEL = "gallium_zink";
     public static String PREF_BRIDGE_CONFIG = "default";
     public static String PREF_LOCAL_LOADER_OVERRIDE = "kgsl";
@@ -121,6 +122,7 @@ public class LauncherPreferences {
         Tools.initStorageConstants(ctx);
 
         if (!RendererPlugin.isInitialized()) RendererPlugin.initRenderers(ctx);
+        DriverPlugin.initDrivers(ctx);
 
         PREF_RENDERER = DEFAULT_PREF.getString("renderer", "opengles2");
         PREF_BUTTONSIZE = DEFAULT_PREF.getInt("buttonscale", 100);
@@ -179,7 +181,7 @@ public class LauncherPreferences {
 
         PREF_EXP_SETUP = DEFAULT_PREF.getBoolean("ExperimentalSetup", false);
         PREF_MESA_LIB = DEFAULT_PREF.getString("CMesaLibrary", "default");
-        PREF_TURNIP_LIBS = DEFAULT_PREF.getString("chooseTurnipDriver", "default");
+        PREF_EXTERNAL_DRIVER = DEFAULT_PREF.getString("externalDriverPlugin", "default");
         PREF_DRIVER_MODEL = DEFAULT_PREF.getString("CDriverModels", "gallium_zink");
         PREF_LOCAL_LOADER_OVERRIDE = DEFAULT_PREF.getString("ChooseMldo", "kgsl");
         PREF_LIBGL_GL = DEFAULT_PREF.getString("CLibglGL", "default");

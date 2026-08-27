@@ -117,7 +117,6 @@ public final class Tools {
     public static String NATIVE_LIB_DIR;
     public static String DIR_DATA; //Initialized later to get context
     public static String MESA_DIR;
-    public static String TURNIP_DIR;
     public static File DIR_CACHE;
     public static File FILE_PROFILE_PATH;
     public static String MULTIRT_HOME;
@@ -146,7 +145,6 @@ public final class Tools {
     public static String MOBILEGLES_DIR = null;
     public static String MOBILEGL_DIR = null;
     public static String MESA_EGL_DIR = null;
-    public static String TURNIP_LIBS = null;
     public static String LOADER_OVERRIDE = null;
     public static String LIBGL_GL = null;
 
@@ -192,7 +190,6 @@ public final class Tools {
         MOBILEGL_DIR = RENDERER_DIR + "/mobilegl";
         NG_GL4ES_DIR = RENDERER_DIR + "/nggl4es";
         MESA_EGL_DIR = RENDERER_DIR + "/mesa";
-        TURNIP_DIR = DIR_DATA + "/turnip";
         NATIVE_LIB_DIR = ctx.getApplicationInfo().nativeLibraryDir;
     }
 
