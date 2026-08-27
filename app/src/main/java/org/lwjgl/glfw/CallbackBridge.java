@@ -232,7 +232,7 @@ public class CallbackBridge {
     public static native int initFps();
 
     static {
-        System.loadLibrary("pgw");
+        System.loadLibrary("pojavexec");
     }
 }
 

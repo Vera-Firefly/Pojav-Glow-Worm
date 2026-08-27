@@ -54,11 +54,25 @@
 // This means that you are forced to have this function/variable for ABI compatibility
 #define ABI_COMPAT __attribute__((unused))
 
-static int currentFps = 0;
+static atomic_uint currentFps = 0;
+
+static void recordFrame() {
+    unsigned int previous = atomic_load_explicit(&currentFps, memory_order_relaxed);
+
+    while (!atomic_compare_exchange_weak_explicit(
+        &currentFps,
+        &previous,
+        previous >= INT_MAX ? 0 : previous + 1,
+        memory_order_relaxed,
+        memory_order_relaxed
+    )) {}
+}
 
 void bigcore_set_affinity();
 
 void* loadTurnipVulkan();
+
+extern void updateMonitorSize(int width, int height);
 
 EXTERNAL_API void pojavTerminate() {
     printf("EGLBridge: Terminating\n");
@@ -199,7 +213,7 @@ void renderer_load_config() {
         set_osm_bridge_tbl();
         return;
     }
-    printf("Config Bridge: Config = %p\n", pojav_environ->bridge_config);
+    printf("Config Bridge: Config = %d\n", pojav_environ->bridge_config);
     switch (pojav_environ->bridge_config) {
         case BRIDGE_TBL_XXX1: {
             pojav_environ->config_renderer = RENDERER_VK_ZINK_XXX1;
@@ -310,7 +324,7 @@ int pojavInitOpenGL() {
     {
         if (pojav_environ->bridge_config != 0)
         {
-            printf("Config Bridge: Config = %p\n", pojav_environ->bridge_config);
+            printf("Config Bridge: Config = %d\n", pojav_environ->bridge_config);
             if (gl_init()) gl_setup_window();
         } else {
             if (br_init()) br_setup_window();
@@ -333,6 +347,7 @@ EXTERNAL_API int pojavInit() {
     pojav_environ->savedWidth = ANativeWindow_getWidth(pojav_environ->pojavWindow);
     pojav_environ->savedHeight = ANativeWindow_getHeight(pojav_environ->pojavWindow);
     ANativeWindow_setBuffersGeometry(pojav_environ->pojavWindow,pojav_environ->savedWidth,pojav_environ->savedHeight,AHARDWAREBUFFER_FORMAT_R8G8B8X8_UNORM);
+    updateMonitorSize(pojav_environ->savedWidth, pojav_environ->savedHeight);
     pojavInitOpenGL();
     return 1;
 }
@@ -356,9 +371,7 @@ EXTERNAL_API void pojavSetWindowHint(int hint, int value) {
 }
 
 EXTERNAL_API void pojavSwapBuffers() {
-    if (currentFps >= INT_MAX - 1)
-        currentFps = 0;
-    currentFps++;
+    recordFrame();
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK
      || pojav_environ->config_renderer == RENDERER_GL4ES)
@@ -439,11 +452,14 @@ Java_org_lwjgl_vulkan_VK_getVulkanDriverHandle(ABI_COMPAT JNIEnv *env, ABI_COMPA
     return (jlong) maybe_load_vulkan();
 }
 
+EXTERNAL_API JNIEXPORT void JNICALL
+Java_org_lwjgl_vulkan_VK_updateFps(ABI_COMPAT JNIEnv *env, ABI_COMPAT jclass thiz) {
+    recordFrame();
+}
+
 EXTERNAL_API JNIEXPORT jint JNICALL
 Java_org_lwjgl_glfw_CallbackBridge_initFps(JNIEnv *env, jclass clazz) {
-    int fps = currentFps;
-    currentFps = 0;
-    return fps;
+    return (jint) atomic_exchange_explicit(&currentFps, 0, memory_order_relaxed);
 }
 
 EXTERNAL_API JNIEXPORT void JNICALL
@@ -472,6 +488,7 @@ Java_org_lwjgl_opengl_GL_getGraphicsBufferAddr(JNIEnv *env, jobject thiz) {
         // return &gbuffer;
         return (jlong)gbuffer;
     }
+    return 0;
 }
 
 EXTERNAL_API JNIEXPORT jintArray JNICALL
@@ -485,6 +502,7 @@ Java_org_lwjgl_opengl_GL_getNativeWidthHeight(JNIEnv *env, jobject thiz) {
         (*env)->SetIntArrayRegion(env, ret, 0, 2, arr);
         return ret;
     }
+    return NULL;
 }
 
 EXTERNAL_API void pojavSwapInterval(int interval) {

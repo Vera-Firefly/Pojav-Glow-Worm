@@ -71,6 +71,8 @@ import net.kdt.pojavlaunch.firefly.utils.DownloadUtils;
 import net.kdt.pojavlaunch.firefly.utils.FileUtils;
 import net.kdt.pojavlaunch.firefly.utils.JREUtils;
 import net.kdt.pojavlaunch.firefly.utils.JSONUtils;
+import net.kdt.pojavlaunch.firefly.utils.MinecraftGraphicsApi;
+import net.kdt.pojavlaunch.firefly.utils.LwjglComponent;
 import net.kdt.pojavlaunch.firefly.utils.OldVersionsUtils;
 import net.kdt.pojavlaunch.firefly.value.DependentLibrary;
 import net.kdt.pojavlaunch.firefly.value.MinecraftAccount;
@@ -233,9 +235,11 @@ public final class Tools {
         }
         Runtime runtime = MultiRTUtils.forceReread(Tools.pickRuntime(minecraftProfile, versionJavaRequirement));
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionId);
+        LwjglComponent lwjglComponent = LwjglComponent.forVersion(versionInfo);
         LauncherProfiles.load(ProfilePathManager.getCurrentProfile());
 
         File gamedir = Tools.getGameDirPath(minecraftProfile);
+        MinecraftGraphicsApi.apply(gamedir.getAbsolutePath(), LauncherPreferences.PREF_GRAPHICS_API);
 
         VersionInfo versionInfo1;
         try {
@@ -273,9 +277,9 @@ public final class Tools {
         String configFilePath = Tools.DIR_DATA + "/security/log4j-rce-patch-" + (is7 ? "1.7" : "1.12") + ".xml";
         javaArgList.add("-Dlog4j.configurationFile=" + configFilePath);
 
-        javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(versionId, gamedir)));
+        javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(versionId, gamedir, lwjglComponent)));
         javaArgList.add("-cp");
-        javaArgList.add(launchClassPath + ":" + getLWJGL3ClassPath());
+        javaArgList.add(lwjglComponent.getClassPath() + ":" + launchClassPath);
 
         javaArgList.add(versionInfo.mainClass);
         javaArgList.addAll(Arrays.asList(launchArgs));
@@ -284,7 +288,7 @@ public final class Tools {
         PGW_VERSION_CODE = activity.getString(R.string.base_version_code);
         if (Tools.isValidString(minecraftProfile.javaArgs)) args = minecraftProfile.javaArgs;
         FFmpegPlugin.discover(activity);
-        JREUtils.launchWithUtils(activity, runtime, versionInfo1, gamedir, javaArgList, args);
+        JREUtils.launchWithUtils(activity, runtime, versionInfo1, gamedir, javaArgList, args, lwjglComponent.getNativeDirectory());
         // If we returned, this means that the JVM exit dialog has been shown and we don't need to be active anymore.
         // We never return otherwise. The process will be killed anyway, and thus we will become inactive
     }
@@ -391,7 +395,7 @@ public final class Tools {
         javaArgList.add(cacioClasspath.toString());
     }
 
-    public static String[] getMinecraftJVMArgs(String versionName, File gameDir) {
+    public static String[] getMinecraftJVMArgs(String versionName, File gameDir, LwjglComponent lwjglComponent) {
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionName, true);
         // Parse Forge 1.17+ additional JVM Arguments
         if (versionInfo.inheritsFrom == null || versionInfo.arguments == null || versionInfo.arguments.jvm == null) {
@@ -402,7 +406,7 @@ public final class Tools {
         varArgMap.put("classpath_separator", ":");
         varArgMap.put("library_directory", ProfilePathHome.getLibrariesHome());
         varArgMap.put("version_name", versionInfo.id);
-        varArgMap.put("natives_directory", Tools.NATIVE_LIB_DIR);
+        varArgMap.put("natives_directory", lwjglComponent.getNativeDirectory().getAbsolutePath());
 
         List<String> minecraftArgs = new ArrayList<>();
         if (versionInfo.arguments != null) {
@@ -504,21 +508,6 @@ public final class Tools {
         return ProfilePathHome.getVersionsHome() + "/" + version + "/" + version + ".jar";
     }
 
-    private static String getLWJGL3ClassPath() {
-        StringBuilder libStr = new StringBuilder();
-        File lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3");
-        File[] lwjgl3Files = lwjgl3Folder.listFiles();
-        if (lwjgl3Files != null) {
-            for (File file : lwjgl3Files) {
-                if (file.getName().endsWith(".jar")) {
-                    libStr.append(file.getAbsolutePath()).append(":");
-                }
-            }
-        }
-        // Remove the ':' at the end
-        libStr.setLength(libStr.length() - 1);
-        return libStr.toString();
-    }
 
     private final static boolean isClientFirst = false;
 

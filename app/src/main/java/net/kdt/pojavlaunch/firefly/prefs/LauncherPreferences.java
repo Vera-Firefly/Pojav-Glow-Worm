@@ -27,6 +27,7 @@ public class LauncherPreferences {
 
     public static SharedPreferences DEFAULT_PREF;
     public static String PREF_RENDERER = "opengles2";
+    public static String PREF_GRAPHICS_API = "default_opengl";
     public static String PREF_MESA_LIB = "default";
     public static String PREF_EXTERNAL_DRIVER = "default";
     public static String PREF_DRIVER_MODEL = "gallium_zink";
@@ -112,6 +113,7 @@ public class LauncherPreferences {
         DriverPlugin.initDrivers(ctx);
 
         PREF_RENDERER = DEFAULT_PREF.getString("renderer", "opengles2");
+        PREF_GRAPHICS_API = DEFAULT_PREF.getString("graphicsApi", "default_opengl");
         PREF_BUTTONSIZE = DEFAULT_PREF.getInt("buttonscale", 100);
         PREF_MOUSESCALE = DEFAULT_PREF.getInt("mousescale", 100);
         PREF_MOUSESPEED = ((float) DEFAULT_PREF.getInt("mousespeed", 100)) / 100f;

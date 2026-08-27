@@ -17,6 +17,19 @@
         <item name="13">Mesa 25.2.0 EGL_NO_SURFACE</item>
     </string-array>
 
+    <string-array name="graphics_api">
+        <item>@string/preference_graphics_api_default</item>
+        <item>@string/preference_graphics_api_default_opengl</item>
+        <item>@string/preference_graphics_api_opengl</item>
+        <item>@string/preference_graphics_api_vulkan</item>
+    </string-array>
+    <string-array name="graphics_api_values">
+        <item>default</item>
+        <item>default_opengl</item>
+        <item>opengl</item>
+        <item>vulkan</item>
+    </string-array>
+
     <string-array name="renderer_values">
         <item>opengles3_nggl4es</item>
         <item>opengles2</item> <!-- gl4es_extra 1.1.4 with OpenGL ES 2/"3" -->

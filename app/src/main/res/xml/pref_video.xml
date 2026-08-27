@@ -23,6 +23,24 @@
             android:icon="@drawable/ic_renderer_mg"
             />
 
+        <androidx.preference.ListPreference
+            android:title="@string/preference_graphics_api_title"
+            android:summary="@string/preference_graphics_api_summary"
+            android:key="graphicsApi"
+            android:defaultValue="default_opengl"
+            android:entries="@array/graphics_api"
+            android:entryValues="@array/graphics_api_values"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false"
+            />
+
+        <Preference
+            android:key="vulkan_checker"
+            android:title="@string/preference_vulkan_check_title"
+            android:summary="@string/preference_vulkan_check_summary"
+            app2:iconSpaceReserved="false"
+            />
+
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="ignoreNotch"

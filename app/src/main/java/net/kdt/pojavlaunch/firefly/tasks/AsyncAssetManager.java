@@ -123,9 +123,7 @@ public class AsyncAssetManager {
                 unpackComponent(ctx, "caciocavallo18", false);
                 unpackComponent(ctx, "caciocavallo19", false);
                 unpackComponent(ctx, "patcher", false);
-                // Since the Java module system doesn't allow multiple JARs to declare the same module,
-                // we repack them to a single file here
-                unpackComponent(ctx, "lwjgl3", false);
+                unpackComponent(ctx, "lwjgl", false);
                 unpackComponent(ctx, "security", true);
                 unpackComponent(ctx, "arc_dns_injector", true);
                 unpackComponent(ctx, "forge_installer", true);
@@ -139,6 +137,9 @@ public class AsyncAssetManager {
     private static void unpackComponent(Context ctx, String component, boolean privateDirectory) throws IOException {
         AssetManager am = ctx.getAssets();
         String rootDir = privateDirectory ? Tools.DIR_DATA : Tools.DIR_GAME_HOME;
+        if ("lwjgl".equals(component)) {
+            rootDir = new File(Tools.DIR_DATA, "components").getAbsolutePath();
+        }
 
         File versionFile = new File(rootDir + "/" + component + "/version");
         InputStream is = am.open("components/" + component + "/version");
@@ -146,13 +147,10 @@ public class AsyncAssetManager {
             if (versionFile.getParentFile().exists() && versionFile.getParentFile().isDirectory()) {
                 FileUtils.deleteDirectory(versionFile.getParentFile());
             }
-            versionFile.getParentFile().mkdir();
+            versionFile.getParentFile().mkdirs();
 
             Log.i("UnpackPrep", component + ": Pack was installed manually, or does not exist, unpacking new...");
-            String[] fileList = am.list("components/" + component);
-            for (String s : fileList) {
-                Tools.copyAssetFile(ctx, "components/" + component + "/" + s, rootDir + "/" + component, true);
-            }
+            Tools.copyAssetFolder(ctx, "components/" + component, rootDir + "/" + component, true);
         } else {
             FileInputStream fis = new FileInputStream(versionFile);
             String release1 = Tools.read(is);
@@ -161,12 +159,9 @@ public class AsyncAssetManager {
                 if (versionFile.getParentFile().exists() && versionFile.getParentFile().isDirectory()) {
                     FileUtils.deleteDirectory(versionFile.getParentFile());
                 }
-                versionFile.getParentFile().mkdir();
+                versionFile.getParentFile().mkdirs();
 
-                String[] fileList = am.list("components/" + component);
-                for (String fileName : fileList) {
-                    Tools.copyAssetFile(ctx, "components/" + component + "/" + fileName, rootDir + "/" + component, true);
-                }
+                Tools.copyAssetFolder(ctx, "components/" + component, rootDir + "/" + component, true);
             } else {
                 Log.i("UnpackPrep", component + ": Pack is up-to-date with the launcher, continuing...");
             }

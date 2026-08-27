@@ -60,17 +60,15 @@ bool checkAdrenoGraphics() {
     return is_adreno;
 }
 
-void* loadTurnipVulkan() {
+void* loadTurnipVulkanForPath(const char* native_dir, const char* cache_dir) {
     if (!checkAdrenoGraphics())
         return NULL;
 
-    const char* native_dir = getenv("DRIVER_PATH");
-    const char* cache_dir = getenv("TMPDIR");
     char* info = getenv("OUTPUT_MESA_INFO");
     char* tu_path = NULL;
 
-    if (!native_dir) 
-        native_dir = getenv("POJAV_NATIVEDIR");
+    if (!native_dir || !cache_dir)
+        return NULL;
 
     if (!linker_ns_load(native_dir))
         return NULL;
@@ -124,6 +122,26 @@ void* loadTurnipVulkan() {
     }
 
     return libvulkan;
+}
+
+void* loadTurnipVulkan() {
+    const char* native_dir = getenv("DRIVER_PATH");
+    if (!native_dir)
+        native_dir = getenv("POJAV_NATIVEDIR");
+
+    return loadTurnipVulkanForPath(native_dir, getenv("TMPDIR"));
+}
+
+#else
+
+void* loadTurnipVulkanForPath(const char* native_dir, const char* cache_dir) {
+    (void) native_dir;
+    (void) cache_dir;
+    return NULL;
+}
+
+void* loadTurnipVulkan() {
+    return NULL;
 }
 
 #endif

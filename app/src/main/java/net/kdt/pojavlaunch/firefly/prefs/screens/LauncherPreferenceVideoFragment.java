@@ -10,6 +10,7 @@ import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_USE_ALT
 import static net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences.PREF_ZINK_PREFER_SYSTEM_DRIVER;
 
 import android.content.Intent;
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.Tools;
 import net.kdt.pojavlaunch.firefly.prefs.CustomSeekBarPreference;
 import net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences;
+import net.kdt.pojavlaunch.firefly.utils.VulkanCapabilities;
+import net.kdt.pojavlaunch.firefly.utils.VulkanChecker;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -121,6 +124,8 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         });
 
         final ListPreference rendererListPref = requirePreference("renderer", ListPreference.class);
+        final ListPreference graphicsApiPref = requirePreference("graphicsApi", ListPreference.class);
+        final Preference vulkanCheckerPref = requirePreference("vulkan_checker", Preference.class);
         final ListPreference configBridgePref = requirePreference("configBridge", ListPreference.class);
         final ChooseMesaListPref CMesaLibP = requirePreference("CMesaLibrary", ChooseMesaListPref.class);
         final ListPreference externalDriverP = requirePreference("externalDriverPlugin", ListPreference.class);
@@ -140,6 +145,16 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
             String currentRenderer = (String) obj;
             Tools.LOCAL_RENDERER = currentRenderer;
             mgRendererSettingsPref.setVisible(currentRenderer.equals("opengles3_mges"));
+            return true;
+        });
+
+        graphicsApiPref.setOnPreferenceChangeListener((pre, obj) -> {
+            LauncherPreferences.PREF_GRAPHICS_API = (String) obj;
+            return true;
+        });
+
+        vulkanCheckerPref.setOnPreferenceClickListener(preference -> {
+            checkVulkanCapabilities();
             return true;
         });
 
@@ -384,6 +399,77 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 .setDraggable(true)
                 .build()
                 .show();
+    }
+
+    private void checkVulkanCapabilities() {
+        final android.content.Context context = requireContext();
+        final AlertDialog progressDialog = new AlertDialog.Builder(context)
+                .setMessage(R.string.global_waiting)
+                .setCancelable(false)
+                .create();
+        progressDialog.show();
+
+        new Thread(() -> {
+            DriverPlugin.initDrivers(context);
+            DriverPlugin.Driver driver = DriverPlugin.getSelectedDriver(LauncherPreferences.PREF_EXTERNAL_DRIVER);
+            boolean useTurnip = !LauncherPreferences.PREF_ZINK_PREFER_SYSTEM_DRIVER;
+            String driverPath = useTurnip
+                    ? (driver == null ? Tools.NATIVE_LIB_DIR : driver.getLibraryPath())
+                    : null;
+            VulkanCapabilities capabilities = VulkanChecker.checkCapabilities(
+                    driverPath,
+                    useTurnip ? new java.io.File(Tools.DIR_CACHE, "vulkan_check") : null
+            );
+
+            if (!isAdded()) return;
+            requireActivity().runOnUiThread(() -> {
+                if (progressDialog.isShowing()) progressDialog.dismiss();
+                showVulkanCheckResult(capabilities, useTurnip);
+            });
+        }, "Vulkan capability check").start();
+    }
+
+    private void showVulkanCheckResult(VulkanCapabilities capabilities, boolean useTurnip) {
+        StringBuilder message = new StringBuilder();
+        boolean supported = capabilities != null && capabilities.isAllSupported();
+        message.append(getString(supported
+                ? R.string.preference_vulkan_check_supported
+                : R.string.preference_vulkan_check_unsupported));
+
+        if (capabilities != null) {
+            message.append("\n\n").append(getString(R.string.preference_vulkan_check_version,
+                    capabilities.getVersionString()));
+            message.append("\n").append(getString(R.string.preference_vulkan_check_turnip, useTurnip));
+            if (supported) {
+                appendRequirements(message, R.string.preference_vulkan_check_extensions,
+                        VulkanCapabilities.REQUIRED_EXTENSIONS);
+                appendRequirements(message, R.string.preference_vulkan_check_features,
+                        VulkanCapabilities.REQUIRED_FEATURES);
+            } else {
+                appendRequirements(message, R.string.preference_vulkan_check_missing_extensions,
+                        capabilities.getMissingExtensions());
+                appendRequirements(message, R.string.preference_vulkan_check_missing_features,
+                        capabilities.getMissingFeatures());
+            }
+        }
+
+        new CustomDialog.Builder(requireContext())
+                .setTitle(getString(R.string.preference_vulkan_check_title))
+                .setScrollMessage(message.toString())
+                .setConfirmListener(android.R.string.ok, view -> true)
+                .build()
+                .show();
+    }
+
+    private void appendRequirements(StringBuilder message, int title, List<String> requirements) {
+        message.append("\n\n").append(getString(title));
+        if (requirements.isEmpty()) {
+            message.append("\n-");
+            return;
+        }
+        for (String requirement : requirements) {
+            message.append("\n").append(requirement);
+        }
     }
 
     private void onExpRendererDialog(SwitchPreference pre, ListPreference rendererListPref) {

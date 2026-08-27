@@ -510,11 +510,15 @@ public class JREUtils {
         }
     }
 
-    private static void loadEnv(String jreHome, final Runtime runtime, VersionInfo versionInfo, boolean renderer) throws Throwable {
+    private static void loadEnv(String jreHome, final Runtime runtime, VersionInfo versionInfo, boolean renderer, File lwjglNativeDirectory) throws Throwable {
         PGWTools.onAppendToLog("Env Map");
         Map<String, String> envMap = new LinkedHashMap<>();
 
         setJavaEnv(envMap, jreHome);
+        if (renderer && lwjglNativeDirectory != null) {
+            envMap.put("POJAV_RENDERER", LOCAL_RENDERER);
+            envMap.put("LD_LIBRARY_PATH", lwjglNativeDirectory.getAbsolutePath() + ":" + LD_LIBRARY_PATH);
+        }
         setCustomEnv(envMap);
 
         if (renderer) {
@@ -596,7 +600,7 @@ public class JREUtils {
         }
     }
 
-    private static void launchJavaVM(final Activity activity, String runtimeHome, File gameDirectory, final List<String> JVMArgs, final String userArgsString) {
+    private static void launchJavaVM(final Activity activity, String runtimeHome, File gameDirectory, final List<String> JVMArgs, final String userArgsString, File lwjglNativeDirectory) {
         PGWTools.onAppendToLog("Launch JVM");
         List<String> userArgs = getJavaArgs(runtimeHome, userArgsString);
 
@@ -610,9 +614,19 @@ public class JREUtils {
         purgeArg(userArgs, "-XX:+UseLargePagesInMetaspace");
         purgeArg(userArgs, "-XX:+UseLargePages");
         purgeArg(userArgs, "-Dorg.lwjgl.opengl.libname");
-        // Don't let the user specify a custom Freetype library (as the user is unlikely to specify a version compiled for Android)
+        purgeArg(userArgs, "-Djava.library.path");
+        purgeArg(userArgs, "-Dorg.lwjgl.librarypath");
+        purgeArg(userArgs, "-Dorg.lwjgl.system.allocator");
+        purgeArg(userArgs, "-Dorg.lwjgl.spvc.libname");
         purgeArg(userArgs, "-Dorg.lwjgl.freetype.libname");
-
+        if (lwjglNativeDirectory != null) {
+            String lwjglNativePath = lwjglNativeDirectory.getAbsolutePath();
+            userArgs.add("-Djava.library.path=" + lwjglNativePath + ":" + NATIVE_LIB_DIR);
+            userArgs.add("-Dorg.lwjgl.librarypath=" + lwjglNativePath);
+            userArgs.add("-Dorg.lwjgl.freetype.libname=" + new File(lwjglNativeDirectory, "libfreetype.so").getAbsolutePath());
+            userArgs.add("-Dorg.lwjgl.spvc.libname=spirv-cross-c-shared");
+            userArgs.add("-Dorg.lwjgl.system.allocator=system");
+        }
         //Add automatically generated args
         userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
         userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
@@ -623,7 +637,7 @@ public class JREUtils {
 
         // Force LWJGL to use the Freetype library intended for it, instead of using the one
         // that we ship with Java (since it may be older than what's needed)
-        userArgs.add("-Dorg.lwjgl.freetype.libname=" + NATIVE_LIB_DIR + "/libfreetype.so");
+        if (lwjglNativeDirectory == null) userArgs.add("-Dorg.lwjgl.freetype.libname=" + NATIVE_LIB_DIR + "/libfreetype.so");
 
         userArgs.addAll(JVMArgs);
         activity.runOnUiThread(() -> Toast(activity, activity.getString(R.string.autoram_info_msg, LauncherPreferences.PREF_RAM_ALLOCATION)));
@@ -651,7 +665,7 @@ public class JREUtils {
         EventBus.getDefault().post(new JvmExitEvent(exitCode));
     }
 
-    public static void launchWithUtils(final Activity activity, final Runtime runtime, VersionInfo versionInfo, File gameDirectory, final List<String> JVMArgs, final String userArgsString) throws Throwable {
+    public static void launchWithUtils(final Activity activity, final Runtime runtime, VersionInfo versionInfo, File gameDirectory, final List<String> JVMArgs, final String userArgsString, File lwjglNativeDirectory) throws Throwable {
         String runtimeHome = MultiRTUtils.getRuntimeHome(runtime.name).getAbsolutePath();
 
         try {
@@ -660,13 +674,13 @@ public class JREUtils {
             // Initialize Load Dlopen Library Path.
             initLdLibraryPath(runtimeHome);
             // Set running environment.
-            loadEnv(runtimeHome, runtime, versionInfo, gameDirectory != null);
+            loadEnv(runtimeHome, runtime, versionInfo, gameDirectory != null, lwjglNativeDirectory);
             // Initialize JVM library files.
             initJavaRuntime(runtimeHome);
             // Initialize renderer library files.
             initGraphicAndSoundEngine(gameDirectory != null);
             // Launch JVM.
-            launchJavaVM(activity, runtimeHome, gameDirectory, JVMArgs, userArgsString);
+            launchJavaVM(activity, runtimeHome, gameDirectory, JVMArgs, userArgsString, lwjglNativeDirectory);
         } finally {
             Logger.appendToLog("JREUtils: Launch With Utils Done");
         }
@@ -1121,7 +1135,7 @@ public class JREUtils {
 
     static {
         System.loadLibrary("native_hook");
-        System.loadLibrary("pgw");
+        System.loadLibrary("pojavexec");
         System.loadLibrary("pojavexec_awt");
     }
 }

@@ -48,6 +48,7 @@ struct pojav_environ_s {
     jmethodID method_onGrabStateChanged;
     jmethodID method_glftSetWindowAttrib;
     jmethodID method_internalWindowSizeChanged;
+    jmethodID method_internalChangeMonitorSize;
     jclass bridgeClazz;
     jclass vmGlfwClass;
     jboolean isGrabbing;
@@ -59,6 +60,8 @@ struct pojav_environ_s {
     long showingWindow;
     bool isInputReady, isCursorEntered, isUseStackQueueCall, shouldUpdateMouse;
     int savedWidth, savedHeight;
+    bool shouldUpdateMonitorSize;
+    bool monitorSizeConsumed;
 #define ADD_CALLBACK_WWIN(NAME) \
     GLFW_invoke_##NAME##_func* GLFW_invoke_##NAME;
     ADD_CALLBACK_WWIN(Char);
