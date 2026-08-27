@@ -29,22 +29,22 @@ jobs:
       - name: Get Jre
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: jrepush.yml
+          workflow: buildjre21.yml
           path: app/src/main/assets/components
           workflow_conclusion: success
           repo: Vera-Firefly/android-openjdk-autobuild
           branch: main
-          name: jre-pojav
+          name: jre21-pojav
 
       - name: Get JSPH
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: jrepush.yml
+          workflow: buildjre21.yml
           path: app/src/main/jniLibs/arm64-v8a
           workflow_conclusion: success
           repo: Vera-Firefly/android-openjdk-autobuild
           branch: main
-          name: libjsph
+          name: jsph-21
 
       - name: Get LWJGL3
         uses: dawidd6/action-download-artifact@v3
@@ -108,12 +108,12 @@ jobs:
       - name: Get JSPH
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: jrepush.yml
+          workflow: buildjre21.yml
           path: app/src/main/jniLibs/arm64-v8a
           workflow_conclusion: success
           repo: Vera-Firefly/android-openjdk-autobuild
           branch: main
-          name: libjsph
+          name: jsph-21
 
       - name: Get LWJGL3
         uses: dawidd6/action-download-artifact@v3
