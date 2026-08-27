@@ -104,19 +104,6 @@ public class LauncherPreferences {
     public static String PREF_GAME_LANGUAGE = ZHTools.getSystemLanguage();
     public static boolean PREF_MESA_INFO = false;
 
-    // MobileGlues Settings
-    public static String MG_GLSL_CACHE_SIZE = "30";
-    public static String MG_ANGLE_OPTION = "0";
-    public static String MG_NOERROR_OPTION = "0";
-    public static String MG_MULTIDRAWMODE_OPTION = "0";
-    public static String MG_GL_VERSION = "0";
-    public static String MG_ANGLECLEARWORKAROUND_OPTION = "0";
-    public static String MG_EXT_GL43 = "0";
-    public static String MG_EXT_CS = "0";
-    public static String MG_EXT_TIMER_QUERY = "0";
-    public static String MG_EXT_DIRECT_STATE_ACCESS = "0";
-    public static String MG_ENABLE_FSR1 = "0";
-
     public static void loadPreferences(Context ctx) {
         //Required for CTRLDEF_FILE and MultiRT
         Tools.initStorageConstants(ctx);
@@ -194,19 +181,6 @@ public class LauncherPreferences {
         PREF_AUTOMATICALLY_SET_GAME_LANGUAGE = DEFAULT_PREF.getBoolean("autoSetGameLanguage", true);
         PREF_GAME_LANGUAGE_OVERRIDDEN = DEFAULT_PREF.getBoolean("gameLanguageOverridden", false);
         PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("setGameLanguage", ZHTools.getSystemLanguage());
-
-        // MobileGlues Settings
-        MG_GLSL_CACHE_SIZE = DEFAULT_PREF.getString("mg_glsl_cache_size", "30");
-        MG_ANGLE_OPTION = DEFAULT_PREF.getString("mg_angle_option", "0");
-        MG_NOERROR_OPTION = DEFAULT_PREF.getString("mg_noerror_option", "0");
-        MG_MULTIDRAWMODE_OPTION = DEFAULT_PREF.getString("mg_multidraw_mode", "0");
-        MG_GL_VERSION = DEFAULT_PREF.getString("mg_gl_version", "0");
-        MG_ANGLECLEARWORKAROUND_OPTION = DEFAULT_PREF.getString("mg_angle_clear_workaround", "0");
-        MG_EXT_GL43 = DEFAULT_PREF.getString("mg_ext_gl43", "0");
-        MG_EXT_CS = DEFAULT_PREF.getString("mg_ext_compute_shader", "0");
-        MG_EXT_TIMER_QUERY = DEFAULT_PREF.getString("mg_ext_timer_query", "0");
-        MG_EXT_DIRECT_STATE_ACCESS = DEFAULT_PREF.getString("mg_ext_direct_state_access", "0");
-        MG_ENABLE_FSR1 = DEFAULT_PREF.getString("mg_enable_fsr1", "0");
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {

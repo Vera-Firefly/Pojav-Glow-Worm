@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="view_version">版本：</string>
+    <string name="view_author">开发者：</string>
+    <string name="view_copyright">开源许可证：</string>
+    <string name="view_launcher">兼容的启动器：</string>
+    <string name="view_logo">图标设计:</string>
+
+    <string name="open_options">修改渲染器设置</string>
+
+    <string name="menu_item_about">关于</string>
+
+    <string name="option_glsl_cache">最大 GLSL 缓存大小</string>
+    <string name="option_glsl_cache_off">关闭</string>
+    <string name="option_glsl_cache_delete">删除已缓存的着色器（%1$s）</string>
+    <string name="option_glsl_cache_delete_failed">删除 GLSL 缓存失败：%s</string>
+    <string name="option_angle">启用 ANGLE 作为 OpenGL ES 驱动</string>
+    <string name="option_angle_disable_if_possible">尽可能不启用</string>
+    <string name="option_angle_enable_if_possible">尽可能启用</string>
+    <string name="option_angle_disable">不启用</string>
+    <string name="option_angle_enable">启用</string>
+
+    <string name="option_no_error">OpenGL 报错设置</string>
+    <string name="option_no_error_auto">自动</string>
+    <string name="option_no_error_enable">不忽略报错</string>
+    <string name="option_no_error_disable_pri">忽略 shader/program 报错</string>
+    <string name="option_no_error_disable_sec">忽略 shader/program/framebuffer 报错</string>
+
+    <string name="option_multidraw">MultiDraw 方案排序</string>
+    <string name="md_summary_default">默认顺序</string>
+    <string name="md_summary_global_default">全局默认顺序</string>
+    <string name="md_summary_global_custom">全局已自定义</string>
+    <string name="md_summary_exception_count">%1$d 个例外</string>
+    <string name="md_order_hint">越靠前越优先；运行中某方案失效时会沿同一顺序继续向后退。</string>
+    <string name="md_order_drag_handle">拖动排序</string>
+    <string name="md_item_native">原生 / 原生EXT</string>
+    <string name="md_item_native_desc">自动匹配 GLES 核心或扩展中同形的函数（若存在）</string>
+    <string name="md_exceptions_group">例外函数</string>
+    <string name="md_exception_on">独立排序</string>
+    <string name="md_exception_off">跟随全局排序</string>
+    <string name="md_bench_run_all">为每个函数分别 Benchmark</string>
+    <string name="md_bench_run_entry">Benchmark 此函数</string>
+    <string name="md_bench_nothing">此设备上没有任何方案可供测量</string>
+    <string name="md_reset_default">恢复默认顺序</string>
+    <string name="md_bench_running_title">Benchmark</string>
+    <string name="md_bench_running_msg">正在依次测量各方案的实际耗时。基础预算约 8 秒；波动压不下去时会放大场景反复重测，设备不稳定时可能需要几分钟。测量期间屏幕不会自动熄灭，请勿操作设备。</string>
+    <string name="md_bench_result_title">Benchmark 结果</string>
+    <string name="md_bench_result_all_intro">各函数已分别测量，并按实测耗时从快到慢排序（×1.00 为该函数内最快）。采用后，下列函数将各自启用独立排序，全局排序保持不变。</string>
+    <string name="md_bench_result_entry_intro">%1$s 的各方案已按实测耗时从快到慢排序（×1.00 为最快）。是否将其设为该函数的独立排序？</string>
+    <string name="md_bench_cost">×%1$s</string>
+    <string name="md_bench_unmeasured">此设备不支持，无法测量，已排至末位</string>
+    <string name="md_bench_quality">每个方案测量 %1$d 轮，轮次间波动 ±%2$s%%</string>
+    <string name="md_bench_noisy">已测量 %1$d 次，波动始终未能降至可靠排序所需的 ±15%% 以内，其中最稳定的一次为 ±%2$s%%。耗时接近的方案之间可能存在排序误差。建议在设备空闲且温度较低时重新测量。</string>
+    <string name="md_bench_running_retry">波动超出可排序范围，正在放大场景重新测量（第 %1$d/%2$d 次）…</string>
+    <string name="md_bench_single_candidate">该函数只有一个方案可测，不存在排序；数值仅供参考。</string>
+    <string name="md_bench_running_smaller">GL 上下文已丢失，该次测量作废。正在以 %1$d 个区块重新测量…</string>
+    <string name="md_bench_adopt_anyway">仍然采用</string>
+    <string name="md_bench_adopt">采用</string>
+    <string name="md_bench_discard">放弃</string>
+    <string name="md_bench_failed">Benchmark 失败：%1$s</string>
+
+    <string name="md_bench_outdated">GLES 驱动已变更，当前 MultiDraw 排序是在此前的驱动上测得，建议重新测量。</string>
+    <string name="md_bench_outdated_action">重新测量</string>
+    <string name="md_home_untuned">MultiDraw 仍在使用默认顺序</string>
+    <string name="md_home_untuned_desc">默认顺序反映的是通常情况下的快慢，而非此设备上的实测结果。运行一次 Benchmark 即可按实测耗时为每个函数分别排序。</string>
+    <string name="md_home_untuned_action">立即测量</string>
+
+    <string name="md_angle_title">从启动器借用 ANGLE</string>
+    <string name="md_angle_intro">您的设置会让 MobileGlues 运行于 ANGLE，而 ANGLE 随启动器分发，本应用不包含。要测量游戏实际使用的驱动，Benchmark 需从已安装的启动器中加载 ANGLE。</string>
+    <string name="md_angle_trust"><![CDATA[<b>请选择完全信任的来源。</b>其原生代码将载入本应用进程，并以本应用的权限运行。请仅选择您自行安装、来源可信的启动器。]]></string>
+    <string name="md_angle_source_version">版本 %1$s</string>
+    <string name="md_angle_none">未找到自带 ANGLE 的已安装启动器。您可以安装一个（Fold Craft Launcher 或 Zalith Launcher），或直接在系统驱动上测量——但该驱动并非游戏实际使用的驱动。</string>
+    <string name="md_angle_skip">使用系统驱动</string>
+    <string name="md_angle_last_used">上次选择</string>
+    <string name="md_glinfo_needs_angle">此信息读取自系统驱动。您的设置会让游戏运行于 ANGLE，因此下列扩展与上限并非 MobileGlues 实际所见。</string>
+    <string name="md_glinfo_borrow">借用 ANGLE 重新读取</string>
+    <string name="md_glinfo_borrowed">已借用启动器的 ANGLE 读取。</string>
+    <string name="md_glinfo_borrow_ineffective">借用的 ANGLE 未生效（设备不支持或加载失败），本页描述的是系统驱动。</string>
+    <string name="md_bench_wrong_driver">本次在系统驱动上测得，而游戏运行于 ANGLE，此排序不适用。</string>
+    <string name="md_bench_context_lost">驱动丢失了 GL 上下文，缩小场景后重试仍然如此，本次测量已终止。丢失之后测得的数据均不可信。</string>
+    <string name="md_bench_process_died">查询进程已终止：渲染器在此驱动上运行失败，未产生任何结果。</string>
+    <string name="md_bench_borrow_failed">借用的 ANGLE 未能加载，本次测量的是系统驱动，与游戏实际使用的驱动不一致。</string>
+    <string name="md_bench_borrow_unsupported">此设备不支持 ANGLE，借用已忽略。游戏同样使用系统驱动，此排序仍然适用。</string>
+
+    <string name="md_backend_unroll">逐条绘制</string>
+    <string name="md_backend_compute">计算着色器</string>
+
+    <string name="option_angle_clear_workaround">ANGLE Depth Clear 修复方案</string>
+    <string name="option_angle_clear_workaround_disable">不启用</string>
+    <string name="option_angle_clear_workaround_enable_1">启用方案 #1</string>
+
+    <string name="option_ext_cs">启用不完整的 ARB_compute_shader 扩展</string>
+    <string name="option_ext_timer_query">禁用推荐的 timer_query 扩展</string>
+    <string name="option_ext_direct_state_access">启用高级的 direct_state_access 扩展</string>
+    <string name="option_enable_fsr1">(实验性) 启用内置的 FSR1</string>
+
+    <string name="option_custom_gl_version">自定义目标 OpenGL 版本</string>
+    <string name="option_custom_gl_version_default">不启用</string>
+    <string name="warning_enabling_custom_gl_version"><![CDATA[<b><big>⚠️ 重要信息：</big></b><br/><br/>
+ • 自定义 OpenGL 版本可能会<b><font color="@colorError">造成游戏崩溃或渲染错误，请谨慎使用</font></b>！<br/>
+ • 若发生问题，请首先<b><font color="@colorError">关闭此功能</font></b>！<br/>
+ • 您启用此功能后，我们将<b><font color="@colorError">不再受理</font></b>您遇到的所有额外问题！反馈问题前，请注意<b><font color="@colorError">禁用此功能</font></b>！<br/>
+ • 为确保稳定性，在没有必要的情况（如 Mods 强行检测 OpenGL 版本等）下，请<b>不要启用此功能</b>！]]></string>
+
+    <string name="dialog_positive">确认</string>
+    <string name="dialog_negative">取消</string>
+    <string name="dialog_github">GitHub 开源页面</string>
+    <string name="repo_summary">发行、渲染器、插件</string>
+    <string name="repo_release">发行仓库</string>
+    <string name="repo_plugin">插件</string>
+    <string name="contributors_title">贡献者</string>
+    <string name="contributors_intro">这些人为此项目写代码、修 bug、做翻译或填兼容性表格——每一种都是贡献。我们在这里列出并感谢所有贡献者。点头像可以去看他们的 GitHub 主页。</string>
+
+    <string name="third_party_title">第三方开源项目</string>
+    <string name="third_party_summary">站在这些项目的肩膀上</string>
+    <string name="third_party_intro">MobileGlues 用到了下面这些开源项目。点击任意一项可以打开它的主页，去看它自己的许可证原文。</string>
+    <string name="third_party_plugin">插件</string>
+    <string name="dialog_sponsor">赞助我们</string>
+
+    <string name="dialog_info">应用信息</string>
+
+    <string name="dialog_permission_title">请前往授权</string>
+    <string name="dialog_permission_msg">您似乎禁止了授权请求。修改配置需要“存储”权限，您必须在授权后才能修改渲染器设置。</string>
+    <string name="dialog_permission_msg_android_Q">修改渲染选项需要“所有文件访问权限”，请在接下来的页面中授予此权限以允许应用访问：\n%s\n\n注意：本应用是自由软件，且完全离线运行，无网络访问权限，绝不收集或泄露您的任何个人数据。</string>
+
+    <string name="permission_failed">授权失败</string>
+
+    <string name="config_save_failed">保存设置失败：%s</string>
+    <string name="dialog_config_corrupt_title">配置文件已损坏</string>
+    <string name="dialog_config_corrupt_message">MG/config.json 无法解析，已保持原样未做修改，并备份为“%1$s”。\n\n详细信息：%2$s\n\n您可以把设置重置为默认值，或者取消后自行修复该文件。</string>
+    <string name="dialog_config_corrupt_reset">重置为默认值</string>
+
+    <string name="dialog_title_warning">警告</string>
+    <string name="warning_ext_cs_enable">启用不完整的 ARB_compute_shader 扩展可能会导致部分光影、Mods 错误，是否继续？</string>
+    <string name="warning_adreno_740_angle">在 Adreno 740 设备上启用 ANGLE 极有可能导致严重渲染错误，是否继续？</string>
+    <string name="warning_enabling_angle_clear_workaround">启用 ANGLE Depth Clear 修复会修复 ANGLE 在 Minecraft 1.21.5+ 原版中的手持物品被遮挡的问题，但会导致性能下降，是否继续？</string>
+    <string name="warning_fsr1_enable">启用内置的 FSR1 可能会在部分驱动下造成图像损坏。\n如果您的设备搭载了 Adreno GPU，请启用 ANGLE以确保渲染正常。\n已知此功能与 ANGLE 同时启用会导致性能下降，请谨慎启用。</string>
+
+    <string name="menu_item_reset">撤销授权或重置 MobileGlues</string>
+    <string name="reset_option_revoke">仅撤销授权</string>
+    <string name="reset_option_revoke_desc">收回存储授权和隐私政策的同意，MG 目录里的配置文件保持原样。</string>
+    <string name="reset_option_remove">撤销并删除全部文件</string>
+    <string name="reset_option_remove_desc">连同 MG 目录里的配置、缓存、日志，以及本应用自己存的全部偏好一起删除，不可恢复。</string>
+    <string name="reset_option_remove_needs_auth">需要先授权才能删除文件。</string>
+    <string name="warning_revoke_authorization">这会同时收回存储授权和您对隐私政策的同意。MG 目录里的配置文件不会被删除，但要重新同意隐私政策并重新授权之后才能继续使用。是否继续？</string>
+
+    <string name="menu_item_remove">移除 MobileGlues 相关文件</string>
+    <string name="remove_mg_files_message"><![CDATA[此操作将删除 MobileGlues 和本插件在 MG 目录下自己创建的全部文件。具体包括：<br/><br/>
+ • <b>配置文件：</b> config.json，以及写入过程中可能残留的临时文件或损坏备份。<br/>
+ • <b>缓存文件：</b> MobileGlues 运行时生成的 GLSL 缓存（glsl_cache.tmp，用于加快加载速度）。<br/>
+ • <b>日志与统计：</b> 运行日志（latest.log）和启动次数统计（stats.json）。<br/><br/>
+只会删除以上这些由 MobileGlues 和本插件自己创建的文件，您手动放进 MG 目录的其他文件不会被触碰；删除完毕后，如果 MG 目录已经空了，目录本身也会一并删除。<br/><br/>
+请注意，此操作是<b><font color="@colorError">不可逆</font></b>的。 一旦您点击“确定”，上述文件将被永久删除，无法恢复。如果您在未来要重新使用 MobileGlues，您将需要重新配置 MobileGlues。<br/><br/>
+<b><font color="@colorError">确定要继续吗？</font></b>]]></string>
+    <string name="ok">确定</string>
+    <string name="ok_with_countdown">确定 (%d 秒)</string>
+	<string name="removing_mobileglues">正在重置 MobileGlues 数据…</string>
+    <string name="reset_failed">重置失败: %s</string>
+    <string name="reset_complete_message">MobileGlues 的配置、缓存和统计数据已重置。</string>
+    <string name="remove_complete_title">移除完成</string>
+    <string name="remove_complete_message">MobileGlues 相关文件已完全移除。\n若需进一步在您的设备上完全移除 MobileGlues，请卸载此软件。\n\n感谢您使用 MobileGlues，我们随时欢迎您回来~</string>
+    <string name="revoke_complete_title">已撤销授权</string>
+    <string name="revoke_complete_message">存储授权和隐私政策的同意都已收回，MG 目录里的文件保持原样。\n\n感谢您使用 MobileGlues，我们随时欢迎您回来~</string>
+    <string name="exit">退出</string>
+
+    <string name="info_mg_info">MobileGlues 信息</string>
+    <string name="button_view_gl_info">查看</string>
+    <string name="dialog_mg_gl_info_title">MobileGlues 信息</string>
+    <string name="dismiss">关闭</string>
+
+    <string name="nav_home">首页</string>
+    <string name="nav_settings">设置</string>
+    <string name="nav_info">信息</string>
+    <string name="nav_back">返回</string>
+
+    <string name="home_status_granted">已授权</string>
+    <string name="home_status_denied">未授权</string>
+    <string name="home_device_gpu">GPU</string>
+    <string name="home_device_gles">OpenGL ES</string>
+    <string name="home_device_ram">内存</string>
+    <string name="home_device_unknown">未知</string>
+    <string name="home_config_hint">点击调整渲染器设置</string>
+    <string name="home_summary_angle">ANGLE %1$s</string>
+    <string name="home_summary_cache">缓存 %1$s</string>
+
+    <string name="auth_choose_title">存储授权</string>
+    <string name="auth_choose_msg">MobileGlues 把配置保存在内部存储的 MG 目录中，请选择应用的访问方式：</string>
+    <string name="auth_method_all_files">所有文件访问</string>
+    <string name="auth_method_all_files_desc">直接读写。将跳转到系统设置页授权。</string>
+    <string name="auth_method_saf">SAF 目录授权</string>
+    <string name="auth_method_saf_desc">通过系统文件选择器，仅授权 MG 目录。</string>
+    <string name="auth_guide_saf_title">授权 MG 目录</string>
+    <string name="auth_guide_saf_msg">接下来会打开系统文件选择器。请在内部存储根目录找到 MG 文件夹（不存在就用选择器的「新建文件夹」按钮创建一个），进入后点击「使用此文件夹」。</string>
+    <string name="auth_wrong_folder">选择的目录不是 MG。MobileGlues 读取的是固定路径（/sdcard/MG），请选择 MG 文件夹。</string>
+
+    <string name="settings_gate_title">需要存储授权</string>
+    <string name="settings_gate_msg">授权后才能查看和修改渲染器设置。</string>
+    <string name="settings_gate_grant">去授权</string>
+
+    <string name="settings_group_plugin">Plugin 配置</string>
+    <string name="settings_group_render">渲染</string>
+    <string name="settings_group_cache">着色器缓存</string>
+    <string name="settings_group_ext">扩展</string>
+    <string name="settings_group_advanced">高级</string>
+    <string name="ui_style">界面风格</string>
+
+    <string name="info_section_app">应用</string>
+    <string name="info_section_about">关于</string>
+    <string name="info_section_details">信息</string>
+    <string name="info_privacy">隐私政策</string>
+    <string name="info_danger_zone">危险区域</string>
+    <string name="info_version_label">版本</string>
+
+    <string name="gl_info_loading">正在查询 MobileGlues GL 信息…</string>
+    <string name="copy">复制</string>
+    <string name="copied">已复制</string>
+
+    <string name="privacy_intro">本应用是完全离线运行的自由软件。这里逐条列出它会碰什么。</string>
+    <string name="privacy_files_title">读写哪些文件</string>
+    <string name="privacy_files_body">只有内部存储的 MG 目录：config.json（您的渲染器设置）、stats.json（渲染器被游戏加载的次数）、glsl_cache.tmp（着色器缓存）以及 MobileGlues 的日志文件。目录之外的任何文件都不会被读取、修改或删除。</string>
+    <string name="privacy_permission_title">为什么需要存储权限</string>
+    <string name="privacy_permission_body">渲染器（游戏内的原生库）直接读取 /sdcard/MG，所以本应用需要能写同一个目录。您可以在「所有文件访问」和「仅授权 MG 目录（SAF）」之间自行选择，并且随时能在系统设置中收回。</string>
+    <string name="privacy_local_title">本地存了什么</string>
+    <string name="privacy_local_body">设备上的少量私有偏好：界面风格、选择的授权方式、上次询问赞助时的启动次数、是否已捐赠。不含任何个人信息或标识符。</string>
+    <string name="privacy_links_title">第三方链接</string>
+    <string name="privacy_links_body">「GitHub 发布页」「赞助」会在您自己的浏览器中打开网页。离开本应用之后的行为由对应网站自行负责。</string>
+    <string name="privacy_network_title">没有网络，可以验证</string>
+    <string name="privacy_network_body">本应用没有声明 INTERNET 权限——您可以在系统设置或安装包清单中核实。因此上传在技术上不可能：任何东西都无法离开这台设备。</string>
+
+    <string name="privacy_consent_title">隐私政策</string>
+    <string name="privacy_consent_footer">点击「同意」表示您已阅读并接受以上内容。不同意则无法使用本应用。</string>
+    <string name="privacy_consent_accept">同意</string>
+    <string name="privacy_consent_decline">不同意并退出</string>
+
+    <string name="sponsor_channels_summary">爱发电、Buy Me a Coffee</string>
+    <string name="sponsor_channels_msg">项目和三位开发者各有各的收款页，挑一个就好，都一样。</string>
+
+    <string name="sponsor_dialog_title">支持 MobileGlues</string>
+    <string name="sponsor_dialog_msg">看起来您已经启动了 %1$d 次 MobileGlues！我们感谢您的使用，如果它帮上了忙，可以请开发者喝杯咖啡哦~完全自愿，不捐赠也没关系。</string>
+    <string name="sponsor_action_donate">去支持一下</string>
+    <string name="sponsor_action_later">下次再说</string>
+    <string name="sponsor_confirm_title">一个小小的确认</string>
+    <string name="sponsor_confirm_msg">如果刚才已经捐赠了，点「已捐赠」，我们就不再提醒；没有的话也没关系哦~</string>
+    <string name="sponsor_action_donated">已捐赠</string>
+    <string name="sponsor_action_not_yet">还没有</string>
+</resources>

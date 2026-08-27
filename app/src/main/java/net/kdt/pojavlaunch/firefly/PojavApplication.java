@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 import net.kdt.pojavlaunch.firefly.BuildConfig;
 import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutor;
+import net.kdt.pojavlaunch.firefly.mobileglues.MGApplication;
 import net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.firefly.utils.*;
 import net.kdt.pojavlaunch.firefly.utils.FileUtils;
@@ -33,6 +34,11 @@ import net.kdt.pojavlaunch.firefly.utils.FileUtils;
 public class PojavApplication extends Application {
     public static final String CRASH_REPORT_TAG = "PojavCrashReport";
     public static final ExecutorService sExecutorService = new ThreadPoolExecutor(4, 4, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+    private MGApplication mobileGlues;
+
+    public MGApplication getMobileGlues() {
+        return mobileGlues;
+    }
 
     @Override
     public void onCreate() {
@@ -72,8 +78,9 @@ public class PojavApplication extends Application {
 			} else {
 				// In other cases, only initialize enough for the basicmost basics to work
 				// and not explode.
-				Tools.initEarlyConstants(this);
-			}
+                Tools.initEarlyConstants(this);
+            }
+            mobileGlues = new MGApplication(this);
             Tools.DEVICE_ARCHITECTURE = Architecture.getDeviceArchitecture();
             //Force x86 lib directory for Asus x86 based zenfones
             if (Architecture.isx86Device() && Architecture.is32BitsDevice()) {

@@ -15,8 +15,6 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -63,6 +61,11 @@
             android:name=".LauncherActivity"
             android:label="@string/app_short_name"
             android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".mobileglues.MobileGluesSettingsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation|uiMode"
+            android:label="@string/preference_renderer_mobileglues_settings"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ImportControlActivity"
             android:configChanges="keyboard|keyboardHidden"
@@ -168,6 +171,11 @@
             android:exported="false" />
 
         <service
+            android:name=".mobileglues.MgQueryService"
+            android:exported="false"
+            android:process=":mgquery" />
+
+        <service
             android:name=".services.GameService"
             android:process=":game"
             android:foregroundServiceType="specialUse"
@@ -186,5 +194,13 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent>
         <package android:name="net.kdt.pojavlaunch.ffmpeg" />
+        <package android:name="com.tungsten.fcl" />
+        <package android:name="com.tungsten.fcm" />
+        <package android:name="com.tungsten.fcl.ngg" />
+        <package android:name="com.tungsten.fcl.qualcommdr" />
+        <package android:name="com.tungsten.fcl.mgdebug.debug" />
+        <package android:name="com.movtery.zalithlauncher.v2" />
+        <package android:name="com.movtery.zalithlauncher.v2.debug" />
+        <package android:name="org.fcl.enchantnet" />
     </queries>
 </manifest>

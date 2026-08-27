@@ -81,7 +81,7 @@ public class AsyncAssetManager {
             InputStream in = ctx.getAssets().open(assetsVersionFile);
             byte[] b = new byte[in.available()];
             in.read(b);
-            int newVersion = Integer.parseInt(new String(b));
+            int newVersion = Integer.parseInt(new String(b).trim());
             in.close();
             versionFile.getParentFile().mkdirs();
             int oldVersion = Integer.parseInt(Tools.read(outVersionFile).trim());
@@ -101,7 +101,7 @@ public class AsyncAssetManager {
             InputStream in = ctx.getAssets().open("login/version");
             byte[] b = new byte[in.available()];
             in.read(b);
-            int newVersion = Integer.parseInt(new String(b));
+            int newVersion = Integer.parseInt(new String(b).trim());
             in.close();
             path.getParentFile().mkdirs();
             int oldVersion = Integer.parseInt(Tools.read(Tools.DIR_GAME_HOME + "/login/version").trim());

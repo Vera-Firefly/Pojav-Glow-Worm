@@ -13,7 +13,8 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android") version "2.0.21"
+    id("org.jetbrains.kotlin.android") version "2.2.10"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.2.10"
 }
 apply(plugin = "stringfog")
 
@@ -121,7 +122,7 @@ fun cleanRuntimeAssets(assetsDir: File) {
     val arch = System.getProperty("arch", "all")
     if (arch == "all") return
 
-    val jreList = listOf("jre-8", "jre-11", "jre-17", "jre-21", "jre-25")
+    val jreList = listOf("jre-8", "jre-17", "jre-21", "jre-25")
 
     jreList.forEach { jre ->
         val runtimeDir = File("${assetsDir}/components/$jre")
@@ -270,10 +271,21 @@ android {
     buildFeatures {
         prefab = true
         buildConfig = true
+        aidl = true
+        compose = true
     }
 }
 
 dependencies {
+    implementation(platform("androidx.compose:compose-bom:2026.06.01"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
     implementation("commons-codec:commons-codec:1.15")
     implementation("androidx.preference:preference:1.2.0")

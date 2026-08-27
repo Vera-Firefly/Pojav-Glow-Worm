@@ -14,13 +14,7 @@ public class LocalEnv {
         String libString = null;
 
         String name = LauncherPreferences.PREF_DEFAULT_RUNTIME;
-        Runtime javaRuntime = null;
-        for (Runtime r : MultiRTUtils.getRuntimes()) {
-            if (r.name.equals(name)) {
-                javaRuntime = r;
-                break;
-            }
-        }
+        Runtime javaRuntime = MultiRTUtils.forceReread(name);
         String path = javaHome + "/lib";
 
         if (javaRuntime.javaVersion == 8) {

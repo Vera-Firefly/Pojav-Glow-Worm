@@ -22,6 +22,16 @@ include $(BUILD_SHARED_LIBRARY)
 
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := mobileglues_info_getter
+LOCAL_SRC_FILES := ../cpp/mobileglues/mobileglues_info_getter.cpp
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../cpp/mobileglues
+LOCAL_CPP_FEATURES := rtti exceptions
+LOCAL_CPPFLAGS := -std=c++17
+LOCAL_LDLIBS := -ldl -llog -lEGL -lGLESv2
+include $(BUILD_SHARED_LIBRARY)
+
+
+include $(CLEAR_VARS)
 LOCAL_LDLIBS := -ldl -llog -landroid
 LOCAL_MODULE := glxshim
 LOCAL_SRC_FILES := glxshim/glxshim.cpp

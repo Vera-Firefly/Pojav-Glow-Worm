@@ -42,6 +42,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import net.kdt.pojavlaunch.firefly.PojavApplication;
+import net.kdt.pojavlaunch.firefly.mobileglues.MobileGluesSettingsActivity;
 import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.Tools;
 import net.kdt.pojavlaunch.firefly.prefs.CustomSeekBarPreference;
@@ -292,160 +293,8 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
                 .show();
     }
 
-    // Check current screen orientation
-    private boolean checkScreenOrientation() {
-        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-    }
-
-    // MobileGlues Renderer Settings
     private void mgRendererSettings() {
-        // Layout
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_mgrenderer_settings, null);
-        EditText maxGlslCacheSize = view.findViewById(R.id.mg_input_max_glsl_cache_size);
-        Spinner enableANGLE = view.findViewById(R.id.mg_spinner_angle);
-        Spinner enableNoError = view.findViewById(R.id.mg_spinner_no_error);
-        Spinner enableCompatibleMode = view.findViewById(R.id.mg_spinner_multidraw_mode);
-        Spinner angleClearWorkaround = view.findViewById(R.id.mg_spinner_angle_clear_workaround);
-        Spinner customGlVersion = view.findViewById(R.id.mg_spinner_gl_version);
-        Switch enableExtGL43 = view.findViewById(R.id.mg_switch_ext_gl43);
-        Switch enableExtComputeShader = view.findViewById(R.id.mg_switch_ext_cs);
-        Switch enableExtTimerQuery = view.findViewById(R.id.mg_switch_ext_timer_query);
-        Switch switchExtDirectStateAccess = view.findViewById(R.id.mg_switch_ext_direct_state_access);
-        Switch switchEnableFsr1 = view.findViewById(R.id.mg_switch_enable_fsr1);
-        FrameLayout container = view.findViewById(R.id.mg_view_container);
-        container.setVisibility(checkScreenOrientation() ? View.VISIBLE : View.GONE);
-
-        // Max glsl cache size
-        maxGlslCacheSize.setText(LauncherPreferences.MG_GLSL_CACHE_SIZE);
-
-        // Angle Settings
-        ArrayList<String> angleOptions = new ArrayList<>();
-        angleOptions.add(getString(R.string.mg_option_angle_disable_if_possible));
-        angleOptions.add(getString(R.string.mg_option_angle_enable_if_possible));
-        angleOptions.add(getString(R.string.mg_option_angle_disable));
-        angleOptions.add(getString(R.string.mg_option_angle_enable));
-        ArrayAdapter<String> angleAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner, angleOptions);
-        enableANGLE.setAdapter(angleAdapter);
-        enableANGLE.setSelection(Integer.parseInt(LauncherPreferences.MG_ANGLE_OPTION));
-
-        // No error Settings
-        ArrayList<String> noErrorOptions = new ArrayList<>();
-        noErrorOptions.add(getString(R.string.mg_option_no_error_auto));
-        noErrorOptions.add(getString(R.string.mg_option_no_error_enable));
-        noErrorOptions.add(getString(R.string.mg_option_no_error_disable_pri));
-        noErrorOptions.add(getString(R.string.mg_option_no_error_disable_sec));
-        ArrayAdapter<String> noErrorAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner, noErrorOptions);
-        enableNoError.setAdapter(noErrorAdapter);
-        enableNoError.setSelection(Integer.parseInt(LauncherPreferences.MG_NOERROR_OPTION));
-
-        // multidraw Mode Settings
-        ArrayList<String> multidrawModeOptions = new ArrayList<>();
-        multidrawModeOptions.add(getString(R.string.mg_option_multidraw_mode_auto));
-        multidrawModeOptions.add(getString(R.string.mg_option_multidraw_mode_indirect));
-        multidrawModeOptions.add(getString(R.string.mg_option_multidraw_mode_basevertex));
-        multidrawModeOptions.add(getString(R.string.mg_option_multidraw_mode_multidraw_indirect));
-        multidrawModeOptions.add(getString(R.string.mg_option_multidraw_mode_drawelements));
-        ArrayAdapter<String> multidrawModeAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner, multidrawModeOptions);
-        enableCompatibleMode.setAdapter(multidrawModeAdapter);
-        enableCompatibleMode.setSelection(Integer.parseInt(LauncherPreferences.MG_MULTIDRAWMODE_OPTION));
-
-        // GL Version option
-        Map<String, Integer> glVersionMap = new LinkedHashMap<>();
-        glVersionMap.put(getString(R.string.mg_option_angle_disable), 0);
-        glVersionMap.put("OpenGL 4.6", 46);
-        glVersionMap.put("OpenGL 4.5", 45);
-        glVersionMap.put("OpenGL 4.4", 44);
-        glVersionMap.put("OpenGL 4.3", 43);
-        glVersionMap.put("OpenGL 4.2", 42);
-        glVersionMap.put("OpenGL 4.1", 41);
-        glVersionMap.put("OpenGL 4.0", 40);
-        glVersionMap.put("OpenGL 3.3", 33);
-        glVersionMap.put("OpenGL 3.2", 32);
-        ArrayList<String> glVersionOptions = new ArrayList<>(glVersionMap.keySet());
-        ArrayAdapter<String> glVersionAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner, glVersionOptions);
-        customGlVersion.setAdapter(glVersionAdapter);
-        int savedGLVersionValue = Integer.parseInt(LauncherPreferences.MG_GL_VERSION);
-        int glVersionIndex = PGWTools.MG_GLVersionSetting.getIndexByValue(glVersionMap, savedGLVersionValue);
-        if (glVersionIndex > 0) {
-            customGlVersion.setSelection(glVersionIndex);
-        }
-
-
-        // Angle Clear Workaround Options
-        ArrayList<String> angleClearWorkaroundOptions = new ArrayList<>();
-        angleClearWorkaroundOptions.add(getString(R.string.mg_option_angle_clear_workaround_disable));
-        angleClearWorkaroundOptions.add(getString(R.string.mg_option_angle_clear_workaround_enable_1));
-        ArrayAdapter<String> angleClearWorkaroundAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner, angleClearWorkaroundOptions);
-        angleClearWorkaround.setAdapter(angleClearWorkaroundAdapter);
-        angleClearWorkaround.setSelection(Integer.parseInt(LauncherPreferences.MG_ANGLECLEARWORKAROUND_OPTION));
-
-        enableExtGL43.setChecked(LauncherPreferences.MG_EXT_GL43.equals("1"));
-        enableExtComputeShader.setChecked(LauncherPreferences.MG_EXT_CS.equals("1"));
-        enableExtTimerQuery.setChecked(LauncherPreferences.MG_EXT_TIMER_QUERY.equals("1"));
-        switchExtDirectStateAccess.setChecked(LauncherPreferences.MG_EXT_DIRECT_STATE_ACCESS.equals("1"));
-        switchEnableFsr1.setChecked(LauncherPreferences.MG_ENABLE_FSR1.equals("1"));
-
-        new CustomDialog.Builder(getContext())
-                .setCustomView(view)
-                .setCancelable(false)
-                .setConfirmListener(R.string.alertdialog_done, customView -> {
-                    String cacheSize = maxGlslCacheSize.getText().toString();
-                    if (cacheSize.isEmpty()) {
-                        maxGlslCacheSize.setError(getString(R.string.global_error_field_empty));
-                        return false;
-                    }
-                    int currentCacheSize;
-                    try {
-                        currentCacheSize = Integer.parseInt(cacheSize);
-                    } catch (NumberFormatException e) {
-                        Log.e("MG maxGlslCacheSize", e.toString());
-                        // maxGlslCacheSize.setError(e.toString());
-                        maxGlslCacheSize.setError(getString(R.string.mg_option_glsl_cache_error_unexpected));
-                        return false;
-                    }
-                    if (currentCacheSize > 99999) {
-                        maxGlslCacheSize.setError(getString(R.string.mg_option_glsl_cache_error_invalid));
-                        return false;
-                    }
-                    if (currentCacheSize <= 0 && currentCacheSize != -1) {
-                        maxGlslCacheSize.setError(getString(R.string.mg_option_glsl_cache_error_range));
-                        return false;
-                    }
-                    LauncherPreferences.MG_GLSL_CACHE_SIZE = cacheSize;
-                    LauncherPreferences.MG_ANGLE_OPTION = Integer.toString(enableANGLE.getSelectedItemPosition());
-                    LauncherPreferences.MG_NOERROR_OPTION = Integer.toString(enableNoError.getSelectedItemPosition());
-                    LauncherPreferences.MG_MULTIDRAWMODE_OPTION = Integer.toString(enableCompatibleMode.getSelectedItemPosition());
-                    LauncherPreferences.MG_ANGLECLEARWORKAROUND_OPTION = Integer.toString(angleClearWorkaround.getSelectedItemPosition());
-                    LauncherPreferences.MG_EXT_GL43 = enableExtGL43.isChecked() ? "1" : "0";
-                    LauncherPreferences.MG_EXT_CS = enableExtComputeShader.isChecked() ? "1" : "0";
-                    LauncherPreferences.MG_EXT_TIMER_QUERY = enableExtTimerQuery.isChecked() ? "1" : "0";
-                    LauncherPreferences.MG_EXT_DIRECT_STATE_ACCESS = switchExtDirectStateAccess.isChecked() ? "1" : "0";
-                    LauncherPreferences.MG_ENABLE_FSR1 = switchEnableFsr1.isChecked() ? "1" : "0";
-
-                    int selectedGLVersionIndex = customGlVersion.getSelectedItemPosition();
-                    int glVersionValue = PGWTools.MG_GLVersionSetting.getValueByIndex(glVersionMap, selectedGLVersionIndex);
-                    LauncherPreferences.MG_GL_VERSION = Integer.toString(glVersionValue);
-
-                    LauncherPreferences.DEFAULT_PREF.edit()
-                            .putString("mg_glsl_cache_size", LauncherPreferences.MG_GLSL_CACHE_SIZE)
-                            .putString("mg_angle_option", LauncherPreferences.MG_ANGLE_OPTION)
-                            .putString("mg_noerror_option", LauncherPreferences.MG_NOERROR_OPTION)
-                            .putString("mg_multidraw_mode", LauncherPreferences.MG_MULTIDRAWMODE_OPTION)
-                            .putString("mg_gl_version", LauncherPreferences.MG_GL_VERSION)
-                            .putString("mg_angle_clear_workaround", LauncherPreferences.MG_ANGLECLEARWORKAROUND_OPTION)
-                            .putString("mg_ext_gl43", LauncherPreferences.MG_EXT_GL43)
-                            .putString("mg_ext_compute_shader", LauncherPreferences.MG_EXT_CS)
-                            .putString("mg_ext_timer_query", LauncherPreferences.MG_EXT_TIMER_QUERY)
-                            .putString("mg_ext_direct_state_access", LauncherPreferences.MG_EXT_DIRECT_STATE_ACCESS)
-                            .putString("mg_enable_fsr1", LauncherPreferences.MG_ENABLE_FSR1)
-                            .apply();
-                    return true;
-                })
-                .setCancelListener(R.string.alertdialog_cancel, customView -> true)
-                .setDraggable(true)
-                .build()
-                .show();
+        startActivity(new Intent(requireContext(), MobileGluesSettingsActivity.class));
     }
 
     private void setListPreference(ListPreference listPreference, String preferenceKey) {

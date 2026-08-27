@@ -13,7 +13,6 @@ object UnpackJRE {
     fun unpackAllJre(assetManager: AssetManager) {
         sExecutorService.execute {
             checkInternalRuntime(assetManager, InternalRuntime.JRE_8)
-            checkInternalRuntime(assetManager, InternalRuntime.JRE_11)
             checkInternalRuntime(assetManager, InternalRuntime.JRE_17)
             checkInternalRuntime(assetManager, InternalRuntime.JRE_21)
             checkInternalRuntime(assetManager, InternalRuntime.JRE_25)
@@ -59,7 +58,6 @@ object UnpackJRE {
         val path: String
     ) {
         JRE_8(8, "Internal-8", "components/jre-8"),
-        JRE_11(11, "Internal-11", "components/jre-11"),
         JRE_17(17, "Internal-17", "components/jre-17"),
         JRE_21(21, "Internal-21", "components/jre-21"),
         JRE_25(25, "Internal-25", "components/jre-25")

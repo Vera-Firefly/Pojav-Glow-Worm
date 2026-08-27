@@ -289,18 +289,6 @@ public class JREUtils {
         {
             envMap.put("MG_DIR_PATH", Tools.MOBILEGLES_DIR);
             envMap.put("LIBGL_GLES", Tools.MOBILEGLES_DIR + "/libmobileglues.so");
-            // MGES Settings
-            envMap.put("MG_maxGlslCacheSize", MG_GLSL_CACHE_SIZE);
-            envMap.put("MG_enableANGLE", MG_ANGLE_OPTION);
-            envMap.put("MG_enableNoError", MG_NOERROR_OPTION);
-            envMap.put("MG_multidrawMode", MG_MULTIDRAWMODE_OPTION);
-            envMap.put("MG_customGLVersion", MG_GL_VERSION);
-            envMap.put("MG_angleDepthClearFixMode", MG_ANGLECLEARWORKAROUND_OPTION);
-            envMap.put("MG_enableExtGL43", MG_EXT_GL43);
-            envMap.put("MG_enableExtComputeShader", MG_EXT_CS);
-            envMap.put("MG_enableExtTimerQuery", MG_EXT_TIMER_QUERY.equals("0") ? "1" : "0");
-            envMap.put("MG_enableExtDirectStateAccess", MG_EXT_DIRECT_STATE_ACCESS);
-            envMap.put("MG_fsr1Setting", MG_ENABLE_FSR1);
         }
 
         if (LOCAL_RENDERER.startsWith("opengles3_desktopgl_mesa"))
