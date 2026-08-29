@@ -58,7 +58,7 @@ class PgwVersionConfig(
         javaDir = runtimeName.takeIf { it.isNotBlank() }?.let { Tools.LAUNCHERPROFILES_RTPREFIX + it }
         javaArgs = jvmArgs.takeIf { it.isNotBlank() }
         pojavRendererName = rendererName.takeIf { it.isNotBlank() }
-        controlFile = controlFile.takeIf { it.isNotBlank() }
+        controlFile = this@PgwVersionConfig.controlFile.takeIf { it.isNotBlank() }
         enableModsCheck = this@PgwVersionConfig.enableModsCheck
         pgwManagedGameDir = effectiveGameDirectory(versionId).absolutePath
         pgwGraphicsApi = graphicsApi.takeIf { it.isNotBlank() }
