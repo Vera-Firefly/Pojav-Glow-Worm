@@ -1,8 +1,6 @@
 package com.kdt.mcgui;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static net.kdt.pojavlaunch.firefly.fragments.ProfileEditorFragment.DELETED_PROFILE;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
@@ -23,13 +21,11 @@ import androidx.fragment.app.FragmentActivity;
 
 import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.Tools;
-import net.kdt.pojavlaunch.firefly.extra.ExtraConstants;
-import net.kdt.pojavlaunch.firefly.extra.ExtraCore;
-import net.kdt.pojavlaunch.firefly.fragments.ProfileEditorFragment;
-import net.kdt.pojavlaunch.firefly.fragments.ProfileTypeSelectFragment;
-import net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences;
-import net.kdt.pojavlaunch.firefly.profiles.ProfileAdapter;
-import net.kdt.pojavlaunch.firefly.profiles.ProfileAdapterExtra;
+import net.kdt.pojavlaunch.firefly.fragments.VersionCatalogFragment;
+import net.kdt.pojavlaunch.firefly.fragments.VersionSettingsFragment;
+import net.kdt.pojavlaunch.firefly.profiles.VersionInstanceAdapter;
+import net.kdt.pojavlaunch.firefly.version.PgwInstalledVersion;
+import net.kdt.pojavlaunch.firefly.version.PgwVersionRepository;
 
 import fr.spse.extended_view.ExtendedTextView;
 
@@ -38,8 +34,6 @@ import fr.spse.extended_view.ExtendedTextView;
  * dropdown popup view with a custom direction.
  */
 public class mcVersionSpinner extends ExtendedTextView {
-    private static final int VERSION_SPINNER_PROFILE_CREATE = 0;
-
     public mcVersionSpinner(@NonNull Context context) {
         super(context);
         init();
@@ -59,13 +53,9 @@ public class mcVersionSpinner extends ExtendedTextView {
     private ListView mListView = null;
     private PopupWindow mPopupWindow = null;
     private Object mPopupAnimation;
-    private int mSelectedIndex;
+    private int mSelectedIndex = -1;
 
-    private final ProfileAdapter mProfileAdapter = new ProfileAdapter(new ProfileAdapterExtra[]{
-            new ProfileAdapterExtra(VERSION_SPINNER_PROFILE_CREATE,
-                    R.string.create_profile,
-                    ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add, null)),
-    });
+    private final VersionInstanceAdapter mVersionAdapter = new VersionInstanceAdapter();
 
 
     /**
@@ -73,24 +63,38 @@ public class mcVersionSpinner extends ExtendedTextView {
      */
     public void setProfileSelection(int position) {
         setSelection(position);
-        LauncherPreferences.DEFAULT_PREF.edit()
-                .putString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,
-                        mProfileAdapter.getItem(position).toString())
-                .apply();
+        Object selection = mVersionAdapter.getItem(position);
+        if (selection instanceof PgwInstalledVersion) {
+            PgwVersionRepository.INSTANCE.select(((PgwInstalledVersion) selection).getId());
+        }
     }
 
     public void setSelection(int position) {
         if (mListView != null) mListView.setSelection(position);
-        mProfileAdapter.setView(this, mProfileAdapter.getItem(position), false);
+        Object item = mVersionAdapter.getItem(position);
+        if (item instanceof PgwInstalledVersion) {
+            PgwInstalledVersion version = (PgwInstalledVersion) item;
+            setText(version.getConfig().getSummary() == null || version.getConfig().getSummary().trim().isEmpty()
+                    ? version.getId() : version.getConfig().getSummary());
+            setCompoundDrawablesRelative(
+                    net.kdt.pojavlaunch.firefly.version.VersionIconCache.fetch(getResources(), version),
+                    null, getCompoundsDrawables()[2], null);
+        } else {
+            setText(R.string.version_manager_install_new);
+            setCompoundDrawablesRelative(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_add, null),
+                    null, getCompoundsDrawables()[2], null);
+        }
         mSelectedIndex = position;
     }
 
     public void openProfileEditor(FragmentActivity fragmentActivity) {
-        Object currentSelection = mProfileAdapter.getItem(mSelectedIndex);
-        if (currentSelection instanceof ProfileAdapterExtra) {
-            performExtraAction((ProfileAdapterExtra) currentSelection);
+        Object currentSelection = mVersionAdapter.getItem(Math.max(0, mSelectedIndex));
+        if (currentSelection instanceof PgwInstalledVersion) {
+            android.os.Bundle arguments = new android.os.Bundle(1);
+            arguments.putString(VersionSettingsFragment.ARG_VERSION_ID, ((PgwInstalledVersion) currentSelection).getId());
+            Tools.swapFragment(fragmentActivity, VersionSettingsFragment.class, VersionSettingsFragment.TAG, arguments);
         } else {
-            Tools.swapFragment(fragmentActivity, ProfileEditorFragment.class, ProfileEditorFragment.TAG, null);
+            Tools.swapFragment(fragmentActivity, VersionCatalogFragment.class, VersionCatalogFragment.TAG, null);
         }
     }
 
@@ -98,7 +102,9 @@ public class mcVersionSpinner extends ExtendedTextView {
      * Reload profiles from the file, forcing the spinner to consider the new data
      */
     public void reloadProfiles() {
-        mProfileAdapter.reloadProfiles();
+        mVersionAdapter.reload();
+        PgwInstalledVersion current = PgwVersionRepository.INSTANCE.current();
+        setSelection(mVersionAdapter.findVersion(current == null ? "" : current.getId()));
     }
 
     /**
@@ -113,16 +119,7 @@ public class mcVersionSpinner extends ExtendedTextView {
         setPaddingRelative(startPadding, 0, endPadding, 0);
         setCompoundDrawablePadding(startPadding);
 
-        int profileIndex;
-        String extra_value = (String) ExtraCore.consumeValue(ExtraConstants.REFRESH_VERSION_SPINNER);
-        if (extra_value != null) {
-            profileIndex = extra_value.equals(DELETED_PROFILE) ? 0
-                    : getProfileAdapter().resolveProfileIndex(extra_value);
-        } else
-            profileIndex = mProfileAdapter.resolveProfileIndex(
-                    LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, ""));
-
-        setProfileSelection(Math.max(0, profileIndex));
+        reloadProfiles();
 
         // Popup window behavior
         setOnClickListener(new OnClickListener() {
@@ -143,12 +140,9 @@ public class mcVersionSpinner extends ExtendedTextView {
         });
     }
 
-    private void performExtraAction(ProfileAdapterExtra extra) {
-        //Replace with switch-case if you want to add more extra actions
-        if (extra.id == VERSION_SPINNER_PROFILE_CREATE) {
-            Tools.swapFragment((FragmentActivity) getContext(), ProfileTypeSelectFragment.class,
-                    ProfileTypeSelectFragment.TAG, null);
-        }
+    private void openInstallPage() {
+        Tools.swapFragment((FragmentActivity) getContext(), VersionCatalogFragment.class,
+                VersionCatalogFragment.TAG, null);
     }
 
 
@@ -158,15 +152,15 @@ public class mcVersionSpinner extends ExtendedTextView {
     @SuppressLint("ClickableViewAccessibility")
     private void getPopupWindow() {
         mListView = (ListView) inflate(getContext(), R.layout.spinner_mc_version, null);
-        mListView.setAdapter(mProfileAdapter);
+        mListView.setAdapter(mVersionAdapter);
         mListView.setOnItemClickListener((parent, view, position, id) -> {
-            Object item = mProfileAdapter.getItem(position);
-            if (item instanceof String) {
+            Object item = mVersionAdapter.getItem(position);
+            if (item instanceof PgwInstalledVersion) {
                 hidePopup(true);
                 setProfileSelection(position);
-            } else if (item instanceof ProfileAdapterExtra) {
+            } else if (item == VersionInstanceAdapter.INSTALL_ENTRY) {
                 hidePopup(false);
-                performExtraAction((ProfileAdapterExtra) item);
+                openInstallPage();
             }
         });
 
@@ -207,7 +201,4 @@ public class mcVersionSpinner extends ExtendedTextView {
         }
     }
 
-    public ProfileAdapter getProfileAdapter() {
-        return mProfileAdapter;
-    }
 }

@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.firefly.fragments;
 
+import static com.firefly.utils.ToastUtils.Toast;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -21,9 +23,11 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.firefly.utils.ListUtils;
+import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 
 import net.kdt.pojavlaunch.firefly.R;
@@ -39,8 +43,15 @@ import net.kdt.pojavlaunch.firefly.profiles.VersionSelectorDialog;
 import net.kdt.pojavlaunch.firefly.utils.CropperUtils;
 import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.firefly.value.launcherprofiles.MinecraftProfile;
+import net.kdt.pojavlaunch.firefly.version.LocalVersion;
+import net.kdt.pojavlaunch.firefly.version.LocalVersionManager;
+import net.kdt.pojavlaunch.firefly.version.VersionRemovalResult;
+import net.kdt.pojavlaunch.firefly.version.VersionIsolation;
+
+import kotlin.Pair;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -49,13 +60,13 @@ import java.util.List;
 
 public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener {
     public static final String TAG = "ProfileEditorFragment";
-    public static final String DELETED_PROFILE = "deleted_profile";
+    private static final float DISABLED_PATH_ALPHA = 0.65f;
 
     private String mProfileKey;
     private MinecraftProfile mTempProfile = null;
     private String mValueToConsume = "";
     private Button mSaveButton, mDeleteButton, mControlSelectButton, mGameDirButton, mVersionSelectButton;
-    private CheckBox mEnableModsCheck, mDisableDownloader;
+    private CheckBox mEnableModsCheck;
     private Spinner mDefaultRuntime, mDefaultRenderer;
     private EditText mDefaultName, mDefaultJvmArgument;
     private TextView mDefaultPath, mDefaultVersion, mDefaultControl;
@@ -63,6 +74,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private final ActivityResultLauncher<?> mCropperLauncher = CropperUtils.registerCropper(this, this);
 
     private List<String> mRenderNames;
+    private boolean mVersionDeleteInProgress;
 
     public ProfileEditorFragment() {
         super(R.layout.fragment_profile_editor);
@@ -75,7 +87,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         String value = (String) ExtraCore.consumeValue(ExtraConstants.FILE_SELECTOR);
         if (value != null) {
             if (mValueToConsume.equals(FileSelectorFragment.BUNDLE_SELECT_FOLDER)) {
-                mTempProfile.gameDir = value;
+                if (!LauncherPreferences.PREF_VERSION_ISOLATION) mTempProfile.gameDir = value;
             } else {
                 mTempProfile.controlFile = value;
             }
@@ -102,16 +114,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
             Tools.backToMainMenu(requireActivity());
         });
 
-        mDeleteButton.setOnClickListener(v -> {
-            if (LauncherProfiles.mainProfileJson.profiles.size() > 1) {
-                ProfileIconCache.dropIcon(mProfileKey);
-                LauncherProfiles.mainProfileJson.profiles.remove(mProfileKey);
-                LauncherProfiles.write(ProfilePathManager.getCurrentProfile());
-                ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, DELETED_PROFILE);
-            }
-
-            Tools.removeCurrentFragment(requireActivity());
-        });
+        mDeleteButton.setOnClickListener(v -> confirmVersionDeletion());
 
         View.OnClickListener gameDirListener = getGameDirListener();
         mGameDirButton.setOnClickListener(gameDirListener);
@@ -134,6 +137,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
 
     private View.OnClickListener getGameDirListener() {
         return v -> {
+            if (LauncherPreferences.PREF_VERSION_ISOLATION) return;
             Bundle bundle = new Bundle(2);
             bundle.putBoolean(FileSelectorFragment.BUNDLE_SELECT_FOLDER, true);
             bundle.putString(FileSelectorFragment.BUNDLE_ROOT_PATH, ProfilePathManager.getCurrentPath());
@@ -159,9 +163,11 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     }
 
     private View.OnClickListener getVersionSelectListener() {
-        return v -> VersionSelectorDialog.open(v.getContext(), false, (id, snapshot)-> {
+        return v -> VersionSelectorDialog.open(v.getContext(), (id, snapshot)-> {
             mTempProfile.lastVersionId = id;
             mDefaultVersion.setText(id);
+            updateGameDirectoryPresentation();
+            updateDeleteButtonState();
         });
     }
 
@@ -194,13 +200,13 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultRenderer.setSelection(rendererIndex);
 
         mEnableModsCheck.setChecked(mTempProfile.enableModsCheck);
-        mDisableDownloader.setChecked(mTempProfile.disableDownloader);
 
         mDefaultVersion.setText(mTempProfile.lastVersionId);
         mDefaultJvmArgument.setText(mTempProfile.javaArgs == null ? "" : mTempProfile.javaArgs);
         mDefaultName.setText(mTempProfile.name);
-        mDefaultPath.setText(mTempProfile.gameDir == null ? "" : mTempProfile.gameDir);
         mDefaultControl.setText(mTempProfile.controlFile == null ? "" : mTempProfile.controlFile);
+        updateGameDirectoryPresentation();
+        updateDeleteButtonState();
     }
 
     private MinecraftProfile getProfile(@NonNull String profile) {
@@ -235,7 +241,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mGameDirButton = view.findViewById(R.id.vprof_editor_path_button);
         mProfileIcon = view.findViewById(R.id.vprof_editor_profile_icon);
         mEnableModsCheck = view.findViewById(R.id.vprof_settings_enable_mods_check);
-        mDisableDownloader = view.findViewById(R.id.vprof_settings_disable_downloader);
     }
 
     private void save() {
@@ -244,13 +249,14 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.controlFile = mDefaultControl.getText().toString();
         mTempProfile.name = mDefaultName.getText().toString();
         mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
-        mTempProfile.gameDir = mDefaultPath.getText().toString();
         mTempProfile.enableModsCheck = mEnableModsCheck.isChecked();
-        mTempProfile.disableDownloader = mDisableDownloader.isChecked();
 
         if (mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;
         if (mTempProfile.javaArgs.isEmpty()) mTempProfile.javaArgs = null;
-        if (mTempProfile.gameDir.isEmpty()) mTempProfile.gameDir = null;
+        if (!LauncherPreferences.PREF_VERSION_ISOLATION) {
+            mTempProfile.gameDir = mDefaultPath.getText().toString();
+            if (mTempProfile.gameDir.isEmpty()) mTempProfile.gameDir = null;
+        }
 
         Runtime selectedRuntime = (Runtime) mDefaultRuntime.getSelectedItem();
         mTempProfile.javaDir = (selectedRuntime.name.equals("<Default>") || selectedRuntime.versionString == null)
@@ -264,6 +270,115 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write(ProfilePathManager.getCurrentProfile());
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
+    }
+
+    private void updateGameDirectoryPresentation() {
+        boolean isolated = LauncherPreferences.PREF_VERSION_ISOLATION;
+        mDefaultPath.setEnabled(!isolated);
+        mGameDirButton.setEnabled(!isolated);
+        mDefaultPath.setAlpha(isolated ? DISABLED_PATH_ALPHA : 1f);
+        mGameDirButton.setAlpha(isolated ? DISABLED_PATH_ALPHA : 1f);
+        if (isolated) {
+            mDefaultPath.setText(VersionIsolation.displayRelativeGameDirectory(
+                    new File(ProfilePathHome.getGameHome()),
+                    mTempProfile.lastVersionId
+            ));
+        } else {
+            mDefaultPath.setText(mTempProfile.gameDir == null ? "" : mTempProfile.gameDir);
+        }
+    }
+
+    private void updateDeleteButtonState() {
+        String versionId = mTempProfile == null ? null : mTempProfile.lastVersionId;
+        mDeleteButton.setEnabled(versionId != null && !versionId.trim().isEmpty() && !"Unknown".equals(versionId));
+    }
+
+    private void confirmVersionDeletion() {
+        if (mVersionDeleteInProgress || mTempProfile == null) return;
+        String versionId = mTempProfile.lastVersionId;
+        if (versionId == null || versionId.trim().isEmpty() || "Unknown".equals(versionId)) {
+            Toast(requireContext(), R.string.version_manager_delete_unavailable);
+            return;
+        }
+
+        mVersionDeleteInProgress = true;
+        new Thread(() -> {
+            try {
+                LocalVersion version = LocalVersionManager.INSTANCE.get(versionId);
+                List<Pair<String, MinecraftProfile>> profiles = version == null
+                        ? null
+                        : LocalVersionManager.INSTANCE.profilesUsing(versionId);
+                Tools.runOnUiThread(() -> showVersionDeleteConfirmation(versionId, version, profiles));
+            } catch (Exception exception) {
+                Tools.runOnUiThread(() -> {
+                    mVersionDeleteInProgress = false;
+                    if (isAdded()) Tools.showError(requireContext(), exception);
+                });
+            }
+        }, "pgw-version-delete-check").start();
+    }
+
+    private void showVersionDeleteConfirmation(
+            @NonNull String versionId,
+            @Nullable LocalVersion version,
+            @Nullable List<Pair<String, MinecraftProfile>> profiles
+    ) {
+        if (!isAdded()) return;
+        if (version == null) {
+            mVersionDeleteInProgress = false;
+            Toast(requireContext(), R.string.version_manager_delete_unavailable);
+            updateDeleteButtonState();
+            return;
+        }
+
+        StringBuilder message = new StringBuilder(getString(
+                LauncherPreferences.PREF_VERSION_ISOLATION
+                        ? R.string.version_manager_delete_message_isolated
+                        : R.string.version_manager_delete_message
+        ));
+        if (profiles != null && !profiles.isEmpty()) {
+            message.append(getString(R.string.version_manager_profiles, profileNames(profiles)));
+        }
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.version_manager_delete_title, versionId))
+                .setMessage(message)
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> mVersionDeleteInProgress = false)
+                .setOnCancelListener(dialog -> mVersionDeleteInProgress = false)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> deleteVersion(versionId))
+                .show();
+    }
+
+    @NonNull
+    private String profileNames(@NonNull List<Pair<String, MinecraftProfile>> profiles) {
+        StringBuilder names = new StringBuilder();
+        for (Pair<String, MinecraftProfile> profile : profiles) {
+            if (names.length() > 0) names.append(", ");
+            String name = profile.getSecond().name;
+            names.append(name == null || name.trim().isEmpty() ? profile.getFirst() : name);
+        }
+        return names.toString();
+    }
+
+    private void deleteVersion(@NonNull String versionId) {
+        mDeleteButton.setEnabled(false);
+        new Thread(() -> {
+            try {
+                VersionRemovalResult result = LocalVersionManager.INSTANCE.delete(versionId);
+                Tools.runOnUiThread(() -> {
+                    if (!isAdded()) return;
+                    ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, result.getSelectedProfileKey());
+                    Tools.backToMainMenu(requireActivity());
+                });
+            } catch (Exception exception) {
+                Tools.runOnUiThread(() -> {
+                    mVersionDeleteInProgress = false;
+                    if (!isAdded()) return;
+                    mDeleteButton.setEnabled(true);
+                    Tools.showError(requireContext(), exception);
+                });
+            }
+        }, "pgw-version-delete").start();
     }
 
     @Override

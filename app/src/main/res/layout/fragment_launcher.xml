@@ -58,6 +58,15 @@
 				app:layout_constraintTop_toBottomOf="@id/custom_control_button"
 				/>
 
+			<com.kdt.mcgui.LauncherMenuButton
+				android:id="@+id/version_manager_button"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_66sdp"
+				android:background="?android:attr/selectableItemBackground"
+				android:drawableStart="@drawable/ic_list"
+				android:text="@string/version_manager_title"
+				app:layout_constraintTop_toBottomOf="@id/install_jar_button" />
+
             <com.kdt.mcgui.LauncherMenuButton
                 android:id="@+id/start_terminal_button"
                 android:layout_width="match_parent"
@@ -65,7 +74,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:drawableStart="@drawable/ic_terminal"
                 android:text="@string/main_terminal"
-                app:layout_constraintTop_toBottomOf="@id/install_jar_button"
+				app:layout_constraintTop_toBottomOf="@id/version_manager_button"
                 />
 
 			<com.kdt.mcgui.LauncherMenuButton
@@ -108,7 +117,8 @@
 	<ImageButton
          android:layout_height="0dp"
          android:layout_width="@dimen/_52sdp"
-         android:src="@drawable/ic_edit_profile"
+		android:src="@drawable/ic_edit_profile"
+		android:tint="@color/primary_text"
          android:background="?android:attr/selectableItemBackground"
 		android:scaleType="centerInside"
          app:layout_constraintTop_toTopOf="@+id/mc_version_spinner"

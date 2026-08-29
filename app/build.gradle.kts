@@ -286,6 +286,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
     implementation("commons-codec:commons-codec:1.15")
     implementation("androidx.preference:preference:1.2.0")
@@ -296,6 +297,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("com.bytedance:bytehook:1.0.10")
+    implementation("com.jakewharton:process-phoenix:3.0.0")
     implementation("com.github.duanhong169:checkerboarddrawable:1.0.2")
     implementation("com.github.PojavLauncherTeam:portrait-sdp:ed33e89cbc")
     implementation("com.github.PojavLauncherTeam:portrait-ssp:6c02fd739b")
@@ -303,7 +305,7 @@ dependencies {
     implementation("com.github.Mathias-Boulay:android_gamepad_remapper:2.0.3")
     implementation("com.github.Mathias-Boulay:virtual-joystick-android:1.14")
     implementation("com.github.megatronking.stringfog:xor:5.0.0")
-    implementation("com.squareup.okhttp3:okhttp:3.9.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.6.1")
 
@@ -330,4 +332,7 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 }

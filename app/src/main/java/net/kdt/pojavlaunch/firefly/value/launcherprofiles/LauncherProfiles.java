@@ -23,7 +23,8 @@ public class LauncherProfiles {
      * Reload the profile from the file, creating a default one if necessary
      */
     public static void load(File launcherProfilesFile) {
-        if (launcherProfilesFile.exists()) {
+        boolean hasSavedProfiles = launcherProfilesFile.exists();
+        if (hasSavedProfiles) {
             try {
                 mainProfileJson = Tools.GLOBAL_GSON.fromJson(Tools.read(launcherProfilesFile.getAbsolutePath()), MinecraftLauncherProfiles.class);
             } catch (IOException e) {
@@ -35,7 +36,7 @@ public class LauncherProfiles {
         // Fill with default
         if (mainProfileJson == null) mainProfileJson = new MinecraftLauncherProfiles();
         if (mainProfileJson.profiles == null) mainProfileJson.profiles = new HashMap<>();
-        if (mainProfileJson.profiles.isEmpty())
+        if (mainProfileJson.profiles.isEmpty() && !hasSavedProfiles)
             mainProfileJson.profiles.put(UUID.randomUUID().toString(), MinecraftProfile.getDefaultProfile());
 
         // Normalize profile names from mod installers

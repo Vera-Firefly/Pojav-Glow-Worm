@@ -15,13 +15,16 @@
 
 static _Atomic bool exit_tripped = false;
 
-static int exit_code = 0;
-
 typedef void (*exit_func)(int);
-// Use the exit hook *only* to store the exit code.
 static void custom_exit(int code) {
-    exit_code = code;
-    BYTEHOOK_CALL_PREV(custom_exit, exit_func, code);
+    if (exit_tripped) {
+        BYTEHOOK_CALL_PREV(custom_exit, exit_func, code);
+        BYTEHOOK_POP_STACK();
+        return;
+    }
+
+    exit_tripped = true;
+    nominal_exit(code, false);
     BYTEHOOK_POP_STACK();
 }
 
@@ -30,7 +33,7 @@ static void custom_atexit() {
         return;
     }
     exit_tripped = true;
-    nominal_exit(exit_code, false);
+    nominal_exit(0, false);
 }
 
 static void create_hooks(bytehook_hook_all_t bytehook_hook_all_p) {
@@ -79,8 +82,6 @@ Java_net_kdt_pojavlaunch_firefly_utils_JREUtils_initializeHooks(JNIEnv *env, jcl
     bool hooks_ready = init_hooks();
     if(!hooks_ready) {
         LOGE("Failed to initialize native hooks!");
+        atexit(custom_atexit);
     }
-    // Always register atexit, because that's what we will call our exit from.
-    // We only use the hook to capture the exit code.
-    atexit(custom_atexit);
 }

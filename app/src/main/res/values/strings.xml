@@ -24,6 +24,102 @@
     <!-- Error messages -->
     <string name="error_fatal">Pojav Glow·Worm has unexpectedly crashed</string>
     <string name="error_no_version">No version!</string>
+    <string name="version_manager_title">Version management</string>
+    <string name="version_manager_refresh">Refresh</string>
+    <string name="version_manager_search">Search versions</string>
+    <string name="version_manager_install">Install</string>
+    <string name="version_manager_installed">Installed</string>
+    <string name="version_manager_install_failed">Version installation failed</string>
+    <string name="version_manager_installing">Installing %1$s</string>
+    <string name="version_manager_no_loader">No %1$s loader is available for %2$s</string>
+    <string name="version_manager_select_loader">Select %1$s loader</string>
+    <string name="version_manager_stable">stable</string>
+    <string name="version_manager_delete_title">Delete %1$s?</string>
+    <string name="version_manager_delete_message">Profiles that use this version will also be removed.</string>
+    <string name="version_manager_delete_message_isolated">This also deletes the isolated saves, mods, configuration, and logs for this version. Profiles that use this version will also be removed.</string>
+    <string name="version_manager_profiles">\nProfiles to remove: %1$s</string>
+    <string name="version_manager_delete_unavailable">This profile has no installed version to delete.</string>
+    <string name="version_manager_loader_fabric">Fabric</string>
+    <string name="version_manager_loader_quilt">Quilt</string>
+    <string name="version_manager_loader_forge">Forge</string>
+    <string name="version_manager_loader_neoforge">NeoForge</string>
+    <string name="version_manager_loader_optifine">OptiFine</string>
+    <string name="version_manager_loader_fabric_api">Fabric API</string>
+    <string name="version_manager_loader_quilted_fabric_api">Quilted Fabric API</string>
+    <string name="version_isolation_title">Version isolation</string>
+    <string name="version_isolation_summary">Keep saves, mods, configuration, and logs separate for every installed version.</string>
+    <string name="version_install_unknown_size">Unknown size</string>
+    <string name="version_manager_select_game">Select Minecraft version</string>
+    <string name="version_manager_no_versions">No matching versions</string>
+    <string name="version_manager_unknown">Unknown</string>
+    <string name="version_filter_release">Release</string>
+    <string name="version_filter_snapshot">Snapshot</string>
+    <string name="version_filter_april_fools">April Fools</string>
+    <string name="version_filter_old">Old versions</string>
+    <string name="version_addon_select">Select loaders and APIs</string>
+    <string name="version_addon_for">Minecraft %1$s</string>
+    <string name="version_install_name_hint">Installation name</string>
+    <string name="version_addon_loading">Loading</string>
+    <string name="version_addon_unavailable">Unavailable</string>
+    <string name="version_addon_retry">Failed to load, tap to retry</string>
+    <string name="version_addon_available">Available</string>
+    <string name="version_addon_current_selection">Selected: %1$s</string>
+    <string name="version_addon_clear_selection">Clear selection</string>
+    <string name="version_addon_expand">Expand %1$s options</string>
+    <string name="version_addon_collapse">Collapse %1$s options</string>
+    <string name="version_addon_none">No API</string>
+    <string name="version_install_progress_title">Installing version</string>
+    <string name="version_install_progress_starting">Preparing installation</string>
+    <string name="version_install_progress_downloading">Downloading %1$d of %2$d files</string>
+    <string name="version_install_progress_preparing">Preparing files</string>
+    <string name="version_install_progress_downloading_minecraft">Downloading Minecraft</string>
+    <string name="version_install_progress_downloading_addon">Downloading add-on</string>
+    <string name="version_install_progress_running_installer">Running loader installer</string>
+    <string name="version_install_progress_verifying">Verifying files</string>
+    <string name="version_install_progress_committing">Saving installed version</string>
+    <string name="version_install_files">%1$d / %2$d files  ·  %3$s / %4$s</string>
+    <string name="version_install_speed">%1$s/s</string>
+    <string name="version_install_cancel">Cancel installation</string>
+    <string name="version_install_cancelled">Installation cancelled</string>
+    <string name="version_install_complete_title">Installation complete</string>
+    <string name="version_install_complete_message">%1$s is ready to play.</string>
+    <string name="version_install_name_exists">This installation name is already in use. Choose a different name.</string>
+    <string name="version_install_invalid_name">Enter a valid installation name.</string>
+    <string name="version_install_step_clear_cache">Clear installation cache</string>
+    <string name="version_install_step_minecraft">Download and install Minecraft %1$s</string>
+    <string name="version_install_step_loader_main">Download %1$s main file</string>
+    <string name="version_install_step_loader_main_skipped">Loader main file not selected</string>
+    <string name="version_install_step_loader_libraries">Resolve %1$s libraries</string>
+    <string name="version_install_step_loader_libraries_skipped">Loader libraries not selected</string>
+    <string name="version_install_step_api_main">Download %1$s main file</string>
+    <string name="version_install_step_api_main_skipped">API main file not selected</string>
+    <string name="version_install_step_install_files">Install game files</string>
+    <string name="version_install_step_working">Working</string>
+    <string name="version_install_step_detail">%1$d / %2$d files  ·  %3$s / %4$s  ·  %5$s/s</string>
+    <string-array name="version_manager_filter_entries">
+        <item>All</item>
+        <item>Release</item>
+        <item>Snapshot</item>
+        <item>Old beta</item>
+        <item>Old alpha</item>
+        <item>Fabric</item>
+        <item>Quilt</item>
+        <item>Forge</item>
+        <item>NeoForge</item>
+        <item>OptiFine</item>
+    </string-array>
+    <string name="version_download_source_title">Game download source</string>
+    <string name="version_download_source_summary">Choose automatic, official-first or BMCLAPI mirror-first downloads</string>
+    <string-array name="version_download_source_entries">
+        <item>Automatic</item>
+        <item>Official first</item>
+        <item>Mirror first</item>
+    </string-array>
+    <string-array name="version_download_source_values">
+        <item>AUTO</item>
+        <item>OFFICIAL_FIRST</item>
+        <item>MIRROR_FIRST</item>
+    </string-array>
     <string name="error_show_more">Show more</string>
     <string name="error_show_less">Show less</string>
 
@@ -433,4 +529,43 @@
     <string name="local_login_bad_username_title">Unsuitable username</string>
     <string name="local_login_bad_username_text">The username must be between 3–16 characters long, and must only contain latin letters, arabic numerals and underscores.</string>
 
+    <string name="version_manager_install_new">Install new version</string>
+    <string name="version_manager_filter_all">All</string>
+    <string name="version_manager_filter_vanilla">Vanilla</string>
+    <string name="version_manager_filter_loader">Loaders</string>
+    <string name="version_manager_no_installed_versions">No installed versions</string>
+    <string name="version_manager_current">Current</string>
+    <string name="version_manager_ready">Ready</string>
+    <string name="version_manager_invalid">Invalid</string>
+    <string name="version_manager_kind_vanilla">Vanilla</string>
+    <string name="version_manager_kind_custom">Custom</string>
+    <string name="version_manager_pin">Pin version</string>
+    <string name="version_manager_settings">Version settings</string>
+    <string name="version_manager_actions">Version actions</string>
+    <string name="version_manager_rename">Rename</string>
+    <string name="version_manager_copy_metadata">Copy version files</string>
+    <string name="version_manager_copy_all">Copy complete instance</string>
+    <string name="version_manager_delete_version">Delete version</string>
+    <string name="version_manager_delete_instance_message">This removes the version directory and all files stored by this isolated instance.</string>
+    <string name="version_manager_clean_assets">Clean unused assets</string>
+    <string name="version_manager_clean_assets_message">Remove shared asset objects that are not referenced by an installed version?</string>
+    <string name="version_settings_icon">Version icon</string>
+    <string name="version_settings_summary">Instance summary</string>
+    <string name="version_settings_graphics_api">Graphics API</string>
+    <string name="version_settings_graphics_default">Use Minecraft setting</string>
+    <string name="version_settings_isolation">Version isolation</string>
+    <string name="version_settings_isolation_follow">Follow global setting</string>
+    <string name="version_settings_isolation_enable">Force enabled</string>
+    <string name="version_settings_isolation_disable">Force disabled</string>
+    <string name="version_settings_tab_one">Overview</string>
+    <string name="version_settings_tab_two">Configuration</string>
+    <string name="version_settings_tab_one_description">Instance overview</string>
+    <string name="version_settings_tab_two_description">Instance configuration</string>
+    <string name="version_overview_name">Instance name</string>
+    <string name="version_overview_summary">Instance note</string>
+    <string name="version_overview_no_summary">No note</string>
+    <string name="version_overview_edit_name">Edit name</string>
+    <string name="version_overview_edit_summary">Edit note</string>
+    <string name="version_overview_reset_icon">Reset icon</string>
+    <string name="version_overview_reset_icon_message">Restore the default icon for this instance?</string>
 </resources>

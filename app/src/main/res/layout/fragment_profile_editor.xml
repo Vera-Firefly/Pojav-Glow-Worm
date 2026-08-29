@@ -284,35 +284,6 @@
                 app:layout_constraintEnd_toEndOf="@id/vprof_enable_mods_check"
                 app:layout_constraintTop_toTopOf="@id/vprof_enable_mods_check" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/vprof_disable_downloader_title"
-                app:layout_constraintBottom_toTopOf="@+id/vprof_disable_downloader"
-                app:layout_constraintStart_toStartOf="@+id/vprof_disable_downloader" />
-
-            <TextView
-                android:id="@+id/vprof_disable_downloader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/background_line"
-                android:ems="10"
-                android:text="@string/vprof_enable_disable_downloader"
-                android:paddingHorizontal="@dimen/padding_heavy"
-                android:textSize="@dimen/_13ssp"
-                app:layout_constraintTop_toBottomOf="@+id/vprof_enable_mods_check" />
-
-            <CheckBox
-                android:id="@+id/vprof_settings_disable_downloader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_8sdp"
-                app:layout_constraintBottom_toBottomOf="@id/vprof_disable_downloader"
-                app:layout_constraintEnd_toEndOf="@id/vprof_disable_downloader"
-                app:layout_constraintTop_toTopOf="@id/vprof_disable_downloader" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <LinearLayout

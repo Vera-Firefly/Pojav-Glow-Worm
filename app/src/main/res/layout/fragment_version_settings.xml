@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_app"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/version_settings_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/background_bottom_bar"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/version_settings_tab_one"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_version_settings_tab"
+            android:clickable="true"
+            android:contentDescription="@string/version_settings_tab_one_description"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/version_settings_tab_one"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/version_settings_tab_two"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_version_settings_tab"
+            android:clickable="true"
+            android:contentDescription="@string/version_settings_tab_two_description"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/version_settings_tab_two"
+            android:textColor="@color/secondary_text"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/version_settings_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:saveEnabled="true" />
+</LinearLayout>

@@ -28,6 +28,7 @@ import android.util.Log;
 import com.firefly.utils.MesaUtils;
 import com.firefly.utils.PGWTools;
 import com.firefly.utils.RendererUtils;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import com.movtery.feature.version.VersionInfo;
 import com.movtery.plugins.renderer.RendererPlugin;
@@ -53,6 +54,7 @@ import org.lwjgl.glfw.CallbackBridge;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -135,7 +137,7 @@ public class JREUtils {
     public static void redirectAndPrintJRELog() {
 
         Log.v("jrelog", "Log starts here");
-        new Thread(new Runnable() {
+        Thread logcatThread = new Thread(new Runnable() {
             int failTime = 0;
             ProcessBuilder logcatPb;
 
@@ -173,7 +175,9 @@ public class JREUtils {
                     Logger.appendToLog("Exception on logging thread:\n" + Log.getStackTraceString(e));
                 }
             }
-        }).start();
+        }, "PGW JRE logcat");
+        logcatThread.setDaemon(true);
+        logcatThread.start();
         Log.i("jrelog-logcat", "Logcat thread started");
 
     }
@@ -602,7 +606,7 @@ public class JREUtils {
 
     private static void launchJavaVM(final Activity activity, String runtimeHome, File gameDirectory, final List<String> JVMArgs, final String userArgsString, File lwjglNativeDirectory) {
         PGWTools.onAppendToLog("Launch JVM");
-        List<String> userArgs = getJavaArgs(runtimeHome, userArgsString);
+        List<String> userArgs = getJavaArgs(runtimeHome, userArgsString, gameDirectory);
 
         //Remove arguments that can interfere with the good working of the launcher
         purgeArg(userArgs, "-Xms");
@@ -650,7 +654,9 @@ public class JREUtils {
 
         final int exitCode = VMLauncher.launchJVM(userArgs.toArray(new String[0]));
         Logger.appendToLog("Java Exit code: " + exitCode);
-        if (exitCode != 0) {
+        if (exitCode == 0) {
+            activity.runOnUiThread(() -> ProcessPhoenix.triggerRebirth(activity));
+        } else {
             activity.runOnUiThread(() -> {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
                 dialog.setMessage(activity.getString(R.string.mcn_exit_title, exitCode));
@@ -687,12 +693,45 @@ public class JREUtils {
     }
 
     /**
+     * Starts a short-lived JVM in an isolated Android process without configuring game graphics
+     * or changing the launcher activity state.
+     */
+    public static int launchInstallerJvm(final Runtime runtime, final File workingDirectory,
+                                         final List<String> jvmArgs) throws Throwable {
+        String runtimeHome = MultiRTUtils.getRuntimeHome(runtime.name).getAbsolutePath();
+        JREUtils.relocateLibPath(runtime, runtimeHome);
+        initLdLibraryPath(runtimeHome);
+        loadEnv(runtimeHome, runtime, null, false, null);
+        initJavaRuntime(runtimeHome);
+
+        ArrayList<String> args = new ArrayList<>();
+        args.add("java");
+        args.add("-Djava.home=" + runtimeHome);
+        args.add("-Djava.io.tmpdir=" + Tools.DIR_CACHE.getAbsolutePath());
+        args.add("-Duser.home=" + workingDirectory.getAbsolutePath());
+        args.add("-Dos.name=Linux");
+        args.add("-Dos.version=Android-" + Build.VERSION.RELEASE);
+        args.add("-Djava.library.path=" + NATIVE_LIB_DIR);
+        args.addAll(jvmArgs);
+
+        if (!workingDirectory.isDirectory() && !workingDirectory.mkdirs()) {
+            throw new IOException("Unable to create JVM working directory: " + workingDirectory);
+        }
+        chdir(workingDirectory.getAbsolutePath());
+        return VMLauncher.launchJVM(args.toArray(new String[0]));
+    }
+
+    /**
      * Gives an argument list filled with both the user args
      * and the auto-generated ones (eg. the window resolution).
      *
      * @return A list filled with args.
      */
     public static List<String> getJavaArgs(String runtimeHome, String userArgumentsString) {
+        return getJavaArgs(runtimeHome, userArgumentsString, null);
+    }
+
+    public static List<String> getJavaArgs(String runtimeHome, String userArgumentsString, File gameDirectory) {
         List<String> userArguments = parseJavaArguments(userArgumentsString);
         String resolvFile;
         resolvFile = new File(Tools.DIR_DATA, "resolv.conf").getAbsolutePath();
@@ -705,7 +744,7 @@ public class JREUtils {
                 "-Duser.language=" + System.getProperty("user.language"),
                 "-Dos.name=Linux",
                 "-Dos.version=Android-" + Build.VERSION.RELEASE,
-                "-Dpojav.path.minecraft=" + ProfilePathHome.getGameHome(),
+                "-Dpojav.path.minecraft=" + (gameDirectory == null ? ProfilePathHome.getGameHome() : gameDirectory.getAbsolutePath()),
                 "-Dpojav.path.private.account=" + Tools.DIR_ACCOUNT_NEW,
                 "-Duser.timezone=" + TimeZone.getDefault().getID(),
 

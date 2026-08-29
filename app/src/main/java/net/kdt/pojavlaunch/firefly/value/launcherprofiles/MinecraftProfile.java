@@ -19,16 +19,27 @@ public class MinecraftProfile {
     public boolean logConfigIsXML;
     public String pojavRendererName;
     public boolean enableModsCheck = true;
-    public boolean disableDownloader;
     public String controlFile;
     public MinecraftResolution[] resolution;
+
+    /**
+     * An in-memory game directory supplied by the installed-version configuration.
+     * It is intentionally not serialized into legacy launcher profiles.
+     */
+    public transient String pgwManagedGameDir;
+
+    /**
+     * An in-memory graphics API supplied by the installed-version configuration.
+     * It is intentionally not serialized into legacy launcher profiles.
+     */
+    public transient String pgwGraphicsApi;
 
 
     public static MinecraftProfile createTemplate() {
         MinecraftProfile TEMPLATE = new MinecraftProfile();
         TEMPLATE.name = "New";
         TEMPLATE.language = 0;
-        TEMPLATE.lastVersionId = "latest-release";
+        TEMPLATE.lastVersionId = "Unknown";
         TEMPLATE.enableModsCheck = true;
         return TEMPLATE;
     }
@@ -60,8 +71,9 @@ public class MinecraftProfile {
         logConfigIsXML = profile.logConfigIsXML;
         pojavRendererName = profile.pojavRendererName;
         enableModsCheck = profile.enableModsCheck;
-        disableDownloader = profile.disableDownloader;
         controlFile = profile.controlFile;
         resolution = profile.resolution;
+        pgwManagedGameDir = profile.pgwManagedGameDir;
+        pgwGraphicsApi = profile.pgwGraphicsApi;
     }
 }

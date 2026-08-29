@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.jakewharton.processphoenix.ProcessPhoenix;
+
 import net.kdt.pojavlaunch.firefly.R;
 
 @Keep
@@ -40,6 +42,11 @@ public class ExitActivity extends AppCompatActivity {
     }
 
     public static void showExitMessage(Context ctx, int code, boolean isSignal) {
+        if (code == 0 && !isSignal) {
+            ProcessPhoenix.triggerRebirth(ctx);
+            return;
+        }
+
         Intent i = new Intent(ctx, ExitActivity.class);
         i.putExtra("code", code);
         i.putExtra("isSignal", isSignal);

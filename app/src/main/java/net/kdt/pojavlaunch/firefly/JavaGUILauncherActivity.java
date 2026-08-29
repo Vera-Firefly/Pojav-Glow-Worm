@@ -52,6 +52,8 @@ import java.util.zip.ZipFile;
 public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouchListener {
 
     public static final String SUBSCRIBE_JVM_EXIT_EVENT = "subscribe_jvm_exit_event";
+    public static final String TRUSTED_INSTALLER = "trusted_installer";
+    private static final int MAX_GUI_INSTALLER_JAVA_VERSION = 21;
     private AWTCanvasView mTextureView;
     private LoggerView mLoggerView;
     private TouchCharInput mTouchCharInput;
@@ -62,6 +64,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
 
     private boolean mIsVirtualMouseEnabled;
     private boolean mSubscribeJvmExitEvent;
+    private boolean mTrustedInstaller;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -168,6 +171,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
                 return;
             }
             mSubscribeJvmExitEvent = extras.getBoolean(SUBSCRIBE_JVM_EXIT_EVENT, false);
+            mTrustedInstaller = extras.getBoolean(TRUSTED_INSTALLER, false);
             final String javaArgs = extras.getString("javaArgs");
             Uri modUri = null;
 
@@ -248,8 +252,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
         }
         Runtime selectedRuntime = MultiRTUtils.forceReread(nearestRuntime);
         int selectedJavaVersion = Math.max(javaVersion, selectedRuntime.javaVersion);
-        // Don't allow versions higher than Java 17 because our caciocavallo implementation does not allow for it
-        if (selectedJavaVersion > 17) {
+        if (selectedJavaVersion > MAX_GUI_INSTALLER_JAVA_VERSION) {
             finalErrorDialog(getString(R.string.execute_jar_incompatible_runtime, selectedJavaVersion));
             return null;
         }
@@ -403,7 +406,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
             }
 
 
-            if (LauncherPreferences.PREF_JAVA_SANDBOX) {
+            if (LauncherPreferences.PREF_JAVA_SANDBOX && !mTrustedInstaller) {
                 Collections.reverse(javaArgList);
                 javaArgList.add("-Xbootclasspath/a:" + Tools.DIR_DATA + "/security/pro-grade.jar");
                 javaArgList.add("-Djava.security.manager=net.sourceforge.prograde.sm.ProGradeJSM");

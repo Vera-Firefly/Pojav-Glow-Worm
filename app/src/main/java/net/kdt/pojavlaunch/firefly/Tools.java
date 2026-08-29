@@ -79,6 +79,7 @@ import net.kdt.pojavlaunch.firefly.value.MinecraftAccount;
 import net.kdt.pojavlaunch.firefly.value.MinecraftLibraryArtifact;
 import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.firefly.value.launcherprofiles.MinecraftProfile;
+import net.kdt.pojavlaunch.firefly.version.VersionIsolation;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
@@ -236,10 +237,12 @@ public final class Tools {
         Runtime runtime = MultiRTUtils.forceReread(Tools.pickRuntime(minecraftProfile, versionJavaRequirement));
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionId);
         LwjglComponent lwjglComponent = LwjglComponent.forVersion(versionInfo);
-        LauncherProfiles.load(ProfilePathManager.getCurrentProfile());
 
         File gamedir = Tools.getGameDirPath(minecraftProfile);
-        MinecraftGraphicsApi.apply(gamedir.getAbsolutePath(), LauncherPreferences.PREF_GRAPHICS_API);
+        String graphicsApi = isValidString(minecraftProfile.pgwGraphicsApi)
+                ? minecraftProfile.pgwGraphicsApi
+                : LauncherPreferences.PREF_GRAPHICS_API;
+        MinecraftGraphicsApi.apply(gamedir.getAbsolutePath(), graphicsApi);
 
         VersionInfo versionInfo1;
         try {
@@ -294,13 +297,22 @@ public final class Tools {
     }
 
     public static File getGameDirPath(@NonNull MinecraftProfile minecraftProfile) {
-        if (minecraftProfile.gameDir != null) {
-            if (minecraftProfile.gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                return new File(minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX, ProfilePathManager.getCurrentPath() + "/"));
-            else
-                return new File(ProfilePathManager.getCurrentPath(), minecraftProfile.gameDir);
+        if (isValidString(minecraftProfile.pgwManagedGameDir)) {
+            return new File(minecraftProfile.pgwManagedGameDir);
         }
-        return new File(ProfilePathHome.getGameHome());
+        File customGameDirectory = null;
+        if (isValidString(minecraftProfile.gameDir)) {
+            if (minecraftProfile.gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
+                customGameDirectory = new File(minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX, ProfilePathManager.getCurrentPath() + "/"));
+            else
+                customGameDirectory = new File(ProfilePathManager.getCurrentPath(), minecraftProfile.gameDir);
+        }
+        return VersionIsolation.resolveGameDirectory(
+                new File(ProfilePathHome.getGameHome()),
+                customGameDirectory,
+                minecraftProfile.lastVersionId,
+                LauncherPreferences.PREF_VERSION_ISOLATION
+        );
     }
 
     public static File getGameDirPath(String gameDir) {

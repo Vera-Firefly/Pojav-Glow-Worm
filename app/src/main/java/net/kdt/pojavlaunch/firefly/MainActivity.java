@@ -76,8 +76,8 @@ import net.kdt.pojavlaunch.firefly.services.GameService;
 import net.kdt.pojavlaunch.firefly.utils.JREUtils;
 import net.kdt.pojavlaunch.firefly.utils.MCOptionUtils;
 import net.kdt.pojavlaunch.firefly.value.MinecraftAccount;
-import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.firefly.value.launcherprofiles.MinecraftProfile;
+import net.kdt.pojavlaunch.firefly.version.PgwVersionRepository;
 
 import org.lwjgl.glfw.CallbackBridge;
 
@@ -118,7 +118,13 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        minecraftProfile = LauncherProfiles.getCurrentProfile();
+        String requestedVersion = getIntent().getStringExtra(INTENT_MINECRAFT_VERSION);
+        minecraftProfile = requestedVersion == null
+                ? PgwVersionRepository.INSTANCE.currentLaunchProfile()
+                : PgwVersionRepository.INSTANCE.launchProfile(requestedVersion);
+        if (minecraftProfile == null) {
+            throw new IllegalStateException("The selected installed version is unavailable");
+        }
 
         String gameDirPath = Tools.getGameDirPath(minecraftProfile).getAbsolutePath();
         MCOptionUtils.load(gameDirPath);
@@ -358,6 +364,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
     @Override
     protected void onDestroy() {
+        stopService(new Intent(this, GameService.class));
         super.onDestroy();
         CallbackBridge.removeGrabListener(touchpad);
         CallbackBridge.removeGrabListener(minecraftGLView);
@@ -455,7 +462,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         PGWTools.onAppendToLog("Launch Minecraft");
         printLauncherInfo(versionId, Tools.isValidString(minecraftProfile.javaArgs) ? minecraftProfile.javaArgs : LauncherPreferences.PREF_CUSTOM_JAVA_ARGS);
         JREUtils.redirectAndPrintJRELog();
-        LauncherProfiles.load(ProfilePathManager.getCurrentProfile());
         int requiredJavaVersion = 8;
         if (version.javaVersion != null) requiredJavaVersion = version.javaVersion.majorVersion;
         Tools.launchMinecraft(this, minecraftAccount, minecraftProfile, versionId, requiredJavaVersion);

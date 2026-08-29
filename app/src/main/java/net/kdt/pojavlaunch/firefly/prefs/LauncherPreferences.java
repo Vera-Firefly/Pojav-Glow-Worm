@@ -35,10 +35,6 @@ public class LauncherPreferences {
     public static String PREF_LOCAL_LOADER_OVERRIDE = "kgsl";
     public static String PREF_LIBGL_GL = "default";
 
-    public static boolean PREF_VERTYPE_RELEASE = true;
-    public static boolean PREF_VERTYPE_SNAPSHOT = false;
-    public static boolean PREF_VERTYPE_OLDALPHA = false;
-    public static boolean PREF_VERTYPE_OLDBETA = false;
     public static boolean PREF_HIDE_SIDEBAR = false;
     public static boolean PREF_IGNORE_NOTCH = false;
     public static int PREF_NOTCH_SIZE = 0;
@@ -48,8 +44,6 @@ public class LauncherPreferences {
     public static String PREF_DEFAULTCTRL_PATH = Tools.CTRLDEF_FILE;
     public static String PREF_CUSTOM_JAVA_ARGS;
     public static boolean PREF_FORCE_ENGLISH = false;
-    public static final String PREF_VERSION_REPOS = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
-    public static boolean PREF_CHECK_LIBRARY_SHA = true;
     public static boolean PREF_DISABLE_GESTURES = false;
     public static boolean PREF_DISABLE_SWAP_HAND = false;
     public static float PREF_MOUSESPEED = 1f;
@@ -88,8 +82,6 @@ public class LauncherPreferences {
     public static boolean PREF_USE_DRM_SHIM = false;
     public static boolean FIX_Q3_BEHAVIOR = false;
 
-    public static boolean PREF_VERIFY_MANIFEST = true;
-    public static String PREF_DOWNLOAD_SOURCE = "default";
     public static boolean PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = false;
     public static boolean PREF_VSYNC_IN_ZINK = true;
 
@@ -104,6 +96,7 @@ public class LauncherPreferences {
     public static boolean PREF_GAME_LANGUAGE_OVERRIDDEN = false;
     public static String PREF_GAME_LANGUAGE = ZHTools.getSystemLanguage();
     public static boolean PREF_MESA_INFO = false;
+    public static boolean PREF_VERSION_ISOLATION = true;
 
     public static void loadPreferences(Context ctx) {
         //Required for CTRLDEF_FILE and MultiRT
@@ -119,14 +112,9 @@ public class LauncherPreferences {
         PREF_MOUSESPEED = ((float) DEFAULT_PREF.getInt("mousespeed", 100)) / 100f;
         PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
         PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
-        PREF_VERTYPE_RELEASE = DEFAULT_PREF.getBoolean("vertype_release", true);
-        PREF_VERTYPE_SNAPSHOT = DEFAULT_PREF.getBoolean("vertype_snapshot", false);
-        PREF_VERTYPE_OLDALPHA = DEFAULT_PREF.getBoolean("vertype_oldalpha", false);
-        PREF_VERTYPE_OLDBETA = DEFAULT_PREF.getBoolean("vertype_oldbeta", false);
         PREF_LONGPRESS_TRIGGER = DEFAULT_PREF.getInt("timeLongPressTrigger", 300);
         PREF_DEFAULTCTRL_PATH = DEFAULT_PREF.getString("defaultCtrl", Tools.CTRLDEF_FILE);
         PREF_FORCE_ENGLISH = DEFAULT_PREF.getBoolean("force_english", false);
-        PREF_CHECK_LIBRARY_SHA = DEFAULT_PREF.getBoolean("checkLibraries", true);
         PREF_DISABLE_GESTURES = DEFAULT_PREF.getBoolean("disableGestures", false);
         PREF_DISABLE_SWAP_HAND = DEFAULT_PREF.getBoolean("disableDoubleTap", false);
         PREF_RAM_ALLOCATION = DEFAULT_PREF.getInt("allocation", findBestRAMAllocation(ctx));
@@ -149,8 +137,6 @@ public class LauncherPreferences {
         PREF_DEADZONE_SCALE = ((float) DEFAULT_PREF.getInt("gamepad_deadzone_scale", 100)) / 100f;
         PREF_BIG_CORE_AFFINITY = DEFAULT_PREF.getBoolean("bigCoreAffinity", false);
         PREF_ZINK_PREFER_SYSTEM_DRIVER = DEFAULT_PREF.getBoolean("zinkPreferSystemDriver", false);
-        PREF_DOWNLOAD_SOURCE = DEFAULT_PREF.getString("downloadSource", "default");
-        PREF_VERIFY_MANIFEST = DEFAULT_PREF.getBoolean("verifyManifest", true);
         PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = DEFAULT_PREF.getBoolean(PREF_KEY_SKIP_NOTIFICATION_CHECK, false);
         PREF_VSYNC_IN_ZINK = DEFAULT_PREF.getBoolean("vsync_in_zink", true);
 
@@ -183,6 +169,7 @@ public class LauncherPreferences {
         PREF_AUTOMATICALLY_SET_GAME_LANGUAGE = DEFAULT_PREF.getBoolean("autoSetGameLanguage", true);
         PREF_GAME_LANGUAGE_OVERRIDDEN = DEFAULT_PREF.getBoolean("gameLanguageOverridden", false);
         PREF_GAME_LANGUAGE = DEFAULT_PREF.getString("setGameLanguage", ZHTools.getSystemLanguage());
+        PREF_VERSION_ISOLATION = DEFAULT_PREF.getBoolean("versionIsolation", true);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {

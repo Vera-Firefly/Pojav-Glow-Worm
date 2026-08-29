@@ -37,19 +37,15 @@ import net.kdt.pojavlaunch.firefly.fragments.MicrosoftLoginFragment;
 import net.kdt.pojavlaunch.firefly.fragments.SelectAuthFragment;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextAwareDoneListener;
-import net.kdt.pojavlaunch.firefly.modloaders.modpacks.ModloaderInstallTracker;
-import net.kdt.pojavlaunch.firefly.modloaders.modpacks.imagecache.IconCacheJanitor;
 import net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.firefly.prefs.screens.LauncherPreferenceFragment;
 import net.kdt.pojavlaunch.firefly.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.firefly.progresskeeper.TaskCountListener;
 import net.kdt.pojavlaunch.firefly.services.ProgressServiceKeeper;
-import net.kdt.pojavlaunch.firefly.tasks.AsyncMinecraftDownloader;
-import net.kdt.pojavlaunch.firefly.tasks.AsyncVersionList;
-import net.kdt.pojavlaunch.firefly.tasks.MinecraftDownloader;
 import net.kdt.pojavlaunch.firefly.utils.NotificationUtils;
-import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.firefly.value.launcherprofiles.MinecraftProfile;
+import net.kdt.pojavlaunch.firefly.version.VersionOperationRunner;
+import net.kdt.pojavlaunch.firefly.version.PgwVersionRepository;
 
 import java.lang.ref.WeakReference;
 
@@ -66,7 +62,6 @@ public class LauncherActivity extends BaseActivity {
     private ImageButton mSettingsButton;
     private ProgressLayout mProgressLayout;
     private ProgressServiceKeeper mProgressServiceKeeper;
-    private ModloaderInstallTracker mInstallTracker;
     private NotificationManager mNotificationManager;
 
     /* Allows to switch from one button "type" to another */
@@ -105,33 +100,25 @@ public class LauncherActivity extends BaseActivity {
         }
     };
 
-    private final ExtraListener<Boolean> mStartDownloadMinecraft = (key, value) -> {
-        mLaunchGame(true);
-        return false;
-    };
+    public void launchGame() {
+        launchGame(true);
+    }
 
-    private final ExtraListener<Boolean> mSkipDownloadMinecraft = (key, value) -> {
-        mLaunchGame(false);
-        return false;
-    };
+    public void launchGameSkippingIntegrityCheck() {
+        launchGame(false);
+    }
 
-    private void mLaunchGame(boolean downloader) {
+    private void launchGame(boolean verifyAndRepair) {
         if (mProgressLayout.hasProcesses()) {
             Toast(this, R.string.tasks_ongoing);
             return;
         }
 
-        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, "");
-        if (LauncherProfiles.mainProfileJson == null || !LauncherProfiles.mainProfileJson.profiles.containsKey(selectedProfile)) {
-            Toast(this, R.string.error_no_version, Toast.LENGTH_LONG);
-            return;
-        }
-        MinecraftProfile prof = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
+        MinecraftProfile prof = PgwVersionRepository.INSTANCE.currentLaunchProfile();
         if (prof == null || prof.lastVersionId == null || "Unknown".equals(prof.lastVersionId)) {
             Toast(this, R.string.error_no_version, Toast.LENGTH_LONG);
             return;
         }
-
         if (mAccountSpinner.getSelectedAccount() == null) {
             Toast(this, R.string.no_saved_accounts, Toast.LENGTH_LONG);
             ExtraCore.setValue(ExtraConstants.SELECT_AUTH_METHOD, true);
@@ -140,14 +127,18 @@ public class LauncherActivity extends BaseActivity {
 
         Tools.ENABLE_MODS_CHECK = prof.enableModsCheck;
 
-        String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
-        JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
-        new MinecraftDownloader().start(
-                downloader && !prof.disableDownloader,
-                mcVersion,
-                normalizedVersionId,
-                new ContextAwareDoneListener(this, normalizedVersionId)
-        );
+        if (!verifyAndRepair) {
+            new ContextAwareDoneListener(prof.lastVersionId).launch();
+            return;
+        }
+
+        VersionOperationRunner.repairBeforeLaunch(prof.lastVersionId, error -> {
+            if (error != null) {
+                Tools.showError(this, error);
+            } else {
+                new ContextAwareDoneListener(prof.lastVersionId).launch();
+            }
+        });
     }
 
     private final TaskCountListener mDoubleLaunchPreventionListener = taskCount -> {
@@ -185,7 +176,6 @@ public class LauncherActivity extends BaseActivity {
                     .add(R.id.container_fragment, MainMenuFragment.class, null, "ROOT").commit();
         }
 
-        IconCacheJanitor.runJanitor();
         mRequestNotificationPermissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 isAllowed -> {
@@ -208,19 +198,9 @@ public class LauncherActivity extends BaseActivity {
         ExtraCore.addExtraListener(ExtraConstants.BACK_PREFERENCE, mBackPreferenceListener);
         ExtraCore.addExtraListener(ExtraConstants.SELECT_AUTH_METHOD, mSelectAuthMethod);
 
-        // ExtraCore.addExtraListener(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
-        ExtraCore.addExtraListener(ExtraConstants.START_DOWNLOADER, mStartDownloadMinecraft);
-        ExtraCore.addExtraListener(ExtraConstants.SKIP_DOWNLOADER, mSkipDownloadMinecraft);
-
-        new AsyncVersionList().getVersionList(versions -> ExtraCore.setValue(ExtraConstants.RELEASE_TABLE, versions), false);
-
-        mInstallTracker = new ModloaderInstallTracker(this);
-
-        mProgressLayout.observe(ProgressLayout.DOWNLOAD_MINECRAFT);
         mProgressLayout.observe(ProgressLayout.UNPACK_RUNTIME);
-        mProgressLayout.observe(ProgressLayout.INSTALL_MODPACK);
         mProgressLayout.observe(ProgressLayout.AUTHENTICATE_MICROSOFT);
-        mProgressLayout.observe(ProgressLayout.DOWNLOAD_VERSION_LIST);
+        mProgressLayout.observe(ProgressLayout.MINECRAFT_VERSION_REPAIR);
         // 初始化并调用 UpdateLauncher 进行更新检查
         UpdateLauncher updateLauncher = new UpdateLauncher(this);
         updateLauncher.checkForUpdates(true);
@@ -230,14 +210,12 @@ public class LauncherActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         ContextExecutor.setActivity(this);
-        mInstallTracker.attach();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         ContextExecutor.clearActivity();
-        mInstallTracker.detach();
     }
 
     @Override
@@ -259,9 +237,6 @@ public class LauncherActivity extends BaseActivity {
         ProgressKeeper.removeTaskCountListener(mProgressServiceKeeper);
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.BACK_PREFERENCE, mBackPreferenceListener);
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.SELECT_AUTH_METHOD, mSelectAuthMethod);
-        // ExtraCore.removeExtraListenerFromValue(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
-        ExtraCore.removeExtraListenerFromValue(ExtraConstants.START_DOWNLOADER, mStartDownloadMinecraft);
-        ExtraCore.removeExtraListenerFromValue(ExtraConstants.SKIP_DOWNLOADER, mSkipDownloadMinecraft);
 
         getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(mFragmentCallbackListener);
     }

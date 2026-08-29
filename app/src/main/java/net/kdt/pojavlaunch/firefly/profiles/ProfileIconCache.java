@@ -20,7 +20,7 @@ import java.util.Objects;
 public class ProfileIconCache {
     // Data header format: data:<mime>;<encoding>,<data>
     private static final String DATA_HEADER = "data:";
-    private static final String FALLBACK_ICON_NAME = "default";
+    private static final String FALLBACK_ICON_NAME = ProfileIconIds.DEFAULT;
     private static final Map<String, Drawable> sIconCache = new HashMap<>();
     private static final Map<String, Drawable> sStaticIconCache = new HashMap<>();
 
@@ -85,12 +85,20 @@ public class ProfileIconCache {
 
     private static int getStaticIconResource(String icon) {
         switch (icon) {
-            case "default":
+            case ProfileIconIds.DEFAULT:
                 return R.drawable.ic_pojav_full;
-            case "fabric":
+            case ProfileIconIds.MINECRAFT:
+                return R.drawable.ic_minecraft;
+            case ProfileIconIds.FORGE:
+                return R.drawable.ic_forge;
+            case ProfileIconIds.NEOFORGE:
+                return R.drawable.ic_neoforge;
+            case ProfileIconIds.FABRIC:
                 return R.drawable.ic_fabric;
-            case "quilt":
+            case ProfileIconIds.QUILT:
                 return R.drawable.ic_quilt;
+            case ProfileIconIds.OPTIFINE:
+                return R.drawable.ic_optifine;
             default:
                 return -1;
         }
