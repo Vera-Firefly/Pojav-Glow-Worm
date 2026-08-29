@@ -58,14 +58,24 @@ object LocalVersionManager {
     fun scan(): List<LocalVersion> = VersionPaths.versions().listFiles()
         .orEmpty()
         .asSequence()
-        .filter(File::isDirectory)
+        .filter { it.isDirectory && !isInternalDirectory(it.name) }
         .map(::readVersion)
-        .sortedWith(compareByDescending<LocalVersion> { it.manifest?.releaseTime.orEmpty() }.thenBy { it.id.lowercase(Locale.ROOT) })
         .toList()
+        .let(::applyInheritedRepairStatus)
+        .sortedWith(compareByDescending<LocalVersion> { it.manifest?.releaseTime.orEmpty() }.thenBy { it.id.lowercase(Locale.ROOT) })
 
-    fun get(versionId: String): LocalVersion? = VersionPaths.versionDirectory(versionId)
-        .takeIf(File::isDirectory)
-        ?.let(::readVersion)
+    fun get(versionId: String): LocalVersion? = versionId
+        .takeUnless(::isInternalDirectory)
+        ?.let { id -> scan().firstOrNull { it.id == id } }
+
+    /** Returns every local instance that directly or transitively inherits from [versionId]. */
+    fun dependentVersionIds(versionId: String): List<String> {
+        val versions = scan()
+        return VersionDependencyGraph.descendants(
+            versionId,
+            versions.associate { it.id to it.manifest?.inheritsFrom }
+        )
+    }
 
     fun rename(versionId: String, newVersionId: String) {
         validateVersionId(newVersionId)
@@ -200,7 +210,21 @@ object LocalVersionManager {
 
     /** Removes unreferenced entries from assets/objects without touching saves, libraries or indexes. */
     fun clearUnreferencedAssets(): Int {
-        val referenced = scan().mapNotNull { it.manifest?.assetIndex?.id }.toSet()
+        val versions = scan()
+        // A missing parent hides the only metadata that can name its asset index. Keep shared
+        // objects intact until repair makes the inheritance graph complete again.
+        if (versions.any { it.requiresRepair }) return 0
+        val byId = versions.associateBy { it.id }
+        val referenced = LinkedHashSet<String>()
+        fun collectAssetIndexes(versionId: String, visited: MutableSet<String>) {
+            if (!visited.add(versionId)) return
+            val manifest = byId[versionId]?.manifest ?: return
+            manifest.assetIndex?.id?.let(referenced::add)
+            manifest.inheritsFrom?.takeIf { it.isNotBlank() }?.let { parentId ->
+                collectAssetIndexes(parentId, visited)
+            }
+        }
+        versions.forEach { collectAssetIndexes(it.id, LinkedHashSet()) }
         val objectsHome = File(VersionPaths.assets(), "objects")
         if (!objectsHome.isDirectory) return 0
 
@@ -230,6 +254,17 @@ object LocalVersionManager {
             valid = manifest != null,
             requiresRepair = manifest != null && !File(directory, "$id.jar").isFile && manifest.inheritsFrom.isNullOrBlank()
         )
+    }
+
+    private fun applyInheritedRepairStatus(versions: List<LocalVersion>): List<LocalVersion> {
+        val parentByVersion = versions.associate { it.id to it.manifest?.inheritsFrom.orEmpty() }
+        val clientJarVersions = versions.filter { File(it.directory, "${it.id}.jar").isFile }.mapTo(LinkedHashSet()) { it.id }
+        return versions.map { version ->
+            version.copy(
+                requiresRepair = version.requiresRepair ||
+                    VersionDependencyGraph.requiresRepair(version.id, parentByVersion, clientJarVersions)
+            )
+        }
     }
 
     private fun detectKind(manifest: GameManifest): LocalVersionKind {
@@ -282,6 +317,9 @@ object LocalVersionManager {
         require(value.isNotBlank() && value.length <= 128) { "Invalid version name" }
         require(!value.contains('/') && !value.contains('\\') && value != "." && value != "..") { "Invalid version name" }
     }
+
+    private fun isInternalDirectory(name: String): Boolean =
+        name.startsWith(".pgw-stage-") || name.startsWith(".pgw-backup-")
 
     private fun <T> parse(file: File, type: Class<T>): T? = runCatching {
         if (!file.isFile) return null

@@ -105,8 +105,14 @@ class VersionSettingsOverviewFragment : Fragment(), CropperUtils.CropperListener
 
     private fun rename(newVersionId: String) {
         if (newVersionId == versionId) return
+        val pendingWrites = (parentFragment as? VersionSettingsFragment)?.flushPendingConfigurationWrites()
         lifecycleScope.launch {
-            runCatching { withContext(Dispatchers.IO) { PgwVersionRepository.rename(versionId, newVersionId) } }
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    pendingWrites?.get()
+                    PgwVersionRepository.rename(versionId, newVersionId)
+                }
+            }
                 .onSuccess {
                     VersionIconCache.drop(versionId)
                     versionId = newVersionId

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import net.kdt.pojavlaunch.firefly.R
+import java.util.concurrent.Future
 
 /** Hosts the pages used to edit one installed version. */
 class VersionSettingsFragment : Fragment(R.layout.fragment_version_settings) {
@@ -57,6 +58,11 @@ class VersionSettingsFragment : Fragment(R.layout.fragment_version_settings) {
         versionId = newVersionId
         showVersion(newVersionId, 0)
     }
+
+    fun flushPendingConfigurationWrites(): Future<*>? = childFragmentManager.fragments
+        .filterIsInstance<VersionSettingsPageFragment>()
+        .firstOrNull()
+        ?.flushPendingWrites()
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (::pager.isInitialized) outState.putInt(STATE_PAGE, pager.currentItem)

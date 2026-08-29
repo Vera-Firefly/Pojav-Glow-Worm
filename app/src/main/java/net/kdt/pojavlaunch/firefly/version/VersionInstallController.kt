@@ -35,9 +35,11 @@ import net.kdt.pojavlaunch.firefly.version.download.MinecraftFileDownloader
 import net.kdt.pojavlaunch.firefly.version.download.VersionDownloadTask
 import net.kdt.pojavlaunch.firefly.version.download.engine.BatchProgress
 import net.kdt.pojavlaunch.firefly.version.download.runVersionDownloadBatch
+import net.kdt.pojavlaunch.firefly.version.io.calculateSha1
 import java.io.File
 import java.io.IOException
 import java.util.UUID
+import java.util.concurrent.atomic.AtomicBoolean
 
 data class AddonSelection(
     val forge: LoaderVersion? = null,
@@ -161,6 +163,9 @@ object VersionInstallRules {
         }
         require(selections.fabricApi == null || selections.fabric != null) { "Fabric API requires Fabric" }
         require(selections.quiltedFabricApi == null || selections.quilt != null) { "Quilted Fabric API requires Quilt" }
+        require(request.targetVersionName != request.minecraftVersion || primary.isEmpty()) {
+            "A loader instance must not use the Minecraft version name"
+        }
         if (selections.hasForgeAndOptiFine()) {
             require(isOptiFineCompatibleWithForge(selections.optiFine!!, selections.forge!!)) {
                 "The selected OptiFine release is not compatible with Forge"
@@ -193,31 +198,38 @@ class VersionInstallController(private val appContext: Context) : ViewModel() {
 
     fun install(request: VersionInstallRequest) {
         check(installJob?.isActive != true) { "A version installation is already running" }
-        VersionInstallRules.validate(request)
-        check(!VersionPaths.versionDirectory(request.targetVersionName).exists()) {
-            "Version already exists: ${request.targetVersionName}"
-        }
-        installJob = viewModelScope.launch {
-            ProgressKeeper.submitProgress(PROGRESS_RECORD, 0, R.string.version_install_progress_starting)
-            try {
-                val installed = withContext(Dispatchers.IO) { VersionInstallTransaction(appContext, request, ::report).run() }
-                PgwVersionRepository.ensureInstalledVersion(
-                    installed,
-                    VersionInstallRules.defaultProfileIcon(request.addons)
-                )
-                _progress.value = VersionInstallProgress(
-                    stage = VersionInstallStage.COMPLETED,
-                    operation = installed,
-                    installedVersion = installed
-                )
-            } catch (cancelled: CancellationException) {
-                _progress.value = VersionInstallProgress(VersionInstallStage.CANCELLED)
-                throw cancelled
-            } catch (error: Throwable) {
-                _progress.value = VersionInstallProgress(VersionInstallStage.FAILED, error = error)
-            } finally {
-                ProgressKeeper.submitProgress(PROGRESS_RECORD, -1, -1)
+        check(INSTALLATION_IN_PROGRESS.compareAndSet(false, true)) { "A version installation is already running" }
+        try {
+            VersionInstallRules.validate(request)
+            check(!VersionPaths.versionDirectory(request.targetVersionName).exists()) {
+                "Version already exists: ${request.targetVersionName}"
             }
+            installJob = viewModelScope.launch {
+                ProgressKeeper.submitProgress(PROGRESS_RECORD, 0, R.string.version_install_progress_starting)
+                try {
+                    val installed = withContext(Dispatchers.IO) { VersionInstallTransaction(appContext, request, ::report).run() }
+                    PgwVersionRepository.ensureInstalledVersion(
+                        installed,
+                        VersionInstallRules.defaultProfileIcon(request.addons)
+                    )
+                    _progress.value = VersionInstallProgress(
+                        stage = VersionInstallStage.COMPLETED,
+                        operation = installed,
+                        installedVersion = installed
+                    )
+                } catch (cancelled: CancellationException) {
+                    _progress.value = VersionInstallProgress(VersionInstallStage.CANCELLED)
+                    throw cancelled
+                } catch (error: Throwable) {
+                    _progress.value = VersionInstallProgress(VersionInstallStage.FAILED, error = error)
+                } finally {
+                    INSTALLATION_IN_PROGRESS.set(false)
+                    ProgressKeeper.submitProgress(PROGRESS_RECORD, -1, -1)
+                }
+            }
+        } catch (error: Throwable) {
+            INSTALLATION_IN_PROGRESS.set(false)
+            throw error
         }
     }
 
@@ -253,6 +265,7 @@ class VersionInstallController(private val appContext: Context) : ViewModel() {
 
     companion object {
         const val PROGRESS_RECORD = "version_install_transaction"
+        private val INSTALLATION_IN_PROGRESS = AtomicBoolean(false)
     }
 }
 
@@ -269,7 +282,7 @@ private class VersionInstallTransaction(
     private val baseVersionExisted = VersionPaths.versionDirectory(request.minecraftVersion).exists()
     private var baseVersionCreated = false
     private var backupDirectory: File? = null
-    private val committedApiFiles = mutableListOf<File>()
+    private val committedApiFiles = mutableListOf<CommittedApiFile>()
     private var targetDirectoryCommitted = false
     private var committed = false
     private val plan = VersionInstallPlan(
@@ -290,6 +303,7 @@ private class VersionInstallTransaction(
             beginStep(VersionInstallStep.CLEAR_CACHE, VersionInstallStage.PREPARING)
             workspace.deleteRecursively()
             workspace.mkdirs()
+            removeStaleTransactionDirectories()
             stageDirectory.deleteRecursively()
             if (!stageDirectory.mkdirs() && !stageDirectory.isDirectory) {
                 throw IOException("Unable to create version staging directory: ${stageDirectory.absolutePath}")
@@ -333,8 +347,12 @@ private class VersionInstallTransaction(
             return request.targetVersionName
         } finally {
             if (!committed) restoreBackup()
-            if (!committed) committedApiFiles.forEach { it.delete() }
-            if (baseVersionCreated && request.targetVersionName != request.minecraftVersion) {
+            if (!committed) rollbackCommittedApiFiles()
+            // A loader manifest still inherits this local vanilla parent after the staged instance
+            // is committed. A standalone custom-named vanilla instance does not need the temporary parent.
+            if (baseVersionCreated && request.targetVersionName != request.minecraftVersion &&
+                (!committed || request.addons.primary() == null)
+            ) {
                 VersionPaths.versionDirectory(request.minecraftVersion).deleteRecursively()
             }
             cleanup()
@@ -525,9 +543,12 @@ private class VersionInstallTransaction(
     private fun cleanup() {
         stageDirectory.deleteRecursively()
         workspace.deleteRecursively()
-        listOf(VersionPaths.versions(), VersionPaths.libraries(), VersionPaths.assets()).forEach { root ->
-            root.walkTopDown().filter { it.isFile && it.name.endsWith(".part") }.forEach { it.delete() }
-        }
+    }
+
+    private fun removeStaleTransactionDirectories() {
+        VersionPaths.versions().listFiles().orEmpty()
+            .filter { it.isDirectory && (it.name.startsWith(".pgw-stage-") || it.name.startsWith(".pgw-backup-")) }
+            .forEach { it.deleteRecursively() }
     }
 
     private fun stageJson(): File = VersionPaths.versionJson(stageId)
@@ -569,12 +590,35 @@ private class VersionInstallTransaction(
         sourceMods.walkTopDown().filter(File::isFile).forEach { source ->
             val target = File(targetMods, source.relativeTo(sourceMods).path)
             target.parentFile?.mkdirs()
-            if (!target.isFile) {
-                source.copyTo(target, overwrite = false)
-                if (!isolateGameFiles) committedApiFiles += target
+            val expectedSha1 = selectedApi()?.takeIf { source.name == it.fileName }?.sha1
+            val targetMatches = target.isFile && (expectedSha1.isNullOrBlank() ||
+                calculateSha1(target).equals(expectedSha1, ignoreCase = true))
+            if (!targetMatches) {
+                val backup = if (!isolateGameFiles && target.isFile) {
+                    File(workspace, "api-backup/${source.relativeTo(sourceMods).path}").also { backup ->
+                        backup.parentFile?.mkdirs()
+                        target.copyTo(backup, overwrite = true)
+                    }
+                } else null
+                source.copyTo(target, overwrite = true)
+                if (!isolateGameFiles) committedApiFiles += CommittedApiFile(target, backup)
             }
         }
     }
+
+    private fun rollbackCommittedApiFiles() {
+        committedApiFiles.asReversed().forEach { committedFile ->
+            val backup = committedFile.backup
+            if (backup?.isFile == true) {
+                backup.copyTo(committedFile.target, overwrite = true)
+            } else {
+                committedFile.target.delete()
+            }
+        }
+        committedApiFiles.clear()
+    }
+
+    private data class CommittedApiFile(val target: File, val backup: File?)
 
     private fun beginStep(step: VersionInstallStep, stage: VersionInstallStage) {
         currentStage = stage

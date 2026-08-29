@@ -15,6 +15,7 @@
     <!-- Error messages -->
     <string name="error_fatal">Pojav Glow·Worm 意外崩溃</string>
     <string name="error_no_version">无版本！</string>
+    <string name="error_version_requires_repair">该版本文件不完整，请先普通启动以完成修复。</string>
     <string name="version_manager_title">版本管理</string>
     <string name="version_manager_refresh">刷新</string>
     <string name="version_manager_search">搜索版本</string>

@@ -42,6 +42,7 @@ import net.kdt.pojavlaunch.firefly.version.PgwVersionRepository
 import net.kdt.pojavlaunch.firefly.version.VersionIsolationMode
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.Future
 
 /** Edits launch options for one installed version as each value changes. */
 class VersionSettingsPageFragment : Fragment() {
@@ -103,6 +104,9 @@ class VersionSettingsPageFragment : Fragment() {
         writeQueue = null
         super.onDestroyView()
     }
+
+    /** Places a barrier after all queued immediate saves so a directory rename cannot lose them. */
+    fun flushPendingWrites(): Future<*>? = writeQueue?.submit { }
 
     override fun onResume() {
         super.onResume()

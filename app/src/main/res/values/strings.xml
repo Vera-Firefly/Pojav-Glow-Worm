@@ -24,6 +24,7 @@
     <!-- Error messages -->
     <string name="error_fatal">Pojav Glow·Worm has unexpectedly crashed</string>
     <string name="error_no_version">No version!</string>
+    <string name="error_version_requires_repair">This version is incomplete. Start normally to repair it first.</string>
     <string name="version_manager_title">Version management</string>
     <string name="version_manager_refresh">Refresh</string>
     <string name="version_manager_search">Search versions</string>

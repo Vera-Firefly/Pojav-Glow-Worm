@@ -128,6 +128,10 @@ public class LauncherActivity extends BaseActivity {
         Tools.ENABLE_MODS_CHECK = prof.enableModsCheck;
 
         if (!verifyAndRepair) {
+            if (!PgwVersionRepository.INSTANCE.isReadyForDirectLaunch(prof.lastVersionId)) {
+                Toast(this, R.string.error_version_requires_repair, Toast.LENGTH_LONG);
+                return;
+            }
             new ContextAwareDoneListener(prof.lastVersionId).launch();
             return;
         }

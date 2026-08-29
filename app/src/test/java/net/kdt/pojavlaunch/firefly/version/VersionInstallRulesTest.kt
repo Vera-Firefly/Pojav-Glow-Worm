@@ -119,6 +119,25 @@ class VersionInstallRulesTest {
         }
     }
 
+    @Test
+    fun rejectsLoaderInstancesNamedAfterTheirVanillaParent() {
+        val fabric = LoaderVersion(LoaderKind.FABRIC, "1.21.1", "0.16.10")
+
+        assertFails {
+            VersionInstallRules.validate(VersionInstallRequest(
+                minecraftVersion = "1.21.1",
+                targetVersionName = "1.21.1",
+                addons = AddonSelection(fabric = fabric)
+            ))
+        }
+
+        VersionInstallRules.validate(VersionInstallRequest(
+            minecraftVersion = "1.21.1",
+            targetVersionName = "1.21.1",
+            addons = AddonSelection()
+        ))
+    }
+
     private fun assertFails(block: () -> Unit) {
         try {
             block()

@@ -12,6 +12,8 @@ package net.kdt.pojavlaunch.firefly.version
 
 import android.graphics.Bitmap
 import android.util.Base64
+import android.util.AtomicFile
+import com.google.gson.JsonObject
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathHome
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager
 import net.kdt.pojavlaunch.firefly.Tools
@@ -23,6 +25,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStreamWriter
 import java.util.LinkedHashMap
 
 data class PgwVersionDeletionResult(
@@ -86,6 +89,11 @@ object PgwVersionRepository {
         ?.takeIf { it.valid }
         ?.let { it.config.toLaunchProfile(it.id) }
 
+    @JvmStatic
+    fun isReadyForDirectLaunch(versionId: String): Boolean = get(versionId)
+        ?.let { it.valid && !it.local.requiresRepair }
+        ?: false
+
     @Synchronized
     fun updateConfig(versionId: String, update: (PgwVersionConfig) -> Unit): PgwVersionConfig {
         val version = get(versionId) ?: throw IOException("Version does not exist: $versionId")
@@ -127,6 +135,7 @@ object PgwVersionRepository {
         val target = VersionPaths.versionDirectory(newVersionId)
         require(source.isDirectory) { "Version does not exist: $versionId" }
         require(!target.exists()) { "Version already exists: $newVersionId" }
+        val dependentVersionIds = LocalVersionManager.dependentVersionIds(versionId)
         if (!source.renameTo(target)) throw IOException("Unable to rename version: $versionId")
 
         val oldJson = File(target, "$versionId.json")
@@ -138,7 +147,27 @@ object PgwVersionRepository {
         try {
             jsonRenamed = renameIfPresent(oldJson, newJson)
             jarRenamed = renameIfPresent(oldJar, newJar)
+            if (jsonRenamed) {
+                updateManifest(newJson) { it.addProperty("id", newVersionId) }
+            }
+            dependentVersionIds.forEach { dependentId ->
+                updateManifest(VersionPaths.versionJson(dependentId)) { manifest ->
+                    if (manifest.inheritsFromId() == versionId) {
+                        manifest.addProperty("inheritsFrom", newVersionId)
+                    }
+                }
+            }
         } catch (error: Throwable) {
+            dependentVersionIds.asReversed().forEach { dependentId ->
+                runCatching {
+                    updateManifest(VersionPaths.versionJson(dependentId)) { manifest ->
+                        if (manifest.inheritsFromId() == newVersionId) {
+                            manifest.addProperty("inheritsFrom", versionId)
+                        }
+                    }
+                }
+            }
+            if (jsonRenamed) runCatching { updateManifest(newJson) { it.addProperty("id", versionId) } }
             if (jarRenamed) newJar.renameTo(oldJar)
             if (jsonRenamed) newJson.renameTo(oldJson)
             target.renameTo(source)
@@ -169,6 +198,7 @@ object PgwVersionRepository {
             }
             renameIfPresent(File(target, "$versionId.json"), File(target, "$newVersionId.json"))
             renameIfPresent(File(target, "$versionId.jar"), File(target, "$newVersionId.jar"))
+            updateManifest(File(target, "$newVersionId.json")) { it.addProperty("id", newVersionId) }
             writeConfig(newVersionId, source.config.copyForNewInstance())
         } catch (error: Throwable) {
             target.deleteRecursively()
@@ -180,6 +210,10 @@ object PgwVersionRepository {
     fun delete(versionId: String): PgwVersionDeletionResult {
         val directory = VersionPaths.versionDirectory(versionId)
         require(directory.isDirectory) { "Version does not exist: $versionId" }
+        val dependents = LocalVersionManager.dependentVersionIds(versionId)
+        require(dependents.isEmpty()) {
+            "Cannot delete $versionId because these instances still inherit from it: ${dependents.joinToString()}"
+        }
         val filesDeleted = directory.walkBottomUp().count { it.isFile }
         if (!directory.deleteRecursively()) throw IOException("Unable to delete version: $versionId")
 
@@ -337,11 +371,30 @@ object PgwVersionRepository {
         if (!file.isFile) null else file.reader().use { Tools.GLOBAL_GSON.fromJson(it, type) }
     }.getOrNull()
 
+    private fun updateManifest(file: File, change: (JsonObject) -> Unit) {
+        val manifest = readJson(file, JsonObject::class.java)
+            ?: throw IOException("Unable to read version metadata: ${file.absolutePath}")
+        change(manifest)
+        writeJson(file, manifest)
+    }
+
+    private fun JsonObject.inheritsFromId(): String? = get("inheritsFrom")
+        ?.takeUnless { it.isJsonNull }
+        ?.takeIf { it.isJsonPrimitive }
+        ?.asString
+
     private fun writeJson(file: File, value: Any) {
         file.parentFile?.mkdirs()
-        val temporary = File(file.parentFile, ".${file.name}.tmp")
-        temporary.writeText(Tools.GLOBAL_GSON.toJson(value))
-        if (file.exists() && !file.delete()) throw IOException("Unable to replace ${file.name}")
-        if (!temporary.renameTo(file)) throw IOException("Unable to write ${file.name}")
+        val atomicFile = AtomicFile(file)
+        val output = atomicFile.startWrite()
+        try {
+            val writer = OutputStreamWriter(output, Charsets.UTF_8)
+            Tools.GLOBAL_GSON.toJson(value, writer)
+            writer.flush()
+            atomicFile.finishWrite(output)
+        } catch (error: Throwable) {
+            atomicFile.failWrite(output)
+            throw error
+        }
     }
 }
