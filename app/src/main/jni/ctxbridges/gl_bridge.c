@@ -4,6 +4,7 @@
 #include <android/native_window_jni.h>
 #include <string.h>
 #include <malloc.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <stdbool.h>
@@ -113,6 +114,7 @@ void gl_swap_surface(gl_render_window_t* bundle) {
         ANativeWindow_acquire(bundle->nativeSurface);
         ANativeWindow_setBuffersGeometry(bundle->nativeSurface, 0, 0, bundle->format);
         bundle->surface = eglCreateWindowSurface_p(g_EglDisplay, bundle->config, bundle->nativeSurface, NULL);
+        printf("gl_swap_surface: window surface=%p (native=%p)\n", bundle->surface, (void *) bundle->nativeSurface);
     } else {
         LOGI("No new native surface, switching to 1x1 pbuffer");
         bundle->nativeSurface = NULL;
@@ -145,7 +147,14 @@ void gl_make_current(gl_render_window_t* bundle) {
     if (bundle->surface == NULL)
         gl_swap_surface(bundle);
 
-    if (eglMakeCurrent_p(g_EglDisplay, bundle->surface, bundle->surface, bundle->context))
+    bool makeCurrentOk = eglMakeCurrent_p(g_EglDisplay, bundle->surface, bundle->surface, bundle->context);
+    {
+        static int mcDbg = 0;
+        if (mcDbg++ < 4 || !makeCurrentOk)
+            printf("gl_make_current tid=%d bundle=%p surface=%p ok=%d eglError=%04x\n",
+                   (int) gettid(), (void *) bundle, bundle->surface, makeCurrentOk, eglGetError_p());
+    }
+    if (makeCurrentOk)
     {
         currentBundle = bundle;
     } else {
@@ -163,6 +172,17 @@ void gl_make_current(gl_render_window_t* bundle) {
 }
 
 void gl_swap_buffers() {
+    static int swapDbg = 0;
+    /* RenderPearl releases the context between surface rebuilds; the bridge
+     * keeps per-thread state, so a swap can arrive with nothing current.
+     * Skip the present instead of crashing, the SDL shim rebinds next frame */
+    if (currentBundle == NULL) {
+        if (swapDbg++ < 8)
+            printf("gl_swap_buffers: no current bundle on tid %d, skipping present\n", (int) gettid());
+        return;
+    }
+    if (swapDbg++ < 8)
+        printf("gl_swap_buffers tid=%d currentBundle=%p surface=%p\n", (int) gettid(), currentBundle, currentBundle->surface);
     if (currentBundle->state == STATE_RENDERER_NEW_WINDOW)
     {
         eglMakeCurrent_p(g_EglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);

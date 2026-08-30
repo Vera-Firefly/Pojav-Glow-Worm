@@ -96,7 +96,6 @@ LOCAL_SRC_FILES := \
     jvm_hooks/emui_iterator_fix_hook.c \
     jvm_hooks/java_exec_hooks.c \
     jvm_hooks/lwjgl_dlopen_hook.c \
-    pojav/bigcoreaffinity.c \
     pojav/egl_bridge.c \
     pojav/input_bridge_v3.c \
     pojav/jre_launcher.c \
@@ -107,6 +106,20 @@ ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
 LOCAL_CFLAGS += -DADRENO_POSSIBLE
 LOCAL_LDLIBS += -lEGL -lGLESv2
 endif
+include $(BUILD_SHARED_LIBRARY)
+
+
+include $(CLEAR_VARS)
+LOCAL_LDLIBS := -ldl -llog -landroid
+LOCAL_MODULE := SDL3
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/sdl3/include
+LOCAL_CFLAGS += -g
+
+LOCAL_SRC_FILES := \
+    sdl3/sdl3_shim_core.c \
+    sdl3/sdl3_shim_periph.c \
+    sdl3/sdl3_keymap.c
+
 include $(BUILD_SHARED_LIBRARY)
 
 

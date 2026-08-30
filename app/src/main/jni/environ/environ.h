@@ -59,6 +59,8 @@ struct pojav_environ_s {
     JavaVM* dalvikJavaVMPtr;
     long showingWindow;
     bool isInputReady, isCursorEntered, isUseStackQueueCall, shouldUpdateMouse;
+    /* Set by the SDL3 compatibility layer instead of the GLFW stub */
+    bool sdlBridgeActive;
     int savedWidth, savedHeight;
     bool shouldUpdateMonitorSize;
     bool monitorSizeConsumed;

@@ -73,6 +73,7 @@ import net.kdt.pojavlaunch.firefly.utils.JREUtils;
 import net.kdt.pojavlaunch.firefly.utils.JSONUtils;
 import net.kdt.pojavlaunch.firefly.utils.MinecraftGraphicsApi;
 import net.kdt.pojavlaunch.firefly.utils.LwjglComponent;
+import net.kdt.pojavlaunch.firefly.utils.SdlSupport;
 import net.kdt.pojavlaunch.firefly.utils.OldVersionsUtils;
 import net.kdt.pojavlaunch.firefly.value.DependentLibrary;
 import net.kdt.pojavlaunch.firefly.value.MinecraftAccount;
@@ -237,6 +238,9 @@ public final class Tools {
         Runtime runtime = MultiRTUtils.forceReread(Tools.pickRuntime(minecraftProfile, versionJavaRequirement));
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionId);
         LwjglComponent lwjglComponent = LwjglComponent.forVersion(versionInfo);
+        if (SdlSupport.isSdl3Version(versionInfo)) {
+            Log.i("SDL3Bridge", "Minecraft 26.3+ SDL3 detected, the SDL3 compatibility layer will handle windowing and input");
+        }
 
         File gamedir = Tools.getGameDirPath(minecraftProfile);
         String graphicsApi = isValidString(minecraftProfile.pgwGraphicsApi)
