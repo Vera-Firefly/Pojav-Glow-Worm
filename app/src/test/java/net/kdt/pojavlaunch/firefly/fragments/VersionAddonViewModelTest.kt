@@ -37,30 +37,52 @@ class VersionAddonViewModelTest {
     }
 
     @Test
-    fun clearingForgeOrOptiFineKeepsTheOtherCompatibleSelection() {
+    fun forgeAndOptiFineRemainSelectedInEitherOrderAndClearIndependently() {
         val forge = LoaderVersion(LoaderKind.FORGE, "1.21.1", "52.0.0")
+        val replacementForge = LoaderVersion(LoaderKind.FORGE, "1.21.1", "52.1.0")
         val optiFine = LoaderVersion(
             LoaderKind.OPTIFINE,
             "1.21.1",
             "HD_U_J3",
-            forgeCompatibility = "52.0.0"
+            forgeCompatibility = "51.0.0"
         )
-        val model = VersionAddonViewModel()
+        val replacementOptiFine = LoaderVersion(LoaderKind.OPTIFINE, "1.21.1", "HD_U_J4")
+        val forgeFirst = VersionAddonViewModel()
 
-        model.select(AddonCardType.FORGE, AddonOption("52.0.0", "52.0.0", loader = forge))
-        model.select(AddonCardType.OPTIFINE, AddonOption("HD_U_J3", "HD_U_J3", loader = optiFine))
-        model.select(AddonCardType.FORGE, null)
+        forgeFirst.select(AddonCardType.FORGE, AddonOption("52.0.0", "52.0.0", loader = forge))
+        forgeFirst.select(AddonCardType.OPTIFINE, AddonOption("HD_U_J3", "HD_U_J3", loader = optiFine))
+        assertEquals(forge, forgeFirst.state.value.selection.forge)
+        assertEquals(optiFine, forgeFirst.state.value.selection.optiFine)
+
+        forgeFirst.select(AddonCardType.FORGE, AddonOption("52.1.0", "52.1.0", loader = replacementForge))
+        forgeFirst.select(AddonCardType.OPTIFINE, AddonOption("HD_U_J4", "HD_U_J4", loader = replacementOptiFine))
+        assertEquals(replacementForge, forgeFirst.state.value.selection.forge)
+        assertEquals(replacementOptiFine, forgeFirst.state.value.selection.optiFine)
+
+        forgeFirst.select(AddonCardType.FORGE, null)
+        assertNull(forgeFirst.state.value.selection.forge)
+        assertEquals(replacementOptiFine, forgeFirst.state.value.selection.optiFine)
+        forgeFirst.select(AddonCardType.OPTIFINE, null)
+        assertNull(forgeFirst.state.value.selection.optiFine)
+
+        val optiFineFirst = VersionAddonViewModel()
+        optiFineFirst.select(AddonCardType.OPTIFINE, AddonOption("HD_U_J3", "HD_U_J3", loader = optiFine))
+        optiFineFirst.select(AddonCardType.FORGE, AddonOption("52.0.0", "52.0.0", loader = forge))
+
+        assertEquals(forge, optiFineFirst.state.value.selection.forge)
+        assertEquals(optiFine, optiFineFirst.state.value.selection.optiFine)
+    }
+
+    @Test
+    fun selectingAnotherPrimaryLoaderClearsForgeAndOptiFine() {
+        val model = VersionAddonViewModel()
+        model.select(AddonCardType.FORGE, AddonOption("52.0.0", "52.0.0", loader = LoaderVersion(LoaderKind.FORGE, "1.21.1", "52.0.0")))
+        model.select(AddonCardType.OPTIFINE, AddonOption("HD_U_J3", "HD_U_J3", loader = LoaderVersion(LoaderKind.OPTIFINE, "1.21.1", "HD_U_J3")))
+        model.select(AddonCardType.FABRIC, AddonOption("0.16.10", "0.16.10", loader = LoaderVersion(LoaderKind.FABRIC, "1.21.1", "0.16.10")))
 
         assertNull(model.state.value.selection.forge)
-        assertEquals(optiFine, model.state.value.selection.optiFine)
-
-        val secondModel = VersionAddonViewModel()
-        secondModel.select(AddonCardType.FORGE, AddonOption("52.0.0", "52.0.0", loader = forge))
-        secondModel.select(AddonCardType.OPTIFINE, AddonOption("HD_U_J3", "HD_U_J3", loader = optiFine))
-        secondModel.select(AddonCardType.OPTIFINE, null)
-
-        assertEquals(forge, secondModel.state.value.selection.forge)
-        assertNull(secondModel.state.value.selection.optiFine)
+        assertNull(model.state.value.selection.optiFine)
+        assertEquals("0.16.10", model.state.value.selection.fabric?.loaderVersion)
     }
 
     private fun apiVersion(projectId: String, version: String, fileName: String) = ModrinthApiVersion(

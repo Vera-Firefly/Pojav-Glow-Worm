@@ -141,7 +141,16 @@ class VersionAddonFragment : Fragment(R.layout.fragment_version_addon) {
             installName.requestFocus()
             return
         }
-        installController.install(request)
+        if (request.addons.hasForgeAndOptiFine()) {
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.version_install_forge_optifine_mod_title)
+                .setMessage(R.string.version_install_forge_optifine_mod_message)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.version_install_continue) { _, _ -> installController.install(request) }
+                .show()
+        } else {
+            installController.install(request)
+        }
     }
 
     private fun setAutomaticName(value: String) {

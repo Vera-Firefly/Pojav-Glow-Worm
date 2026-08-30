@@ -224,13 +224,18 @@ object LoaderCatalog {
 
     suspend fun optifine(minecraftVersion: String): List<LoaderVersion> = withContext(Dispatchers.IO) {
         val html = VersionCatalog.requestText(MirrorPolicy.candidates("https://optifine.net/downloads"))
+        parseOptiFineVersions(minecraftVersion, html)
+    }
+
+    internal fun parseOptiFineVersions(minecraftVersion: String, html: String): List<LoaderVersion> {
         val names = Regex("<td[^>]*class=['\"]colFile['\"][^>]*>([^<]+)</td>")
             .findAll(html).map { it.groupValues[1].trim() }.toList()
         val forges = Regex("<td[^>]*class=['\"]colForge['\"][^>]*>([^<]+)</td>")
             .findAll(html).map { it.groupValues[1].trim() }.toList()
-        val jars = Regex("(?:adfoc\\.us|[?&])[^>\"']*?[?&]f=([^&\"']+\\.jar)")
+        val jars = Regex("(?:adfoc\\.us|[?&])[^>\"']*?(?:[?&]|&amp;)f=([^&\"']+\\.jar)")
             .findAll(html).map { it.groupValues[1] }.toList()
-        names.mapIndexedNotNull { index, display ->
+        if (names.size != forges.size || names.size != jars.size) return emptyList()
+        return names.mapIndexedNotNull { index, display ->
             val fileName = jars.getOrNull(index) ?: return@mapIndexedNotNull null
             val normalized = fileName.removePrefix("preview_").removeSuffix(".jar")
             val inherit = normalized.removePrefix("OptiFine_").substringBefore("_HD_")
@@ -238,8 +243,8 @@ object LoaderCatalog {
             if (inherit != minecraftVersion) return@mapIndexedNotNull null
             val compat = forges.getOrNull(index)
                 ?.takeUnless { it.contains("N/A", ignoreCase = true) }
-                ?.removePrefix("Forge")
-                ?.removePrefix("#")
+                ?.removePrefix("Forge ")
+                ?.replace("#", "")
                 ?.trim()
             LoaderVersion(
                 kind = LoaderKind.OPTIFINE,

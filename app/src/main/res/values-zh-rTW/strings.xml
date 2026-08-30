@@ -77,6 +77,9 @@
     <string name="version_install_complete_message">%1$s 已可啟動。</string>
     <string name="version_install_name_exists">此安裝名稱已被使用，請修改後再試。</string>
     <string name="version_install_invalid_name">請輸入有效的安裝名稱。</string>
+    <string name="version_install_forge_optifine_mod_title">將 OptiFine 作為模組安裝</string>
+    <string name="version_install_forge_optifine_mod_message">同時選擇 Forge 和 OptiFine 時，OptiFine 會作為模組安裝在 mods 資料夾中。</string>
+    <string name="version_install_continue">繼續安裝</string>
     <string name="version_install_step_clear_cache">清理安裝快取</string>
     <string name="version_install_step_minecraft">下載並安裝原版 %1$s</string>
     <string name="version_install_step_loader_main">下載 %1$s 主檔案</string>

@@ -41,7 +41,6 @@ import net.kdt.pojavlaunch.firefly.version.LoaderVersion
 import net.kdt.pojavlaunch.firefly.version.MinecraftVersion
 import net.kdt.pojavlaunch.firefly.version.ModrinthApiCatalog
 import net.kdt.pojavlaunch.firefly.version.ModrinthApiVersion
-import net.kdt.pojavlaunch.firefly.version.VersionInstallRules
 
 internal class MinecraftVersionAdapter(
     private val typeLabel: (MinecraftVersion) -> String,
@@ -171,20 +170,8 @@ internal class VersionAddonViewModel : ViewModel() {
         var fabricCleared = previous.fabricApiCleared
         var quiltCleared = previous.quiltApiCleared
         when (type) {
-            AddonCardType.OPTIFINE -> {
-                val selected = option?.loader
-                val retainedForge = current.forge?.takeIf { forge ->
-                    selected == null || VersionInstallRules.isOptiFineCompatibleWithForge(selected, forge)
-                }
-                next = AddonSelection(forge = retainedForge, optiFine = selected)
-            }
-            AddonCardType.FORGE -> {
-                val selected = option?.loader
-                val retainedOptiFine = current.optiFine?.takeIf { optiFine ->
-                    selected == null || VersionInstallRules.isOptiFineCompatibleWithForge(optiFine, selected)
-                }
-                next = AddonSelection(forge = selected, optiFine = retainedOptiFine)
-            }
+            AddonCardType.OPTIFINE -> next = AddonSelection(forge = current.forge, optiFine = option?.loader)
+            AddonCardType.FORGE -> next = AddonSelection(forge = option?.loader, optiFine = current.optiFine)
             AddonCardType.NEOFORGE -> next = AddonSelection(neoForge = option?.loader)
             AddonCardType.FABRIC -> {
                 next = AddonSelection(fabric = option?.loader)

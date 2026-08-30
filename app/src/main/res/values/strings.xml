@@ -86,6 +86,9 @@
     <string name="version_install_complete_message">%1$s is ready to play.</string>
     <string name="version_install_name_exists">This installation name is already in use. Choose a different name.</string>
     <string name="version_install_invalid_name">Enter a valid installation name.</string>
+    <string name="version_install_forge_optifine_mod_title">Install OptiFine as a mod</string>
+    <string name="version_install_forge_optifine_mod_message">With Forge and OptiFine selected together, OptiFine will be installed as a mod in the mods folder.</string>
+    <string name="version_install_continue">Continue installation</string>
     <string name="version_install_step_clear_cache">Clear installation cache</string>
     <string name="version_install_step_minecraft">Download and install Minecraft %1$s</string>
     <string name="version_install_step_loader_main">Download %1$s main file</string>

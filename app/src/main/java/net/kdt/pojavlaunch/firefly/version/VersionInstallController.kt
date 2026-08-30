@@ -159,30 +159,12 @@ object VersionInstallRules {
         val selections = request.addons
         val primary = listOfNotNull(selections.forge, selections.neoForge, selections.fabric, selections.quilt, selections.optiFine)
         require(primary.size <= 1 || selections.hasForgeAndOptiFine() && primary.size == 2) {
-            "Only Forge and a compatible OptiFine version can be combined"
+            "Only Forge and OptiFine can be combined"
         }
         require(selections.fabricApi == null || selections.fabric != null) { "Fabric API requires Fabric" }
         require(selections.quiltedFabricApi == null || selections.quilt != null) { "Quilted Fabric API requires Quilt" }
         require(request.targetVersionName != request.minecraftVersion || primary.isEmpty()) {
             "A loader instance must not use the Minecraft version name"
-        }
-        if (selections.hasForgeAndOptiFine()) {
-            require(isOptiFineCompatibleWithForge(selections.optiFine!!, selections.forge!!)) {
-                "The selected OptiFine release is not compatible with Forge"
-            }
-        }
-    }
-
-    fun isOptiFineCompatibleWithForge(optiFine: LoaderVersion, forge: LoaderVersion): Boolean {
-        val required = optiFine.forgeCompatibility ?: return false
-        if (required.isBlank()) return true
-        val forgeParts = forge.loaderVersion.split('.', '-').mapNotNull { it.toIntOrNull() }
-        val requiredParts = required.split('.', '-').mapNotNull { it.toIntOrNull() }
-        if (requiredParts.isEmpty() || forgeParts.isEmpty()) return forge.loaderVersion.contains(required)
-        return if ('.' in required) {
-            forgeParts.take(requiredParts.size) == requiredParts
-        } else {
-            forgeParts.lastOrNull()?.toString() == required
         }
     }
 }
@@ -282,7 +264,7 @@ private class VersionInstallTransaction(
     private val baseVersionExisted = VersionPaths.versionDirectory(request.minecraftVersion).exists()
     private var baseVersionCreated = false
     private var backupDirectory: File? = null
-    private val committedApiFiles = mutableListOf<CommittedApiFile>()
+    private val committedModFiles = mutableListOf<CommittedModFile>()
     private var targetDirectoryCommitted = false
     private var committed = false
     private val plan = VersionInstallPlan(
@@ -324,12 +306,12 @@ private class VersionInstallTransaction(
             downloadMinecraft()
             completeStep(VersionInstallStep.MINECRAFT)
             when {
-                addons.hasForgeAndOptiFine() -> installForge(addons.forge!!).also { installOptiFine(addons.optiFine!!, true) }
+                addons.hasForgeAndOptiFine() -> installForge(addons.forge!!).also { installOptiFineAsForgeMod(addons.optiFine!!) }
                 addons.forge != null -> installForge(addons.forge)
                 addons.neoForge != null -> installForge(addons.neoForge)
                 addons.fabric != null -> installFabricLike(addons.fabric)
                 addons.quilt != null -> installFabricLike(addons.quilt)
-                addons.optiFine != null -> installOptiFine(addons.optiFine, false)
+                addons.optiFine != null -> installStandaloneOptiFine(addons.optiFine)
             }
 
             selectedApi()?.let { api ->
@@ -347,7 +329,7 @@ private class VersionInstallTransaction(
             return request.targetVersionName
         } finally {
             if (!committed) restoreBackup()
-            if (!committed) rollbackCommittedApiFiles()
+            if (!committed) rollbackCommittedModFiles()
             // A loader manifest still inherits this local vanilla parent after the staged instance
             // is committed. A standalone custom-named vanilla instance does not need the temporary parent.
             if (baseVersionCreated && request.targetVersionName != request.minecraftVersion &&
@@ -438,23 +420,21 @@ private class VersionInstallTransaction(
         completeStep(VersionInstallStep.LOADER_LIBRARIES)
     }
 
-    private suspend fun installOptiFine(loader: LoaderVersion, mergeWithForge: Boolean) {
-        beginStep(VersionInstallStep.LOADER_MAIN_FILE, VersionInstallStage.DOWNLOADING_ADDON)
-        val archive = File(workspace, loader.fileName ?: "optifine.jar")
-        val url = LoaderCatalog.resolveOptiFineDownload(loader)
-        runVersionDownloadBatch(
-            listOf(VersionDownloadTask(MirrorPolicy.candidates(url), archive, null)),
-            maxConnections = 2
-        ) { batch -> reportBatch(VersionInstallStep.LOADER_MAIN_FILE, VersionInstallStage.DOWNLOADING_ADDON, batch) }
-        ensureActive()
-        completeStep(VersionInstallStep.LOADER_MAIN_FILE)
+    private suspend fun installOptiFineAsForgeMod(loader: LoaderVersion) {
+        val target = File(workspace, "mods/${optiFineArchiveFileName(loader)}")
+        downloadOptiFine(loader, target)
+    }
+
+    private suspend fun installStandaloneOptiFine(loader: LoaderVersion) {
+        val archive = File(workspace, optiFineArchiveFileName(loader))
+        downloadOptiFine(loader, archive)
         beginStep(VersionInstallStep.LOADER_LIBRARIES, VersionInstallStage.VERIFYING)
         val target = File(VersionPaths.libraries(), "optifine/OptiFine/${loader.loaderVersion}/OptiFine-${loader.loaderVersion}.jar")
         val pendingLibrary = File(workspace, "libraries/${target.relativeTo(VersionPaths.libraries()).path}")
         pendingLibrary.parentFile?.mkdirs()
         archive.copyTo(pendingLibrary, overwrite = true)
 
-        val root = if (mergeWithForge) readJson(stageJson()) else JsonObject().apply {
+        val root = JsonObject().apply {
             addProperty("inheritsFrom", request.minecraftVersion)
             addProperty("type", "release")
             readJson(stageJson())["mainClass"]?.let { add("mainClass", it) }
@@ -478,6 +458,20 @@ private class VersionInstallTransaction(
         stageJson().writeText(Tools.GLOBAL_GSON.toJson(root))
         completeStep(VersionInstallStep.LOADER_LIBRARIES)
     }
+
+    private suspend fun downloadOptiFine(loader: LoaderVersion, target: File) {
+        beginStep(VersionInstallStep.LOADER_MAIN_FILE, VersionInstallStage.DOWNLOADING_ADDON)
+        val url = LoaderCatalog.resolveOptiFineDownload(loader)
+        runVersionDownloadBatch(
+            listOf(VersionDownloadTask(MirrorPolicy.candidates(url), target, null)),
+            maxConnections = 2
+        ) { batch -> reportBatch(VersionInstallStep.LOADER_MAIN_FILE, VersionInstallStage.DOWNLOADING_ADDON, batch) }
+        ensureActive()
+        completeStep(VersionInstallStep.LOADER_MAIN_FILE)
+    }
+
+    private fun optiFineArchiveFileName(loader: LoaderVersion): String =
+        loader.fileName?.takeIf { it.isNotBlank() } ?: "OptiFine-${loader.loaderVersion}.jar"
 
     private suspend fun stageApi(api: ModrinthApiVersion) {
         val target = File(workspace, "mods/${api.fileName}")
@@ -508,12 +502,12 @@ private class VersionInstallTransaction(
             if (!target.renameTo(backup)) throw IOException("Unable to back up existing version")
             backupDirectory = backup
         }
-        if (isolateGameFiles) commitApiFiles(stageDirectory)
+        if (isolateGameFiles) commitStagedMods(stageDirectory)
         renameStageFiles()
         if (!stageDirectory.renameTo(target)) throw IOException("Unable to commit installed version")
         targetDirectoryCommitted = true
         copyDirectory(File(workspace, "libraries"), VersionPaths.libraries())
-        if (!isolateGameFiles) commitApiFiles(VersionPaths.gameHome())
+        if (!isolateGameFiles) commitStagedMods(VersionPaths.gameHome())
         backupDirectory?.deleteRecursively()
         backupDirectory = null
     }
@@ -583,7 +577,7 @@ private class VersionInstallTransaction(
         }
     }
 
-    private fun commitApiFiles(gameDirectory: File) {
+    private fun commitStagedMods(gameDirectory: File) {
         val sourceMods = File(workspace, "mods")
         if (!sourceMods.isDirectory) return
         val targetMods = File(gameDirectory, "mods")
@@ -595,19 +589,19 @@ private class VersionInstallTransaction(
                 calculateSha1(target).equals(expectedSha1, ignoreCase = true))
             if (!targetMatches) {
                 val backup = if (!isolateGameFiles && target.isFile) {
-                    File(workspace, "api-backup/${source.relativeTo(sourceMods).path}").also { backup ->
+                    File(workspace, "mods-backup/${source.relativeTo(sourceMods).path}").also { backup ->
                         backup.parentFile?.mkdirs()
                         target.copyTo(backup, overwrite = true)
                     }
                 } else null
                 source.copyTo(target, overwrite = true)
-                if (!isolateGameFiles) committedApiFiles += CommittedApiFile(target, backup)
+                if (!isolateGameFiles) committedModFiles += CommittedModFile(target, backup)
             }
         }
     }
 
-    private fun rollbackCommittedApiFiles() {
-        committedApiFiles.asReversed().forEach { committedFile ->
+    private fun rollbackCommittedModFiles() {
+        committedModFiles.asReversed().forEach { committedFile ->
             val backup = committedFile.backup
             if (backup?.isFile == true) {
                 backup.copyTo(committedFile.target, overwrite = true)
@@ -615,10 +609,10 @@ private class VersionInstallTransaction(
                 committedFile.target.delete()
             }
         }
-        committedApiFiles.clear()
+        committedModFiles.clear()
     }
 
-    private data class CommittedApiFile(val target: File, val backup: File?)
+    private data class CommittedModFile(val target: File, val backup: File?)
 
     private fun beginStep(step: VersionInstallStep, stage: VersionInstallStage) {
         currentStage = stage

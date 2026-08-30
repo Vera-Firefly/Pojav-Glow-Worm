@@ -3,8 +3,6 @@ package net.kdt.pojavlaunch.firefly.version
 import net.kdt.pojavlaunch.firefly.version.model.GameManifest
 import net.kdt.pojavlaunch.firefly.profiles.ProfileIconIds
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class VersionInstallRulesTest {
@@ -82,20 +80,28 @@ class VersionInstallRulesTest {
     }
 
     @Test
-    fun checksForgeAndOptiFineCompatibility() {
-        val optiFine = LoaderVersion(
-            LoaderKind.OPTIFINE,
-            "1.21.1",
-            "HD_U_J3",
-            forgeCompatibility = "52.0.0"
-        )
-        assertTrue(VersionInstallRules.isOptiFineCompatibleWithForge(
-            optiFine,
-            LoaderVersion(LoaderKind.FORGE, "1.21.1", "52.0.0")
+    fun acceptsForgeAndOptiFineRegardlessOfCompatibilityMetadata() {
+        val forge = LoaderVersion(LoaderKind.FORGE, "1.21.1", "52.0.0")
+        VersionInstallRules.validate(VersionInstallRequest(
+            minecraftVersion = "1.21.1",
+            targetVersionName = "forge-optifine-no-metadata",
+            addons = AddonSelection(
+                forge = forge,
+                optiFine = LoaderVersion(LoaderKind.OPTIFINE, "1.21.1", "HD_U_J3")
+            )
         ))
-        assertFalse(VersionInstallRules.isOptiFineCompatibleWithForge(
-            optiFine,
-            LoaderVersion(LoaderKind.FORGE, "1.21.1", "51.0.0")
+        VersionInstallRules.validate(VersionInstallRequest(
+            minecraftVersion = "1.21.1",
+            targetVersionName = "forge-optifine-mismatched-metadata",
+            addons = AddonSelection(
+                forge = forge,
+                optiFine = LoaderVersion(
+                    LoaderKind.OPTIFINE,
+                    "1.21.1",
+                    "HD_U_J4",
+                    forgeCompatibility = "51.0.0"
+                )
+            )
         ))
     }
 
