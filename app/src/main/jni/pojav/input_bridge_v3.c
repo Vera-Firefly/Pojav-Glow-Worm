@@ -107,20 +107,26 @@ ADD_CALLBACK_WWIN(WindowSize)
 
 #undef ADD_CALLBACK_WWIN
 
-void handleFramebufferSizeJava(long window, int w, int h) {
-    (*pojav_environ->glfwThreadVmEnv)->CallStaticVoidMethod(pojav_environ->glfwThreadVmEnv, pojav_environ->vmGlfwClass, pojav_environ->method_internalChangeMonitorSize, w, h);
-    (*pojav_environ->glfwThreadVmEnv)->CallStaticVoidMethod(pojav_environ->glfwThreadVmEnv, pojav_environ->vmGlfwClass, pojav_environ->method_internalWindowSizeChanged, (long)window);
-}
-
 void updateMonitorSize(int width, int height) {
     (*pojav_environ->glfwThreadVmEnv)->CallStaticVoidMethod(
             pojav_environ->glfwThreadVmEnv, pojav_environ->vmGlfwClass,
             pojav_environ->method_internalChangeMonitorSize, width, height);
 }
 
+void updateWindowSize(void *window) {
+    (*pojav_environ->glfwThreadVmEnv)->CallStaticVoidMethod(
+            pojav_environ->glfwThreadVmEnv, pojav_environ->vmGlfwClass,
+            pojav_environ->method_internalWindowSizeChanged, (jlong) window);
+}
+
 void pojavPumpEvents(void* window) {
     if (pojav_environ->shouldUpdateMouse)
         pojav_environ->GLFW_invoke_CursorPos(window, floor(pojav_environ->cursorX), floor(pojav_environ->cursorY));
+
+    if (pojav_environ->shouldUpdateMonitorSize) {
+        // GLFW keeps the size on each window, so this must run once per window.
+        updateWindowSize(window);
+    }
 
     size_t index = pojav_environ->outEventIndex;
     size_t targetIndex = pojav_environ->outTargetIndex;
@@ -142,14 +148,6 @@ void pojavPumpEvents(void* window) {
                 break;
             case EVENT_TYPE_SCROLL:
                 if(pojav_environ->GLFW_invoke_Scroll) pojav_environ->GLFW_invoke_Scroll(window, event.i1, event.i2);
-                break;
-            case EVENT_TYPE_FRAMEBUFFER_SIZE:
-                handleFramebufferSizeJava(pojav_environ->showingWindow, event.i1, event.i2);
-                if(pojav_environ->GLFW_invoke_FramebufferSize) pojav_environ->GLFW_invoke_FramebufferSize(window, event.i1, event.i2);
-                break;
-            case EVENT_TYPE_WINDOW_SIZE:
-                handleFramebufferSizeJava(pojav_environ->showingWindow, event.i1, event.i2);
-                if(pojav_environ->GLFW_invoke_WindowSize) pojav_environ->GLFW_invoke_WindowSize(window, event.i1, event.i2);
                 break;
         }
 
@@ -453,29 +451,18 @@ void noncritical_send_mouse_button(__attribute__((unused)) JNIEnv* env, __attrib
 void critical_send_screen_size(jint width, jint height) {
     pojav_environ->savedWidth = width;
     pojav_environ->savedHeight = height;
-    pojav_environ->shouldUpdateMonitorSize = true;
-    if (pojav_environ->isInputReady)
-    {
-        if (pojav_environ->GLFW_invoke_FramebufferSize || pojav_environ->sdlBridgeActive)
-        {
-            if (pojav_environ->isUseStackQueueCall)
-            {
-                sendData(EVENT_TYPE_FRAMEBUFFER_SIZE, width, height, 0, 0);
-            } else if (pojav_environ->GLFW_invoke_FramebufferSize) {
-                pojav_environ->GLFW_invoke_FramebufferSize((void*) pojav_environ->showingWindow, width, height);
-            }
-        }
 
-        if (pojav_environ->GLFW_invoke_WindowSize || pojav_environ->sdlBridgeActive)
-        {
-            if (pojav_environ->isUseStackQueueCall)
-            {
-                sendData(EVENT_TYPE_WINDOW_SIZE, width, height, 0, 0);
-            } else if (pojav_environ->GLFW_invoke_WindowSize) {
-                pojav_environ->GLFW_invoke_WindowSize((void*) pojav_environ->showingWindow, width, height);
-            }
+    if (pojav_environ->sdlBridgeActive) {
+        if (pojav_environ->isInputReady) {
+            sendData(EVENT_TYPE_WINDOW_SIZE, width, height, 0, 0);
         }
+        return;
     }
+
+    // A resize may arrive during a poll cycle after the monitor update ran.
+    // Mark it pending again so the next cycle updates every GLFW window.
+    pojav_environ->monitorSizeConsumed = false;
+    pojav_environ->shouldUpdateMonitorSize = true;
 }
 
 void noncritical_send_screen_size(__attribute__((unused)) JNIEnv* env, __attribute__((unused)) jclass clazz, jint width, jint height) {
