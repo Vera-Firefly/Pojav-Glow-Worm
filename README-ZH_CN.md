@@ -146,6 +146,7 @@ cd ../
 - [virglrenderer](https://github.com/PojavLauncherTeam/virglrenderer): [MIT License](https://gitlab.freedesktop.org/virgl/virglrenderer/-/blob/master/COPYING).
 - [terminal-view](https://github.com/termux/termux-app/tree/master/terminal-view): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
 - [terminal-emulator](https://github.com/termux/termux-app/tree/master/terminal-emulator): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
+- 加载器卡片图标来源于 [Zalith Launcher 2](https://github.com/ZalithLauncher/ZalithLauncher)，遵循 GPLv3 许可证。
 - 感谢[MCHeads](https://mc-heads.net)提供Minecraft头像组件
 
 ## 更多

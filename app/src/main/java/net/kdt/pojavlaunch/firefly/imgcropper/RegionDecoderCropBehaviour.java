@@ -11,8 +11,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import net.kdt.pojavlaunch.firefly.PojavApplication;
-import net.kdt.pojavlaunch.firefly.modloaders.modpacks.SelfReferencingFuture;
 import net.kdt.pojavlaunch.firefly.utils.MatrixUtils;
+import net.kdt.pojavlaunch.firefly.utils.SelfReferencingFuture;
 
 import java.util.concurrent.Future;
 

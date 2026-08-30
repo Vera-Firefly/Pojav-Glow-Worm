@@ -16,6 +16,7 @@ import net.kdt.pojavlaunch.firefly.Tools;
 import net.kdt.pojavlaunch.firefly.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.firefly.value.launcherprofiles.MinecraftProfile;
+import net.kdt.pojavlaunch.firefly.version.LocalVersionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,17 +105,6 @@ public class ProfileAdapter extends BaseAdapter {
         else
             extendedTextView.setText(R.string.unnamed);
 
-        if (minecraftProfile.lastVersionId != null) {
-            if (minecraftProfile.lastVersionId.equalsIgnoreCase("latest-release")) {
-                extendedTextView.setText(String.format("%s - %s", extendedTextView.getText(), v.getContext().getText(R.string.profiles_latest_release)));
-            } else if (minecraftProfile.lastVersionId.equalsIgnoreCase("latest-snapshot")) {
-                extendedTextView.setText(String.format("%s - %s", extendedTextView.getText(), v.getContext().getText(R.string.profiles_latest_snapshot)));
-            } else {
-                extendedTextView.setText(String.format("%s - %s", extendedTextView.getText(), minecraftProfile.lastVersionId));
-            }
-
-        } else extendedTextView.setText(extendedTextView.getText());
-
         // Set selected background if needed
         if (displaySelection) {
             String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, "");
@@ -142,6 +132,7 @@ public class ProfileAdapter extends BaseAdapter {
      */
     public void reloadProfiles() {
         LauncherProfiles.load(ProfilePathManager.getCurrentProfile());
+        LocalVersionManager.INSTANCE.removeProfilesWithoutLocalVersion();
         mProfiles = new HashMap<>(LauncherProfiles.mainProfileJson.profiles);
         mProfileList = new ArrayList<>(Arrays.asList(mProfiles.keySet().toArray(new String[0])));
         notifyDataSetChanged();

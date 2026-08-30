@@ -21,22 +21,34 @@ import net.kdt.pojavlaunch.firefly.MainActivity;
 import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.Tools;
 import net.kdt.pojavlaunch.firefly.progresskeeper.ProgressKeeper;
-import net.kdt.pojavlaunch.firefly.tasks.AsyncMinecraftDownloader;
 import net.kdt.pojavlaunch.firefly.utils.NotificationUtils;
-import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
+import net.kdt.pojavlaunch.firefly.value.launcherprofiles.MinecraftProfile;
+import net.kdt.pojavlaunch.firefly.version.PgwVersionRepository;
 
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneListener, ContextExecutorTask {
-    private final String mErrorString;
+public class ContextAwareDoneListener implements ContextExecutorTask {
     private final String mNormalizedVersionid;
     private static volatile boolean shouldQuitLauncher = false;
 
-    public ContextAwareDoneListener(Context baseContext, String versionId) {
-        this.mErrorString = baseContext.getString(R.string.mc_download_failed);
+    public ContextAwareDoneListener(String versionId) {
         this.mNormalizedVersionid = versionId;
+    }
+
+    public void launch() {
+        if (!Tools.ENABLE_MODS_CHECK) {
+            executeTask();
+            return;
+        }
+
+        AtomicInteger progressCount = new AtomicInteger(0);
+        ModParserListener listener = createModParserListener(progressCount);
+        MinecraftProfile profile = PgwVersionRepository.INSTANCE.launchProfile(mNormalizedVersionid);
+        if (profile == null) return;
+        File gameDir = Tools.getGameDirPath(profile);
+        ModParser.checkAllMods(gameDir, listener);
     }
 
     private Intent createGameStartIntent(Context context) {
@@ -52,20 +64,6 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
 
     private void executeTask() {
         ProgressKeeper.waitUntilDone(() -> ContextExecutor.executeTask(this));
-    }
-
-    @Override
-    public void onDownloadDone() {
-        if (!Tools.ENABLE_MODS_CHECK) {
-            executeTask();
-            return;
-        }
-
-        AtomicInteger progressCount = new AtomicInteger(0);
-        ModParserListener listener = createModParserListener(progressCount);
-        File gameDir = Tools.getGameDirPath(LauncherProfiles.getCurrentProfile());
-
-        ModParser.checkAllMods(gameDir, listener);
     }
 
     private ModParserListener createModParserListener(AtomicInteger progressCount) {
@@ -85,7 +83,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
     private void updateProgress(AtomicInteger progressCount, int totalFileCount) {
         int i = progressCount.incrementAndGet();
         ProgressLayout.setProgress(
-                ProgressLayout.INSTALL_MODPACK,
+                ProgressLayout.CHECK_MODS,
                 i * 100 / totalFileCount,
                 R.string.mod_check_progress_message,
                 i,
@@ -94,7 +92,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
     }
 
     private void handleParseResult(List<? extends ModInfo> modInfoList) {
-        ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
+        ProgressLayout.clearProgress(ProgressLayout.CHECK_MODS);
 
         ContextExecutor.executeTaskWithAllContext(context -> {
             clearAndProcessModCheck(context, modInfoList);
@@ -108,11 +106,6 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
             executeTask();
             return null;
         });
-    }
-
-    @Override
-    public void onDownloadFailed(Throwable throwable) {
-        Tools.showErrorRemote(mErrorString, throwable);
     }
 
     @Override

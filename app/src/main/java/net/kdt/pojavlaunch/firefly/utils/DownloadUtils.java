@@ -23,7 +23,7 @@ import java.util.concurrent.Callable;
 
 @SuppressWarnings("IOStreamConstructor")
 public class DownloadUtils {
-    public static final String USER_AGENT = Tools.APP_NAME;
+    public static final String USER_AGENT = "Pojav-Glow-Worm/1.0";
     private static final int TIME_OUT = 10000;
 
     public static void download(String url, OutputStream os) throws IOException {

@@ -176,6 +176,12 @@
             android:process=":mgquery" />
 
         <service
+            android:name=".version.InstallerJvmService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:process=":jvm" />
+
+        <service
             android:name=".services.GameService"
             android:process=":game"
             android:foregroundServiceType="specialUse"

@@ -31,6 +31,7 @@ import com.movtery.ui.fragment.ProfilePathManagerFragment;
 import com.qz.terminal2.ConsoleActivity;
 
 import net.kdt.pojavlaunch.firefly.CustomControlsActivity;
+import net.kdt.pojavlaunch.firefly.LauncherActivity;
 import net.kdt.pojavlaunch.firefly.R;
 import net.kdt.pojavlaunch.firefly.Tools;
 import net.kdt.pojavlaunch.firefly.extra.ExtraConstants;
@@ -53,6 +54,7 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
         Button mAboutLauncherButton = view.findViewById(R.id.about_launcher_button);
         Button mCustomControlButton = view.findViewById(R.id.custom_control_button);
         Button mInstallJarButton = view.findViewById(R.id.install_jar_button);
+        Button mVersionManagerButton = view.findViewById(R.id.version_manager_button);
         Button mStartTerminalButton = view.findViewById(R.id.start_terminal_button);
         Button mShareLogsButton = view.findViewById(R.id.share_logs_button);
 
@@ -62,16 +64,13 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
         mVersionSpinner = view.findViewById(R.id.mc_version_spinner);
 
         mAboutLauncherButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), AboutFragment.class, AboutFragment.TAG, null));
-        mAboutLauncherButton.setOnLongClickListener((v) -> {
-            Tools.swapFragment(requireActivity(), SearchModFragment.class, SearchModFragment.TAG, null);
-            return true;
-        });
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
         mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
         mInstallJarButton.setOnLongClickListener(v -> {
             runInstallerWithConfirmation(true);
             return true;
         });
+        mVersionManagerButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), VersionManagerFragment.class, VersionManagerFragment.TAG, null));
         mStartTerminalButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), ConsoleActivity.class)));
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
 
@@ -85,11 +84,9 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
 
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
-        mPlayButton.setOnClickListener(v -> {
-            ExtraCore.setValue(ExtraConstants.START_DOWNLOADER, true);
-        });
+        mPlayButton.setOnClickListener(v -> ((LauncherActivity) requireActivity()).launchGame());
         mPlayButton.setOnLongClickListener(v -> {
-            ExtraCore.setValue(ExtraConstants.SKIP_DOWNLOADER, true);
+            ((LauncherActivity) requireActivity()).launchGameSkippingIntegrityCheck();
             return true;
         });
 

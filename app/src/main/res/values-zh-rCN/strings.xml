@@ -15,6 +15,106 @@
     <!-- Error messages -->
     <string name="error_fatal">Pojav Glow·Worm 意外崩溃</string>
     <string name="error_no_version">无版本！</string>
+    <string name="error_version_requires_repair">该版本文件不完整，请先普通启动以完成修复。</string>
+    <string name="version_manager_title">版本管理</string>
+    <string name="version_manager_refresh">刷新</string>
+    <string name="version_manager_search">搜索版本</string>
+    <string name="version_manager_install">安装</string>
+    <string name="version_manager_installed">已安装</string>
+    <string name="version_manager_install_failed">版本安装失败</string>
+    <string name="version_manager_installing">正在安装 %1$s</string>
+    <string name="version_manager_no_loader">%2$s 没有可用的 %1$s 加载器版本</string>
+    <string name="version_manager_select_loader">选择 %1$s 加载器版本</string>
+    <string name="version_manager_stable">稳定版</string>
+    <string name="version_manager_delete_title">删除 %1$s？</string>
+    <string name="version_manager_delete_message">使用此版本的关联档案也会被删除。</string>
+    <string name="version_manager_delete_message_isolated">这会一并删除该版本隔离的存档、模组、配置和日志。使用此版本的关联档案也会被删除。</string>
+    <string name="version_manager_profiles">\n将删除的档案：%1$s</string>
+    <string name="version_manager_delete_unavailable">此档案没有可删除的已安装版本。</string>
+    <string name="version_manager_loader_fabric">Fabric</string>
+    <string name="version_manager_loader_quilt">Quilt</string>
+    <string name="version_manager_loader_forge">Forge</string>
+    <string name="version_manager_loader_neoforge">NeoForge</string>
+    <string name="version_manager_loader_optifine">OptiFine</string>
+    <string name="version_manager_loader_fabric_api">Fabric API</string>
+    <string name="version_manager_loader_quilted_fabric_api">Quilted Fabric API</string>
+    <string name="version_isolation_title">版本隔离</string>
+    <string name="version_isolation_summary">让每个已安装版本的存档、模组、配置和日志互不影响。</string>
+    <string name="version_install_unknown_size">未知大小</string>
+    <string name="version_manager_select_game">选择 Minecraft 版本</string>
+    <string name="version_manager_no_versions">没有匹配的版本</string>
+    <string name="version_manager_unknown">未知</string>
+    <string name="version_filter_release">正式版</string>
+    <string name="version_filter_snapshot">快照版</string>
+    <string name="version_filter_april_fools">愚人节版</string>
+    <string name="version_filter_old">远古版</string>
+    <string name="version_addon_select">选择加载器和 API</string>
+    <string name="version_addon_for">Minecraft %1$s</string>
+    <string name="version_install_name_hint">安装名称</string>
+    <string name="version_addon_loading">正在加载</string>
+    <string name="version_addon_unavailable">不可用</string>
+    <string name="version_addon_retry">加载失败，点击重试</string>
+    <string name="version_addon_available">可以选择</string>
+    <string name="version_addon_current_selection">当前选择项：%1$s</string>
+    <string name="version_addon_clear_selection">取消选择</string>
+    <string name="version_addon_expand">展开 %1$s 选项</string>
+    <string name="version_addon_collapse">收起 %1$s 选项</string>
+    <string name="version_addon_none">不安装 API</string>
+    <string name="version_install_progress_title">正在安装版本</string>
+    <string name="version_install_progress_starting">正在准备安装</string>
+    <string name="version_install_progress_downloading">正在下载第 %1$d / %2$d 个文件</string>
+    <string name="version_install_progress_preparing">正在准备文件</string>
+    <string name="version_install_progress_downloading_minecraft">正在下载 Minecraft</string>
+    <string name="version_install_progress_downloading_addon">正在下载附加组件</string>
+    <string name="version_install_progress_running_installer">正在运行加载器安装器</string>
+    <string name="version_install_progress_verifying">正在校验文件</string>
+    <string name="version_install_progress_committing">正在保存已安装版本</string>
+    <string name="version_install_files">%1$d / %2$d 个文件  ·  %3$s / %4$s</string>
+    <string name="version_install_speed">%1$s/秒</string>
+    <string name="version_install_cancel">取消安装</string>
+    <string name="version_install_cancelled">安装已取消</string>
+    <string name="version_install_complete_title">安装完成</string>
+    <string name="version_install_complete_message">%1$s 已可启动。</string>
+    <string name="version_install_name_exists">该安装名称已被使用，请修改后重试。</string>
+    <string name="version_install_invalid_name">请输入有效的安装名称。</string>
+    <string name="version_install_forge_optifine_mod_title">将 OptiFine 作为模组安装</string>
+    <string name="version_install_forge_optifine_mod_message">同时选择 Forge 和 OptiFine 时，OptiFine 会作为模组安装在 mods 文件夹中。</string>
+    <string name="version_install_continue">继续安装</string>
+    <string name="version_install_step_clear_cache">清理安装缓存</string>
+    <string name="version_install_step_minecraft">下载并安装原版 %1$s</string>
+    <string name="version_install_step_loader_main">下载 %1$s 主文件</string>
+    <string name="version_install_step_loader_main_skipped">未选择加载器主文件</string>
+    <string name="version_install_step_loader_libraries">解析 %1$s 支持库</string>
+    <string name="version_install_step_loader_libraries_skipped">未选择加载器支持库</string>
+    <string name="version_install_step_api_main">下载 %1$s 主文件</string>
+    <string name="version_install_step_api_main_skipped">未选择 API 主文件</string>
+    <string name="version_install_step_install_files">安装游戏文件</string>
+    <string name="version_install_step_working">正在处理</string>
+    <string name="version_install_step_detail">%1$d / %2$d 个文件  ·  %3$s / %4$s  ·  %5$s/秒</string>
+    <string-array name="version_manager_filter_entries">
+        <item>全部</item>
+        <item>正式版</item>
+        <item>快照版</item>
+        <item>远古 Beta</item>
+        <item>远古 Alpha</item>
+        <item>Fabric</item>
+        <item>Quilt</item>
+        <item>Forge</item>
+        <item>NeoForge</item>
+        <item>OptiFine</item>
+    </string-array>
+    <string name="version_download_source_title">游戏下载源</string>
+    <string name="version_download_source_summary">选择自动、官方优先或 BMCLAPI 镜像优先下载</string>
+    <string-array name="version_download_source_entries">
+        <item>自动</item>
+        <item>官方优先</item>
+        <item>镜像优先</item>
+    </string-array>
+    <string-array name="version_download_source_values">
+        <item>AUTO</item>
+        <item>OFFICIAL_FIRST</item>
+        <item>MIRROR_FIRST</item>
+    </string-array>
     <string name="error_show_more">显示细节</string>
     <string name="error_show_less">隐藏细节</string>
     <!-- Toast messages -->
@@ -356,4 +456,43 @@
     <string name="log_view_button_output_on">输出\n开启</string>
     <string name="log_view_label_log_output">日志输出:</string>
 
+    <string name="version_manager_install_new">安装新版本</string>
+    <string name="version_manager_filter_all">全部</string>
+    <string name="version_manager_filter_vanilla">原版</string>
+    <string name="version_manager_filter_loader">加载器</string>
+    <string name="version_manager_no_installed_versions">没有已安装的版本</string>
+    <string name="version_manager_current">当前使用</string>
+    <string name="version_manager_ready">可启动</string>
+    <string name="version_manager_invalid">无效</string>
+    <string name="version_manager_kind_vanilla">原版</string>
+    <string name="version_manager_kind_custom">自定义</string>
+    <string name="version_manager_pin">置顶版本</string>
+    <string name="version_manager_settings">版本设置</string>
+    <string name="version_manager_actions">版本操作</string>
+    <string name="version_manager_rename">重命名</string>
+    <string name="version_manager_copy_metadata">复制版本文件</string>
+    <string name="version_manager_copy_all">复制完整实例</string>
+    <string name="version_manager_delete_version">删除版本</string>
+    <string name="version_manager_delete_instance_message">这会删除版本目录及此隔离实例保存的全部文件。</string>
+    <string name="version_manager_clean_assets">清理未使用资源</string>
+    <string name="version_manager_clean_assets_message">删除未被已安装版本引用的共享资源对象？</string>
+    <string name="version_settings_icon">版本图标</string>
+    <string name="version_settings_summary">实例摘要</string>
+    <string name="version_settings_graphics_api">图形 API</string>
+    <string name="version_settings_graphics_default">使用 Minecraft 设置</string>
+    <string name="version_settings_isolation">版本隔离</string>
+    <string name="version_settings_isolation_follow">跟随全局设置</string>
+    <string name="version_settings_isolation_enable">强制开启</string>
+    <string name="version_settings_isolation_disable">强制关闭</string>
+    <string name="version_settings_tab_one">版本概览</string>
+    <string name="version_settings_tab_two">版本配置</string>
+    <string name="version_settings_tab_one_description">实例版本概览</string>
+    <string name="version_settings_tab_two_description">实例版本配置</string>
+    <string name="version_overview_name">实例名称</string>
+    <string name="version_overview_summary">实例备注</string>
+    <string name="version_overview_no_summary">暂无备注</string>
+    <string name="version_overview_edit_name">修改名称</string>
+    <string name="version_overview_edit_summary">修改备注</string>
+    <string name="version_overview_reset_icon">恢复默认图标</string>
+    <string name="version_overview_reset_icon_message">要恢复此实例的默认图标吗？</string>
 </resources>

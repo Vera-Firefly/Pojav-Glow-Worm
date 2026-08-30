@@ -1,28 +1,19 @@
 package net.kdt.pojavlaunch.firefly.profiles;
 
-import static net.kdt.pojavlaunch.firefly.extra.ExtraCore.getValue;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.ExpandableListView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import net.kdt.pojavlaunch.firefly.JMinecraftVersionList;
 import net.kdt.pojavlaunch.firefly.R;
-import net.kdt.pojavlaunch.firefly.extra.ExtraConstants;
 
 public class VersionSelectorDialog {
-    public static void open(Context context, boolean hideCustomVersions, VersionSelectorListener listener) {
+    public static void open(Context context, VersionSelectorListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         ExpandableListView expandableListView = (ExpandableListView) LayoutInflater.from(context)
                 .inflate(R.layout.dialog_expendable_list_view, null);
-        JMinecraftVersionList jMinecraftVersionList = (JMinecraftVersionList) getValue(ExtraConstants.RELEASE_TABLE);
-        JMinecraftVersionList.Version[] versionArray;
-        if (jMinecraftVersionList == null || jMinecraftVersionList.versions == null)
-            versionArray = new JMinecraftVersionList.Version[0];
-        else versionArray = jMinecraftVersionList.versions;
-        VersionListAdapter adapter = new VersionListAdapter(versionArray, hideCustomVersions, context);
+        VersionListAdapter adapter = new VersionListAdapter(context);
 
         expandableListView.setAdapter(adapter);
         builder.setView(expandableListView);
@@ -30,7 +21,7 @@ public class VersionSelectorDialog {
 
         expandableListView.setOnChildClickListener((parent, v1, groupPosition, childPosition, id) -> {
             String version = adapter.getChild(groupPosition, childPosition);
-            listener.onVersionSelected(version, adapter.isSnapshotSelected(groupPosition));
+            listener.onVersionSelected(version, false);
             dialog.dismiss();
             return true;
         });
