@@ -441,7 +441,16 @@ static void convert_ring_event(const GLFWInputEvent *ev) {
             break;
         }
         case 1006: { /* EVENT_TYPE_MOUSE_BUTTON */
-            Uint8 button = (Uint8) (ev->i1 + 1); /* GLFW is 0-based, SDL is 1-based */
+            /* GLFW uses left=0, right=1, middle=2 while SDL uses
+             * left=1, middle=2, right=3.  A simple +1 swaps right and
+             * middle, which is visible in Minecraft's key bindings. */
+            Uint8 button;
+            switch (ev->i1) {
+                case 0: button = SDL_BUTTON_LEFT; break;
+                case 1: button = SDL_BUTTON_RIGHT; break;
+                case 2: button = SDL_BUTTON_MIDDLE; break;
+                default: button = (Uint8) (ev->i1 + 1); break;
+            }
             Uint32 mask = SDL_BUTTON_MASK(button);
             if (ev->i2) mouseButtonState |= mask;
             else mouseButtonState &= ~mask;
@@ -493,8 +502,8 @@ static void pump_events(void) {
     /* Absolute cursor motion, mirroring the GLFW pump's cursor flush */
     if (pojav_environ->cLastX != pojav_environ->cursorX ||
         pojav_environ->cLastY != pojav_environ->cursorY) {
-        float nx = (float) floor(pojav_environ->cursorX);
-        float ny = (float) floor(pojav_environ->cursorY);
+        float nx = (float) pojav_environ->cursorX;
+        float ny = (float) pojav_environ->cursorY;
         stage_mouse_motion(nx, ny, nx - (float) pojav_environ->cLastX, ny - (float) pojav_environ->cLastY);
         pojav_environ->cLastX = pojav_environ->cursorX;
         pojav_environ->cLastY = pojav_environ->cursorY;
