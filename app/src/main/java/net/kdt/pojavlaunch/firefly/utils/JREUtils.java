@@ -618,6 +618,8 @@ public class JREUtils {
         purgeArg(userArgs, "-XX:+UseTransparentHugePages");
         purgeArg(userArgs, "-XX:+UseLargePagesInMetaspace");
         purgeArg(userArgs, "-XX:+UseLargePages");
+        // Keep JVM thread pools sized for the actual processor count.
+        purgeArg(userArgs, "-XX:ActiveProcessorCount");
         purgeArg(userArgs, "-Dorg.lwjgl.opengl.libname");
         purgeArg(userArgs, "-Djava.library.path");
         purgeArg(userArgs, "-Dorg.lwjgl.librarypath");
@@ -635,6 +637,7 @@ public class JREUtils {
         //Add automatically generated args
         userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
         userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
+        userArgs.add("-XX:ActiveProcessorCount=" + java.lang.Runtime.getRuntime().availableProcessors());
         if (LOCAL_RENDERER != null) {
             userArgs.add("-Dorg.lwjgl.opengl.renderertag=" + LOCAL_RENDERER);
             userArgs.add("-Dorg.lwjgl.opengl.libname=" + loadGraphicsLibrary());
