@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_line"
+                android:paddingVertical="0px"
                 android:dropDownWidth="match_parent" />
 
             <ImageView
@@ -57,6 +58,7 @@
             android:layout_height="44dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/background_line"
+            android:paddingVertical="0px"
             android:gravity="center_vertical"
             android:inputType="text"
             android:paddingHorizontal="12dp"
@@ -81,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_line"
+                android:paddingVertical="0px"
                 android:dropDownWidth="match_parent" />
 
             <ImageView
@@ -111,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_line"
+                android:paddingVertical="0px"
                 android:dropDownWidth="match_parent" />
 
             <ImageView
@@ -141,6 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_line"
+                android:paddingVertical="0px"
                 android:dropDownWidth="match_parent" />
 
             <ImageView
@@ -174,6 +179,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/background_line"
+                android:paddingVertical="0px"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:hint="@string/use_global_default"
@@ -213,6 +219,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/background_line"
+                android:paddingVertical="0px"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
