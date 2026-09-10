@@ -188,7 +188,7 @@ class VersionSettingsPageFragment : Fragment() {
 
         val runtimes = MultiRTUtils.getRuntimes()
         runtime.adapter = RTSpinnerAdapter(requireContext(), runtimes)
-        runtime.setSelection(runtimes.indexOf(Runtime(value.config.runtimeName)).takeIf { it >= 0 } ?: 0)
+        runtime.setSelection(runtimes.indexOf(Runtime(value.config.runtimeName)).takeIf { it >= 0 } ?: runtimes.size - 1)
 
         val compatible = ListUtils.getCompatibleRenderers(requireContext())
         rendererIds = compatible.rendererIds

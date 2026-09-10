@@ -348,8 +348,6 @@
     <string name="preference_wipe_controller_description">允許您重新映射手柄按鍵。</string>
     <string name="preference_deadzone_scale_title">搖杆死區比例</string>
     <string name="preference_deadzone_scale_description">若搖杆偏移，請調高此選項。</string>
-    <string name="preference_force_big_core_title">強制渲染器在大核上運行</string>
-    <string name="preference_force_big_core_desc">強制Minecraft渲染線程在最高頻率的覈心運行。</string>
     <string name="version_select_hint">選擇版本</string>
     <string name="forge_dl_progress">正在下載%s的安裝程式</string>
     <string name="forge_dl_searching">正在蒐索Forge版本號</string>

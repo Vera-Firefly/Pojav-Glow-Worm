@@ -56,10 +56,14 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
     @Override
     public boolean onCapturedPointer(View view, MotionEvent event) {
         checkSameDevice(event.getDevice());
+        int action = event.getActionMasked();
         // Yes, we actually not only receive relative mouse events here, but also absolute touchpad ones!
         // Therefore, we need to know when it's a touchpad and when it's a mouse.
 
-        if ((event.getSource() & InputDevice.SOURCE_CLASS_TRACKBALL) != 0) {
+        // Button and scroll events may carry stale X/Y axis values on Android.
+        // Treating those values as motion creates a small camera drift after input stops.
+        boolean isMotion = action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_HOVER_MOVE;
+        if (isMotion && (event.getSource() & InputDevice.SOURCE_CLASS_TRACKBALL) != 0) {
             // If the source claims to be a relative device by belonging to the trackball class,
             // use its coordinates directly.
             if (mDeviceSupportsRelativeAxis) {
@@ -72,13 +76,16 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
                 mVector[0] = event.getX();
                 mVector[1] = event.getY();
             }
-        } else {
+        } else if (isMotion) {
             // If it's not a trackball, it's likely a touchpad and needs tracking like a touchscreen.
             mPointerTracker.trackEvent(event);
             // The relative position will already be written down into the mVector variable.
+        } else {
+            mVector[0] = 0;
+            mVector[1] = 0;
         }
 
-        if (!CallbackBridge.isGrabbing()) {
+        if (isMotion && !CallbackBridge.isGrabbing()) {
             enableTouchpadIfNecessary();
             // Yes, if the user's touchpad is multi-touch we will also receive events for that.
             // So, handle the scrolling gesture ourselves.
@@ -90,14 +97,14 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
             } else {
                 mScroller.performScroll(mVector);
             }
-        } else {
+        } else if (isMotion) {
             // Position is updated by many events, hence it is send regardless of the event value
             CallbackBridge.mouseX += (mVector[0] * mScaleFactor);
             CallbackBridge.mouseY += (mVector[1] * mScaleFactor);
             CallbackBridge.sendCursorPos(CallbackBridge.mouseX, CallbackBridge.mouseY);
         }
 
-        switch (event.getActionMasked()) {
+        switch (action) {
             case MotionEvent.ACTION_MOVE:
                 return true;
             case MotionEvent.ACTION_BUTTON_PRESS:
@@ -111,6 +118,7 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
                 );
                 return true;
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
                 mPointerTracker.cancelTracking();
                 return true;
             default:

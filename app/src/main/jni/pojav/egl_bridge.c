@@ -68,8 +68,6 @@ static void recordFrame() {
     )) {}
 }
 
-void bigcore_set_affinity();
-
 void* loadTurnipVulkan();
 
 extern void updateMonitorSize(int width, int height);
@@ -338,16 +336,21 @@ int pojavInitOpenGL() {
 }
 
 EXTERNAL_API int pojavInit() {
-    pojav_environ->glfwThreadVmEnv = get_attached_env(pojav_environ->runtimeJavaVMPtr);
-    if(pojav_environ->glfwThreadVmEnv == NULL) {
-        printf("Failed to attach Java-side JNIEnv to GLFW thread\n");
-        return 0;
+    /* SDL3 bridge mode: the game JVM never loads the GLFW stub, so there is no
+     * runtime VM env to attach and no GLFW class to notify about monitor size */
+    if (!pojav_environ->sdlBridgeActive) {
+        pojav_environ->glfwThreadVmEnv = get_attached_env(pojav_environ->runtimeJavaVMPtr);
+        if(pojav_environ->glfwThreadVmEnv == NULL) {
+            printf("Failed to attach Java-side JNIEnv to GLFW thread\n");
+            return 0;
+        }
     }
     ANativeWindow_acquire(pojav_environ->pojavWindow);
     pojav_environ->savedWidth = ANativeWindow_getWidth(pojav_environ->pojavWindow);
     pojav_environ->savedHeight = ANativeWindow_getHeight(pojav_environ->pojavWindow);
     ANativeWindow_setBuffersGeometry(pojav_environ->pojavWindow,pojav_environ->savedWidth,pojav_environ->savedHeight,AHARDWAREBUFFER_FORMAT_R8G8B8X8_UNORM);
-    updateMonitorSize(pojav_environ->savedWidth, pojav_environ->savedHeight);
+    if (!pojav_environ->sdlBridgeActive)
+        updateMonitorSize(pojav_environ->savedWidth, pojav_environ->savedHeight);
     pojavInitOpenGL();
     return 1;
 }
@@ -371,6 +374,9 @@ EXTERNAL_API void pojavSetWindowHint(int hint, int value) {
 }
 
 EXTERNAL_API void pojavSwapBuffers() {
+    static int swapLogCount = 0;
+    if (swapLogCount++ < 3)
+        printf("pojavSwapBuffers: config_renderer=%d bridge_config=%d\n", pojav_environ->config_renderer, pojav_environ->bridge_config);
     recordFrame();
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK
@@ -395,7 +401,9 @@ EXTERNAL_API void pojavSwapBuffers() {
 }
 
 EXTERNAL_API void pojavMakeCurrent(void* window) {
-    if (getenv("POJAV_BIG_CORE_AFFINITY") != NULL) bigcore_set_affinity();
+    static int mcLogCount = 0;
+    if (mcLogCount++ < 6)
+        printf("pojavMakeCurrent: window=%p config_renderer=%d bridge_config=%d\n", window, pojav_environ->config_renderer, pojav_environ->bridge_config);
 
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK
      || pojav_environ->config_renderer == RENDERER_GL4ES)
@@ -420,6 +428,7 @@ EXTERNAL_API void pojavMakeCurrent(void* window) {
 }
 
 EXTERNAL_API void* pojavCreateContext(void* contextSrc) {
+    printf("pojavCreateContext: src=%p config_renderer=%d bridge_config=%d\n", contextSrc, pojav_environ->config_renderer, pojav_environ->bridge_config);
     if (pojav_environ->config_renderer == RENDERER_VULKAN)
         return (void *) pojav_environ->pojavWindow;
 

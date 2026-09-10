@@ -34,6 +34,15 @@ static jlong ndlopen_bugfix(__attribute__((unused)) JNIEnv *env,
         return (jlong) maybe_load_vulkan();
     }
 
+    // The SDL3 compatibility layer is shipped inside the APK; redirect the
+    // bare-name load to the absolute location the launcher prepared
+    const char* sdl3Path = getenv("POJAV_SDL3_LIB");
+    if (sdl3Path && strstr(filename, "libSDL3.so") == filename) {
+        printf("LWJGL linkerhook: replacing load for libSDL3.so with %s\n", sdl3Path);
+        void* handle = dlopen(sdl3Path, (int)jmode ? (int)jmode : (RTLD_LAZY | RTLD_LOCAL));
+        if (handle) return (jlong) handle;
+    }
+
     // This hook also serves the task of mitigating a bug: the idea is that since, on Android 10 and
     // earlier, the linker doesn't really do namespace nesting.
     // It is not a problem as most of the libraries are in the launcher path, but when you try to run

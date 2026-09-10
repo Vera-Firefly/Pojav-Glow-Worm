@@ -239,8 +239,6 @@ public class JREUtils {
             envMap.put("PGW_VERSION_CODE", PGW_VERSION_CODE);
         if (Tools.BRIDGE_CONFIG != null)
             envMap.put("BRIDGE_CONFIG", BRIDGE_CONFIG);
-        if (PREF_BIG_CORE_AFFINITY)
-            envMap.put("POJAV_BIG_CORE_AFFINITY", "1");
         if (PREF_DUMP_SHADERS)
             envMap.put("LIBGL_VGPU_DUMP", "1");
         if (PREF_ZINK_PREFER_SYSTEM_DRIVER)
@@ -523,6 +521,9 @@ public class JREUtils {
             envMap.put("POJAV_RENDERER", LOCAL_RENDERER);
             envMap.put("LD_LIBRARY_PATH", lwjglNativeDirectory.getAbsolutePath() + ":" + LD_LIBRARY_PATH);
         }
+        envMap.put("POJAV_SDL3_LIB", NATIVE_LIB_DIR + "/libSDL3.so");
+        envMap.put("SDL3_WINDOW_WIDTH", Integer.toString(Tools.getDisplayFriendlyRes(currentDisplayMetrics.widthPixels, LauncherPreferences.PREF_SCALE_FACTOR / 100F)));
+        envMap.put("SDL3_WINDOW_HEIGHT", Integer.toString(Tools.getDisplayFriendlyRes(currentDisplayMetrics.heightPixels, LauncherPreferences.PREF_SCALE_FACTOR / 100F)));
         setCustomEnv(envMap);
 
         if (renderer) {
@@ -617,6 +618,8 @@ public class JREUtils {
         purgeArg(userArgs, "-XX:+UseTransparentHugePages");
         purgeArg(userArgs, "-XX:+UseLargePagesInMetaspace");
         purgeArg(userArgs, "-XX:+UseLargePages");
+        // Keep JVM thread pools sized for the actual processor count.
+        purgeArg(userArgs, "-XX:ActiveProcessorCount");
         purgeArg(userArgs, "-Dorg.lwjgl.opengl.libname");
         purgeArg(userArgs, "-Djava.library.path");
         purgeArg(userArgs, "-Dorg.lwjgl.librarypath");
@@ -634,6 +637,7 @@ public class JREUtils {
         //Add automatically generated args
         userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
         userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
+        userArgs.add("-XX:ActiveProcessorCount=" + java.lang.Runtime.getRuntime().availableProcessors());
         if (LOCAL_RENDERER != null) {
             userArgs.add("-Dorg.lwjgl.opengl.renderertag=" + LOCAL_RENDERER);
             userArgs.add("-Dorg.lwjgl.opengl.libname=" + loadGraphicsLibrary());
@@ -749,6 +753,8 @@ public class JREUtils {
                 "-Duser.timezone=" + TimeZone.getDefault().getID(),
 
                 "-Dorg.lwjgl.vulkan.libname=libvulkan.so",
+                // SDL3 compatibility layer (only touched by Minecraft 26.3+ snapshots)
+                "-Dorg.lwjgl.sdl.libname=" + NATIVE_LIB_DIR + "/libSDL3.so",
                 //LWJGL 3 DEBUG FLAGS
                 //"-Dorg.lwjgl.util.Debug=true",
                 //"-Dorg.lwjgl.util.DebugFunctions=true",

@@ -107,20 +107,26 @@ ADD_CALLBACK_WWIN(WindowSize)
 
 #undef ADD_CALLBACK_WWIN
 
-void handleFramebufferSizeJava(long window, int w, int h) {
-    (*pojav_environ->glfwThreadVmEnv)->CallStaticVoidMethod(pojav_environ->glfwThreadVmEnv, pojav_environ->vmGlfwClass, pojav_environ->method_internalChangeMonitorSize, w, h);
-    (*pojav_environ->glfwThreadVmEnv)->CallStaticVoidMethod(pojav_environ->glfwThreadVmEnv, pojav_environ->vmGlfwClass, pojav_environ->method_internalWindowSizeChanged, (long)window);
-}
-
 void updateMonitorSize(int width, int height) {
     (*pojav_environ->glfwThreadVmEnv)->CallStaticVoidMethod(
             pojav_environ->glfwThreadVmEnv, pojav_environ->vmGlfwClass,
             pojav_environ->method_internalChangeMonitorSize, width, height);
 }
 
+void updateWindowSize(void *window) {
+    (*pojav_environ->glfwThreadVmEnv)->CallStaticVoidMethod(
+            pojav_environ->glfwThreadVmEnv, pojav_environ->vmGlfwClass,
+            pojav_environ->method_internalWindowSizeChanged, (jlong) window);
+}
+
 void pojavPumpEvents(void* window) {
     if (pojav_environ->shouldUpdateMouse)
         pojav_environ->GLFW_invoke_CursorPos(window, floor(pojav_environ->cursorX), floor(pojav_environ->cursorY));
+
+    if (pojav_environ->shouldUpdateMonitorSize) {
+        // GLFW keeps the size on each window, so this must run once per window.
+        updateWindowSize(window);
+    }
 
     size_t index = pojav_environ->outEventIndex;
     size_t targetIndex = pojav_environ->outTargetIndex;
@@ -142,14 +148,6 @@ void pojavPumpEvents(void* window) {
                 break;
             case EVENT_TYPE_SCROLL:
                 if(pojav_environ->GLFW_invoke_Scroll) pojav_environ->GLFW_invoke_Scroll(window, event.i1, event.i2);
-                break;
-            case EVENT_TYPE_FRAMEBUFFER_SIZE:
-                handleFramebufferSizeJava(pojav_environ->showingWindow, event.i1, event.i2);
-                if(pojav_environ->GLFW_invoke_FramebufferSize) pojav_environ->GLFW_invoke_FramebufferSize(window, event.i1, event.i2);
-                break;
-            case EVENT_TYPE_WINDOW_SIZE:
-                handleFramebufferSizeJava(pojav_environ->showingWindow, event.i1, event.i2);
-                if(pojav_environ->GLFW_invoke_WindowSize) pojav_environ->GLFW_invoke_WindowSize(window, event.i1, event.i2);
                 break;
         }
 
@@ -329,12 +327,12 @@ JNIEXPORT void JNICALL Java_org_lwjgl_glfw_CallbackBridge_nativeSetGrabbing(__at
 }
 
 jboolean critical_send_char(jchar codepoint) {
-    if (pojav_environ->GLFW_invoke_Char && pojav_environ->isInputReady)
+    if ((pojav_environ->GLFW_invoke_Char || pojav_environ->sdlBridgeActive) && pojav_environ->isInputReady)
     {
         if (pojav_environ->isUseStackQueueCall)
         {
             sendData(EVENT_TYPE_CHAR, codepoint, 0, 0, 0);
-        } else {
+        } else if (pojav_environ->GLFW_invoke_Char) {
             pojav_environ->GLFW_invoke_Char((void*) pojav_environ->showingWindow, (unsigned int) codepoint);
         }
         return JNI_TRUE;
@@ -347,12 +345,12 @@ jboolean noncritical_send_char(__attribute__((unused)) JNIEnv* env, __attribute_
 }
 
 jboolean critical_send_char_mods(jchar codepoint, jint mods) {
-    if (pojav_environ->GLFW_invoke_CharMods && pojav_environ->isInputReady)
+    if ((pojav_environ->GLFW_invoke_CharMods || pojav_environ->sdlBridgeActive) && pojav_environ->isInputReady)
     {
         if (pojav_environ->isUseStackQueueCall)
         {
             sendData(EVENT_TYPE_CHAR_MODS, (int) codepoint, mods, 0, 0);
-        } else {
+        } else if (pojav_environ->GLFW_invoke_CharMods) {
             pojav_environ->GLFW_invoke_CharMods((void*) pojav_environ->showingWindow, codepoint, mods);
         }
         return JNI_TRUE;
@@ -375,7 +373,7 @@ void critical_send_cursor_pos(jfloat x, jfloat y) {
 #ifdef DEBUG
     LOGD("Sending cursor position \n");
 #endif
-    if (pojav_environ->GLFW_invoke_CursorPos && pojav_environ->isInputReady) {
+    if ((pojav_environ->GLFW_invoke_CursorPos || pojav_environ->sdlBridgeActive) && pojav_environ->isInputReady) {
 #ifdef DEBUG
         LOGD("pojav_environ->GLFW_invoke_CursorPos && pojav_environ->isInputReady \n");
 #endif
@@ -390,6 +388,9 @@ void critical_send_cursor_pos(jfloat x, jfloat y) {
                 } else {
                     pojav_environ->GLFW_invoke_CursorEnter((void*) pojav_environ->showingWindow, 1);
                 }
+            } else if (pojav_environ->sdlBridgeActive) {
+                // The SDL pump emits the mouse-enter event itself on the first motion
+                pojav_environ->isCursorEntered = true;
             } else if (pojav_environ->isGrabbing) {
                 // Some Minecraft versions does not use GLFWCursorEnterCallback
                 // This is a smart check, as Minecraft will not in grab mode if already not.
@@ -397,7 +398,7 @@ void critical_send_cursor_pos(jfloat x, jfloat y) {
             }
         }
 
-        if (!pojav_environ->isUseStackQueueCall)
+        if (!pojav_environ->isUseStackQueueCall && pojav_environ->GLFW_invoke_CursorPos)
         {
             pojav_environ->GLFW_invoke_CursorPos((void*) pojav_environ->showingWindow, (double) (x), (double) (y));
         } else {
@@ -415,13 +416,13 @@ void noncritical_send_cursor_pos(__attribute__((unused)) JNIEnv* env, __attribut
        __typeof__ (b) _b = (b); \
      _a > _b ? _a : _b; })
 void critical_send_key(jint key, jint scancode, jint action, jint mods) {
-    if (pojav_environ->GLFW_invoke_Key && pojav_environ->isInputReady)
+    if ((pojav_environ->GLFW_invoke_Key || pojav_environ->sdlBridgeActive) && pojav_environ->isInputReady)
     {
-        pojav_environ->keyDownBuffer[max(0, key-31)] = (jbyte) action;
+        if (pojav_environ->keyDownBuffer) pojav_environ->keyDownBuffer[max(0, key-31)] = (jbyte) action;
         if (pojav_environ->isUseStackQueueCall)
         {
             sendData(EVENT_TYPE_KEY, key, scancode, action, mods);
-        } else {
+        } else if (pojav_environ->GLFW_invoke_Key) {
             pojav_environ->GLFW_invoke_Key((void*) pojav_environ->showingWindow, key, scancode, action, mods);
         }
     }
@@ -431,13 +432,13 @@ void noncritical_send_key(__attribute__((unused)) JNIEnv* env, __attribute__((un
 }
 
 void critical_send_mouse_button(jint button, jint action, jint mods) {
-    if (pojav_environ->GLFW_invoke_MouseButton && pojav_environ->isInputReady)
+    if ((pojav_environ->GLFW_invoke_MouseButton || pojav_environ->sdlBridgeActive) && pojav_environ->isInputReady)
     {
-        pojav_environ->mouseDownBuffer[max(0, button)] = (jbyte) action;
+        if (pojav_environ->mouseDownBuffer) pojav_environ->mouseDownBuffer[max(0, button)] = (jbyte) action;
         if (pojav_environ->isUseStackQueueCall)
         {
             sendData(EVENT_TYPE_MOUSE_BUTTON, button, action, mods, 0);
-        } else {
+        } else if (pojav_environ->GLFW_invoke_MouseButton) {
             pojav_environ->GLFW_invoke_MouseButton((void*) pojav_environ->showingWindow, button, action, mods);
         }
     }
@@ -450,29 +451,18 @@ void noncritical_send_mouse_button(__attribute__((unused)) JNIEnv* env, __attrib
 void critical_send_screen_size(jint width, jint height) {
     pojav_environ->savedWidth = width;
     pojav_environ->savedHeight = height;
-    pojav_environ->shouldUpdateMonitorSize = true;
-    if (pojav_environ->isInputReady)
-    {
-        if (pojav_environ->GLFW_invoke_FramebufferSize)
-        {
-            if (pojav_environ->isUseStackQueueCall)
-            {
-                sendData(EVENT_TYPE_FRAMEBUFFER_SIZE, width, height, 0, 0);
-            } else {
-                pojav_environ->GLFW_invoke_FramebufferSize((void*) pojav_environ->showingWindow, width, height);
-            }
-        }
 
-        if (pojav_environ->GLFW_invoke_WindowSize)
-        {
-            if (pojav_environ->isUseStackQueueCall)
-            {
-                sendData(EVENT_TYPE_WINDOW_SIZE, width, height, 0, 0);
-            } else {
-                pojav_environ->GLFW_invoke_WindowSize((void*) pojav_environ->showingWindow, width, height);
-            }
+    if (pojav_environ->sdlBridgeActive) {
+        if (pojav_environ->isInputReady) {
+            sendData(EVENT_TYPE_WINDOW_SIZE, width, height, 0, 0);
         }
+        return;
     }
+
+    // A resize may arrive during a poll cycle after the monitor update ran.
+    // Mark it pending again so the next cycle updates every GLFW window.
+    pojav_environ->monitorSizeConsumed = false;
+    pojav_environ->shouldUpdateMonitorSize = true;
 }
 
 void noncritical_send_screen_size(__attribute__((unused)) JNIEnv* env, __attribute__((unused)) jclass clazz, jint width, jint height) {
@@ -480,10 +470,10 @@ void noncritical_send_screen_size(__attribute__((unused)) JNIEnv* env, __attribu
 }
 
 void critical_send_scroll(jdouble xoffset, jdouble yoffset) {
-    if (pojav_environ->GLFW_invoke_Scroll && pojav_environ->isInputReady) {
+    if ((pojav_environ->GLFW_invoke_Scroll || pojav_environ->sdlBridgeActive) && pojav_environ->isInputReady) {
         if (pojav_environ->isUseStackQueueCall) {
             sendData(EVENT_TYPE_SCROLL, (int)xoffset, (int)yoffset, 0, 0);
-        } else {
+        } else if (pojav_environ->GLFW_invoke_Scroll) {
             pojav_environ->GLFW_invoke_Scroll((void*) pojav_environ->showingWindow, (double) xoffset, (double) yoffset);
         }
     }
@@ -500,8 +490,12 @@ JNIEXPORT void JNICALL Java_org_lwjgl_glfw_GLFW_nglfwSetShowingWindow(__attribut
 
 JNIEXPORT void JNICALL Java_org_lwjgl_glfw_CallbackBridge_nativeSetWindowAttrib(__attribute__((unused)) JNIEnv* env, __attribute__((unused)) jclass clazz, jint attrib, jint value) {
     if (!pojav_environ->showingWindow) return;
+    /* SDL3 mode: the game JVM never loads the GLFW stub, so there is no
+     * runtime VM (and no GLFW class) to deliver window attribs to */
+    if (!pojav_environ->runtimeJavaVMPtr || !pojav_environ->vmGlfwClass) return;
 
     JNIEnv *jvm_env = get_attached_env(pojav_environ->runtimeJavaVMPtr);
+    if (!jvm_env) return;
 
     (*jvm_env)->CallStaticVoidMethod(
             jvm_env, pojav_environ->vmGlfwClass,

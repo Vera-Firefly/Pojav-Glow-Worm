@@ -34,6 +34,7 @@
 ## Introduction 
 * PojavLauncher is a Minecraft: Java Edition launcher for Android based on [Boardwalk](https://github.com/zhuowei/Boardwalk). 
 * This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.21.x snapshots (including Combat Test versions). 
+* Minecraft 26.3+ snapshots, which use SDL3 for window management and input, are supported through a bundled SDL3 compatibility layer (libSDL3.so). 
 * Modding via Forge and Fabric are also supported. 
 * This repository contains source code for Android. 
 * Pojav Glow·Worm does not support IOS
