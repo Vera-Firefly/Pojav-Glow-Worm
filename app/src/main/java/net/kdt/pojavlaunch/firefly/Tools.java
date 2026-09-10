@@ -60,6 +60,7 @@ import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutorTask;
 import net.kdt.pojavlaunch.firefly.lifecycle.LifecycleAwareAlertDialog;
+import net.kdt.pojavlaunch.firefly.logshare.LogShareClient;
 import net.kdt.pojavlaunch.firefly.memory.MemoryHoleFinder;
 import net.kdt.pojavlaunch.firefly.memory.SelfMapsParser;
 import net.kdt.pojavlaunch.firefly.multirt.MultiRTUtils;
@@ -1248,11 +1249,83 @@ public final class Tools {
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shareIntent.setType("text/plain");
 
-        Intent sendIntent = Intent.createChooser(shareIntent, "latestlog.txt");
-        context.startActivity(sendIntent);
+        Intent chooser = Intent.createChooser(shareIntent, "latestlog.txt");
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(chooser);
+    }
+
+    /**
+     * Uploads the latest log to LogShare.CN and shares the resulting link.
+     * Falls back to sharing the raw file if the upload cannot be completed.
+     */
+    public static void uploadLog(Context context) {
+        File logFile = new File(DIR_GAME_HOME, "latestlog.txt");
+        if (!logFile.isFile()) {
+            Toast(context, R.string.logshare_log_missing);
+            return;
+        }
+        final Context appContext = context.getApplicationContext();
+        Toast(appContext, R.string.logshare_uploading);
+        sExecutorService.execute(() -> {
+            final String content;
+            try {
+                content = readLogFile(logFile);
+            } catch (IOException e) {
+                Log.w("LogShare", "Unable to read latestlog.txt", e);
+                MAIN_HANDLER.post(() -> shareLog(appContext));
+                return;
+            }
+            LogShareClient.upload(logShareSource(), logFile.getName(), content, logFile.length(),
+                    new LogShareClient.UploadCallback() {
+                        @Override
+                        public void onSuccess(@NonNull String id, @NonNull String url) {
+                            MAIN_HANDLER.post(() -> shareLogLink(appContext, url));
+                        }
+
+                        @Override
+                        public void onFailure(@Nullable String message) {
+                            MAIN_HANDLER.post(() -> {
+                                Toast(appContext, appContext.getString(R.string.logshare_failed,
+                                        message != null ? message : ""));
+                                shareLog(appContext);
+                            });
+                        }
+                    });
+        });
+    }
+
+    /** Builds the LogShare "source" tag, e.g. {@code pgw/snowdrop-...} (API limit is 64 chars). */
+    private static String logShareSource() {
+        String version = BuildConfig.VERSION_NAME;
+        String source = "pgw/" + (version != null ? version : "");
+        return source.length() > 64 ? source.substring(0, 64) : source;
+    }
+
+    private static String readLogFile(File file) throws IOException {
+        int length = (int) Math.min(file.length(), 10L * 1024 * 1024);
+        byte[] buffer = new byte[length];
+        int offset = 0;
+        try (FileInputStream input = new FileInputStream(file)) {
+            while (offset < length) {
+                int count = input.read(buffer, offset, length - offset);
+                if (count < 0) break;
+                offset += count;
+            }
+        }
+        return new String(buffer, 0, offset, StandardCharsets.UTF_8);
+    }
+
+    private static void shareLogLink(Context context, String url) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+        sendIntent.setType("text/plain");
+        Intent chooser = Intent.createChooser(sendIntent,
+                context.getString(R.string.main_share_logs));
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(chooser);
     }
 
     /**

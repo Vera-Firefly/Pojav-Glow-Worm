@@ -243,6 +243,10 @@
     <string name="customctrl_selectdefault">选择默认控制键位</string>
     <string name="customctrl_export">导出控制键位</string>
     <string name="main_share_logs">共享日志文件</string>
+    <string name="logshare_uploading">正在上传日志到 LogShare…</string>
+    <string name="logshare_log_missing">未找到 latestlog.txt</string>
+    <string name="logshare_failed">上传失败：%1$s，改为分享文件…</string>
+    <string name="logshare_upload">上传到 LogShare</string>
     <string name="main_install_jar_file">执行 .jar</string>
     <string name="main_play">启动游戏</string>
     <string name="autoram_info_msg">内存已设为 %d MB</string>

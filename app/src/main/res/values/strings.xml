@@ -252,6 +252,10 @@
     <string name="customctrl_export">Export controlmap</string>
 
     <string name="main_share_logs">Share log file</string>
+    <string name="logshare_uploading">Uploading log to LogShare…</string>
+    <string name="logshare_log_missing">latestlog.txt not found</string>
+    <string name="logshare_failed">Upload failed: %1$s. Sharing the file instead…</string>
+    <string name="logshare_upload">Upload to LogShare</string>
     <string name="main_install_jar_file">Execute a .jar</string>
     <string name="main_play">Play</string>
     <string name="autoram_info_msg">Memory set to %d MB</string>

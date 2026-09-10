@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.firefly;
 
 import static net.kdt.pojavlaunch.firefly.Tools.shareLog;
+import static net.kdt.pojavlaunch.firefly.Tools.uploadLog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -37,6 +38,7 @@ public class ExitActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setMessage(getString(message, code))
                 .setPositiveButton(R.string.main_share_logs, (dialog, which) -> shareLog(this))
+                .setNeutralButton(R.string.logshare_upload, (dialog, which) -> uploadLog(this))
                 .setOnDismissListener(dialog -> ExitActivity.this.finish())
                 .show();
     }
