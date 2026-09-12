@@ -111,7 +111,8 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_LDLIBS := -ldl -llog -landroid
-LOCAL_MODULE := SDL3
+# Compatibility layer kept as fallback; the real libSDL3.so ships in jniLibs
+LOCAL_MODULE := SDL3_compat
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/sdl3/include
 LOCAL_CFLAGS += -g
 
@@ -146,10 +147,13 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_MODULE := native_hook
 LOCAL_LDLIBS := -ldl -llog
-LOCAL_SHARED_LIBRARIES := bytehook pojavexec
+# br_common provides pojav_environ
+LOCAL_SHARED_LIBRARIES := bytehook pojavexec br_common
 LOCAL_SRC_FILES := \
     native_hooks/exit_hook.c \
-    native_hooks/chmod_hook.c
+    native_hooks/chmod_hook.c \
+    sdl_hook.c \
+    sdl_dlopen_hook.c
 include $(BUILD_SHARED_LIBRARY)
 
 

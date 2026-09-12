@@ -121,11 +121,8 @@ static jlong shim_ndlopen(JNIEnv *env, jclass clazz, jlong name, jint jmode) {
         if (strncmp(filename, "libvulkan.so", 12) == 0 && pojav.maybe_load_vulkan) {
             return (jlong) (uintptr_t) pojav.maybe_load_vulkan();
         }
-        const char *sdl3Path = getenv("POJAV_SDL3_LIB");
-        if (sdl3Path && strncmp(filename, "libSDL3.so", 10) == 0) {
-            void *h = dlopen(sdl3Path, jmode ? (int) jmode : (RTLD_LAZY | RTLD_LOCAL));
-            if (h) return (jlong) (uintptr_t) h;
-        }
+        /* libSDL3.so 不再重定向到兼容层：ZL2 模式下 LWJGL 直接 dlopen
+         * nativeLibraryDir 里的真 libSDL3.so，SDL 集成由 sdl_hook.c 完成 */
     }
     return (jlong) (uintptr_t) dlopen(filename, (int) jmode);
 }

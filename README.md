@@ -99,6 +99,7 @@ cd ../
 - [x] [OpenJDK 11](https://github.com/openjdk/jdk11u) Mobile port: ARM32, ARM64, x86, x86_64
 - [x] [OpenJDK 17](https://github.com/openjdk/jdk17u) Mobile port: ARM32, ARM64, x86, x86_64
 - [x] [OpenJDK 21](https://github.com/openjdk/jdk21u) Mobile port: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 25](https://github.com/openjdk/jdk25u) Mobile port: ARM64
 - [x] [Caciocavallo](https://openjdk.java.net/projects/caciocavallo/)
 - [x] [Caciocavallo11](https://github.com/FCL-Team/caciocavallo11-FCL)
 - [x] Headless mod installer
@@ -108,11 +109,18 @@ cd ../
 - [x] Support for Minecraft 1.12.2 and below. Used [lwjglx](https://github.com/PojavLauncherTeam/lwjglx), a LWJGL2 compatibility layer for LWJGL3.
 - [x] Support for Minecraft 1.13 and above. Used [GLFW stub](https://github.com/PojavLauncherTeam/lwjgl3-glfw-java).
 - [x] Support for Minecraft 1.17 (22w13a to be exact) and above. Used [Holy GL4ES](https://github.com/PojavLauncherTeam/gl4es-114-extra)
+- [x] Support for Minecraft 26.3 and above. Uses the real libSDL3 (SDL Java layer + native hook integration)
 - [x] Game surface zooming.
 - [x] New input pipe rewritten to native code to boost performance.
 - [x] Rewritten entire controls system (thanks to @Mathias-Boulay)
 - [x] Virtual terminal system
+- [x] LogShare.CN log sharing (one-tap upload from the crash dialog)
 - [ ] More to come!
+
+## Maintenance note
+This project went unmaintained from January to August 2026. During that gap, the upstream Pojav family of launchers (e.g. [ZalithLauncher 2](https://github.com/ZalithLauncher/ZalithLauncher)) evolved significantly in runtime architecture, SDL3 support, input bridging and EGL compatibility, none of which this project tracked.
+
+Catching up change-by-change by hand was impractical, so much of the current code is ported directly from ZalithLauncher 2's mature implementations (both projects are GPLv3). The SDL3 support, parts of the runtime and the input bridge originate from there. Credits to ZalithLauncher 2 and its contributors.
 
 ## Known Issues
 - Controller mods aren't working.
@@ -147,6 +155,7 @@ Any code change to this repository should be submitted as a pull request. The de
 - [terminal-view](https://github.com/termux/termux-app/tree/master/terminal-view): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
 - [terminal-emulator](https://github.com/termux/termux-app/tree/master/terminal-emulator): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
 - Loader card icons are derived from [Zalith Launcher 2](https://github.com/ZalithLauncher/ZalithLauncher), licensed under GPLv3.
+- [SDL3](https://github.com/libsdl-org/SDL) real runtime and its Android Java layer: [zlib License](https://github.com/libsdl-org/SDL/blob/main/LICENSE.txt). The SDL3 integration (SDL Java layer adaptation, native hooks) is based on [Zalith Launcher 2](https://github.com/ZalithLauncher/ZalithLauncher), licensed under GPLv3.
 - Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
 
 ## More

@@ -6,6 +6,7 @@
 
 #include "log.h"
 
+#include "environ/environ.h"
 #include "utils.h"
 
 typedef int (*Main_Function_t)(int, char**);
@@ -184,3 +185,28 @@ JNIEXPORT jint JNICALL Java_net_kdt_pojavlaunch_firefly_utils_JREUtils_executeFo
 }
 */
 
+
+// --- SDL launcher integration ---
+
+jintArray convertIntArrayJVM(JNIEnv* srcEnv, JNIEnv* dstEnv, jintArray srcIntArray) {
+	if (srcIntArray == NULL) {
+		return NULL;
+	}
+
+	jsize len = (*srcEnv)->GetArrayLength(srcEnv, srcIntArray);
+	jint* srcPtr = (*srcEnv)->GetIntArrayElements(srcEnv, srcIntArray, NULL);
+
+	jintArray dstIntArray = (*dstEnv)->NewIntArray(dstEnv, len);
+	(*dstEnv)->SetIntArrayRegion(dstEnv, dstIntArray, 0, len, srcPtr);
+
+	(*srcEnv)->ReleaseIntArrayElements(srcEnv, srcIntArray, srcPtr, JNI_ABORT);
+
+	return dstIntArray;
+}
+
+bool notifyLauncher(JNIEnv *dvm_env, int type, int actions[], int len) {
+	jintArray actionArray = (*dvm_env)->NewIntArray(dvm_env, len);
+	(*dvm_env)->SetIntArrayRegion(dvm_env, actionArray, 0, len, actions);
+	return (*dvm_env)->CallStaticBooleanMethod(dvm_env, pojav_environ->bridgeClazz,
+		pojav_environ->method_notifyLauncher, type, actionArray);
+}

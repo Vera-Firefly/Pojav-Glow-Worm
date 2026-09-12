@@ -23,7 +23,74 @@ public class CallbackBridge {
     public static final int CLIPBOARD_PASTE = 2001;
     public static final int CLIPBOARD_OPEN = 2002;
 
+    // SDL launcher integration notification types
+    public static final int NOTIF_TYPE_SDL = 0;
+    public static final int ACTION_INIT_LAUNCHER_INTEGRATION = 0;
+    public static final int ACTION_SEND_TEXTBOX_RECT = 1;
+
+    /**
+     * SDL launcher integration notification entry, called from JRE side.
+     * @return whether the notification was handled
+     */
+    @SuppressWarnings("unused")
+    public static boolean notifyLauncher(int type, int... action) {
+        if (action == null || action.length == 0) {
+            net.kdt.pojavlaunch.firefly.Logger.appendToLog("SDLBridge: notification has no action");
+            return false;
+        }
+        switch (type) {
+            case NOTIF_TYPE_SDL:
+                if (action[0] == ACTION_INIT_LAUNCHER_INTEGRATION) {
+                    if (!net.kdt.pojavlaunch.firefly.sdl.SdlBridge.markSdlInitialized()) {
+                        return true;
+                    }
+                    try {
+                        net.kdt.pojavlaunch.firefly.Logger.appendToLog("SDLBridge: loading real SDL3");
+                        System.loadLibrary("SDL3");
+                        net.kdt.pojavlaunch.firefly.Logger.appendToLog("SDLBridge: setting up SDL JNI");
+                        net.kdt.pojavlaunch.firefly.sdl.SdlBridge.setupJNI();
+                        net.kdt.pojavlaunch.firefly.Logger.appendToLog("SDLBridge: binding SDL surface");
+                        net.kdt.pojavlaunch.firefly.sdl.SdlBridge.setSdlEnabled(true);
+                        org.libsdl.app.SDLSurface surface = org.libsdl.app.SDLActivity.getSDLSurface();
+                        if (surface != null) {
+                            surface.surfaceChanged();
+                            if (windowWidth > 0 && windowHeight > 0) {
+                                surface.nativeResize(windowWidth, windowHeight);
+                            }
+                        }
+                        net.kdt.pojavlaunch.firefly.Logger.appendToLog("SDLBridge: SDL support enabled!");
+                        return true;
+                    } catch (Throwable e) {
+                        net.kdt.pojavlaunch.firefly.sdl.SdlBridge.setSdlEnabled(false);
+                        net.kdt.pojavlaunch.firefly.sdl.SdlBridge.clearSdlInitialized();
+                        java.io.StringWriter trace = new java.io.StringWriter();
+                        e.printStackTrace(new java.io.PrintWriter(trace));
+                        net.kdt.pojavlaunch.firefly.Logger.appendToLog("SDLBridge: SDL launcher integration unavailable:\n" + trace);
+                    }
+                }
+                if (action[0] == ACTION_SEND_TEXTBOX_RECT) {
+                    // TODO: 输入框位置同步（后续接入）
+                }
+        }
+        return false;
+    }
+
+    /**
+     * LWJGL SDL binding entry point, forwards to {@link #notifyLauncher}.
+     */
+    @SuppressWarnings("unused")
+    public static void nativeNotifyLauncher(int type, int... action) {
+        notifyLauncher(type, action);
+    }
+
     public static volatile int windowWidth, windowHeight;
+    // Android mouse button bitmask reported with onNativeMouse
+    private static int sMouseButtonState = 0;
+    private static int sdlMoveLogCounter = 0;
+    /** SDL relative mouse mode flag */
+    public static volatile boolean sdlRelativeMode = false;
+    private static float sdlLastSentX, sdlLastSentY;
+    private static boolean sdlLastSentValid = false;
     public static volatile int physicalWidth, physicalHeight;
     public static float mouseX, mouseY;
     public volatile static boolean holdingAlt, holdingCapslock, holdingCtrl,
@@ -44,9 +111,57 @@ public class CallbackBridge {
         mouseX = x;
         mouseY = y;
         nativeSendCursorPos(mouseX, mouseY);
+        // SDL mode: relative deltas while grabbing, absolute coordinates otherwise
+        if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled()) {
+            if (sdlRelativeMode) {
+                float dx = x - (sdlLastSentValid ? sdlLastSentX : x);
+                float dy = y - (sdlLastSentValid ? sdlLastSentY : y);
+                sdlLastSentX = x;
+                sdlLastSentY = y;
+                sdlLastSentValid = true;
+                org.libsdl.app.SDLActivity.onNativeMouse(0, android.view.MotionEvent.ACTION_MOVE, dx, dy, true);
+            } else {
+                sdlLastSentValid = false;
+                if ((++sdlMoveLogCounter % 120) == 1) {
+                    net.kdt.pojavlaunch.firefly.Logger.appendToLog(
+                        "SDLBridge: onNativeMouse MOVE x=" + x + " y=" + y + " (window=" + windowWidth + "x" + windowHeight + ")");
+                }
+                org.libsdl.app.SDLActivity.onNativeMouse(0, android.view.MotionEvent.ACTION_MOVE, x, y, false);
+            }
+        }
+    }
+
+    /** Relative (grabbed) mouse movement */
+    public static void sendCursorDelta(float x, float y) {
+        mouseX += x;
+        mouseY += y;
+        nativeSendCursorPos(mouseX, mouseY);
+        if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled()) {
+            org.libsdl.app.SDLActivity.onNativeMouse(0, android.view.MotionEvent.ACTION_MOVE, x, y, true);
+        }
     }
 
     public static void sendKeycode(int keycode, char keychar, int scancode, int modifiers, boolean isDown) {
+        // TODO CHECK: This may cause input issue, not receive input!
+        if (keycode != 0) nativeSendKey(keycode, scancode, isDown ? 1 : 0, modifiers);
+        if (isDown && keychar != '\u0000') {
+            nativeSendCharMods(keychar, modifiers);
+            nativeSendChar(keychar);
+        }
+        // SDL mode: also forward through the SDL Java layer
+        if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled()) {
+            int androidKeycode = net.kdt.pojavlaunch.firefly.input.EfficientAndroidLWJGLKeycode.getSdlAndroidKeycode(keycode);
+            if (androidKeycode == android.view.KeyEvent.KEYCODE_UNKNOWN) return;
+            if (isDown) {
+                org.libsdl.app.SDLActivity.onNativeKeyDown(androidKeycode);
+                // 游戏只在 SDL_EVENT_TEXT_INPUT 里插入字符，仅 KEYDOWN 不会有任何输入
+                if (!Character.isISOControl(keychar) && org.libsdl.app.SDLActivity.isSDLTextInputActive()) {
+                    org.libsdl.app.SDLActivity.onNativeTextInput(String.valueOf(keychar));
+                }
+            } else {
+                org.libsdl.app.SDLActivity.onNativeKeyUp(androidKeycode);
+            }
+        }
         // TODO CHECK: This may cause input issue, not receive input!
         if (keycode != 0) nativeSendKey(keycode, scancode, isDown ? 1 : 0, modifiers);
         if (isDown && keychar != '\u0000') {
@@ -58,6 +173,12 @@ public class CallbackBridge {
     public static void sendChar(char keychar, int modifiers) {
         nativeSendCharMods(keychar, modifiers);
         nativeSendChar(keychar);
+        // SDL mode: also forward into the SDL text input channel
+        if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled()
+                && !Character.isISOControl(keychar)
+                && org.libsdl.app.SDLActivity.isSDLTextInputActive()) {
+            org.libsdl.app.SDLActivity.onNativeTextInput(String.valueOf(keychar));
+        }
     }
 
     public static void sendKeyPress(int keyCode, int modifiers, boolean status) {
@@ -84,6 +205,24 @@ public class CallbackBridge {
     public static void sendMouseKeycode(int button, int modifiers, boolean isDown) {
         // if (isGrabbing()) DEBUG_STRING.append("MouseGrabStrace: " + android.util.Log.getStackTraceString(new Throwable()) + "\n");
         nativeSendMouseButton(button, isDown ? 1 : 0, modifiers);
+        // SDL mode: also forward button state through onNativeMouse
+        if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled()) {
+            int aKey;
+            switch (button) {
+                case 0: aKey = android.view.MotionEvent.BUTTON_PRIMARY; break;
+                case 1: aKey = android.view.MotionEvent.BUTTON_SECONDARY; break;
+                case 2: aKey = android.view.MotionEvent.BUTTON_TERTIARY; break;
+                default: aKey = 1 << (button - 1); break;
+            }
+            if (isDown) {
+                sMouseButtonState |= aKey;
+            } else {
+                sMouseButtonState &= ~aKey;
+            }
+            org.libsdl.app.SDLActivity.onNativeMouse(sMouseButtonState,
+                    isDown ? android.view.MotionEvent.ACTION_DOWN : android.view.MotionEvent.ACTION_UP,
+                    mouseX, mouseY, false);
+        }
     }
 
     public static void sendMouseKeycode(int keycode) {
@@ -93,6 +232,11 @@ public class CallbackBridge {
 
     public static void sendScroll(double xoffset, double yoffset) {
         nativeSendScroll(xoffset, yoffset);
+        // SDL mode: also forward scroll through onNativeMouse
+        if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled()) {
+            org.libsdl.app.SDLActivity.onNativeMouse(0, android.view.MotionEvent.ACTION_SCROLL,
+                    (float) xoffset, (float) yoffset, false);
+        }
     }
 
     public static void sendUpdateWindowSize(int w, int h) {
@@ -171,10 +315,18 @@ public class CallbackBridge {
         }
     }
 
+    /** Forwards an SDL pointer lock request to the launcher grab mechanism */
+    public static void notifyGrabStateFromSdl(final boolean grabbing) {
+        sdlRelativeMode = grabbing;
+        sdlLastSentValid = false;
+        onGrabStateChanged(grabbing);
+    }
+
     //Called from JRE side
     @SuppressWarnings("unused")
     private static void onGrabStateChanged(final boolean grabbing) {
         isGrabbing = grabbing;
+        sdlLastSentValid = false;
         sChoreographer.postFrameCallbackDelayed((time) -> {
             // If the grab re-changed, skip notify process
             if (isGrabbing != grabbing) return;

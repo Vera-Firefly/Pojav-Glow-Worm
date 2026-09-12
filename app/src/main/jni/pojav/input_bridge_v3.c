@@ -36,6 +36,19 @@
 
 static void registerFunctions(JNIEnv *env);
 
+/** Forwards launcher notifications to CallbackBridge.notifyLauncher */
+JNIEXPORT jboolean JNICALL Java_org_lwjgl_glfw_CallbackBridge_nativeNotifyLauncher(JNIEnv* env, __attribute__((unused)) jclass clazz, jint type, jintArray action) {
+    TRY_ATTACH_ENV(dvm_env, pojav_environ->dalvikJavaVMPtr, "nativeNotifyLauncher failed!\n",);
+    jboolean result = (*dvm_env)->CallStaticBooleanMethod(dvm_env, pojav_environ->bridgeClazz,
+                                                          pojav_environ->method_notifyLauncher, type, convertIntArrayJVM(env, dvm_env, action));
+    if ((*dvm_env)->ExceptionCheck(dvm_env)) {
+        (*dvm_env)->ExceptionDescribe(dvm_env);
+        (*dvm_env)->ExceptionClear(dvm_env);
+        return JNI_FALSE;
+    }
+    return result;
+}
+
 jint JNI_OnLoad(JavaVM* vm, __attribute__((unused)) void* reserved) {
     if (pojav_environ->dalvikJavaVMPtr == NULL)
     {
@@ -47,6 +60,7 @@ jint JNI_OnLoad(JavaVM* vm, __attribute__((unused)) void* reserved) {
         pojav_environ->bridgeClazz = (*dvEnv)->NewGlobalRef(dvEnv,(*dvEnv) ->FindClass(dvEnv,"org/lwjgl/glfw/CallbackBridge"));
         pojav_environ->method_accessAndroidClipboard = (*dvEnv)->GetStaticMethodID(dvEnv, pojav_environ->bridgeClazz, "accessAndroidClipboard", "(ILjava/lang/String;)Ljava/lang/String;");
         pojav_environ->method_onGrabStateChanged = (*dvEnv)->GetStaticMethodID(dvEnv, pojav_environ->bridgeClazz, "onGrabStateChanged", "(Z)V");
+        pojav_environ->method_notifyLauncher = (*dvEnv)->GetStaticMethodID(dvEnv, pojav_environ->bridgeClazz, "notifyLauncher", "(I[I)Z");
         pojav_environ->isUseStackQueueCall = JNI_FALSE;
     } else if (pojav_environ->dalvikJavaVMPtr != vm) {
         LOGI("Saving JVM environ...");

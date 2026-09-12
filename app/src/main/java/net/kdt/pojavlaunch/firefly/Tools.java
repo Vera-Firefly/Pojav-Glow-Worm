@@ -61,6 +61,7 @@ import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutorTask;
 import net.kdt.pojavlaunch.firefly.lifecycle.LifecycleAwareAlertDialog;
 import net.kdt.pojavlaunch.firefly.logshare.LogShareClient;
+import net.kdt.pojavlaunch.firefly.sdl.SdlBridge;
 import net.kdt.pojavlaunch.firefly.memory.MemoryHoleFinder;
 import net.kdt.pojavlaunch.firefly.memory.SelfMapsParser;
 import net.kdt.pojavlaunch.firefly.multirt.MultiRTUtils;
@@ -240,7 +241,8 @@ public final class Tools {
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionId);
         LwjglComponent lwjglComponent = LwjglComponent.forVersion(versionInfo);
         if (SdlSupport.isSdl3Version(versionInfo)) {
-            Log.i("SDL3Bridge", "Minecraft 26.3+ SDL3 detected, the SDL3 compatibility layer will handle windowing and input");
+            Log.i("SDL3Bridge", "Minecraft 26.3+ SDL3 detected, real libSDL3 + sdl_hook integration will handle windowing and input");
+            SdlBridge.setSdlEnabled(true);
         }
 
         File gamedir = Tools.getGameDirPath(minecraftProfile);
@@ -362,21 +364,19 @@ public final class Tools {
 
     public static void getCacioJavaArgs(List<String> javaArgList, Runtime runtime) {
         boolean isCacio10 = runtime.javaVersion == 8;
-        boolean isCacio11 = runtime.javaVersion == 11;
-        boolean isCacio18 = (runtime.javaVersion >= 17 && runtime.javaVersion <= 21);
         // Caciocavallo config AWT-enabled version
         javaArgList.add("-Djava.awt.headless=false");
         javaArgList.add("-Dcacio.managed.screensize=" + AWTCanvasView.AWT_CANVAS_WIDTH + "x" + AWTCanvasView.AWT_CANVAS_HEIGHT);
         javaArgList.add("-Dcacio.font.fontmanager=sun.awt.X11FontManager");
         javaArgList.add("-Dcacio.font.fontscaler=sun.font.FreetypeFontScaler");
-        javaArgList.add("-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel");
+        javaArgList.add("-Dswing.defaultlaf=javax.swing.plaf.nimbus.NimbusLookAndFeel");
         if (isCacio10) {
             javaArgList.add("-Dawt.toolkit=net.java.openjdk.cacio.ctc.CTCToolkit");
             javaArgList.add("-Djava.awt.graphicsenv=net.java.openjdk.cacio.ctc.CTCGraphicsEnvironment");
         } else {
             javaArgList.add("-Dawt.toolkit=com.github.caciocavallosilano.cacio.ctc.CTCToolkit");
             javaArgList.add("-Djava.awt.graphicsenv=com.github.caciocavallosilano.cacio.ctc.CTCGraphicsEnvironment");
-            javaArgList.add("-Djava.system.class.loader=com.github.caciocavallosilano.cacio.ctc.CTCPreloadClassLoader");
+            javaArgList.add("-javaagent:" + DIR_GAME_HOME + "/caciocavallo17/cacio-agent.jar");
 
             javaArgList.add("--add-exports=java.desktop/java.awt=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/java.awt.peer=ALL-UNNAMED");
@@ -398,18 +398,23 @@ public final class Tools {
             javaArgList.add("--add-opens=java.base/java.net=ALL-UNNAMED");
         }
 
-        StringBuilder cacioClasspath = new StringBuilder();
-        cacioClasspath.append("-Xbootclasspath/").append(isCacio10 ? "p" : "a");
-        File cacioDir = new File(DIR_GAME_HOME + "/caciocavallo" + (isCacio10 ? "" : isCacio11 ? "11" : isCacio18 ? "18" : "19"));
+        File cacioDir = new File(DIR_GAME_HOME + "/caciocavallo" + (isCacio10 ? "" : "17"));
         File[] cacioFiles = cacioDir.listFiles();
+        StringBuilder cacioClasspath = new StringBuilder();
         if (cacioFiles != null) {
             for (File file : cacioFiles) {
                 if (file.getName().endsWith(".jar")) {
+                    if (cacioClasspath.length() == 0) {
+                        cacioClasspath.append("-Xbootclasspath/").append(isCacio10 ? "p" : "a");
+                    }
                     cacioClasspath.append(":").append(file.getAbsolutePath());
                 }
             }
         }
-        javaArgList.add(cacioClasspath.toString());
+        // Skip the option entirely when no cacio jar is on disk
+        if (cacioClasspath.length() > 0) {
+            javaArgList.add(cacioClasspath.toString());
+        }
     }
 
     public static String[] getMinecraftJVMArgs(String versionName, File gameDir, LwjglComponent lwjglComponent) {
@@ -1171,6 +1176,7 @@ public final class Tools {
     public static void launchModInstaller(Activity activity, @NonNull Uri uri) {
         Intent intent = new Intent(activity, JavaGUILauncherActivity.class);
         intent.putExtra("modUri", uri);
+        intent.putExtra(JavaGUILauncherActivity.TRUSTED_INSTALLER, true);
         activity.startActivity(intent);
     }
 

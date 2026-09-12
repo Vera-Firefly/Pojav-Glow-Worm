@@ -49,14 +49,17 @@ struct pojav_environ_s {
     jmethodID method_glftSetWindowAttrib;
     jmethodID method_internalWindowSizeChanged;
     jmethodID method_internalChangeMonitorSize;
+    jmethodID method_notifyLauncher;
     jclass bridgeClazz;
     jclass vmGlfwClass;
     jboolean isGrabbing;
     jbyte* keyDownBuffer;
     jbyte* mouseDownBuffer;
     JavaVM* runtimeJavaVMPtr;
+    JNIEnv* runtimeJNIEnvPtr_JRE;
     JNIEnv* glfwThreadVmEnv;
     JavaVM* dalvikJavaVMPtr;
+    JNIEnv* dalvikJNIEnvPtr_ANDROID;
     long showingWindow;
     bool isInputReady, isCursorEntered, isUseStackQueueCall, shouldUpdateMouse;
     /* Set by the SDL3 compatibility layer instead of the GLFW stub */

@@ -373,11 +373,29 @@ public class MinecraftGLSurface extends View implements GrabListener {
 
         CallbackBridge.sendUpdateWindowSize(windowWidth, windowHeight);
 
+        // SDL mode: keep the SDL window in sync with the surface size
+        if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled()) {
+            try {
+                org.libsdl.app.SDLSurface sdlSurface = org.libsdl.app.SDLActivity.getSDLSurface();
+                if (sdlSurface != null) {
+                    sdlSurface.surfaceChanged();
+                    sdlSurface.nativeResize(windowWidth, windowHeight);
+                }
+            } catch (UnsatisfiedLinkError ignored) {
+            }
+        }
+
     }
 
     private void realStart(Surface surface) {
         // Initial size set
         refreshSize();
+
+        // SDL mode: register the surface with the SDL Java layer
+        net.kdt.pojavlaunch.firefly.sdl.SdlBridge.prepareSurface(
+                (android.app.Activity) getContext(),
+                surface,
+                (ViewGroup) getParent());
 
         //Load Minecraft options:
         MCOptionUtils.set("fullscreen", "off");

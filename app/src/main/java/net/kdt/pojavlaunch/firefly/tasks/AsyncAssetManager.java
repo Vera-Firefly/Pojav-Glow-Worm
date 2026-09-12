@@ -120,6 +120,7 @@ public class AsyncAssetManager {
             try {
                 unpackComponent(ctx, "caciocavallo", false);
                 unpackComponent(ctx, "caciocavallo11", false);
+                unpackComponent(ctx, "caciocavallo17", false);
                 unpackComponent(ctx, "caciocavallo18", false);
                 unpackComponent(ctx, "caciocavallo19", false);
                 unpackComponent(ctx, "patcher", false);

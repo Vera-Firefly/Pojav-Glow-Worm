@@ -13,6 +13,12 @@
 #define TAG __FILE_NAME__
 #include "pojav/log.h"
 
+// SDL3 launcher integration hooks
+typedef bytehook_stub_t (*bytehook_hook_all_fn)(const char *callee_path_name, const char *sym_name, void *new_func,
+                                                bytehook_hooked_t hooked, void *hooked_arg);
+void create_sdl_hooks(bytehook_hook_all_fn bytehook_hook_all_p);
+void create_sdl_dlopen_hooks(bytehook_hook_all_fn bytehook_hook_all_p);
+
 static _Atomic bool exit_tripped = false;
 
 typedef void (*exit_func)(int);
@@ -39,6 +45,10 @@ static void custom_atexit() {
 static void create_hooks(bytehook_hook_all_t bytehook_hook_all_p) {
     bytehook_stub_t stub_exit = bytehook_hook_all_p(NULL, "exit", &custom_exit, NULL, NULL);
     LOGI("Successfully initialized exit hook, stub: %p", stub_exit);
+    // SDL3 launcher integration; the game JVM lives in this process
+    // so its SDL calls are intercepted as well
+    create_sdl_hooks(bytehook_hook_all_p);
+    create_sdl_dlopen_hooks(bytehook_hook_all_p);
     // Only apply chmod hooks on devices where the game directory is in games/PojavLauncher
     // which is below API 29
     if(android_get_device_api_level() < 29) {

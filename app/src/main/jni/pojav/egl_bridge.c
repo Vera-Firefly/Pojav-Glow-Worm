@@ -68,6 +68,11 @@ static void recordFrame() {
     )) {}
 }
 
+/* Frame counter entry point used by the SDL EGL swap proxy */
+void pojav_record_frame_for_sdl(void) {
+    recordFrame();
+}
+
 void* loadTurnipVulkan();
 
 extern void updateMonitorSize(int width, int height);

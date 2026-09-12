@@ -53,7 +53,7 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
 
     public static final String SUBSCRIBE_JVM_EXIT_EVENT = "subscribe_jvm_exit_event";
     public static final String TRUSTED_INSTALLER = "trusted_installer";
-    private static final int MAX_GUI_INSTALLER_JAVA_VERSION = 21;
+    private static final int MAX_GUI_INSTALLER_JAVA_VERSION = 25;
     private AWTCanvasView mTextureView;
     private LoggerView mLoggerView;
     private TouchCharInput mTouchCharInput;
@@ -245,12 +245,17 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
             finalErrorDialog(getString(R.string.execute_jar_failed_to_read_file));
             return null;
         }
-        String nearestRuntime = MultiRTUtils.getNearestJreName(javaVersion);
-        if (nearestRuntime == null) {
-            finalErrorDialog(getString(R.string.multirt_nocompatiblert, javaVersion));
-            return null;
+        // Prefer the user-configured default runtime; fall back to the nearest one
+        String defaultRuntime = LauncherPreferences.PREF_DEFAULT_RUNTIME;
+        Runtime selectedRuntime = MultiRTUtils.forceReread(defaultRuntime);
+        if (selectedRuntime == null || selectedRuntime.javaVersion < javaVersion) {
+            String nearestRuntime = MultiRTUtils.getNearestJreName(javaVersion);
+            if (nearestRuntime == null) {
+                finalErrorDialog(getString(R.string.multirt_nocompatiblert, javaVersion));
+                return null;
+            }
+            selectedRuntime = MultiRTUtils.forceReread(nearestRuntime);
         }
-        Runtime selectedRuntime = MultiRTUtils.forceReread(nearestRuntime);
         int selectedJavaVersion = Math.max(javaVersion, selectedRuntime.javaVersion);
         if (selectedJavaVersion > MAX_GUI_INSTALLER_JAVA_VERSION) {
             finalErrorDialog(getString(R.string.execute_jar_incompatible_runtime, selectedJavaVersion));

@@ -100,6 +100,7 @@ cd ../
 - [x] [OpenJDK 11](https://github.com/openjdk/jdk11u) 移动端口: ARM32, ARM64, x86, x86_64
 - [x] [OpenJDK 17](https://github.com/openjdk/jdk17u) 移动端口: ARM32, ARM64, x86, x86_64
 - [x] [OpenJDK 21](https://github.com/openjdk/jdk21u) 移动端口: ARM32, ARM64, x86, x86_64
+- [x] [OpenJDK 25](https://github.com/openjdk/jdk25u) 移动端口: ARM64
 - [x] [Caciocavallo](https://openjdk.java.net/projects/caciocavallo/)
 - [x] [Caciocavallo11](https://github.com/FCL-Team/caciocavallo11-FCL)
 - [x] 无脑模组安装程序
@@ -109,11 +110,18 @@ cd ../
 - [x] 支持Mincraft 1.12.2及更低版本.使用[lwjglx](https://github.com/PojavLauncherTeam/lwjglx),LWJGL3的LWJGL2兼容层
 - [x] 支持Minecraft 1.13 及更高版本.使用[GLFW stub](https://github.com/PojavLauncherTeam/lwjgl3-glfw-java).
 - [x] 支持Minecraft 1.17 及更高版本.使用[Holy GL4ES](https://github.com/PojavLauncherTeam/gl4es-114-extra)
+- [x] 支持Minecraft 26.3 及更高版本.使用真 libSDL3 (SDL Java 层 + 原生 hook 集成)
 - [x] 游戏分辨率缩放
 - [x] 新的输入管道重写为本机代码,以提高性能
 - [x] 重写了整个操作方式(感谢@Mathias-Boulay)
 - [x] 半完整的虚拟终端系统
+- [x] LogShare.CN 日志分享(崩溃弹窗一键上传)
 - [ ] 还有更多到来!
+
+## 项目维护说明
+本项目在 2026 年 1 月至 8 月经历了约八个月的无人维护空窗期。期间上游 Pojav 系社区(如 [ZalithLauncher 2](https://github.com/ZalithLauncher/ZalithLauncher) 等)在运行时架构、SDL3 支持、输入桥、EGL 兼容层等方面有大量演进,本项目均未跟上。
+
+空窗期结束后追赶积压更新时,考虑到逐项手写的工作量过于繁重,本项目采用**直接从 ZalithLauncher 2 移植成熟实现**的方式跟进社区节奏(两项目同为 GPLv3)。当前 SDL3 支持、部分运行时与输入桥实现均源于此。感谢 Zalith Launcher 2 及其贡献者。
 
 ## 了解出现的问题
 - 控制器模块不工作
@@ -147,6 +155,7 @@ cd ../
 - [terminal-view](https://github.com/termux/termux-app/tree/master/terminal-view): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
 - [terminal-emulator](https://github.com/termux/termux-app/tree/master/terminal-emulator): [Apache 2.0](https://github.com/termux/termux-app/blob/master/LICENSE.md).
 - 加载器卡片图标来源于 [Zalith Launcher 2](https://github.com/ZalithLauncher/ZalithLauncher)，遵循 GPLv3 许可证。
+- [SDL3](https://github.com/libsdl-org/SDL) 真实运行时及其 Android Java 层: [zlib License](https://github.com/libsdl-org/SDL/blob/main/LICENSE.txt)。SDL3 集成层(SDL Java 层适配、原生 hook)参考自 [Zalith Launcher 2](https://github.com/ZalithLauncher/ZalithLauncher)，遵循 GPLv3 许可证。
 - 感谢[MCHeads](https://mc-heads.net)提供Minecraft头像组件
 
 ## 更多
