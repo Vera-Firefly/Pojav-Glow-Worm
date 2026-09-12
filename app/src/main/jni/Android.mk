@@ -107,23 +107,6 @@ LOCAL_CFLAGS += -DADRENO_POSSIBLE
 LOCAL_LDLIBS += -lEGL -lGLESv2
 endif
 include $(BUILD_SHARED_LIBRARY)
-
-
-include $(CLEAR_VARS)
-LOCAL_LDLIBS := -ldl -llog -landroid
-# Compatibility layer kept as fallback; the real libSDL3.so ships in jniLibs
-LOCAL_MODULE := SDL3_compat
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/sdl3/include
-LOCAL_CFLAGS += -g
-
-LOCAL_SRC_FILES := \
-    sdl3/sdl3_shim_core.c \
-    sdl3/sdl3_shim_periph.c \
-    sdl3/sdl3_keymap.c
-
-include $(BUILD_SHARED_LIBRARY)
-
-
 include $(CLEAR_VARS)
 LOCAL_LDLIBS := -ldl -llog
 LOCAL_MODULE := vulkan_check
@@ -178,4 +161,3 @@ LOCAL_SRC_FILES := xawt_fake.c
 include $(BUILD_SHARED_LIBRARY)
 
 $(info $(shell (rm $(HERE_PATH)/../jniLibs/*/libawt_headless.so)))
-

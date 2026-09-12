@@ -150,16 +150,18 @@ public class CallbackBridge {
         }
         // SDL mode: also forward through the SDL Java layer
         if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled()) {
-            int androidKeycode = net.kdt.pojavlaunch.firefly.input.EfficientAndroidLWJGLKeycode.getSdlAndroidKeycode(keycode);
-            if (androidKeycode == android.view.KeyEvent.KEYCODE_UNKNOWN) return;
-            if (isDown) {
-                org.libsdl.app.SDLActivity.onNativeKeyDown(androidKeycode);
-                // 游戏只在 SDL_EVENT_TEXT_INPUT 里插入字符，仅 KEYDOWN 不会有任何输入
-                if (!Character.isISOControl(keychar) && org.libsdl.app.SDLActivity.isSDLTextInputActive()) {
-                    org.libsdl.app.SDLActivity.onNativeTextInput(String.valueOf(keychar));
+            try {
+                int androidKeycode = net.kdt.pojavlaunch.firefly.input.EfficientAndroidLWJGLKeycode.getSdlAndroidKeycode(keycode);
+                if (androidKeycode == android.view.KeyEvent.KEYCODE_UNKNOWN) return;
+                if (isDown) {
+                    org.libsdl.app.SDLActivity.onNativeKeyDown(androidKeycode);
+                    if (!Character.isISOControl(keychar) && org.libsdl.app.SDLActivity.isSDLTextInputActive()) {
+                        org.libsdl.app.SDLActivity.onNativeTextInput(String.valueOf(keychar));
+                    }
+                } else {
+                    org.libsdl.app.SDLActivity.onNativeKeyUp(androidKeycode);
                 }
-            } else {
-                org.libsdl.app.SDLActivity.onNativeKeyUp(androidKeycode);
+            } catch (Throwable ignored) {
             }
         }
     }
@@ -314,6 +316,14 @@ public class CallbackBridge {
         sdlRelativeMode = grabbing;
         sdlLastSentValid = false;
         onGrabStateChanged(grabbing);
+    }
+
+    public static void clearSdlBridgeState() {
+        sMouseButtonState = 0;
+        sdlRelativeMode = false;
+        sdlLastSentValid = false;
+        sdlLastSentX = 0;
+        sdlLastSentY = 0;
     }
 
     //Called from JRE side

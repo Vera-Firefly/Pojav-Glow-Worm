@@ -521,9 +521,6 @@ public class JREUtils {
             envMap.put("POJAV_RENDERER", LOCAL_RENDERER);
             envMap.put("LD_LIBRARY_PATH", lwjglNativeDirectory.getAbsolutePath() + ":" + LD_LIBRARY_PATH);
         }
-        envMap.put("POJAV_SDL3_LIB", NATIVE_LIB_DIR + "/libSDL3.so");
-        envMap.put("SDL3_WINDOW_WIDTH", Integer.toString(Tools.getDisplayFriendlyRes(currentDisplayMetrics.widthPixels, LauncherPreferences.PREF_SCALE_FACTOR / 100F)));
-        envMap.put("SDL3_WINDOW_HEIGHT", Integer.toString(Tools.getDisplayFriendlyRes(currentDisplayMetrics.heightPixels, LauncherPreferences.PREF_SCALE_FACTOR / 100F)));
         setCustomEnv(envMap);
 
         if (renderer) {

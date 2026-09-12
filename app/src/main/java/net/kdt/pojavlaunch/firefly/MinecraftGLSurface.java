@@ -146,6 +146,10 @@ public class MinecraftGLSurface extends View implements GrabListener {
 
                 @Override
                 public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+                    org.libsdl.app.SDLSurface sdlSurface = org.libsdl.app.SDLActivity.getSDLSurface();
+                    if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled() && sdlSurface != null) {
+                        sdlSurface.surfaceDestroyed(holder);
+                    }
                 }
             });
 
@@ -178,6 +182,10 @@ public class MinecraftGLSurface extends View implements GrabListener {
 
                 @Override
                 public boolean onSurfaceTextureDestroyed(@NonNull SurfaceTexture surface) {
+                    org.libsdl.app.SDLSurface sdlSurface = org.libsdl.app.SDLActivity.getSDLSurface();
+                    if (net.kdt.pojavlaunch.firefly.sdl.SdlBridge.getSdlEnabled() && sdlSurface != null) {
+                        sdlSurface.surfaceDestroyed();
+                    }
                     return true;
                 }
 

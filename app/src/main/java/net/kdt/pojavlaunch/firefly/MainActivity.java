@@ -365,6 +365,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     protected void onDestroy() {
         stopService(new Intent(this, GameService.class));
+        net.kdt.pojavlaunch.firefly.sdl.SdlBridge.reset();
         super.onDestroy();
         CallbackBridge.removeGrabListener(touchpad);
         CallbackBridge.removeGrabListener(minecraftGLView);

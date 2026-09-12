@@ -55,6 +55,13 @@ public final class SdlBridge {
         sdlInitialized = false;
     }
 
+    public static synchronized void reset() {
+        sdlEnabled = false;
+        sdlInitialized = false;
+        org.libsdl.app.SDLSurface.clearNativeSurface();
+        org.lwjgl.glfw.CallbackBridge.clearSdlBridgeState();
+    }
+
     public static boolean getSdlEnabled() {
         return sdlEnabled;
     }
