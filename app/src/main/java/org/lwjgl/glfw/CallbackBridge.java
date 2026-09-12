@@ -162,12 +162,6 @@ public class CallbackBridge {
                 org.libsdl.app.SDLActivity.onNativeKeyUp(androidKeycode);
             }
         }
-        // TODO CHECK: This may cause input issue, not receive input!
-        if (keycode != 0) nativeSendKey(keycode, scancode, isDown ? 1 : 0, modifiers);
-        if (isDown && keychar != '\u0000') {
-            nativeSendCharMods(keychar, modifiers);
-            nativeSendChar(keychar);
-        }
     }
 
     public static void sendChar(char keychar, int modifiers) {
@@ -387,4 +381,3 @@ public class CallbackBridge {
         System.loadLibrary("pojavexec");
     }
 }
-
